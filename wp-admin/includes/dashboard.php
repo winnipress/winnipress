@@ -309,41 +309,7 @@ function wp_dashboard_right_now() {
 
 	?>
 	</ul>
-	<?php
-	update_right_now_message();
 
-	// Check if search engines are asked not to index this site.
-	if ( !is_network_admin() && !is_user_admin() && current_user_can( 'manage_options') && '0' == get_option( 'blog_public')) {
-
-		/**
-		 * Filters the link title attribute for the 'Search Engines Discouraged'
-		 * message displayed in the 'At a Glance' dashboard widget.
-		 *
-		 * Prior to 3.8.0, the widget was named 'Right Now'.
-		 *
-		 * @since 3.0.0
-		 * @since 4.5.0 The default for `$title` was updated to an empty string.
-		 *
-		 * @param string $title Default attribute text.
-		 */
-		$title = apply_filters( 'privacy_on_link_title', '');
-
-		/**
-		 * Filters the link label for the 'Search Engines Discouraged' message
-		 * displayed in the 'At a Glance' dashboard widget.
-		 *
-		 * Prior to 3.8.0, the widget was named 'Right Now'.
-		 *
-		 * @since 3.0.0
-		 *
-		 * @param string $content Default text.
-		 */
-		$content = apply_filters( 'privacy_on_link_text' , __( 'Search Engines Discouraged'));
-		$title_attr = '' === $title ? '' : " title='$title'";
-
-		echo "<p><a href='options-reading.php'$title_attr>$content</a></p>";
-	}
-	?>
 	</div>
 	<?php
 	/*
@@ -1432,53 +1398,7 @@ function wp_dashboard_quota() {
 	<?php
 }
 
-// Display Browser Nag Meta Box
-function wp_dashboard_browser_nag() {
-	$notice = '';
-	$response = wp_check_browser_version();
 
-	if ( $response) {
-		if ( $response['insecure']) {
-			/* translators: %s: browser name and link */
-			$msg = sprintf( __( "It looks like you're using an insecure version of %s. Using an outdated browser makes your computer unsafe. For the best WordPress experience, please update your browser."),
-				sprintf( '<a href="%s">%s</a>', esc_url( $response['update_url']), esc_html( $response['name']))
-			);
-		} else {
-			/* translators: %s: browser name and link */
-			$msg = sprintf( __( "It looks like you're using an old version of %s. For the best WordPress experience, please update your browser."),
-				sprintf( '<a href="%s">%s</a>', esc_url( $response['update_url']), esc_html( $response['name']))
-			);
-		}
-
-		$browser_nag_class = '';
-		if ( !empty( $response['img_src'])) {
-			$img_src = ( is_ssl() && !empty( $response['img_src_ssl']))? $response['img_src_ssl'] : $response['img_src'];
-
-			$notice .= '<div class="alignright browser-icon"><a href="' . esc_attr($response['update_url']) . '"><img src="' . esc_attr( $img_src) . '" alt="" /></a></div>';
-			$browser_nag_class = ' has-browser-icon';
-		}
-		$notice .= "<p class='browser-update-nag{$browser_nag_class}'>{$msg}</p>";
-
-		$browsehappy = 'https://browsehappy.com/';
-		$locale = get_user_locale();
-		if ( 'en_US' !== $locale)
-			$browsehappy = add_query_arg( 'locale', $locale, $browsehappy);
-
-		$notice .= '<p>' . sprintf( __( '<a href="%1$s" class="update-browser-link">Update %2$s</a> or learn how to <a href="%3$s" class="browse-happy-link">browse happy</a>'), esc_attr( $response['update_url']), esc_html( $response['name']), esc_url( $browsehappy)) . '</p>';
-		$notice .= '<p class="hide-if-no-js"><a href="" class="dismiss" aria-label="' . esc_attr__( 'Dismiss the browser warning panel') . '">' . __( 'Dismiss') . '</a></p>';
-		$notice .= '<div class="clear"></div>';
-	}
-
-	/**
-	* Filters the notice output for the 'Browse Happy' nag meta box.
-	*
-	* @since 3.2.0
-	*
-	* @param string $notice   The notice content.
-	* @param array  $response An array containing web browser information.
-	*/
-	echo apply_filters( 'browse-happy-notice', $notice, $response);
-}
 
 /**
  * @since 3.2.0

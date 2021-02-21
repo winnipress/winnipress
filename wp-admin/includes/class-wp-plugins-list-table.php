@@ -250,10 +250,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 			$js_plugins[ $key ] = array_keys( (array) $list );
 		}
 
-		wp_localize_script( 'updates', '_wpUpdatesItemCounts', array(
-			'plugins' => $js_plugins,
-			'totals'  => wp_get_update_data(),
-		) );
+		
 
 		if ( !$orderby ) {
 			$orderby = 'Name';

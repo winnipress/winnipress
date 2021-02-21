@@ -234,11 +234,6 @@ class Custom_Background {
 </div>
 <?php } ?>
 
-<?php if ( !empty( $this->updated ) ) { ?>
-<div id="message" class="updated">
-<p><?php printf( __( 'Background updated. <a href="%s">Visit your site</a> to see how it looks.' ), home_url( '/' ) ); ?></p>
-</div>
-<?php } ?>
 
 <h3><?php _e( 'Background Image' ); ?></h3>
 

@@ -570,7 +570,6 @@ do_action( 'pre_current_active_plugins', $plugins['all'] );
 
 <?php
 wp_print_request_filesystem_credentials_modal();
-wp_print_admin_notice_templates();
-wp_print_update_row_templates();
+
 
 include(ABSPATH . 'wp-admin/admin-footer.php');

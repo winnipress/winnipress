@@ -116,17 +116,6 @@ add_action( 'profile_update', 'default_password_nag_edit_user', 10, 2 );
 
 add_action( 'personal_options_update', 'send_confirmation_on_profile_email' );
 
-// Update hooks.
-add_action( 'load-plugins.php', 'wp_plugin_update_rows', 20 ); // After wp_update_plugins() is called.
-add_action( 'load-themes.php', 'wp_theme_update_rows', 20 ); // After wp_update_themes() is called.
-
-add_action( 'admin_notices', 'update_nag',      3  );
-add_action( 'admin_notices', 'maintenance_nag', 10 );
-
-add_filter( 'update_footer', 'core_update_footer' );
-
-// Update Core hooks.
-add_action( '_core_updated_successfully', '_redirect_to_about_wordpress' );
 
 // Upgrade hooks.
 add_action( 'upgrader_process_complete', array( 'Language_Pack_Upgrader', 'async_upgrade' ), 20 );

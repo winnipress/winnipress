@@ -355,6 +355,6 @@ if ( $tab ) {
 
 <?php
 wp_print_request_filesystem_credentials_modal();
-wp_print_admin_notice_templates();
+
 
 include(ABSPATH . 'wp-admin/admin-footer.php');

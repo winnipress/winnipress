@@ -28,23 +28,9 @@ if (is_multisite()) {
 	$submenu[ 'index.php' ][5] = array(__('My Sites'), 'read', 'my-sites.php');
 }
 
-if (!is_multisite() || current_user_can('update_core')) {
-	$update_data = wp_get_update_data();
-}
 
-if (!is_multisite()) {
-	if (current_user_can('update_core')) {
-		$cap = 'update_core';
-	} elseif (current_user_can('update_plugins')) {
-		$cap = 'update_plugins';
-	} elseif (current_user_can('update_themes')) {
-		$cap = 'update_themes';
-	} else {
-		$cap = 'update_languages';
-	}
-	$submenu[ 'index.php' ][10] = array(sprintf(__('Updates %s'), "<span class='update-plugins count-{$update_data['counts']['total']}'><span class='update-count'>" . number_format_i18n($update_data['counts']['total']) . "</span></span>"), $cap, 'update-core.php');
-	unset($cap);
-}
+
+
 
 $menu[4] = array('', 'read', 'separator1', '', 'wp-menu-separator');
 
@@ -197,11 +183,7 @@ function _add_themes_utility_last() {
 }
 
 $count = '';
-if (!is_multisite() && current_user_can('update_plugins')) {
-	if (!isset($update_data))
-		$update_data = wp_get_update_data();
-	$count = "<span class='update-plugins count-{$update_data['counts']['plugins']}'><span class='plugin-count'>" . number_format_i18n($update_data['counts']['plugins']) . "</span></span>";
-}
+
 
 $menu[65] = array(sprintf(__('Plugins %s'), $count), 'activate_plugins', 'plugins.php', '', 'menu-top menu-icon-plugins', 'menu-plugins', 'dashicons-admin-plugins');
 
@@ -213,7 +195,6 @@ $submenu['plugins.php'][5]  = array(__('Installed Plugins'), 'activate_plugins',
 		$submenu['plugins.php'][15] = array(_x('Editor', 'plugin editor'), 'edit_plugins', 'plugin-editor.php');
 	}
 
-unset($update_data);
 
 if (current_user_can('list_users'))
 	$menu[70] = array(__('Users'), 'list_users', 'users.php', '', 'menu-top menu-icon-users', 'menu-users', 'dashicons-admin-users');
@@ -250,9 +231,7 @@ $menu[75] = array(__('Tools'), 'edit_posts', 'tools.php', '', 'menu-top menu-ico
 		$submenu['tools.php'][50] = array(__('Network Setup'), 'setup_network', 'network.php');
 
 $change_notice = '';
-if (current_user_can('manage_privacy_options') && WP_Privacy_Policy_Content::text_change_check()) {
-	$change_notice = ' <span class="update-plugins 1"><span class="plugin-count">' . number_format_i18n(1) . '</span></span>';
-}
+
 
 // translators: %s is the update notification bubble, if updates are available.
 $menu[80]                               = array(sprintf(__('Settings %s'), $change_notice), 'manage_options', 'options-general.php', '', 'menu-top menu-icon-settings', 'menu-settings', 'dashicons-admin-settings');

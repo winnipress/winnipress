@@ -52,7 +52,7 @@ function _get_cron_lock(){
 	if(wp_using_ext_object_cache()){
 		/*
 		 * Skip local cache and force re-fetch of doing_cron transient
-		 * in case another process updated the cache.
+		 * in case another process altered the cache.
 		 */
 		$value = wp_cache_get('doing_cron', 'transient', true);
 	} else {

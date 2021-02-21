@@ -395,23 +395,6 @@ function install_plugin_install_status($api, $loop = false) {
 	$url = false;
 	$update_file = false;
 
-	/*
-	 * Check to see if this plugin is known to be installed,
-	 * and has an update awaiting it.
-	 */
-	$update_plugins = get_site_transient('update_plugins');
-	if ( isset( $update_plugins->response)) {
-		foreach ( (array)$update_plugins->response as $file => $plugin) {
-			if ( $plugin->slug === $api->slug) {
-				$status = 'update_available';
-				$update_file = $file;
-				$version = $plugin->new_version;
-				if ( current_user_can('update_plugins'))
-					$url = wp_nonce_url(self_admin_url('update.php?action=upgrade-plugin&plugin=' . $update_file), 'upgrade-plugin_' . $update_file);
-				break;
-			}
-		}
-	}
 
 	if ( 'install' == $status) {
 		if ( is_dir( WP_PLUGIN_DIR . '/' . $api->slug)) {
