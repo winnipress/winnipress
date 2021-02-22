@@ -5,7 +5,7 @@ require(dirname(__FILE__) . '/wp-load.php');
 
 add_action('wp_head', 'wp_no_robots');
 
-require(dirname(__FILE__) . '/wp-blog-header.php');
+require(dirname(__FILE__) . '/wp-load-template.php');
 
 nocache_headers();
 

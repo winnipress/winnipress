@@ -11,7 +11,7 @@ define('WP_INSTALLING', true);
 /** Sets up the WordPress Environment. */
 require(dirname(__FILE__) . '/wp-load.php');
 
-require(dirname(__FILE__) . '/wp-blog-header.php');
+require(dirname(__FILE__) . '/wp-load-template.php');
 
 if (!is_multisite()) {
 	wp_redirect(wp_registration_url());

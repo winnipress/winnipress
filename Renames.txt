@@ -1,0 +1,7 @@
+FILES
+
+wp-blog-header.php is now wp-load-template.php
+
+VARS
+
+$wp_did_header is now $wp_loaded_template
