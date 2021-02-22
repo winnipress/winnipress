@@ -31,15 +31,8 @@ else :
 	$template = get_index_template();
 endif;
 
-/**
-* Filters the path of the current template before including it.
-* @param string $template The path of the template to include.
-*/
+// Filter the path of the current template before actually including it to allow customizations
+// If the filtered value is set to false, do not include
 if($template = apply_filters('template_include', $template)){
-	include($template);
-}elseif(current_user_can('switch_themes')){
-	$theme = wp_get_theme();
-	if($theme->errors()){
-		wp_die($theme->errors());
-	}
+    include($template);
 }
