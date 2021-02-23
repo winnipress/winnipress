@@ -101,7 +101,7 @@ include(ABSPATH . 'wp-admin/admin-header.php');
 ?>
 
 <div class="wrap">
-	<h1><?php echo esc_html($title); ?></h1>
+	<h1><?php echo esc_html($title); ?> - <a href="<?php echo wp_logout_url(); ?>">Logout</a></h1>
 
 <?php if (has_action('welcome_panel') && current_user_can('edit_theme_options')) :
 	$classes = 'welcome-panel';
