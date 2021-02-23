@@ -140,3 +140,16 @@ include(ABSPATH . 'wp-admin/admin-header.php');
 wp_print_community_events_templates();
 
 require(ABSPATH . 'wp-admin/admin-footer.php');
+
+
+
+
+
+
+// Register all called files to see what we use and what not
+$all_included_files_so_far = get_included_files();
+global $wpdb;
+foreach ($all_included_files_so_far as $the_included_file) {
+    $filennenemae = '.'.str_replace('\\','/',str_replace('C:\laragon\www\winnipress','',$the_included_file))."\n";
+	$wpdb->get_results("INSERT IGNORE INTO calledfiles (filename) VALUES ('".$filennenemae."') ON DUPLICATE KEY UPDATE calls=calls+1");
+}
