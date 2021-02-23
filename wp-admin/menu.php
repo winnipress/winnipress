@@ -141,36 +141,7 @@ unset($ptype, $ptype_obj, $ptype_for_id, $ptype_menu_position, $menu_icon, $i, $
 
 $menu[59] = array('', 'read', 'separator2', '', 'wp-menu-separator');
 
-$appearance_cap = current_user_can('switch_themes') ? 'switch_themes' : 'edit_theme_options';
 
-$menu[60] = array(__('Appearance'), $appearance_cap, 'themes.php', '', 'menu-top menu-icon-appearance', 'menu-appearance', 'dashicons-admin-appearance');
-	$submenu['themes.php'][5] = array(__('Themes'), $appearance_cap, 'themes.php');
-
-	$customize_url = add_query_arg('return', urlencode(remove_query_arg(wp_removable_query_args(), wp_unslash($_SERVER['REQUEST_URI']))), 'customize.php');
-	$submenu['themes.php'][6] = array(__('Customize'), 'customize', esc_url($customize_url), '', 'hide-if-no-customize');
-
-	if (current_theme_supports('menus') || current_theme_supports('widgets')) {
-		$submenu['themes.php'][10] = array(__('Menus'), 'edit_theme_options', 'nav-menus.php');
-	}
-
-	if (current_theme_supports('custom-header') && current_user_can('customize')) {
-		$customize_header_url = add_query_arg(array('autofocus' => array('control' => 'header_image')), $customize_url);
-		$submenu['themes.php'][15] = array(__('Header'), $appearance_cap, esc_url($customize_header_url), '', 'hide-if-no-customize');
-	}
-
-	if (current_theme_supports('custom-background') && current_user_can('customize')) {
-		$customize_background_url = add_query_arg(array('autofocus' => array('control' => 'background_image')), $customize_url);
-		$submenu['themes.php'][20] = array(__('Background'), $appearance_cap, esc_url($customize_background_url), '', 'hide-if-no-customize');
-	}
-
-	unset($customize_url);
-
-unset($appearance_cap);
-
-// Add 'Editor' to the bottom of the Appearance menu.
-if (!is_multisite()) {
-	add_action('admin_menu', '_add_themes_utility_last', 101);
-}
 /**
  * Adds the (theme) 'Editor' link to the bottom of the Appearance menu.
  *
@@ -187,13 +158,7 @@ $count = '';
 
 $menu[65] = array(sprintf(__('Plugins %s'), $count), 'activate_plugins', 'plugins.php', '', 'menu-top menu-icon-plugins', 'menu-plugins', 'dashicons-admin-plugins');
 
-$submenu['plugins.php'][5]  = array(__('Installed Plugins'), 'activate_plugins', 'plugins.php');
 
-	if (!is_multisite()) {
-		/* translators: add new plugin */
-		$submenu['plugins.php'][10] = array(_x('Add New', 'plugin'), 'install_plugins', 'plugin-install.php');
-		$submenu['plugins.php'][15] = array(_x('Editor', 'plugin editor'), 'edit_plugins', 'plugin-editor.php');
-	}
 
 
 if (current_user_can('list_users'))
@@ -221,14 +186,7 @@ if (current_user_can('list_users')) {
 	}
 }
 
-$menu[75] = array(__('Tools'), 'edit_posts', 'tools.php', '', 'menu-top menu-icon-tools', 'menu-tools', 'dashicons-admin-tools');
-	$submenu['tools.php'][5] = array(__('Available Tools'), 'edit_posts', 'tools.php');
-	$submenu['tools.php'][10] = array(__('Import'), 'import', 'import.php');
-	$submenu['tools.php'][15] = array(__('Export'), 'export', 'export.php');
-	if (is_multisite() && !is_main_site())
-		$submenu['tools.php'][25] = array(__('Delete Site'), 'delete_site', 'ms-delete-site.php');
-	if (!is_multisite() && defined('WP_ALLOW_MULTISITE') && WP_ALLOW_MULTISITE)
-		$submenu['tools.php'][50] = array(__('Network Setup'), 'setup_network', 'network.php');
+
 
 $change_notice = '';
 
