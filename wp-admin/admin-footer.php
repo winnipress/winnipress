@@ -69,7 +69,8 @@ if (function_exists('get_site_option')) {
 
 
 
-
+// Print logs
+winni_print_logs();
 
 
 

@@ -4,8 +4,6 @@
 // Require debug tools
 require_once(dirname(__FILE__) . '/wp-includes/winni-debug-tools.php');
 
-winni_log('start the party');
-
 // Load WP
 require_once(dirname(__FILE__) . '/wp-load.php');
 

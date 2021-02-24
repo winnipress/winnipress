@@ -1161,62 +1161,37 @@ function check_ajax_referer($action = -1, $query_arg = false, $die = true ){
 endif;
 
 if (!function_exists('wp_redirect') ) :
-/**
- * Redirects to another page.
- *
- * Note: wp_redirect() does not exit automatically, and should almost always be
- * followed by a call to `exit;`:
- *
- *     wp_redirect($url );
- *     exit;
- *
- * Exiting can also be selectively manipulated by using wp_redirect() as a conditional
- * in conjunction with the {@see 'wp_redirect'} and {@see 'wp_redirect_location'} hooks:
- *
- *     if (wp_redirect($url ) ){
- *         exit;
- *     }
- *
- * @since 1.5.1
- *
- * @global bool $is_IIS
- *
- * @param string $location The path to redirect to.
- * @param int    $status   Status code to use.
- * @return bool False if $location is not provided, true otherwise.
- */
+// Redirect to another page
 function wp_redirect($location, $status = 302){
 	global $is_IIS;
 
-	/**
-	 * Filters the redirect location.
-	 *
-	 * @since 2.1.0
-	 *
-	 * @param string $location The path to redirect to.
-	 * @param int    $status   Status code to use.
-	 */
-	$location = apply_filters('wp_redirect', $location, $status );
+	// If something to log, use wp_die() to create an intermediate screen before the redirect
+	if(!empty($GLOBALS['winni_logs'])){
+		$go_on_args = array(
+			'link_url' => $location,
+			'link_text' => 'OK &raquo;',
+			'back_link' => true
+		);
+		wp_die(implode('<br><br>', $GLOBALS['winni_logs']), 'Winni logs', $go_on_args);
+	}
 
-	/**
-	 * Filters the redirect status code.
-	 *
-	 * @since 2.3.0
-	 *
-	 * @param int    $status   Status code to use.
-	 * @param string $location The path to redirect to.
-	 */
-	$status = apply_filters('wp_redirect_status', $status, $location );
+	// Filter the redirect location
+	$location = apply_filters('wp_redirect', $location, $status);
 
-	if (!$location )
+	if(!$location){
 		return false;
+	}
+
+	// Filter the redirect status code
+	$status = apply_filters('wp_redirect_status', $status, $location);
 
 	$location = wp_sanitize_redirect($location);
 
-	if (!$is_IIS && PHP_SAPI != 'cgi-fcgi' )
+	if(!$is_IIS && PHP_SAPI != 'cgi-fcgi'){
 		status_header($status); // This causes problems on IIS and some FastCGI setups
+	}
 
-	header("Location: $location", true, $status);
+	header('Location: '.  $location, true, $status);
 
 	return true;
 }
@@ -1292,14 +1267,17 @@ function wp_safe_redirect($location, $status = 302){
 	// Need to look at the URL the way it will end up in wp_redirect()
 	$location = wp_sanitize_redirect($location);
 
-	/**
-	 * Filters the redirect fallback URL for when the provided redirect is not safe (local).
-	 *
-	 * @since 4.3.0
-	 *
-	 * @param string $fallback_url The fallback URL to use by default.
-	 * @param int    $status       The redirect status.
-	 */
+	// If something to log, use wp_die() to create an intermediate screen before the redirect
+	if(!empty($GLOBALS['winni_logs'])){
+		$go_on_args = array(
+			'link_url' => $location,
+			'link_text' => 'OK &raquo;',
+			'back_link' => true
+		);
+		wp_die(implode('<br><br>', $GLOBALS['winni_logs']), 'Winni logs', $go_on_args);
+	}
+
+	// Filters the redirect fallback URL for when the provided redirect is not safe (local)
 	$location = wp_validate_redirect($location, apply_filters('wp_safe_redirect_fallback', admin_url(), $status ) );
 
 	wp_redirect($location, $status);

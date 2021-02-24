@@ -28,6 +28,9 @@ if (!WP_NETWORK_ADMIN && !WP_USER_ADMIN ) {
 if (isset($_GET['import']) && !defined('WP_LOAD_IMPORTERS') )
 	define('WP_LOAD_IMPORTERS', true);
 
+// Require debug tools
+require_once(dirname(dirname(__FILE__)) . '/wp-includes/winni-debug-tools.php');
+
 require_once(dirname(dirname(__FILE__)) . '/wp-load.php');
 
 nocache_headers();

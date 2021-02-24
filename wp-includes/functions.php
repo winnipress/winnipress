@@ -2723,18 +2723,9 @@ function wp_die( $message = '', $title = '', $args = array() ){
 		 * @param callable $function Callback function name.
 		 */
 		$function = apply_filters( 'wp_die_ajax_handler', '_ajax_wp_die_handler' );
-	} elseif ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ){
+	}else {
 		/**
-		 * Filters the callback for killing WordPress execution for XML-RPC requests.
-		 *
-		 * @since 3.4.0
-		 *
-		 * @param callable $function Callback function name.
-		 */
-		$function = apply_filters( 'wp_die_xmlrpc_handler', '_xmlrpc_wp_die_handler' );
-	} else {
-		/**
-		 * Filters the callback for killing WordPress execution for all non-Ajax, non-XML-RPC requests.
+		 * Filters the callback for killing WordPress execution for all non-Ajax requests.
 		 *
 		 * @since 3.0.0
 		 *
@@ -2792,6 +2783,10 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ){
 		$message .= "\n<p><a href='javascript:history.back()'>$back_text</a></p>";
 	}
 
+	if ( isset( $r['link_url'] ) ){
+		$message .= "\n<p><a href='".$r['link_url']."'>".$r['link_text']."</a></p>";
+	}
+
 	if ( !did_action( 'admin_head' ) ) :
 		if ( !headers_sent() ){
 			status_header( $r['response'] );
@@ -2809,18 +2804,13 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ){
 			$text_direction = 'rtl';
 ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width">
-	<?php
-	if ( function_exists( 'wp_no_robots' ) ){
-		wp_no_robots();
-	}
-	?>
 	<title><?php echo $title ?></title>
 	<style type="text/css">
-		html {
+		html{
 			background: #f1f1f1;
 		}
 		body {
@@ -2866,9 +2856,6 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ){
 		}
 		a:focus {
 			color: #124964;
-		    -webkit-box-shadow:
-		    	0 0 0 1px #5b9dd9,
-				0 0 2px 1px rgba(30, 140, 190, .8);
 		    box-shadow:
 		    	0 0 0 1px #5b9dd9,
 				0 0 2px 1px rgba(30, 140, 190, .8);
@@ -2886,15 +2873,9 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ){
 			margin: 0;
 			padding: 0 10px 1px;
 			cursor: pointer;
-			-webkit-border-radius: 3px;
-			-webkit-appearance: none;
 			border-radius: 3px;
 			white-space: nowrap;
-			-webkit-box-sizing: border-box;
-			-moz-box-sizing:    border-box;
 			box-sizing:         border-box;
-
-			-webkit-box-shadow: 0 1px 0 #ccc;
 			box-shadow: 0 1px 0 #ccc;
 		 	vertical-align: top;
 		}
@@ -2914,7 +2895,6 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ){
 
 		.button:focus  {
 			border-color: #5b9dd9;
-			-webkit-box-shadow: 0 0 3px rgba( 0, 115, 170, .8 );
 			box-shadow: 0 0 3px rgba( 0, 115, 170, .8 );
 			outline: none;
 		}
@@ -2922,18 +2902,9 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ){
 		.button:active {
 			background: #eee;
 			border-color: #999;
-		 	-webkit-box-shadow: inset 0 2px 5px -3px rgba( 0, 0, 0, 0.5 );
 		 	box-shadow: inset 0 2px 5px -3px rgba( 0, 0, 0, 0.5 );
-		 	-webkit-transform: translateY(1px);
-		 	-ms-transform: translateY(1px);
 		 	transform: translateY(1px);
 		}
-
-		<?php
-		if ( 'rtl' == $text_direction ){
-			echo 'body { font-family: Tahoma, Arial; }';
-		}
-		?>
 	</style>
 </head>
 <body id="error-page">
