@@ -2622,12 +2622,11 @@ function wp_head() {
  * @since 1.5.1
  */
 function wp_footer() {
-	/**
-	 * Prints scripts or data before the closing body tag on the front end.
-	 *
-	 * @since 1.5.1
-	 */
-	do_action( 'wp_footer' );
+	// Print scripts or data before the closing body tag on the front end
+	do_action( 'wp_footer');
+
+	// Print out all logs if any
+	winni_print_logs();
 }
 
 /**

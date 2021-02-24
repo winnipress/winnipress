@@ -1,5 +1,10 @@
 <?php
-// WHAT IS THIS FILE: This is the WP starting point
+// WHAT IS THIS FILE: This is the WP Frontend starting point
+
+// Require debug tools
+require_once(dirname(__FILE__) . '/wp-includes/winni-debug-tools.php');
+
+winni_log('start the party');
 
 // Load WP
 require_once(dirname(__FILE__) . '/wp-load.php');
