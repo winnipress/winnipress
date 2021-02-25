@@ -69,7 +69,7 @@ class SimplePie_Cache
 	/**
 	 * Don't call the constructor. Please.
 	 */
-	private function __construct(){ }
+	private function __construct(){ yeah(__METHOD__); }
 
 	/**
 	 * Create a new SimplePie_Cache object

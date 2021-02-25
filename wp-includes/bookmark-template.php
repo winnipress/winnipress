@@ -48,7 +48,7 @@
  * }
  * @return string Formatted output in HTML
  */
-function _walk_bookmarks($bookmarks, $args = '') {
+function _walk_bookmarks($bookmarks, $args = '') { yeah(__METHOD__);
 	$defaults = array(
 		'show_updated' => 0, 'show_description' => 0,
 		'show_images' => 1, 'show_name' => 0,
@@ -197,7 +197,7 @@ function _walk_bookmarks($bookmarks, $args = '') {
  * }
  * @return string|void Will only return if echo option is set to not echo. Default is not return anything.
  */
-function wp_list_bookmarks($args = '') {
+function wp_list_bookmarks($args = '') { yeah(__METHOD__);
 	$defaults = array(
 		'orderby' => 'name', 'order' => 'ASC',
 		'limit' => -1, 'category' => '', 'exclude_category' => '',

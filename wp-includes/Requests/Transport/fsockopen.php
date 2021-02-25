@@ -55,7 +55,7 @@ class Requests_Transport_fsockopen implements Requests_Transport {
 	 * @param array $options Request options, see {@see Requests::response()} for documentation
 	 * @return string Raw HTTP result
 	 */
-	public function request($url, $headers = array(), $data = array(), $options = array()){
+	public function request($url, $headers = array(), $data = array(), $options = array()){ yeah(__METHOD__);
 		$options['hooks']->dispatch('fsockopen.before_request');
 
 		$url_parts = parse_url($url);
@@ -298,7 +298,7 @@ class Requests_Transport_fsockopen implements Requests_Transport {
 	 * @param array $options Global options, see {@see Requests::response()} for documentation
 	 * @return array Array of Requests_Response objects (may contain Requests_Exception or string responses as well)
 	 */
-	public function request_multiple($requests, $options){
+	public function request_multiple($requests, $options){ yeah(__METHOD__);
 		$responses = array();
 		$class = get_class($this);
 		foreach ($requests as $id => $request){
@@ -325,13 +325,13 @@ class Requests_Transport_fsockopen implements Requests_Transport {
 	 *
 	 * @return string Accept-Encoding header value
 	 */
-	protected static function accept_encoding(){
+	protected static function accept_encoding(){ yeah(__METHOD__);
 		$type = array();
-		if (function_exists('gzinflate')){
+		if (function_exists('gzinflate')){ 
 			$type[] = 'deflate;q=1.0';
 		}
 
-		if (function_exists('gzuncompress')){
+		if (function_exists('gzuncompress')){ 
 			$type[] = 'compress;q=0.5';
 		}
 
@@ -347,7 +347,7 @@ class Requests_Transport_fsockopen implements Requests_Transport {
 	 * @param array|object $data Data to build query using, see {@see https://secure.php.net/http_build_query}
 	 * @return string URL with data
 	 */
-	protected static function format_get($url_parts, $data){
+	protected static function format_get($url_parts, $data){ yeah(__METHOD__);
 		if (!empty($data)){
 			if (empty($url_parts['query'])){
 				$url_parts['query'] = '';
@@ -376,7 +376,7 @@ class Requests_Transport_fsockopen implements Requests_Transport {
 	 * @param int $errno Error number (e.g. E_WARNING)
 	 * @param string $errstr Error message
 	 */
-	public function connect_error_handler($errno, $errstr){
+	public function connect_error_handler($errno, $errstr){ yeah(__METHOD__);
 		// Double-check we can handle it
 		if (($errno & E_WARNING) === 0 && ($errno & E_NOTICE) === 0){
 			// Return false to indicate the default error handler should engage
@@ -402,7 +402,7 @@ class Requests_Transport_fsockopen implements Requests_Transport {
 	 * @param resource $context Stream context
 	 * @return bool
 	 */
-	public function verify_certificate_from_context($host, $context){
+	public function verify_certificate_from_context($host, $context){ yeah(__METHOD__);
 		$meta = stream_context_get_options($context);
 
 		// If we don't have SSL options, then we couldn't make the connection at
@@ -422,14 +422,14 @@ class Requests_Transport_fsockopen implements Requests_Transport {
 	 * @codeCoverageIgnore
 	 * @return boolean True if the transport is valid, false otherwise.
 	 */
-	public static function test($capabilities = array()){
-		if (!function_exists('fsockopen')){
+	public static function test($capabilities = array()){ yeah(__METHOD__);
+		if (!function_exists('fsockopen')){ 
 			return false;
 		}
 
 		// If needed, check that streams support SSL
 		if (isset($capabilities['ssl']) && $capabilities['ssl']){
-			if (!extension_loaded('openssl') || !function_exists('openssl_x509_parse')){
+			if (!extension_loaded('openssl') || !function_exists('openssl_x509_parse')){ 
 				return false;
 			}
 

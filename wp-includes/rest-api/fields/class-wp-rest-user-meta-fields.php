@@ -23,7 +23,7 @@ class WP_REST_User_Meta_Fields extends WP_REST_Meta_Fields {
 	 *
 	 * @return string The user meta type.
 	 */
-	protected function get_meta_type(){
+	protected function get_meta_type(){ yeah(__METHOD__);
 		return 'user';
 	}
 
@@ -34,7 +34,7 @@ class WP_REST_User_Meta_Fields extends WP_REST_Meta_Fields {
 	 *
 	 * @return string 'user' There are no subtypes.
 	 */
-	protected function get_meta_subtype(){
+	protected function get_meta_subtype(){ yeah(__METHOD__);
 		return 'user';
 	}
 
@@ -45,7 +45,7 @@ class WP_REST_User_Meta_Fields extends WP_REST_Meta_Fields {
 	 *
 	 * @return string The user REST field type.
 	 */
-	public function get_rest_field_type(){
+	public function get_rest_field_type(){ yeah(__METHOD__);
 		return 'user';
 	}
 }

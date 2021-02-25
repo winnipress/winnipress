@@ -31,7 +31,7 @@ class WP_Widget_Form_Customize_Control extends WP_Customize_Control {
 	 *
 	 * @global array $wp_registered_widgets
 	 */
-	public function to_json() {
+	public function to_json() { yeah(__METHOD__);
 		global $wp_registered_widgets;
 
 		parent::to_json();
@@ -65,7 +65,7 @@ class WP_Widget_Form_Customize_Control extends WP_Customize_Control {
 	 *
 	 * @since 3.9.0
 	 */
-	public function render_content() {}
+	public function render_content() { yeah(__METHOD__);}
 
 	/**
 	 * Whether the current widget is rendered on the page.
@@ -74,7 +74,7 @@ class WP_Widget_Form_Customize_Control extends WP_Customize_Control {
 	 *
 	 * @return bool Whether the widget is rendered.
 	 */
-	public function active_callback() {
+	public function active_callback() { yeah(__METHOD__);
 		return $this->manager->widgets->is_widget_rendered($this->widget_id );
 	}
 }

@@ -16,7 +16,7 @@ class Requests_Response {
 	/**
 	 * Constructor
 	 */
-	public function __construct(){
+	public function __construct(){ yeah(__METHOD__);
 		$this->headers = new Requests_Response_Headers();
 		$this->cookies = new Requests_Cookie_Jar();
 	}
@@ -95,7 +95,7 @@ class Requests_Response {
 	 *
 	 * @return boolean True if redirect (3xx status), false if not.
 	 */
-	public function is_redirect(){
+	public function is_redirect(){ yeah(__METHOD__);
 		$code = $this->status_code;
 		return in_array($code, array(300, 301, 302, 303, 307)) || $code > 307 && $code < 400;
 	}
@@ -107,7 +107,7 @@ class Requests_Response {
 	 * @throws Requests_Exception_HTTP On non-successful status code. Exception class corresponds to code (e.g. {@see Requests_Exception_HTTP_404})
 	 * @param boolean $allow_redirects Set to false to throw on a 3xx as well
 	 */
-	public function throw_for_status($allow_redirects = true){
+	public function throw_for_status($allow_redirects = true){ yeah(__METHOD__);
 		if ($this->is_redirect()){
 			if (!$allow_redirects){
 				throw new Requests_Exception('Redirection not allowed', 'response.no_redirects', $this);

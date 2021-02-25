@@ -4,7 +4,7 @@
 $GLOBALS['winni_logs'] = array();
 
 // Function to add logs
-function winni_log($thing){
+function winni_log($thing){ yeah(__METHOD__);
 
     // Where has this function been called?
     $backtrace = debug_backtrace();
@@ -25,7 +25,7 @@ function winni_log($thing){
 
 
 // Print logs
-function winni_print_logs(){
+function winni_print_logs(){ yeah(__METHOD__);
 
     if(empty($GLOBALS['winni_logs'])){
         return false;

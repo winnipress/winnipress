@@ -24,7 +24,7 @@ if(empty($wp)){
  *                              Default '0'. Accepts '0' or '1', true or false.
  * @param string $error_message Error message if an error occurred.
  */
-function trackback_response($error = 0, $error_message = ''){
+function trackback_response($error = 0, $error_message = ''){ yeah(__METHOD__);
 	header('Content-Type: text/xml; charset=' . get_option('blog_charset'));
 	if($error){
 		echo '<?xml version="1.0" encoding="utf-8"?'.">\n";
@@ -67,7 +67,7 @@ if(false !== strpos($charset, 'UTF-7'))
 	die;
 
 // For international trackbacks.
-if(function_exists('mb_convert_encoding')){
+if(function_exists('mb_convert_encoding')){ 
 	$title     = mb_convert_encoding($title, get_option('blog_charset'), $charset);
 	$excerpt   = mb_convert_encoding($excerpt, get_option('blog_charset'), $charset);
 	$blog_name = mb_convert_encoding($blog_name, get_option('blog_charset'), $charset);

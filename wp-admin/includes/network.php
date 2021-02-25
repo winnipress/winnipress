@@ -16,7 +16,7 @@
  *
  * @return Whether a network exists.
  */
-function network_domain_check() {
+function network_domain_check() { yeah(__METHOD__);
 	global $wpdb;
 
 	$sql = $wpdb->prepare( "SHOW TABLES LIKE %s", $wpdb->esc_like( $wpdb->site));
@@ -32,7 +32,7 @@ function network_domain_check() {
  * @since 3.0.0
  * @return bool Whether subdomain installation is allowed
  */
-function allow_subdomain_install() {
+function allow_subdomain_install() { yeah(__METHOD__);
 	$domain = preg_replace( '|https?://([^/]+)|', '$1', get_option( 'home'));
 	if ( parse_url( get_option( 'home'), PHP_URL_PATH) || 'localhost' == $domain || preg_match( '|^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$|', $domain))
 		return false;
@@ -49,7 +49,7 @@ function allow_subdomain_install() {
  *
  * @return bool Whether subdirectory installation is allowed
  */
-function allow_subdirectory_install() {
+function allow_subdirectory_install() { yeah(__METHOD__);
 	global $wpdb;
         /**
          * Filters whether to enable the subdirectory installation feature in Multisite.
@@ -77,7 +77,7 @@ function allow_subdirectory_install() {
  * @since 3.0.0
  * @return string Base domain.
  */
-function get_clean_basedomain() {
+function get_clean_basedomain() { yeah(__METHOD__);
 	if ( $existing_domain = network_domain_check())
 		return $existing_domain;
 	$domain = preg_replace( '|https?://|', '', get_option( 'siteurl'));
@@ -98,7 +98,7 @@ function get_clean_basedomain() {
  *
  * @param WP_Error $errors
  */
-function network_step1( $errors = false) {
+function network_step1( $errors = false) { yeah(__METHOD__);
 	global $is_apache;
 
 	if ( defined('DO_NOT_UPGRADE_GLOBAL_TABLES')) {
@@ -342,7 +342,7 @@ function network_step1( $errors = false) {
  *
  * @param WP_Error $errors
  */
-function network_step2( $errors = false) {
+function network_step2( $errors = false) { yeah(__METHOD__);
 	global $wpdb;
 
 	$hostname          = get_clean_basedomain();

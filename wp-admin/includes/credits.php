@@ -14,7 +14,7 @@
  *
  * @return array|false A list of all of the contributors, or false on error.
  */
-function wp_credits() {
+function wp_credits() { yeah(__METHOD__);
 	// include an unmodified $wp_version
 	include( ABSPATH . WPINC . '/version.php');
 
@@ -59,7 +59,7 @@ function wp_credits() {
  * @param string $username      The contributor's username.
  * @param string $profiles      URL to the contributor's WordPress.org profile page.
  */
-function _wp_credits_add_profile_link( &$display_name, $username, $profiles) {
+function _wp_credits_add_profile_link( &$display_name, $username, $profiles) { yeah(__METHOD__);
 	$display_name = '<a href="' . esc_url( sprintf( $profiles, $username)) . '">' . esc_html( $display_name) . '</a>';
 }
 
@@ -71,6 +71,6 @@ function _wp_credits_add_profile_link( &$display_name, $username, $profiles) {
  *
  * @param string $data External library data (passed by reference).
  */
-function _wp_credits_build_object_link( &$data) {
+function _wp_credits_build_object_link( &$data) { yeah(__METHOD__);
 	$data = '<a href="' . esc_url( $data[1]) . '">' . esc_html( $data[0]) . '</a>';
 }

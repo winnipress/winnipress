@@ -14,7 +14,7 @@
  * @global array $wp_registered_widgets
  * @global array $wp_registered_widget_controls
  */
-function wp_list_widgets() {
+function wp_list_widgets() { yeah(__METHOD__);
 	global $wp_registered_widgets, $wp_registered_widget_controls;
 
 	$sort = $wp_registered_widgets;
@@ -57,7 +57,7 @@ function wp_list_widgets() {
  *
  * @return int
  */
-function _sort_name_callback( $a, $b) {
+function _sort_name_callback( $a, $b) { yeah(__METHOD__);
 	return strnatcasecmp( $a['name'], $b['name']);
 }
 
@@ -70,7 +70,7 @@ function _sort_name_callback( $a, $b) {
  * @param string $sidebar      Sidebar ID.
  * @param string $sidebar_name Optional. Sidebar name. Default empty.
  */
-function wp_list_widget_controls( $sidebar, $sidebar_name = '') {
+function wp_list_widget_controls( $sidebar, $sidebar_name = '') { yeah(__METHOD__);
 	add_filter( 'dynamic_sidebar_params', 'wp_list_widget_controls_dynamic_sidebar');
 
 	$description = wp_sidebar_description( $sidebar);
@@ -114,7 +114,7 @@ function wp_list_widget_controls( $sidebar, $sidebar_name = '') {
  * @param array $params
  * @return array
  */
-function wp_list_widget_controls_dynamic_sidebar( $params) {
+function wp_list_widget_controls_dynamic_sidebar( $params) { yeah(__METHOD__);
 	global $wp_registered_widgets;
 	static $i = 0;
 	$i++;
@@ -142,7 +142,7 @@ function wp_list_widget_controls_dynamic_sidebar( $params) {
  * @param string $id_base
  * @return int
  */
-function next_widget_id_number( $id_base) {
+function next_widget_id_number( $id_base) { yeah(__METHOD__);
 	global $wp_registered_widgets;
 	$number = 1;
 
@@ -169,7 +169,7 @@ function next_widget_id_number( $id_base) {
  * @param array $sidebar_args
  * @return array
  */
-function wp_widget_control( $sidebar_args) {
+function wp_widget_control( $sidebar_args) { yeah(__METHOD__);
 	global $wp_registered_widgets, $wp_registered_widget_controls, $sidebars_widgets;
 
 	$widget_id = $sidebar_args['widget_id'];
@@ -285,6 +285,6 @@ function wp_widget_control( $sidebar_args) {
  * @param string $classes
  * @return string
  */
-function wp_widgets_access_body_class($classes) {
+function wp_widgets_access_body_class($classes) { yeah(__METHOD__);
 	return "$classes widgets_access ";
 }

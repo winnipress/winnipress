@@ -30,7 +30,7 @@
  * @param string|bool $secure_cookie Optional. Whether to use secure cookie.
  * @return WP_User|WP_Error WP_User on success, WP_Error on failure.
  */
-function wp_signon($credentials = array(), $secure_cookie = '' ) {
+function wp_signon($credentials = array(), $secure_cookie = '' ) { yeah(__METHOD__);
 	if (empty($credentials) ) {
 		$credentials = array(); // Back-compat for plugins passing an empty string.
 
@@ -120,7 +120,7 @@ function wp_signon($credentials = array(), $secure_cookie = '' ) {
  * @param string                $password Password for authentication.
  * @return WP_User|WP_Error WP_User on success, WP_Error on failure.
  */
-function wp_authenticate_username_password($user, $username, $password) {
+function wp_authenticate_username_password($user, $username, $password) { yeah(__METHOD__);
 	if ($user instanceof WP_User ) {
 		return $user;
 	}
@@ -191,7 +191,7 @@ function wp_authenticate_username_password($user, $username, $password) {
  * @param string                $password Password for authentication.
  * @return WP_User|WP_Error WP_User on success, WP_Error on failure.
  */
-function wp_authenticate_email_password($user, $email, $password ) {
+function wp_authenticate_email_password($user, $email, $password ) { yeah(__METHOD__);
 	if ($user instanceof WP_User ) {
 		return $user;
 	}
@@ -264,7 +264,7 @@ function wp_authenticate_email_password($user, $email, $password ) {
  * @param string                $password Password. If not empty, cancels the cookie authentication.
  * @return WP_User|WP_Error WP_User on success, WP_Error on failure.
  */
-function wp_authenticate_cookie($user, $username, $password) {
+function wp_authenticate_cookie($user, $username, $password) { yeah(__METHOD__);
 	if ($user instanceof WP_User ) {
 		return $user;
 	}
@@ -299,7 +299,7 @@ function wp_authenticate_cookie($user, $username, $password) {
  * @param WP_User|WP_Error|null $user WP_User or WP_Error object from a previous callback. Default null.
  * @return WP_User|WP_Error WP_User on success, WP_Error if the user is considered a spammer.
  */
-function wp_authenticate_spam_check($user ) {
+function wp_authenticate_spam_check($user ) { yeah(__METHOD__);
 	if ($user instanceof WP_User && is_multisite() ) {
 		/**
 		 * Filters whether the user has been marked as a spammer.
@@ -332,7 +332,7 @@ function wp_authenticate_spam_check($user ) {
  * @return int|false User ID if validated, false otherwise. If a user ID from
  *                   an earlier filter callback is received, that value is returned.
  */
-function wp_validate_logged_in_cookie($user_id ) {
+function wp_validate_logged_in_cookie($user_id ) { yeah(__METHOD__);
 	if ($user_id ) {
 		return $user_id;
 	}
@@ -359,7 +359,7 @@ function wp_validate_logged_in_cookie($user_id ) {
  * @param bool         $public_only Optional. Whether to only return counts for public posts. Default false.
  * @return string Number of posts the user has written in this post type.
  */
-function count_user_posts($userid, $post_type = 'post', $public_only = false ) {
+function count_user_posts($userid, $post_type = 'post', $public_only = false ) { yeah(__METHOD__);
 	global $wpdb;
 
 	$where = get_posts_by_author_sql($post_type, true, $userid, $public_only );
@@ -393,7 +393,7 @@ function count_user_posts($userid, $post_type = 'post', $public_only = false ) {
  * @param bool         $public_only Optional. Only return counts for public posts.  Defaults to false.
  * @return array Amount of posts each user has written.
  */
-function count_many_users_posts($users, $post_type = 'post', $public_only = false ) {
+function count_many_users_posts($users, $post_type = 'post', $public_only = false ) { yeah(__METHOD__);
 	global $wpdb;
 
 	$count = array();
@@ -427,7 +427,7 @@ function count_many_users_posts($users, $post_type = 'post', $public_only = fals
  *
  * @return int The current user's ID, or 0 if no user is logged in.
  */
-function get_current_user_id() {
+function get_current_user_id() { yeah(__METHOD__);
 	if (!function_exists('wp_get_current_user' ) )
 		return 0;
 	$user = wp_get_current_user();
@@ -453,7 +453,7 @@ function get_current_user_id() {
  * @param string $deprecated Use get_option() to check for an option in the options table.
  * @return mixed User option value on success, false on failure.
  */
-function get_user_option($option, $user = 0, $deprecated = '' ) {
+function get_user_option($option, $user = 0, $deprecated = '' ) { yeah(__METHOD__);
 	global $wpdb;
 
 	if (!empty($deprecated ) )
@@ -508,7 +508,7 @@ function get_user_option($option, $user = 0, $deprecated = '' ) {
  * @return int|bool User meta ID if the option didn't exist, true on successful update,
  *                  false on failure.
  */
-function update_user_option($user_id, $option_name, $newvalue, $global = false ) {
+function update_user_option($user_id, $option_name, $newvalue, $global = false ) { yeah(__METHOD__);
 	global $wpdb;
 
 	if (!$global )
@@ -534,7 +534,7 @@ function update_user_option($user_id, $option_name, $newvalue, $global = false )
  *                            Default false (blog specific).
  * @return bool True on success, false on failure.
  */
-function delete_user_option($user_id, $option_name, $global = false ) {
+function delete_user_option($user_id, $option_name, $global = false ) { yeah(__METHOD__);
 	global $wpdb;
 
 	if (!$global )
@@ -553,7 +553,7 @@ function delete_user_option($user_id, $option_name, $global = false ) {
  *                    for more information on accepted arguments.
  * @return array List of users.
  */
-function get_users($args = array() ) {
+function get_users($args = array() ) { yeah(__METHOD__);
 
 	$args = wp_parse_args($args );
 	$args['count_total'] = false;
@@ -577,7 +577,7 @@ function get_users($args = array() ) {
  * @return array A list of the user's sites. An empty array if the user doesn't exist
  *               or belongs to no sites.
  */
-function get_blogs_of_user($user_id, $all = false ) {
+function get_blogs_of_user($user_id, $all = false ) { yeah(__METHOD__);
 	global $wpdb;
 
 	$user_id = (int) $user_id;
@@ -700,7 +700,7 @@ function get_blogs_of_user($user_id, $all = false ) {
  * @param int $blog_id Optional. ID of the blog to check. Defaults to the current site.
  * @return bool
  */
-function is_user_member_of_blog($user_id = 0, $blog_id = 0 ) {
+function is_user_member_of_blog($user_id = 0, $blog_id = 0 ) { yeah(__METHOD__);
 	global $wpdb;
 
 	$user_id = (int) $user_id;
@@ -766,7 +766,7 @@ function is_user_member_of_blog($user_id = 0, $blog_id = 0 ) {
  * @param bool   $unique     Optional. Whether the same key should not be added. Default false.
  * @return int|false Meta ID on success, false on failure.
  */
-function add_user_meta($user_id, $meta_key, $meta_value, $unique = false) {
+function add_user_meta($user_id, $meta_key, $meta_value, $unique = false) { yeah(__METHOD__);
 	return add_metadata('user', $user_id, $meta_key, $meta_value, $unique);
 }
 
@@ -785,7 +785,7 @@ function add_user_meta($user_id, $meta_key, $meta_value, $unique = false) {
  * @param mixed  $meta_value Optional. Metadata value.
  * @return bool True on success, false on failure.
  */
-function delete_user_meta($user_id, $meta_key, $meta_value = '') {
+function delete_user_meta($user_id, $meta_key, $meta_value = '') { yeah(__METHOD__);
 	return delete_metadata('user', $user_id, $meta_key, $meta_value);
 }
 
@@ -800,7 +800,7 @@ function delete_user_meta($user_id, $meta_key, $meta_value = '') {
  * @param bool   $single  Whether to return a single value.
  * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
  */
-function get_user_meta($user_id, $key = '', $single = false) {
+function get_user_meta($user_id, $key = '', $single = false) { yeah(__METHOD__);
 	return get_metadata('user', $user_id, $key, $single);
 }
 
@@ -821,7 +821,7 @@ function get_user_meta($user_id, $key = '', $single = false) {
  * @param mixed  $prev_value Optional. Previous value to check before removing.
  * @return int|bool Meta ID if the key didn't exist, true on successful update, false on failure.
  */
-function update_user_meta($user_id, $meta_key, $meta_value, $prev_value = '') {
+function update_user_meta($user_id, $meta_key, $meta_value, $prev_value = '') { yeah(__METHOD__);
 	return update_metadata('user', $user_id, $meta_key, $meta_value, $prev_value);
 }
 
@@ -844,7 +844,7 @@ function update_user_meta($user_id, $meta_key, $meta_value, $prev_value = '') {
  * @param int|null $site_id  Optional. The site ID to count users for. Defaults to the current site.
  * @return array Includes a grand total and an array of counts indexed by role strings.
  */
-function count_users($strategy = 'time', $site_id = null ) {
+function count_users($strategy = 'time', $site_id = null ) { yeah(__METHOD__);
 	global $wpdb;
 
 	// Initialize
@@ -952,7 +952,7 @@ function count_users($strategy = 'time', $site_id = null ) {
  *
  * @param int $for_user_id Optional. User ID to set up global data.
  */
-function setup_userdata($for_user_id = '') {
+function setup_userdata($for_user_id = '') { yeah(__METHOD__);
 	global $user_login, $userdata, $user_level, $user_ID, $user_email, $user_url, $user_identity;
 
 	if ('' == $for_user_id )
@@ -1039,7 +1039,7 @@ function setup_userdata($for_user_id = '') {
  * }
  * @return string String of HTML content.
  */
-function wp_dropdown_users($args = '' ) {
+function wp_dropdown_users($args = '' ) { yeah(__METHOD__);
 	$defaults = array(
 		'show_option_all' => '', 'show_option_none' => '', 'hide_if_only_one_author' => '',
 		'orderby' => 'display_name', 'order' => 'ASC',
@@ -1168,7 +1168,7 @@ function wp_dropdown_users($args = '' ) {
  *                        'attribute' and 'js'.
  * @return mixed Sanitized value.
  */
-function sanitize_user_field($field, $value, $user_id, $context) {
+function sanitize_user_field($field, $value, $user_id, $context) { yeah(__METHOD__);
 	$int_fields = array('ID');
 	if (in_array($field, $int_fields) )
 		$value = (int) $value;
@@ -1267,7 +1267,7 @@ function sanitize_user_field($field, $value, $user_id, $context) {
  * @param WP_User $user User object to be cached
  * @return bool|null Returns false on failure.
  */
-function update_user_caches($user ) {
+function update_user_caches($user ) { yeah(__METHOD__);
 	if ($user instanceof WP_User ) {
 		if (!$user->exists() ) {
 			return false;
@@ -1290,7 +1290,7 @@ function update_user_caches($user ) {
  *
  * @param WP_User|int $user User object or ID to be cleaned from the cache
  */
-function clean_user_cache($user ) {
+function clean_user_cache($user ) { yeah(__METHOD__);
 	if (is_numeric($user ) )
 		$user = new WP_User($user );
 
@@ -1321,7 +1321,7 @@ function clean_user_cache($user ) {
  * @param string $username Username.
  * @return int|false The user's ID on success, and false on failure.
  */
-function username_exists($username ) {
+function username_exists($username ) { yeah(__METHOD__);
 	if ($user = get_user_by('login', $username ) ) {
 		$user_id = $user->ID;
 	} else {
@@ -1347,7 +1347,7 @@ function username_exists($username ) {
  * @param string $email Email.
  * @return int|false The user's ID on success, and false on failure.
  */
-function email_exists($email ) {
+function email_exists($email ) { yeah(__METHOD__);
 	if ($user = get_user_by('email', $email) ) {
 		return $user->ID;
 	}
@@ -1363,7 +1363,7 @@ function email_exists($email ) {
  * @param string $username Username.
  * @return bool Whether username given is valid
  */
-function validate_username($username ) {
+function validate_username($username ) { yeah(__METHOD__);
 	$sanitized = sanitize_user($username, true );
 	$valid = ($sanitized == $username && !empty($sanitized ) );
 
@@ -1430,7 +1430,7 @@ function validate_username($username ) {
  * @return int|WP_Error The newly created user's ID or a WP_Error object if the user could not
  *                      be created.
  */
-function wp_insert_user($userdata ) {
+function wp_insert_user($userdata ) { yeah(__METHOD__);
 	global $wpdb;
 
 	if ($userdata instanceof stdClass ) {
@@ -1786,7 +1786,7 @@ function wp_insert_user($userdata ) {
  * @param object|WP_User $userdata An array of user data or a user object of type stdClass or WP_User.
  * @return int|WP_Error The updated user's ID or a WP_Error object if the user could not be updated.
  */
-function wp_update_user($userdata) {
+function wp_update_user($userdata) { yeah(__METHOD__);
 	if ($userdata instanceof stdClass ) {
 		$userdata = get_object_vars($userdata );
 	} elseif ($userdata instanceof WP_User ) {
@@ -2019,7 +2019,7 @@ All at ###SITENAME###
  * @return int|WP_Error The newly created user's ID or a WP_Error object if the user could not
  *                      be created.
  */
-function wp_create_user($username, $password, $email = '') {
+function wp_create_user($username, $password, $email = '') { yeah(__METHOD__);
 	$user_login = wp_slash($username );
 	$user_email = wp_slash($email    );
 	$user_pass = $password;
@@ -2040,7 +2040,7 @@ function wp_create_user($username, $password, $email = '') {
  * @param WP_User $user WP_User instance.
  * @return array List of user keys to be populated in wp_update_user().
  */
-function _get_additional_user_keys($user ) {
+function _get_additional_user_keys($user ) { yeah(__METHOD__);
 	$keys = array('first_name', 'last_name', 'nickname', 'description', 'rich_editing', 'syntax_highlighting', 'comment_shortcuts', 'admin_color', 'use_ssl', 'locale' );
 	return array_merge($keys, array_keys(wp_get_user_contact_methods($user ) ) );
 }
@@ -2055,7 +2055,7 @@ function _get_additional_user_keys($user ) {
  * @param WP_User $user Optional. WP_User object.
  * @return array Array of contact methods and their labels.
  */
-function wp_get_user_contact_methods($user = null ) {
+function wp_get_user_contact_methods($user = null ) { yeah(__METHOD__);
 	$methods = array();
 	if (get_site_option('initial_db_version' ) < 23588 ) {
 		$methods = array(
@@ -2087,7 +2087,7 @@ function wp_get_user_contact_methods($user = null ) {
  * @param WP_User $user Optional. WP_User object. Default null.
  * @return array Array of contact methods and their labels.
  */
-function _wp_get_user_contactmethods($user = null ) {
+function _wp_get_user_contactmethods($user = null ) { yeah(__METHOD__);
 	return wp_get_user_contact_methods($user );
 }
 
@@ -2098,7 +2098,7 @@ function _wp_get_user_contactmethods($user = null ) {
  *
  * @return string The password hint text.
  */
-function wp_get_password_hint() {
+function wp_get_password_hint() { yeah(__METHOD__);
 	$hint = __('Hint: The password should be at least twelve characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like !" ? $ % ^ &amp; ).' );
 
 	/**
@@ -2123,7 +2123,7 @@ function wp_get_password_hint() {
  *
  * @return string|WP_Error Password reset key on success. WP_Error on error.
  */
-function get_password_reset_key($user ) {
+function get_password_reset_key($user ) { yeah(__METHOD__);
 	global $wpdb, $wp_hasher;
 
 	/**
@@ -2212,7 +2212,7 @@ function get_password_reset_key($user ) {
  * @param string $login     The user login.
  * @return WP_User|WP_Error WP_User object on success, WP_Error object for invalid or expired keys.
  */
-function check_password_reset_key($key, $login) {
+function check_password_reset_key($key, $login) { yeah(__METHOD__);
 	global $wpdb, $wp_hasher;
 
 	$key = preg_replace('/[^a-z0-9]/i', '', $key);
@@ -2291,7 +2291,7 @@ function check_password_reset_key($key, $login) {
  * @param WP_User $user     The user
  * @param string $new_pass New password for the user in plaintext
  */
-function reset_password($user, $new_pass ) {
+function reset_password($user, $new_pass ) { yeah(__METHOD__);
 	/**
 	 * Fires before the user's password is reset.
 	 *
@@ -2325,7 +2325,7 @@ function reset_password($user, $new_pass ) {
  * @param string $user_email User's email address to send password and add
  * @return int|WP_Error Either user's ID or error on failure.
  */
-function register_new_user($user_login, $user_email ) {
+function register_new_user($user_login, $user_email ) { yeah(__METHOD__);
 	$errors = new WP_Error();
 
 	$sanitized_user_login = sanitize_user($user_login );
@@ -2434,7 +2434,7 @@ function register_new_user($user_login, $user_email ) {
  *                        or an empty string (admin only), 'user', or 'both' (admin and user).
  *                        Default 'both'.
  */
-function wp_send_new_user_notifications($user_id, $notify = 'both' ) {
+function wp_send_new_user_notifications($user_id, $notify = 'both' ) { yeah(__METHOD__);
 	wp_new_user_notification($user_id, null, $notify );
 }
 
@@ -2445,7 +2445,7 @@ function wp_send_new_user_notifications($user_id, $notify = 'both' ) {
  *
  * @return string Token.
  */
-function wp_get_session_token() {
+function wp_get_session_token() { yeah(__METHOD__);
 	$cookie = wp_parse_auth_cookie('', 'logged_in' );
 	return !empty($cookie['token'] ) ? $cookie['token'] : '';
 }
@@ -2456,7 +2456,7 @@ function wp_get_session_token() {
  * @since 4.0.0
  * @return array Array of sessions.
  */
-function wp_get_all_sessions() {
+function wp_get_all_sessions() { yeah(__METHOD__);
 	$manager = WP_Session_Tokens::get_instance(get_current_user_id() );
 	return $manager->get_all();
 }
@@ -2466,7 +2466,7 @@ function wp_get_all_sessions() {
  *
  * @since 4.0.0
  */
-function wp_destroy_current_session() {
+function wp_destroy_current_session() { yeah(__METHOD__);
 	$token = wp_get_session_token();
 	if ($token ) {
 		$manager = WP_Session_Tokens::get_instance(get_current_user_id() );
@@ -2479,7 +2479,7 @@ function wp_destroy_current_session() {
  *
  * @since 4.0.0
  */
-function wp_destroy_other_sessions() {
+function wp_destroy_other_sessions() { yeah(__METHOD__);
 	$token = wp_get_session_token();
 	if ($token ) {
 		$manager = WP_Session_Tokens::get_instance(get_current_user_id() );
@@ -2492,7 +2492,7 @@ function wp_destroy_other_sessions() {
  *
  * @since 4.0.0
  */
-function wp_destroy_all_sessions() {
+function wp_destroy_all_sessions() { yeah(__METHOD__);
 	$manager = WP_Session_Tokens::get_instance(get_current_user_id() );
 	$manager->destroy_all();
 }
@@ -2506,7 +2506,7 @@ function wp_destroy_all_sessions() {
  * @param int|null $site_id Optional. The site ID to get users with no role for. Defaults to the current site.
  * @return array Array of user IDs.
  */
-function wp_get_users_with_no_role($site_id = null ) {
+function wp_get_users_with_no_role($site_id = null ) { yeah(__METHOD__);
 	global $wpdb;
 
 	if (!$site_id ) {
@@ -2554,7 +2554,7 @@ function wp_get_users_with_no_role($site_id = null ) {
  *
  * @return WP_User Current WP_User instance.
  */
-function _wp_get_current_user() {
+function _wp_get_current_user() { yeah(__METHOD__);
 	global $current_user;
 
 	if (!empty($current_user ) ) {
@@ -2614,7 +2614,7 @@ function _wp_get_current_user() {
  * @global WP_Error $errors WP_Error object.
  * @global wpdb     $wpdb   WordPress database object.
  */
-function send_confirmation_on_profile_email() {
+function send_confirmation_on_profile_email() { yeah(__METHOD__);
 	global $errors, $wpdb;
 
 	$current_user = wp_get_current_user();
@@ -2714,7 +2714,7 @@ All at ###SITENAME###
  *
  * @global string $pagenow
  */
-function new_user_email_admin_notice() {
+function new_user_email_admin_notice() { yeah(__METHOD__);
 	global $pagenow;
 	if ('profile.php' === $pagenow && isset($_GET['updated'] ) && $email = get_user_meta(get_current_user_id(), '_new_email', true ) ) {
 		/* translators: %s: New email address */
@@ -2730,7 +2730,7 @@ function new_user_email_admin_notice() {
  *
  * @return array List of core privacy action types.
  */
-function _wp_privacy_action_request_types() {
+function _wp_privacy_action_request_types() { yeah(__METHOD__);
 	return array(
 		'export_personal_data',
 		'remove_personal_data',
@@ -2745,7 +2745,7 @@ function _wp_privacy_action_request_types() {
  * @param array $exporters  An array of personal data exporters.
  * @return array An array of personal data exporters.
  */
-function wp_register_user_personal_data_exporter($exporters ) {
+function wp_register_user_personal_data_exporter($exporters ) { yeah(__METHOD__);
 	$exporters['wordpress-user'] = array(
 		'exporter_friendly_name' => __('WordPress User' ),
 		'callback'               => 'wp_user_personal_data_exporter',
@@ -2762,7 +2762,7 @@ function wp_register_user_personal_data_exporter($exporters ) {
  * @param string $email_address  The users email address.
  * @return array An array of personal data.
  */
-function wp_user_personal_data_exporter($email_address ) {
+function wp_user_personal_data_exporter($email_address ) { yeah(__METHOD__);
 	$email_address = trim($email_address );
 
 	$data_to_export = array();
@@ -2844,7 +2844,7 @@ function wp_user_personal_data_exporter($email_address ) {
  *
  * @param int $request_id ID of the request.
  */
-function _wp_privacy_account_request_confirmed($request_id ) {
+function _wp_privacy_account_request_confirmed($request_id ) { yeah(__METHOD__);
 	$request_data = wp_get_user_request_data($request_id );
 
 	if (!$request_data ) {
@@ -2872,7 +2872,7 @@ function _wp_privacy_account_request_confirmed($request_id ) {
  *
  * @param int $request_id The ID of the request.
  */
-function _wp_privacy_send_request_confirmation_notification($request_id ) {
+function _wp_privacy_send_request_confirmation_notification($request_id ) { yeah(__METHOD__);
 	$request_data = wp_get_user_request_data($request_id );
 
 	if (!is_a($request_data, 'WP_User_Request' ) || 'request-confirmed' !== $request_data->status ) {
@@ -3011,7 +3011,7 @@ All at ###SITENAME###
  *
  * @param int $request_id The privacy request post ID associated with this request.
  */
-function _wp_privacy_send_erasure_fulfillment_notification($request_id ) {
+function _wp_privacy_send_erasure_fulfillment_notification($request_id ) { yeah(__METHOD__);
 	$request_data = wp_get_user_request_data($request_id );
 
 	if (!is_a($request_data, 'WP_User_Request' ) || 'request-completed' !== $request_data->status ) {
@@ -3148,7 +3148,7 @@ All at ###SITENAME###
  * @param int $request_id The request ID being confirmed.
  * @return string $message The confirmation message.
  */
-function _wp_privacy_account_request_confirmed_message($request_id ) {
+function _wp_privacy_account_request_confirmed_message($request_id ) { yeah(__METHOD__);
 	$request = wp_get_user_request_data($request_id );
 
 	$message = '<p class="success">' . __('Action has been confirmed.' ) . '</p>';
@@ -3190,7 +3190,7 @@ function _wp_privacy_account_request_confirmed_message($request_id ) {
  * @param array  $request_data  Misc data you want to send with the verification request and pass to the actions once the request is confirmed.
  * @return int|WP_Error Returns the request ID if successful, or a WP_Error object on failure.
  */
-function wp_create_user_request($email_address = '', $action_name = '', $request_data = array() ) {
+function wp_create_user_request($email_address = '', $action_name = '', $request_data = array() ) { yeah(__METHOD__);
 	$email_address = sanitize_email($email_address );
 	$action_name   = sanitize_key($action_name );
 
@@ -3240,7 +3240,7 @@ function wp_create_user_request($email_address = '', $action_name = '', $request
  * @param string $action_name Action name of the request.
  * @return string Human readable action name.
  */
-function wp_user_request_action_description($action_name ) {
+function wp_user_request_action_description($action_name ) { yeah(__METHOD__);
 	switch ($action_name ) {
 		case 'export_personal_data':
 			$description = __('Export Personal Data' );
@@ -3275,7 +3275,7 @@ function wp_user_request_action_description($action_name ) {
  * @param string $request_id ID of the request created via wp_create_user_request().
  * @return WP_Error|bool Will return true/false based on the success of sending the email, or a WP_Error object.
  */
-function wp_send_user_request($request_id ) {
+function wp_send_user_request($request_id ) { yeah(__METHOD__);
 	$request_id = absint($request_id );
 	$request    = wp_get_user_request_data($request_id );
 
@@ -3381,7 +3381,7 @@ All at ###SITENAME###
  * @param int $request_id Request ID.
  * @return string Confirmation key.
  */
-function wp_generate_user_request_key($request_id ) {
+function wp_generate_user_request_key($request_id ) { yeah(__METHOD__);
 	global $wp_hasher;
 
 	// Generate something random for a confirmation key.
@@ -3413,7 +3413,7 @@ function wp_generate_user_request_key($request_id ) {
  * @param string $key        Provided key to validate.
  * @return bool|WP_Error WP_Error on failure, true on success.
  */
-function wp_validate_user_request_key($request_id, $key ) {
+function wp_validate_user_request_key($request_id, $key ) { yeah(__METHOD__);
 	global $wp_hasher;
 
 	$request_id = absint($request_id );
@@ -3476,7 +3476,7 @@ function wp_validate_user_request_key($request_id, $key ) {
  * @param int $request_id Request ID to get data about.
  * @return WP_User_Request|false
  */
-function wp_get_user_request_data($request_id ) {
+function wp_get_user_request_data($request_id ) { yeah(__METHOD__);
 	$request_id = absint($request_id );
 	$post       = get_post($request_id );
 
@@ -3580,7 +3580,7 @@ final class WP_User_Request {
 	 *
 	 * @param WP_Post|object $post Post object.
 	 */
-	public function __construct($post ) {
+	public function __construct($post ) { yeah(__METHOD__);
 		$this->ID                  = $post->ID;
 		$this->user_id             = $post->post_author;
 		$this->email               = $post->post_title;

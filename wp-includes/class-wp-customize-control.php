@@ -204,7 +204,7 @@ class WP_Customize_Control {
 	 *                                                 'date' are supported implicitly. Default 'text'.
 	 * }
 	 */
-	public function __construct($manager, $id, $args = array()) {
+	public function __construct($manager, $id, $args = array()) { yeah(__METHOD__);
 		$keys = array_keys(get_object_vars($this));
 		foreach ($keys as $key) {
 			if (isset($args[ $key ])) {
@@ -242,7 +242,7 @@ class WP_Customize_Control {
 	 *
 	 * @since 3.4.0
 	 */
-	public function enqueue() {}
+	public function enqueue() { yeah(__METHOD__);}
 
 	/**
 	 * Check whether control is active to current Customizer preview.
@@ -251,7 +251,7 @@ class WP_Customize_Control {
 	 *
 	 * @return bool Whether the control is active to the current preview.
 	 */
-	final public function active() {
+	final public function active() { yeah(__METHOD__);
 		$control = $this;
 		$active = call_user_func($this->active_callback, $this);
 
@@ -278,7 +278,7 @@ class WP_Customize_Control {
 	 *
 	 * @return true Always true.
 	 */
-	public function active_callback() {
+	public function active_callback() { yeah(__METHOD__);
 		return true;
 	}
 
@@ -291,7 +291,7 @@ class WP_Customize_Control {
 	 * @param string $setting_key
 	 * @return mixed The requested setting's value, if the setting exists.
 	 */
-	final public function value($setting_key = 'default') {
+	final public function value($setting_key = 'default') { yeah(__METHOD__);
 		if (isset($this->settings[ $setting_key ])) {
 			return $this->settings[ $setting_key ]->value();
 		}
@@ -302,7 +302,7 @@ class WP_Customize_Control {
 	 *
 	 * @since 3.4.0
 	 */
-	public function to_json() {
+	public function to_json() { yeah(__METHOD__);
 		$this->json['settings'] = array();
 		foreach ($this->settings as $key => $setting) {
 			$this->json['settings'][ $key ] = $setting->id;
@@ -329,7 +329,7 @@ class WP_Customize_Control {
 	 *
 	 * @return array Array of parameters passed to the JavaScript.
 	 */
-	public function json() {
+	public function json() { yeah(__METHOD__);
 		$this->to_json();
 		return $this->json;
 	}
@@ -346,7 +346,7 @@ class WP_Customize_Control {
 	 *
 	 * @return bool False if theme doesn't support the control or user doesn't have the required permissions, otherwise true.
 	 */
-	final public function check_capabilities() {
+	final public function check_capabilities() { yeah(__METHOD__);
 		if (!empty($this->capability) && !current_user_can($this->capability)) {
 			return false;
 		}
@@ -372,7 +372,7 @@ class WP_Customize_Control {
 	 *
 	 * @return string Contents of the control.
 	 */
-	final public function get_content() {
+	final public function get_content() { yeah(__METHOD__);
 		ob_start();
 		$this->maybe_render();
 		return trim(ob_get_clean());
@@ -384,7 +384,7 @@ class WP_Customize_Control {
 	 * @since 3.4.0
 	 * @uses WP_Customize_Control::render()
 	 */
-	final public function maybe_render() {
+	final public function maybe_render() { yeah(__METHOD__);
 		if (!$this->check_capabilities())
 			return;
 
@@ -417,7 +417,7 @@ class WP_Customize_Control {
 	 *
 	 * @since 3.4.0
 	 */
-	protected function render() {
+	protected function render() { yeah(__METHOD__);
 		$id    = 'customize-control-' . str_replace(array('[', ']'), array('-', ''), $this->id);
 		$class = 'customize-control customize-control-' . $this->type;
 
@@ -436,7 +436,7 @@ class WP_Customize_Control {
 	 * @return string Data link parameter, a `data-customize-setting-link` attribute if the `$setting_key` refers to a pre-registered setting,
 	 *                and a `data-customize-setting-key-link` attribute if the setting is not yet registered.
 	 */
-	public function get_link($setting_key = 'default') {
+	public function get_link($setting_key = 'default') { yeah(__METHOD__);
 		if (isset($this->settings[ $setting_key ]) && $this->settings[ $setting_key ] instanceof WP_Customize_Setting) {
 			return 'data-customize-setting-link="' . esc_attr($this->settings[ $setting_key ]->id) . '"';
 		} else {
@@ -452,7 +452,7 @@ class WP_Customize_Control {
 	 *
 	 * @param string $setting_key
 	 */
-	public function link($setting_key = 'default') {
+	public function link($setting_key = 'default') { yeah(__METHOD__);
 		echo $this->get_link($setting_key);
 	}
 
@@ -461,7 +461,7 @@ class WP_Customize_Control {
 	 *
 	 * @since 4.0.0
 	 */
-	public function input_attrs() {
+	public function input_attrs() { yeah(__METHOD__);
 		foreach ($this->input_attrs as $attr => $value) {
 			echo $attr . '="' . esc_attr($value) . '" ';
 		}
@@ -479,7 +479,7 @@ class WP_Customize_Control {
 	 *
 	 * @since 3.4.0
 	 */
-	protected function render_content() {
+	protected function render_content() { yeah(__METHOD__);
 		$input_id = '_customize-input-' . $this->id;
 		$description_id = '_customize-description-' . $this->id;
 		$describedby_attr = (!empty($this->description)) ? ' aria-describedby="' . esc_attr($description_id) . '" ' : '';
@@ -670,7 +670,7 @@ class WP_Customize_Control {
 	 *
 	 * @since 4.1.0
 	 */
-	final public function print_template() {
+	final public function print_template() { yeah(__METHOD__);
 		?>
 		<script type="text/html" id="tmpl-customize-control-<?php echo $this->type; ?>-content">
 			<?php $this->content_template(); ?>
@@ -688,7 +688,7 @@ class WP_Customize_Control {
 	 *
 	 * @since 4.1.0
 	 */
-	protected function content_template() {}
+	protected function content_template() { yeah(__METHOD__);}
 
 }
 

@@ -24,7 +24,7 @@
  *
  * @return mixed Comment post ID on success.
  */
-function comment_exists( $comment_author, $comment_date, $timezone = 'blog') {
+function comment_exists( $comment_author, $comment_date, $timezone = 'blog') { yeah(__METHOD__);
 	global $wpdb;
 
 	$date_field = 'comment_date';
@@ -44,7 +44,7 @@ function comment_exists( $comment_author, $comment_date, $timezone = 'blog') {
  *
  * @since 2.0.0
  */
-function edit_comment() {
+function edit_comment() { yeah(__METHOD__);
 	if ( !current_user_can( 'edit_comment', (int) $_POST['comment_ID']))
 		wp_die ( __( 'Sorry, you are not allowed to edit comments on this post.'));
 
@@ -93,7 +93,7 @@ function edit_comment() {
  * @param int $id ID of comment to retrieve.
  * @return WP_Comment|false Comment if found. False on failure.
  */
-function get_comment_to_edit( $id) {
+function get_comment_to_edit( $id) { yeah(__METHOD__);
 	if ( !$comment = get_comment($id))
 		return false;
 
@@ -128,7 +128,7 @@ function get_comment_to_edit( $id) {
  * @param int|array $post_id Either a single Post ID or an array of Post IDs
  * @return int|array Either a single Posts pending comments as an int or an array of ints keyed on the Post IDs
  */
-function get_pending_comments_num( $post_id) {
+function get_pending_comments_num( $post_id) { yeah(__METHOD__);
 	global $wpdb;
 
 	$single = false;
@@ -171,7 +171,7 @@ function get_pending_comments_num( $post_id) {
  * @param string $name User name.
  * @return string Avatar with Admin name.
  */
-function floated_admin_avatar( $name) {
+function floated_admin_avatar( $name) { yeah(__METHOD__);
 	$avatar = get_avatar( get_comment(), 32, 'mystery');
 	return "$avatar $name";
 }
@@ -179,7 +179,7 @@ function floated_admin_avatar( $name) {
 /**
  * @since 2.7.0
  */
-function enqueue_comment_hotkeys_js() {
+function enqueue_comment_hotkeys_js() { yeah(__METHOD__);
 	if ( 'true' == get_user_option( 'comment_shortcuts'))
 		wp_enqueue_script( 'jquery-table-hotkeys');
 }
@@ -189,7 +189,7 @@ function enqueue_comment_hotkeys_js() {
  *
  * @param string $msg Error Message. Assumed to contain HTML and be sanitized.
  */
-function comment_footer_die( $msg) {
+function comment_footer_die( $msg) { yeah(__METHOD__);
 	echo "<div class='wrap'><p>$msg</p></div>";
 	include( ABSPATH . 'wp-admin/admin-footer.php');
 	die;

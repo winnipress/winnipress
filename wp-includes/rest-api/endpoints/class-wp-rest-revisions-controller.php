@@ -47,7 +47,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 *
 	 * @param string $parent_post_type Post type of the parent.
 	 */
-	public function __construct($parent_post_type ) {
+	public function __construct($parent_post_type ) { yeah(__METHOD__);
 		$this->parent_post_type = $parent_post_type;
 		$this->parent_controller = new WP_REST_Posts_Controller($parent_post_type );
 		$this->namespace = 'wp/v2';
@@ -63,7 +63,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 *
 	 * @see register_rest_route()
 	 */
-	public function register_routes() {
+	public function register_routes() { yeah(__METHOD__);
 
 		register_rest_route($this->namespace, '/' . $this->parent_base . '/(?P<parent>[\d]+)/' . $this->rest_base, array(
 			'args' => array(
@@ -125,7 +125,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 * @param int $id Supplied ID.
 	 * @return WP_Post|WP_Error Post object if ID is valid, WP_Error otherwise.
 	 */
-	protected function get_parent($parent ) {
+	protected function get_parent($parent ) { yeah(__METHOD__);
 		$error = new WP_Error('rest_post_invalid_parent', __('Invalid post parent ID.' ), array('status' => 404 ) );
 		if ((int) $parent <= 0 ) {
 			return $error;
@@ -147,7 +147,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full data about the request.
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
-	public function get_items_permissions_check($request ) {
+	public function get_items_permissions_check($request ) { yeah(__METHOD__);
 		$parent = $this->get_parent($request['parent'] );
 		if (is_wp_error($parent ) ) {
 			return $parent;
@@ -169,7 +169,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 * @param int $id Supplied ID.
 	 * @return WP_Post|WP_Error Revision post object if ID is valid, WP_Error otherwise.
 	 */
-	protected function get_revision($id ) {
+	protected function get_revision($id ) { yeah(__METHOD__);
 		$error = new WP_Error('rest_post_invalid_id', __('Invalid revision ID.' ), array('status' => 404 ) );
 		if ((int) $id <= 0 ) {
 			return $error;
@@ -191,7 +191,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full data about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function get_items($request ) {
+	public function get_items($request ) { yeah(__METHOD__);
 		$parent = $this->get_parent($request['parent'] );
 		if (is_wp_error($parent ) ) {
 			return $parent;
@@ -215,7 +215,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full data about the request.
 	 * @return bool|WP_Error True if the request has read access for the item, WP_Error object otherwise.
 	 */
-	public function get_item_permissions_check($request ) {
+	public function get_item_permissions_check($request ) { yeah(__METHOD__);
 		return $this->get_items_permissions_check($request );
 	}
 
@@ -227,7 +227,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full data about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function get_item($request ) {
+	public function get_item($request ) { yeah(__METHOD__);
 		$parent = $this->get_parent($request['parent'] );
 		if (is_wp_error($parent ) ) {
 			return $parent;
@@ -250,7 +250,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 * @param  WP_REST_Request $request Full details about the request.
 	 * @return bool|WP_Error True if the request has access to delete the item, WP_Error object otherwise.
 	 */
-	public function delete_item_permissions_check($request ) {
+	public function delete_item_permissions_check($request ) { yeah(__METHOD__);
 		$parent = $this->get_parent($request['parent'] );
 		if (is_wp_error($parent ) ) {
 			return $parent;
@@ -278,7 +278,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return true|WP_Error True on success, or WP_Error object on failure.
 	 */
-	public function delete_item($request ) {
+	public function delete_item($request ) { yeah(__METHOD__);
 		$revision = $this->get_revision($request['id'] );
 		if (is_wp_error($revision ) ) {
 			return $revision;
@@ -326,7 +326,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response($post, $request ) {
+	public function prepare_item_for_response($post, $request ) { yeah(__METHOD__);
 		$GLOBALS['post'] = $post;
 
 		setup_postdata($post );
@@ -430,7 +430,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 * @param string|null $date     Optional. Local publication time. Default null.
 	 * @return string|null ISO8601/RFC3339 formatted datetime, otherwise null.
 	 */
-	protected function prepare_date_response($date_gmt, $date = null ) {
+	protected function prepare_date_response($date_gmt, $date = null ) { yeah(__METHOD__);
 		if ('0000-00-00 00:00:00' === $date_gmt ) {
 			return null;
 		}
@@ -449,7 +449,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Item schema data.
 	 */
-	public function get_item_schema() {
+	public function get_item_schema() { yeah(__METHOD__);
 		$schema = array(
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
 			'title'      => "{$this->parent_post_type}-revision",
@@ -536,7 +536,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Collection parameters.
 	 */
-	public function get_collection_params() {
+	public function get_collection_params() { yeah(__METHOD__);
 		return array(
 			'context' => $this->get_context_param(array('default' => 'view' ) ),
 		);
@@ -551,7 +551,7 @@ class WP_REST_Revisions_Controller extends WP_REST_Controller {
 	 * @param WP_Post $post    Post revision object.
 	 * @return string Prepared excerpt or empty string.
 	 */
-	protected function prepare_excerpt_response($excerpt, $post ) {
+	protected function prepare_excerpt_response($excerpt, $post ) { yeah(__METHOD__);
 
 		/** This filter is documented in wp-includes/post-template.php */
 		$excerpt = apply_filters('the_excerpt', $excerpt, $post );

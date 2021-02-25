@@ -503,7 +503,7 @@ if (is_nav_menu($nav_menu_selected_id ) ) {
  * @param string $classes
  * @return string
  */
-function wp_nav_menu_max_depth($classes ) {
+function wp_nav_menu_max_depth($classes ) { yeah(__METHOD__);
 	global $_wp_nav_menu_max_depth;
 	return "$classes menu-max-depth-$_wp_nav_menu_max_depth";
 }

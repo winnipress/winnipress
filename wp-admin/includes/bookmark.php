@@ -13,7 +13,7 @@
  *
  * @return int|WP_Error Value 0 or WP_Error on failure. The link ID on success.
  */
-function add_link() {
+function add_link() { yeah(__METHOD__);
 	return edit_link();
 }
 
@@ -25,7 +25,7 @@ function add_link() {
  * @param int $link_id Optional. ID of the link to edit. Default 0.
  * @return int|WP_Error Value 0 or WP_Error on failure. The link ID on success.
  */
-function edit_link( $link_id = 0 ) {
+function edit_link( $link_id = 0 ) { yeah(__METHOD__);
 	if ( !current_user_can( 'manage_links' ) ) {
 		wp_die(
 			'<h1>' . __( 'You need a higher level of permission.' ) . '</h1>' .
@@ -57,7 +57,7 @@ function edit_link( $link_id = 0 ) {
  *
  * @return stdClass Default link object.
  */
-function get_default_link_to_edit() {
+function get_default_link_to_edit() { yeah(__METHOD__);
 	$link = new stdClass;
 	if ( isset( $_GET['linkurl'] ) )
 		$link->link_url = esc_url( wp_unslash( $_GET['linkurl'] ) );
@@ -84,7 +84,7 @@ function get_default_link_to_edit() {
  * @param int $link_id ID of the link to delete
  * @return true Always true.
  */
-function wp_delete_link( $link_id ) {
+function wp_delete_link( $link_id ) { yeah(__METHOD__);
 	global $wpdb;
 	/**
 	 * Fires before a link is deleted.
@@ -121,7 +121,7 @@ function wp_delete_link( $link_id ) {
  * @param int $link_id Link ID to look up
  * @return array The requested link's categories
  */
-function wp_get_link_cats( $link_id = 0 ) {
+function wp_get_link_cats( $link_id = 0 ) { yeah(__METHOD__);
 	$cats = wp_get_object_terms( $link_id, 'link_category', array('fields' => 'ids') );
 	return array_unique( $cats );
 }
@@ -134,7 +134,7 @@ function wp_get_link_cats( $link_id = 0 ) {
  * @param int|stdClass $link Link ID or object to retrieve.
  * @return object Link object for editing.
  */
-function get_link_to_edit( $link ) {
+function get_link_to_edit( $link ) { yeah(__METHOD__);
 	return get_bookmark( $link, OBJECT, 'edit' );
 }
 
@@ -149,7 +149,7 @@ function get_link_to_edit( $link ) {
  * @param bool  $wp_error Optional. Whether to return a WP_Error object on failure. Default false.
  * @return int|WP_Error Value 0 or WP_Error on failure. The link ID on success.
  */
-function wp_insert_link( $linkdata, $wp_error = false ) {
+function wp_insert_link( $linkdata, $wp_error = false ) { yeah(__METHOD__);
 	global $wpdb;
 
 	$defaults = array( 'link_id' => 0, 'link_name' => '', 'link_url' => '', 'link_rating' => 0 );
@@ -247,7 +247,7 @@ function wp_insert_link( $linkdata, $wp_error = false ) {
  * @param int   $link_id         ID of the link to update.
  * @param array $link_categories Array of link categories to add the link to.
  */
-function wp_set_link_cats( $link_id = 0, $link_categories = array() ) {
+function wp_set_link_cats( $link_id = 0, $link_categories = array() ) { yeah(__METHOD__);
 	// If $link_categories isn't already an array, make it one:
 	if ( !is_array( $link_categories ) || 0 == count( $link_categories ) )
 		$link_categories = array( get_option( 'default_link_category' ) );
@@ -268,7 +268,7 @@ function wp_set_link_cats( $link_id = 0, $link_categories = array() ) {
  * @param array $linkdata Link data to update.
  * @return int|WP_Error Value 0 or WP_Error on failure. The updated link ID on success.
  */
-function wp_update_link( $linkdata ) {
+function wp_update_link( $linkdata ) { yeah(__METHOD__);
 	$link_id = (int) $linkdata['link_id'];
 
 	$link = get_bookmark( $link_id, ARRAY_A );
@@ -298,7 +298,7 @@ function wp_update_link( $linkdata ) {
  *
  * @global string $pagenow
  */
-function wp_link_manager_disabled_message() {
+function wp_link_manager_disabled_message() { yeah(__METHOD__);
 	global $pagenow;
 	if ( 'link-manager.php' != $pagenow && 'link-add.php' != $pagenow && 'link.php' != $pagenow )
 		return;

@@ -9,7 +9,7 @@
  * @access private
  */
 
-if (!function_exists('spl_autoload_register' ) ){
+if (!function_exists('spl_autoload_register' ) ){ 
 	$_wp_spl_autoloaders = array();
 
 	/**
@@ -19,7 +19,7 @@ if (!function_exists('spl_autoload_register' ) ){
 	 *
 	 * @param string $classname Class to attempt autoloading.
 	 */
-	function __autoload($classname ){
+	function __autoload($classname ){ yeah(__METHOD__);
 		global $_wp_spl_autoloaders;
 		foreach ($_wp_spl_autoloaders as $autoloader ){
 			if (!is_callable($autoloader ) ){
@@ -47,7 +47,7 @@ if (!function_exists('spl_autoload_register' ) ){
 	 * @param bool     $prepend           Whether the function should be prepended to the stack.
 	 *                                    Default false.
 	 */
-	function spl_autoload_register($autoload_function, $throw = true, $prepend = false ){
+	function spl_autoload_register($autoload_function, $throw = true, $prepend = false ){ yeah(__METHOD__);
 		if ($throw && !is_callable($autoload_function ) ){
 			// String not translated to match PHP core.
 			throw new Exception('Function not callable' );
@@ -75,7 +75,7 @@ if (!function_exists('spl_autoload_register' ) ){
 	 * @param callable $function The function to unregister.
 	 * @return bool True if the function was unregistered, false if it could not be.
 	 */
-	function spl_autoload_unregister($function ){
+	function spl_autoload_unregister($function ){ yeah(__METHOD__);
 		global $_wp_spl_autoloaders;
 		foreach ($_wp_spl_autoloaders as &$autoloader ){
 			if ($autoloader === $function ){
@@ -94,7 +94,7 @@ if (!function_exists('spl_autoload_register' ) ){
 	 *
 	 * @return array List of autoloader functions.
 	 */
-	function spl_autoload_functions(){
+	function spl_autoload_functions(){ yeah(__METHOD__);
 		return $GLOBALS['_wp_spl_autoloaders'];
 	}
 }

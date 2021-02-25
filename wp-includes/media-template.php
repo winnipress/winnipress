@@ -13,7 +13,7 @@
  *
  * @since 3.9.0
  */
-function wp_underscore_audio_template(){
+function wp_underscore_audio_template(){ yeah(__METHOD__);
 	$audio_types = wp_get_audio_extensions();
 ?>
 <audio style="visibility: hidden"
@@ -47,7 +47,7 @@ function wp_underscore_audio_template(){
  *
  * @since 3.9.0
  */
-function wp_underscore_video_template(){
+function wp_underscore_video_template(){ yeah(__METHOD__);
 	$video_types = wp_get_video_extensions();
 ?>
 <#  var w_rule = '', classes = [],
@@ -136,7 +136,7 @@ function wp_underscore_video_template(){
  *
  * @global bool $is_IE
  */
-function wp_print_media_templates(){
+function wp_print_media_templates(){ yeah(__METHOD__);
 	global $is_IE;
 	$class = 'media-modal wp-core-ui';
 	if($is_IE && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 7') !== false )
@@ -1071,7 +1071,7 @@ function wp_print_media_templates(){
 				<div class="setting">
 					<span><?php _e('Add alternate sources for maximum HTML5 playback:' ) ?></span>
 					<div class="button-large">
-					<# _.each(html5types, function (mime, type){ #>
+					<# _.each(html5types, function (mime, type){ yeah(__METHOD__); #>
 					<button class="button add-media-source" data-mime="{{ mime }}">{{ type }}</button>
 					<# } ) #>
 					</div>
@@ -1153,7 +1153,7 @@ function wp_print_media_templates(){
 				<div class="setting">
 					<span><?php _e('Add alternate sources for maximum HTML5 playback:' ); ?></span>
 					<div class="button-large">
-					<# _.each(html5types, function (mime, type){ #>
+					<# _.each(html5types, function (mime, type){ yeah(__METHOD__); #>
 					<button class="button add-media-source" data-mime="{{ mime }}">{{ type }}</button>
 					<# } ) #>
 					</div>
@@ -1192,7 +1192,7 @@ function wp_print_media_templates(){
 					var content = '';
 					if(!_.isEmpty(data.model.content ) ){
 						var tracks = jQuery(data.model.content ).filter('track' );
-						_.each(tracks.toArray(), function (track){
+						_.each(tracks.toArray(), function (track){ yeah(__METHOD__);
 							content += track.outerHTML; #>
 						<p>
 							<input class="content-track" type="text" value="{{ track.outerHTML }}" />
@@ -1211,7 +1211,7 @@ function wp_print_media_templates(){
 	<script type="text/html" id="tmpl-editor-gallery">
 		<# if(data.attachments.length ){ #>
 			<div class="gallery gallery-columns-{{ data.columns }}">
-				<# _.each(data.attachments, function(attachment, index ){ #>
+				<# _.each(data.attachments, function(attachment, index ){ yeah(__METHOD__); #>
 					<dl class="gallery-item">
 						<dt class="gallery-icon">
 							<# if(attachment.thumbnail ){ #>

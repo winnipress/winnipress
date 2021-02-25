@@ -124,7 +124,7 @@ $is_iis7 = $is_IIS && intval(substr($_SERVER['SERVER_SOFTWARE'], strpos($_SERVER
  * 
  * @return bool
  */
-function wp_is_mobile() {
+function wp_is_mobile() { yeah(__METHOD__);
 	if (empty($_SERVER['HTTP_USER_AGENT']) ) {
 		$is_mobile = false;
 	} elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false // many mobile devices (all iPhone, iPad, etc.)

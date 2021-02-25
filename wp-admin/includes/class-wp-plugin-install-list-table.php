@@ -27,7 +27,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 	 *
 	 * @return bool
 	 */
-	public function ajax_user_can() {
+	public function ajax_user_can() { yeah(__METHOD__);
 		return current_user_can('install_plugins');
 	}
 
@@ -42,7 +42,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_installed_plugins() {
+	protected function get_installed_plugins() { yeah(__METHOD__);
 		$plugins = array();
 
 		$plugin_info = get_site_transient( 'update_plugins' );
@@ -74,7 +74,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_installed_plugin_slugs() {
+	protected function get_installed_plugin_slugs() { yeah(__METHOD__);
 		return array_keys( $this->get_installed_plugins() );
 	}
 
@@ -86,7 +86,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 	 * @global string $type
 	 * @global string $term
 	 */
-	public function prepare_items() {
+	public function prepare_items() { yeah(__METHOD__);
 		include( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 
 		global $tabs, $tab, $paged, $type, $term;
@@ -263,7 +263,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 
 	/**
 	 */
-	public function no_items() {
+	public function no_items() { yeah(__METHOD__);
 		if ( isset( $this->error ) ) { ?>
 			<div class="inline error"><p><?php echo $this->error->get_error_message(); ?></p>
 				<p class="hide-if-no-js"><button class="button try-again"><?php _e( 'Try Again' ); ?></button></p>
@@ -281,7 +281,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_views() {
+	protected function get_views() { yeah(__METHOD__);
 		global $tabs, $tab;
 
 		$display_tabs = array();
@@ -299,7 +299,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 	/**
 	 * Override parent views so we can use the filter bar display.
 	 */
-	public function views() {
+	public function views() { yeah(__METHOD__);
 		$views = $this->get_views();
 
 		/** This filter is documented in wp-admin/inclues/class-wp-list-table.php */
@@ -327,7 +327,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 	/**
 	 * Override the parent display() so we can provide a different container.
 	 */
-	public function display() {
+	public function display() { yeah(__METHOD__);
 		$singular = $this->_args['singular'];
 
 		$data_attr = '';
@@ -356,7 +356,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 	 *
 	 * @param string $which
 	 */
-	protected function display_tablenav( $which ) {
+	protected function display_tablenav( $which ) { yeah(__METHOD__);
 		if ( $GLOBALS['tab'] === 'featured' ) {
 			return;
 		}
@@ -389,14 +389,14 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 	/**
 	 * @return array
 	 */
-	protected function get_table_classes() {
+	protected function get_table_classes() { yeah(__METHOD__);
 		return array( 'widefat', $this->_args['plural'] );
 	}
 
 	/**
 	 * @return array
 	 */
-	public function get_columns() {
+	public function get_columns() { yeah(__METHOD__);
 		return array();
 	}
 
@@ -405,7 +405,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 	 * @param object $plugin_b
 	 * @return int
 	 */
-	private function order_callback( $plugin_a, $plugin_b ) {
+	private function order_callback( $plugin_a, $plugin_b ) { yeah(__METHOD__);
 		$orderby = $this->orderby;
 		if ( !isset( $plugin_a->$orderby, $plugin_b->$orderby ) ) {
 			return 0;
@@ -425,7 +425,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 		}
 	}
 
-	public function display_rows() {
+	public function display_rows() { yeah(__METHOD__);
 		$plugins_allowedtags = array(
 			'a' => array( 'href' => array(),'title' => array(), 'target' => array() ),
 			'abbr' => array( 'title' => array() ),'acronym' => array( 'title' => array() ),

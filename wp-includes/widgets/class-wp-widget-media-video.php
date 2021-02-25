@@ -21,7 +21,7 @@ class WP_Widget_Media_Video extends WP_Widget_Media {
 	 *
 	 * @since  4.8.0
 	 */
-	public function __construct() {
+	public function __construct() { yeah(__METHOD__);
 		parent::__construct('media_video', __('Video' ), array(
 			'description' => __('Displays a video from the media library or from YouTube, Vimeo, or another provider.' ),
 			'mime_type'   => 'video',
@@ -55,7 +55,7 @@ class WP_Widget_Media_Video extends WP_Widget_Media {
 	 * @link https://core.trac.wordpress.org/ticket/35574
 	 * @return array Schema for properties.
 	 */
-	public function get_instance_schema() {
+	public function get_instance_schema() { yeah(__METHOD__);
 		$schema = array_merge(
 			parent::get_instance_schema(),
 			array(
@@ -104,7 +104,7 @@ class WP_Widget_Media_Video extends WP_Widget_Media {
 	 *
 	 * @return void
 	 */
-	public function render_media($instance ) {
+	public function render_media($instance ) { yeah(__METHOD__);
 		$instance = array_merge(wp_list_pluck($this->get_instance_schema(), 'default' ), $instance );
 		$attachment = null;
 
@@ -149,7 +149,7 @@ class WP_Widget_Media_Video extends WP_Widget_Media {
 	 * @param string $html Video shortcode HTML output.
 	 * @return string HTML Output.
 	 */
-	public function inject_video_max_width_style($html ) {
+	public function inject_video_max_width_style($html ) { yeah(__METHOD__);
 		$html = preg_replace('/\sheight="\d+"/', '', $html );
 		$html = preg_replace('/\swidth="\d+"/', '', $html );
 		$html = preg_replace('/(?<=width:)\s*\d+px(?=;?)/', '100%', $html );
@@ -166,7 +166,7 @@ class WP_Widget_Media_Video extends WP_Widget_Media {
 	 *
 	 * @since 4.8.0
 	 */
-	public function enqueue_preview_scripts() {
+	public function enqueue_preview_scripts() { yeah(__METHOD__);
 		/** This filter is documented in wp-includes/media.php */
 		if ('mediaelement' === apply_filters('wp_video_shortcode_library', 'mediaelement' ) ) {
 			wp_enqueue_style('wp-mediaelement' );
@@ -180,7 +180,7 @@ class WP_Widget_Media_Video extends WP_Widget_Media {
 	 *
 	 * @since 4.8.0
 	 */
-	public function enqueue_admin_scripts() {
+	public function enqueue_admin_scripts() { yeah(__METHOD__);
 		parent::enqueue_admin_scripts();
 
 		$handle = 'media-video-widget';
@@ -218,7 +218,7 @@ class WP_Widget_Media_Video extends WP_Widget_Media {
 	 *
 	 * @since 4.8.0
 	 */
-	public function render_control_template_scripts() {
+	public function render_control_template_scripts() { yeah(__METHOD__);
 		parent::render_control_template_scripts()
 		?>
 		<script type="text/html" id="tmpl-wp-media-widget-video-preview">

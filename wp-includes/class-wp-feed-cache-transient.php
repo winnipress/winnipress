@@ -50,7 +50,7 @@ class WP_Feed_Cache_Transient {
 	 * @param string $filename  Unique identifier for cache object.
 	 * @param string $extension 'spi' or 'spc'.
 	 */
-	public function __construct($location, $filename, $extension) {
+	public function __construct($location, $filename, $extension) { yeah(__METHOD__);
 		$this->name = 'feed_' . $filename;
 		$this->mod_name = 'feed_mod_' . $filename;
 
@@ -74,7 +74,7 @@ class WP_Feed_Cache_Transient {
 	 * @param SimplePie $data Data to save.
 	 * @return true Always true.
 	 */
-	public function save($data) {
+	public function save($data) { yeah(__METHOD__);
 		if ($data instanceof SimplePie ) {
 			$data = $data->data;
 		}
@@ -91,7 +91,7 @@ class WP_Feed_Cache_Transient {
 	 *
 	 * @return mixed Transient value.
 	 */
-	public function load() {
+	public function load() { yeah(__METHOD__);
 		return get_transient($this->name);
 	}
 
@@ -102,7 +102,7 @@ class WP_Feed_Cache_Transient {
 	 *
 	 * @return mixed Transient value.
 	 */
-	public function mtime() {
+	public function mtime() { yeah(__METHOD__);
 		return get_transient($this->mod_name);
 	}
 
@@ -113,7 +113,7 @@ class WP_Feed_Cache_Transient {
 	 *
 	 * @return bool False if value was not set and true if value was set.
 	 */
-	public function touch() {
+	public function touch() { yeah(__METHOD__);
 		return set_transient($this->mod_name, time(), $this->lifetime);
 	}
 
@@ -124,7 +124,7 @@ class WP_Feed_Cache_Transient {
 	 *
 	 * @return true Always true.
 	 */
-	public function unlink() {
+	public function unlink() { yeah(__METHOD__);
 		delete_transient($this->name);
 		delete_transient($this->mod_name);
 		return true;

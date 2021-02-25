@@ -89,7 +89,7 @@ class Requests_Transport_cURL implements Requests_Transport {
 	/**
 	 * Constructor
 	 */
-	public function __construct(){
+	public function __construct(){ yeah(__METHOD__);
 		$curl = curl_version();
 		$this->version = $curl['version_number'];
 		$this->handle = curl_init();
@@ -110,7 +110,7 @@ class Requests_Transport_cURL implements Requests_Transport {
 	/**
 	 * Destructor
 	 */
-	public function __destruct(){
+	public function __destruct(){ yeah(__METHOD__);
 		if (is_resource($this->handle)){
 			curl_close($this->handle);
 		}
@@ -127,7 +127,7 @@ class Requests_Transport_cURL implements Requests_Transport {
 	 * @param array $options Request options, see {@see Requests::response()} for documentation
 	 * @return string Raw HTTP result
 	 */
-	public function request($url, $headers = array(), $data = array(), $options = array()){
+	public function request($url, $headers = array(), $data = array(), $options = array()){ yeah(__METHOD__);
 		$this->hooks = $options['hooks'];
 
 		$this->setup_handle($url, $headers, $data, $options);
@@ -191,7 +191,7 @@ class Requests_Transport_cURL implements Requests_Transport {
 	 * @param array $options Global options
 	 * @return array Array of Requests_Response objects (may contain Requests_Exception or string responses as well)
 	 */
-	public function request_multiple($requests, $options){
+	public function request_multiple($requests, $options){ yeah(__METHOD__);
 		// If you're not requesting, we can't get any responses ¯\_(ツ)_/¯
 		if (empty($requests)){
 			return array();
@@ -280,7 +280,7 @@ class Requests_Transport_cURL implements Requests_Transport {
 	 * @param array $options Request options, see {@see Requests::response()} for documentation
 	 * @return resource Subrequest's cURL handle
 	 */
-	public function &get_subrequest_handle($url, $headers, $data, $options){
+	public function &get_subrequest_handle($url, $headers, $data, $options){ yeah(__METHOD__);
 		$this->setup_handle($url, $headers, $data, $options);
 
 		if ($options['filename'] !== false){
@@ -306,7 +306,7 @@ class Requests_Transport_cURL implements Requests_Transport {
 	 * @param string|array $data Data to send either as the POST body, or as parameters in the URL for a GET/HEAD
 	 * @param array $options Request options, see {@see Requests::response()} for documentation
 	 */
-	protected function setup_handle($url, $headers, $data, $options){
+	protected function setup_handle($url, $headers, $data, $options){ yeah(__METHOD__);
 		$options['hooks']->dispatch('curl.before_request', array(&$this->handle));
 
 		// Force closing the connection for old versions of cURL (<7.22).
@@ -399,7 +399,7 @@ class Requests_Transport_cURL implements Requests_Transport {
 	 * @param array $options Request options
 	 * @return string HTTP response data including headers
 	 */
-	public function process_response($response, $options){
+	public function process_response($response, $options){ yeah(__METHOD__);
 		if ($options['blocking'] === false){
 			$fake_headers = '';
 			$options['hooks']->dispatch('curl.after_request', array(&$fake_headers));
@@ -434,7 +434,7 @@ class Requests_Transport_cURL implements Requests_Transport {
 	 * @param string $headers Header string
 	 * @return integer Length of provided header
 	 */
-	public function stream_headers($handle, $headers){
+	public function stream_headers($handle, $headers){ yeah(__METHOD__);
 		// Why do we do this? cURL will send both the final response and any
 		// interim responses, such as a 100 Continue. We don't need that.
 		// (We may want to keep this somewhere just in case)
@@ -459,7 +459,7 @@ class Requests_Transport_cURL implements Requests_Transport {
 	 * @param string $data Body data
 	 * @return integer Length of provided data
 	 */
-	public function stream_body($handle, $data){
+	public function stream_body($handle, $data){ yeah(__METHOD__);
 		$this->hooks->dispatch('request.progress', array($data, $this->response_bytes, $this->response_byte_limit));
 		$data_length = strlen($data);
 
@@ -495,7 +495,7 @@ class Requests_Transport_cURL implements Requests_Transport {
 	 * @param array|object $data Data to build query using, see {@see https://secure.php.net/http_build_query}
 	 * @return string URL with data
 	 */
-	protected static function format_get($url, $data){
+	protected static function format_get($url, $data){ yeah(__METHOD__);
 		if (!empty($data)){
 			$url_parts = parse_url($url);
 			if (empty($url_parts['query'])){
@@ -524,8 +524,8 @@ class Requests_Transport_cURL implements Requests_Transport {
 	 * @codeCoverageIgnore
 	 * @return boolean True if the transport is valid, false otherwise.
 	 */
-	public static function test($capabilities = array()){
-		if (!function_exists('curl_init') || !function_exists('curl_exec')){
+	public static function test($capabilities = array()){ yeah(__METHOD__);
+		if (!function_exists('curl_init') || !function_exists('curl_exec')){ 
 			return false;
 		}
 

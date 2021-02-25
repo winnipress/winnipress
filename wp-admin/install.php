@@ -18,7 +18,7 @@ nocache_headers();
 $step = isset($_GET['step']) ? (int) $_GET['step'] : 1;
 
 // Display installation header
-function display_header(){
+function display_header(){ yeah(__METHOD__);
 	header('Content-Type: text/html; charset=utf-8');
 	?>
 	<!DOCTYPE html>
@@ -39,7 +39,7 @@ function display_header(){
 }
 
 // Display installer setup form
-function display_setup_form($error = null){
+function display_setup_form($error = null){ yeah(__METHOD__);
 	global $wpdb;
 
 	$installation_title = isset($_POST['installation_title']) ? trim(wp_unslash($_POST['installation_title'])) : '';

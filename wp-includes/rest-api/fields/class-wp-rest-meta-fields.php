@@ -31,7 +31,7 @@ abstract class WP_REST_Meta_Fields {
 	 *
 	 * @return string Subtype for the meta type, or empty string if no specific subtype.
 	 */
-	protected function get_meta_subtype(){
+	protected function get_meta_subtype(){ yeah(__METHOD__);
 		return '';
 	}
 
@@ -51,7 +51,7 @@ abstract class WP_REST_Meta_Fields {
 	 *
 	 * @see register_rest_field()
 	 */
-	public function register_field(){
+	public function register_field(){ yeah(__METHOD__);
 		register_rest_field($this->get_rest_field_type(), 'meta', array(
 			'get_callback'    => array($this, 'get_value' ),
 			'update_callback' => array($this, 'update_value' ),
@@ -68,7 +68,7 @@ abstract class WP_REST_Meta_Fields {
 	 * @param WP_REST_Request $request   Full details about the request.
 	 * @return WP_Error|object Object containing the meta values by name, otherwise WP_Error object.
 	 */
-	public function get_value($object_id, $request ){
+	public function get_value($object_id, $request ){ yeah(__METHOD__);
 		$fields   = $this->get_registered_fields();
 		$response = array();
 
@@ -109,7 +109,7 @@ abstract class WP_REST_Meta_Fields {
 	 * @param array           $args    Options for the field.
 	 * @return mixed Prepared value.
 	 */
-	protected function prepare_value_for_response($value, $request, $args ){
+	protected function prepare_value_for_response($value, $request, $args ){ yeah(__METHOD__);
 		if (!empty($args['prepare_callback'] ) ){
 			$value = call_user_func($args['prepare_callback'], $value, $request, $args );
 		}
@@ -126,7 +126,7 @@ abstract class WP_REST_Meta_Fields {
 	 * @param int             $object_id Object ID to fetch meta for.
 	 * @return WP_Error|null WP_Error if one occurs, null on success.
 	 */
-	public function update_value($meta, $object_id ){
+	public function update_value($meta, $object_id ){ yeah(__METHOD__);
 		$fields = $this->get_registered_fields();
 		foreach ($fields as $meta_key => $args ){
 			$name = $args['name'];
@@ -178,7 +178,7 @@ abstract class WP_REST_Meta_Fields {
 	 * @param string $name      Name for the field that is exposed in the REST API.
 	 * @return bool|WP_Error True if meta field is deleted, WP_Error otherwise.
 	 */
-	protected function delete_meta_value($object_id, $meta_key, $name ){
+	protected function delete_meta_value($object_id, $meta_key, $name ){ yeah(__METHOD__);
 		$meta_type = $this->get_meta_type();
 		if (!current_user_can("delete_{$meta_type}_meta", $object_id, $meta_key ) ){
 			return new WP_Error(
@@ -213,7 +213,7 @@ abstract class WP_REST_Meta_Fields {
 	 * @param array  $values    List of values to update to.
 	 * @return bool|WP_Error True if meta fields are updated, WP_Error otherwise.
 	 */
-	protected function update_multi_meta_value($object_id, $meta_key, $name, $values ){
+	protected function update_multi_meta_value($object_id, $meta_key, $name, $values ){ yeah(__METHOD__);
 		$meta_type = $this->get_meta_type();
 		if (!current_user_can("edit_{$meta_type}_meta", $object_id, $meta_key ) ){
 			return new WP_Error(
@@ -284,7 +284,7 @@ abstract class WP_REST_Meta_Fields {
 	 * @param mixed  $value     Updated value.
 	 * @return bool|WP_Error True if the meta field was updated, WP_Error otherwise.
 	 */
-	protected function update_meta_value($object_id, $meta_key, $name, $value ){
+	protected function update_meta_value($object_id, $meta_key, $name, $value ){ yeah(__METHOD__);
 		$meta_type = $this->get_meta_type();
 		if (!current_user_can("edit_{$meta_type}_meta", $object_id, $meta_key ) ){
 			return new WP_Error(
@@ -325,7 +325,7 @@ abstract class WP_REST_Meta_Fields {
 	 *
 	 * @return array Registered fields.
 	 */
-	protected function get_registered_fields(){
+	protected function get_registered_fields(){ yeah(__METHOD__);
 		$registered = array();
 
 		$meta_type    = $this->get_meta_type();
@@ -391,7 +391,7 @@ abstract class WP_REST_Meta_Fields {
 	 *
 	 * @return array Field schema data.
 	 */
-	public function get_field_schema(){
+	public function get_field_schema(){ yeah(__METHOD__);
 		$fields = $this->get_registered_fields();
 
 		$schema = array(
@@ -425,7 +425,7 @@ abstract class WP_REST_Meta_Fields {
 	 * @param array           $args    REST-specific options for the meta key.
 	 * @return mixed Value prepared for output. If a non-JsonSerializable object, null.
 	 */
-	public static function prepare_value($value, $request, $args ){
+	public static function prepare_value($value, $request, $args ){ yeah(__METHOD__);
 		$type = $args['schema']['type'];
 
 		// For multi-value fields, check the item type instead.
@@ -466,7 +466,7 @@ abstract class WP_REST_Meta_Fields {
 	 * @param  string          $param   The parameter name.
 	 * @return WP_Error|string The meta array, if valid, otherwise an error.
 	 */
-	public function check_meta_is_array($value, $request, $param ){
+	public function check_meta_is_array($value, $request, $param ){ yeah(__METHOD__);
 		if (!is_array($value ) ){
 			return false;
 		}

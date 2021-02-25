@@ -160,7 +160,7 @@ class WP_Customize_Setting {
 	 *                                      theme mod or option name.
 	 * @param array                $args    Setting arguments.
 	 */
-	public function __construct($manager, $id, $args = array() ) {
+	public function __construct($manager, $id, $args = array() ) { yeah(__METHOD__);
 		$keys = array_keys(get_object_vars($this ) );
 		foreach ($keys as $key ) {
 			if (isset($args[ $key ] ) ) {
@@ -214,7 +214,7 @@ class WP_Customize_Setting {
 	 *     @type array  $keys Keys for multidimensional array.
 	 * }
 	 */
-	final public function id_data() {
+	final public function id_data() { yeah(__METHOD__);
 		return $this->id_data;
 	}
 
@@ -226,7 +226,7 @@ class WP_Customize_Setting {
 	 *
 	 * @since 4.4.0
 	 */
-	protected function aggregate_multidimensional() {
+	protected function aggregate_multidimensional() { yeah(__METHOD__);
 		$id_base = $this->id_data['base'];
 		if (!isset(self::$aggregated_multidimensionals[ $this->type ] ) ) {
 			self::$aggregated_multidimensionals[ $this->type ] = array();
@@ -254,7 +254,7 @@ class WP_Customize_Setting {
 	 * @since 4.5.0
 	 * @ignore
 	 */
-	static public function reset_aggregated_multidimensionals() {
+	static public function reset_aggregated_multidimensionals() { yeah(__METHOD__);
 		self::$aggregated_multidimensionals = array();
 	}
 
@@ -273,7 +273,7 @@ class WP_Customize_Setting {
 	 *
 	 * @return bool If preview() has been called.
 	 */
-	public function is_current_blog_previewed() {
+	public function is_current_blog_previewed() { yeah(__METHOD__);
 		if (!isset($this->_previewed_blog_id ) ) {
 			return false;
 		}
@@ -301,7 +301,7 @@ class WP_Customize_Setting {
 	 *
 	 * @return bool False when preview short-circuits due no change needing to be previewed.
 	 */
-	public function preview() {
+	public function preview() { yeah(__METHOD__);
 		if (!isset($this->_previewed_blog_id ) ) {
 			$this->_previewed_blog_id = get_current_blog_id();
 		}
@@ -415,7 +415,7 @@ class WP_Customize_Setting {
 	 * @see WP_Customize_Manager::set_post_value()
 	 * @see WP_Customize_Setting::_multidimensional_preview_filter()
 	 */
-	final public function _clear_aggregated_multidimensional_preview_applied_flag() {
+	final public function _clear_aggregated_multidimensional_preview_applied_flag() { yeah(__METHOD__);
 		unset(self::$aggregated_multidimensionals[ $this->type ][ $this->id_data['base'] ]['preview_applied_instances'][ $this->id ] );
 	}
 
@@ -431,7 +431,7 @@ class WP_Customize_Setting {
 	 * @param mixed $original Old value.
 	 * @return mixed New or old value.
 	 */
-	public function _preview_filter($original ) {
+	public function _preview_filter($original ) { yeah(__METHOD__);
 		if (!$this->is_current_blog_previewed() ) {
 			return $original;
 		}
@@ -463,7 +463,7 @@ class WP_Customize_Setting {
 	 * @param mixed $original Original root value.
 	 * @return mixed New or old value.
 	 */
-	final public function _multidimensional_preview_filter($original ) {
+	final public function _multidimensional_preview_filter($original ) { yeah(__METHOD__);
 		if (!$this->is_current_blog_previewed() ) {
 			return $original;
 		}
@@ -502,7 +502,7 @@ class WP_Customize_Setting {
 	 *
 	 * @return false|void False if cap check fails or value isn't set or is invalid.
 	 */
-	final public function save() {
+	final public function save() { yeah(__METHOD__);
 		$value = $this->post_value();
 
 		if (!$this->check_capabilities() || !isset($value ) ) {
@@ -536,7 +536,7 @@ class WP_Customize_Setting {
 	 * @param mixed $default A default value which is used as a fallback. Default is null.
 	 * @return mixed The default value on failure, otherwise the sanitized and validated value.
 	 */
-	final public function post_value($default = null ) {
+	final public function post_value($default = null ) { yeah(__METHOD__);
 		return $this->manager->post_value($this, $default );
 	}
 
@@ -548,7 +548,7 @@ class WP_Customize_Setting {
 	 * @param string|array $value    The value to sanitize.
 	 * @return string|array|null|WP_Error Sanitized value, or `null`/`WP_Error` if invalid.
 	 */
-	public function sanitize($value ) {
+	public function sanitize($value ) { yeah(__METHOD__);
 
 		/**
 		 * Filters a Customize setting value in un-slashed form.
@@ -571,7 +571,7 @@ class WP_Customize_Setting {
 	 * @param mixed $value Value to validate.
 	 * @return true|WP_Error True if the input was validated, otherwise WP_Error.
 	 */
-	public function validate($value ) {
+	public function validate($value ) { yeah(__METHOD__);
 		if (is_wp_error($value ) ) {
 			return $value;
 		}
@@ -610,7 +610,7 @@ class WP_Customize_Setting {
 	 * @param mixed $default Value to return if root does not exist.
 	 * @return mixed
 	 */
-	protected function get_root_value($default = null ) {
+	protected function get_root_value($default = null ) { yeah(__METHOD__);
 		$id_base = $this->id_data['base'];
 		if ('option' === $this->type ) {
 			return get_option($id_base, $default );
@@ -634,7 +634,7 @@ class WP_Customize_Setting {
 	 * @param mixed $value Value to set as root of multidimensional setting.
 	 * @return bool Whether the multidimensional root was updated successfully.
 	 */
-	protected function set_root_value($value ) {
+	protected function set_root_value($value ) { yeah(__METHOD__);
 		$id_base = $this->id_data['base'];
 		if ('option' === $this->type ) {
 			$autoload = true;
@@ -663,7 +663,7 @@ class WP_Customize_Setting {
 	 * @param mixed $value The value to update.
 	 * @return bool The result of saving the value.
 	 */
-	protected function update($value ) {
+	protected function update($value ) { yeah(__METHOD__);
 		$id_base = $this->id_data['base'];
 		if ('option' === $this->type || 'theme_mod' === $this->type ) {
 			if (!$this->is_multidimensional_aggregated ) {
@@ -698,7 +698,7 @@ class WP_Customize_Setting {
 	 * @since 3.4.0
 	 * @deprecated 4.4.0 Deprecated in favor of update() method.
 	 */
-	protected function _update_theme_mod() {
+	protected function _update_theme_mod() { yeah(__METHOD__);
 		_deprecated_function(__METHOD__, '4.4.0', __CLASS__ . '::update()' );
 	}
 
@@ -708,7 +708,7 @@ class WP_Customize_Setting {
 	 * @since 3.4.0
 	 * @deprecated 4.4.0 Deprecated in favor of update() method.
 	 */
-	protected function _update_option() {
+	protected function _update_option() { yeah(__METHOD__);
 		_deprecated_function(__METHOD__, '4.4.0', __CLASS__ . '::update()' );
 	}
 
@@ -719,7 +719,7 @@ class WP_Customize_Setting {
 	 *
 	 * @return mixed The value.
 	 */
-	public function value() {
+	public function value() { yeah(__METHOD__);
 		$id_base = $this->id_data['base'];
 		$is_core_type = ('option' === $this->type || 'theme_mod' === $this->type );
 
@@ -772,7 +772,7 @@ class WP_Customize_Setting {
 	 *
 	 * @return mixed The requested escaped value.
 	 */
-	public function js_value() {
+	public function js_value() { yeah(__METHOD__);
 
 		/**
 		 * Filters a Customize setting value for use in JavaScript.
@@ -799,7 +799,7 @@ class WP_Customize_Setting {
 	 *
 	 * @return array Array of parameters passed to JavaScript.
 	 */
-	public function json() {
+	public function json() { yeah(__METHOD__);
 		return array(
 			'value'     => $this->js_value(),
 			'transport' => $this->transport,
@@ -815,7 +815,7 @@ class WP_Customize_Setting {
 	 *
 	 * @return bool False if theme doesn't support the setting or user can't change setting, otherwise true.
 	 */
-	final public function check_capabilities() {
+	final public function check_capabilities() { yeah(__METHOD__);
 		if ($this->capability && !call_user_func_array('current_user_can', (array) $this->capability ) )
 			return false;
 
@@ -835,7 +835,7 @@ class WP_Customize_Setting {
 	 * @param bool $create Default is false.
 	 * @return array|void Keys are 'root', 'node', and 'key'.
 	 */
-	final protected function multidimensional(&$root, $keys, $create = false ) {
+	final protected function multidimensional(&$root, $keys, $create = false ) { yeah(__METHOD__);
 		if ($create && empty($root ) )
 			$root = array();
 
@@ -885,7 +885,7 @@ class WP_Customize_Setting {
 	 * @param mixed $value The value to update.
 	 * @return mixed
 	 */
-	final protected function multidimensional_replace($root, $keys, $value ) {
+	final protected function multidimensional_replace($root, $keys, $value ) { yeah(__METHOD__);
 		if (!isset($value ) )
 			return $root;
 		elseif (empty($keys ) ) // If there are no keys, we're replacing the root.
@@ -909,7 +909,7 @@ class WP_Customize_Setting {
 	 * @param mixed $default A default value which is used as a fallback. Default is null.
 	 * @return mixed The requested value or the default value.
 	 */
-	final protected function multidimensional_get($root, $keys, $default = null ) {
+	final protected function multidimensional_get($root, $keys, $default = null ) { yeah(__METHOD__);
 		if (empty($keys ) ) // If there are no keys, test the root.
 			return isset($root ) ? $root : $default;
 
@@ -926,7 +926,7 @@ class WP_Customize_Setting {
 	 * @param $keys
 	 * @return bool True if value is set, false if not.
 	 */
-	final protected function multidimensional_isset($root, $keys ) {
+	final protected function multidimensional_isset($root, $keys ) { yeah(__METHOD__);
 		$result = $this->multidimensional_get($root, $keys );
 		return isset($result );
 	}

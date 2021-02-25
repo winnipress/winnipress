@@ -35,7 +35,7 @@ class WP_HTTP_Requests_Hooks extends Requests_Hooks {
 	 * @param string $url URL to request.
 	 * @param array $request Request data in WP_Http format.
 	 */
-	public function __construct($url, $request ) {
+	public function __construct($url, $request ) { yeah(__METHOD__);
 		$this->url = $url;
 		$this->request = $request;
 	}
@@ -47,7 +47,7 @@ class WP_HTTP_Requests_Hooks extends Requests_Hooks {
 	 * @param array $parameters Parameters to pass to callbacks.
 	 * @return boolean True if hooks were run, false if nothing was hooked.
 	 */
-	public function dispatch($hook, $parameters = array() ) {
+	public function dispatch($hook, $parameters = array() ) { yeah(__METHOD__);
 		$result = parent::dispatch($hook, $parameters );
 
 		// Handle back-compat actions

@@ -64,7 +64,7 @@ class Requests_Cookie {
 	 * @param string $value
 	 * @param array|Requests_Utility_CaseInsensitiveDictionary $attributes Associative array of attribute data
 	 */
-	public function __construct($name, $value, $attributes = array(), $flags = array(), $reference_time = null){
+	public function __construct($name, $value, $attributes = array(), $flags = array(), $reference_time = null){ yeah(__METHOD__);
 		$this->name = $name;
 		$this->value = $value;
 		$this->attributes = $attributes;
@@ -92,7 +92,7 @@ class Requests_Cookie {
 	 *
 	 * @return boolean True if expired, false if time is valid.
 	 */
-	public function is_expired(){
+	public function is_expired(){ yeah(__METHOD__);
 		// RFC6265, s. 4.1.2.2:
 		// If a cookie has both the Max-Age and the Expires attribute, the Max-
 		// Age attribute has precedence and controls the expiration date of the
@@ -116,7 +116,7 @@ class Requests_Cookie {
 	 * @param Requests_IRI $uri URI to check
 	 * @return boolean Whether the cookie is valid for the given URI
 	 */
-	public function uri_matches(Requests_IRI $uri){
+	public function uri_matches(Requests_IRI $uri){ yeah(__METHOD__);
 		if (!$this->domain_matches($uri->host)){
 			return false;
 		}
@@ -134,7 +134,7 @@ class Requests_Cookie {
 	 * @param string $string Domain to check
 	 * @return boolean Whether the cookie is valid for the given domain
 	 */
-	public function domain_matches($string){
+	public function domain_matches($string){ yeah(__METHOD__);
 		if (!isset($this->attributes['domain'])){
 			// Cookies created manually; cookies created by Requests will set
 			// the domain to the requested domain
@@ -183,7 +183,7 @@ class Requests_Cookie {
 	 * @param string $request_path Path to check
 	 * @return boolean Whether the cookie is valid for the given path
 	 */
-	public function path_matches($request_path){
+	public function path_matches($request_path){ yeah(__METHOD__);
 		if (empty($request_path)){
 			// Normalize empty path to root
 			$request_path = '/';
@@ -225,7 +225,7 @@ class Requests_Cookie {
 	 *
 	 * @return boolean Whether the cookie was successfully normalized
 	 */
-	public function normalize(){
+	public function normalize(){ yeah(__METHOD__);
 		foreach ($this->attributes as $key => $value){
 			$orig_value = $value;
 			$value = $this->normalize_attribute($key, $value);
@@ -251,7 +251,7 @@ class Requests_Cookie {
 	 * @param string|boolean $value Attribute value (string value, or true if empty/flag)
 	 * @return mixed Value if available, or null if the attribute value is invalid (and should be skipped)
 	 */
-	protected function normalize_attribute($name, $value){
+	protected function normalize_attribute($name, $value){ yeah(__METHOD__);
 		switch (strtolower($name)){
 			case 'expires':
 				// Expiration parsing, as per RFC 6265 section 5.2.1
@@ -307,7 +307,7 @@ class Requests_Cookie {
 	 *
 	 * @return string Cookie formatted for Cookie header
 	 */
-	public function format_for_header(){
+	public function format_for_header(){ yeah(__METHOD__);
 		return sprintf('%s=%s', $this->name, $this->value);
 	}
 
@@ -318,7 +318,7 @@ class Requests_Cookie {
 	 * @deprecated Use {@see Requests_Cookie::format_for_header}
 	 * @return string
 	 */
-	public function formatForHeader(){
+	public function formatForHeader(){ yeah(__METHOD__);
 		return $this->format_for_header();
 	}
 
@@ -330,7 +330,7 @@ class Requests_Cookie {
 	 *
 	 * @return string Cookie formatted for Set-Cookie header
 	 */
-	public function format_for_set_cookie(){
+	public function format_for_set_cookie(){ yeah(__METHOD__);
 		$header_value = $this->format_for_header();
 		if (!empty($this->attributes)){
 			$parts = array();
@@ -356,7 +356,7 @@ class Requests_Cookie {
 	 * @deprecated Use {@see Requests_Cookie::format_for_set_cookie}
 	 * @return string
 	 */
-	public function formatForSetCookie(){
+	public function formatForSetCookie(){ yeah(__METHOD__);
 		return $this->format_for_set_cookie();
 	}
 
@@ -365,7 +365,7 @@ class Requests_Cookie {
 	 *
 	 * Attributes and other data can be accessed via methods.
 	 */
-	public function __toString(){
+	public function __toString(){ yeah(__METHOD__);
 		return $this->value;
 	}
 
@@ -379,7 +379,7 @@ class Requests_Cookie {
 	 * @param string Cookie header value (from a Set-Cookie header)
 	 * @return Requests_Cookie Parsed cookie object
 	 */
-	public static function parse($string, $name = '', $reference_time = null){
+	public static function parse($string, $name = '', $reference_time = null){ yeah(__METHOD__);
 		$parts = explode(';', $string);
 		$kvparts = array_shift($parts);
 
@@ -431,7 +431,7 @@ class Requests_Cookie {
 	 * @param int|null $time Reference time for expiration calculation
 	 * @return array
 	 */
-	public static function parse_from_headers(Requests_Response_Headers $headers, Requests_IRI $origin = null, $time = null){
+	public static function parse_from_headers(Requests_Response_Headers $headers, Requests_IRI $origin = null, $time = null){ yeah(__METHOD__);
 		$cookie_headers = $headers->getValues('Set-Cookie');
 		if (empty($cookie_headers)){
 			return array();
@@ -494,7 +494,7 @@ class Requests_Cookie {
 	 * @deprecated Use {@see Requests_Cookie::parse_from_headers}
 	 * @return string
 	 */
-	public static function parseFromHeaders(Requests_Response_Headers $headers){
+	public static function parseFromHeaders(Requests_Response_Headers $headers){ yeah(__METHOD__);
 		return self::parse_from_headers($headers);
 	}
 }

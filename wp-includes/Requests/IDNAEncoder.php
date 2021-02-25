@@ -40,7 +40,7 @@ class Requests_IDNAEncoder {
 	 * @param string $string Hostname
 	 * @return string Punycode-encoded hostname
 	 */
-	public static function encode($string){
+	public static function encode($string){ yeah(__METHOD__);
 		$parts = explode('.', $string);
 		foreach ($parts as &$part){
 			$part = self::to_ascii($part);
@@ -59,7 +59,7 @@ class Requests_IDNAEncoder {
 	 * @param string $string ASCII or UTF-8 string (max length 64 characters)
 	 * @return string ASCII string
 	 */
-	public static function to_ascii($string){
+	public static function to_ascii($string){ yeah(__METHOD__);
 		// Step 1: Check if the string is already ASCII
 		if (self::is_ascii($string)){
 			// Skip to step 7
@@ -111,7 +111,7 @@ class Requests_IDNAEncoder {
 	 * @param string $string
 	 * @return bool Is the string ASCII-only?
 	 */
-	protected static function is_ascii($string){
+	protected static function is_ascii($string){ yeah(__METHOD__);
 		return (preg_match('/(?:[^\x00-\x7F])/', $string) !== 1);
 	}
 
@@ -122,7 +122,7 @@ class Requests_IDNAEncoder {
 	 * @param string $string
 	 * @return string Prepared string
 	 */
-	protected static function nameprep($string){
+	protected static function nameprep($string){ yeah(__METHOD__);
 		return $string;
 	}
 
@@ -135,7 +135,7 @@ class Requests_IDNAEncoder {
 	 * @param string $input
 	 * @return array Unicode code points
 	 */
-	protected static function utf8_to_codepoints($input){
+	protected static function utf8_to_codepoints($input){ yeah(__METHOD__);
 		$codepoints = array();
 
 		// Get number of bytes
@@ -225,7 +225,7 @@ class Requests_IDNAEncoder {
 	 * @param string $input UTF-8 encoded string to encode
 	 * @return string Punycode-encoded string
 	 */
-	public static function punycode_encode($input){
+	public static function punycode_encode($input){ yeah(__METHOD__);
 		$output = '';
 #		let n = initial_n
 		$n = self::BOOTSTRAP_INITIAL_N;
@@ -339,7 +339,7 @@ class Requests_IDNAEncoder {
 	 * @param int $digit Digit in the range 0-35
 	 * @return string Single character corresponding to digit
 	 */
-	protected static function digit_to_char($digit){
+	protected static function digit_to_char($digit){ yeah(__METHOD__);
 		// @codeCoverageIgnoreStart
 		// As far as I know, this never happens, but still good to be sure.
 		if ($digit < 0 || $digit > 35){
@@ -359,7 +359,7 @@ class Requests_IDNAEncoder {
 	 * @param bool $firsttime
 	 * @return int New bias
 	 */
-	protected static function adapt($delta, $numpoints, $firsttime){
+	protected static function adapt($delta, $numpoints, $firsttime){ yeah(__METHOD__);
 #	function adapt(delta,numpoints,firsttime):
 #		if firsttime then let delta = delta div damp
 		if ($firsttime){

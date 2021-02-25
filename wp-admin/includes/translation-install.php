@@ -16,7 +16,7 @@
  * @param array|object $args Translation API arguments. Optional.
  * @return object|WP_Error On success an object of translations, WP_Error on failure.
  */
-function translations_api( $type, $args = null) {
+function translations_api( $type, $args = null) { yeah(__METHOD__);
 	include( ABSPATH . WPINC . '/version.php'); // include an unmodified $wp_version
 
 	if ( !in_array( $type, array( 'plugins', 'themes', 'core'))) {
@@ -114,7 +114,7 @@ function translations_api( $type, $args = null) {
  * @return array Array of translations, each an array of data. If the API response results
  *               in an error, an empty array will be returned.
  */
-function wp_get_available_translations() {
+function wp_get_available_translations() { yeah(__METHOD__);
 	if ( !wp_installing() && false !== ( $translations = get_site_transient( 'available_translations'))) {
 		return $translations;
 	}
@@ -149,7 +149,7 @@ function wp_get_available_translations() {
  *
  * @param array $languages Array of available languages (populated via the Translation API).
  */
-function wp_install_language_form( $languages) {
+function wp_install_language_form( $languages) { yeah(__METHOD__);
 	global $wp_local_package;
 
 	$installed_languages = get_available_languages();
@@ -196,7 +196,7 @@ function wp_install_language_form( $languages) {
  * @return string|bool Returns the language code if successfully downloaded
  *                     (or already installed), or false on failure.
  */
-function wp_download_language_pack( $download) {
+function wp_download_language_pack( $download) { yeah(__METHOD__);
 	// Check if the translation is already installed.
 	if ( in_array( $download, get_available_languages())) {
 		return $download;
@@ -244,7 +244,7 @@ function wp_download_language_pack( $download) {
  *
  * @return bool Returns true on success, false on failure.
  */
-function wp_can_install_language_pack() {
+function wp_can_install_language_pack() { yeah(__METHOD__);
 	if ( !wp_is_file_mod_allowed( 'can_install_language_pack')) {
 		return false;
 	}

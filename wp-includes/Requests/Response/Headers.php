@@ -23,7 +23,7 @@ class Requests_Response_Headers extends Requests_Utility_CaseInsensitiveDictiona
 	 * @param string $key
 	 * @return string Header value
 	 */
-	public function offsetGet($key){
+	public function offsetGet($key){ yeah(__METHOD__);
 		$key = strtolower($key);
 		if (!isset($this->data[$key])){
 			return null;
@@ -40,7 +40,7 @@ class Requests_Response_Headers extends Requests_Utility_CaseInsensitiveDictiona
 	 * @param string $key Item name
 	 * @param string $value Item value
 	 */
-	public function offsetSet($key, $value){
+	public function offsetSet($key, $value){ yeah(__METHOD__);
 		if ($key === null){
 			throw new Requests_Exception('Object is a dictionary, not a list', 'invalidset');
 		}
@@ -60,7 +60,7 @@ class Requests_Response_Headers extends Requests_Utility_CaseInsensitiveDictiona
 	 * @param string $key
 	 * @return array Header values
 	 */
-	public function getValues($key){
+	public function getValues($key){ yeah(__METHOD__);
 		$key = strtolower($key);
 		if (!isset($this->data[$key])){
 			return null;
@@ -78,7 +78,7 @@ class Requests_Response_Headers extends Requests_Utility_CaseInsensitiveDictiona
 	 * @param string|array $value Value to flatten
 	 * @return string Flattened value
 	 */
-	public function flatten($value){
+	public function flatten($value){ yeah(__METHOD__);
 		if (is_array($value)){
 			$value = implode(',', $value);
 		}
@@ -92,7 +92,7 @@ class Requests_Response_Headers extends Requests_Utility_CaseInsensitiveDictiona
 	 * Converts the internal
 	 * @return ArrayIterator
 	 */
-	public function getIterator(){
+	public function getIterator(){ yeah(__METHOD__);
 		return new Requests_Utility_FilteredIterator($this->data, array($this, 'flatten'));
 	}
 }

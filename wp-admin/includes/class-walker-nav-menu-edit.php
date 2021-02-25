@@ -26,7 +26,7 @@ class Walker_Nav_Menu_Edit extends Walker_Nav_Menu {
 	 * @param int    $depth  Depth of menu item. Used for padding.
 	 * @param array  $args   Not used.
 	 */
-	public function start_lvl( &$output, $depth = 0, $args = array() ) {}
+	public function start_lvl( &$output, $depth = 0, $args = array() ) { yeah(__METHOD__);}
 
 	/**
 	 * Ends the list of after the elements are added.
@@ -39,7 +39,7 @@ class Walker_Nav_Menu_Edit extends Walker_Nav_Menu {
 	 * @param int    $depth  Depth of menu item. Used for padding.
 	 * @param array  $args   Not used.
 	 */
-	public function end_lvl( &$output, $depth = 0, $args = array() ) {}
+	public function end_lvl( &$output, $depth = 0, $args = array() ) { yeah(__METHOD__);}
 
 	/**
 	 * Start the element output.
@@ -55,7 +55,7 @@ class Walker_Nav_Menu_Edit extends Walker_Nav_Menu {
 	 * @param array  $args   Not used.
 	 * @param int    $id     Not used.
 	 */
-	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) { yeah(__METHOD__);
 		global $_wp_nav_menu_max_depth;
 		$_wp_nav_menu_max_depth = $depth > $_wp_nav_menu_max_depth ? $depth : $_wp_nav_menu_max_depth;
 

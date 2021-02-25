@@ -21,7 +21,7 @@ class WP_Widget_Tag_Cloud extends WP_Widget {
 	 *
 	 * @since 2.8.0
 	 */
-	public function __construct() {
+	public function __construct() { yeah(__METHOD__);
 		$widget_ops = array(
 			'description' => __('A cloud of your most used tags.' ),
 			'customize_selective_refresh' => true,
@@ -38,7 +38,7 @@ class WP_Widget_Tag_Cloud extends WP_Widget {
 	 *                        'before_widget', and 'after_widget'.
 	 * @param array $instance Settings for the current Tag Cloud widget instance.
 	 */
-	public function widget($args, $instance ) {
+	public function widget($args, $instance ) { yeah(__METHOD__);
 		$current_taxonomy = $this->_get_current_taxonomy($instance );
 
 		if (!empty($instance['title'] ) ) {
@@ -102,7 +102,7 @@ class WP_Widget_Tag_Cloud extends WP_Widget {
 	 * @param array $old_instance Old settings for this instance.
 	 * @return array Settings to save or bool false to cancel saving.
 	 */
-	public function update($new_instance, $old_instance ) {
+	public function update($new_instance, $old_instance ) { yeah(__METHOD__);
 		$instance = array();
 		$instance['title'] = sanitize_text_field($new_instance['title'] );
 		$instance['count'] = !empty($new_instance['count'] ) ? 1 : 0;
@@ -117,7 +117,7 @@ class WP_Widget_Tag_Cloud extends WP_Widget {
 	 *
 	 * @param array $instance Current settings.
 	 */
-	public function form($instance ) {
+	public function form($instance ) { yeah(__METHOD__);
 		$current_taxonomy = $this->_get_current_taxonomy($instance);
 		$title_id = $this->get_field_id('title' );
 		$count = isset($instance['count'] ) ? (bool) $instance['count'] : false;
@@ -187,7 +187,7 @@ class WP_Widget_Tag_Cloud extends WP_Widget {
 	 * @param array $instance Current settings.
 	 * @return string Name of the current taxonomy if set, otherwise 'post_tag'.
 	 */
-	public function _get_current_taxonomy($instance) {
+	public function _get_current_taxonomy($instance) { yeah(__METHOD__);
 		if (!empty($instance['taxonomy']) && taxonomy_exists($instance['taxonomy']) )
 			return $instance['taxonomy'];
 

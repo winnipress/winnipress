@@ -23,7 +23,7 @@ class Requests_Hooks implements Requests_Hooker {
 	/**
 	 * Constructor
 	 */
-	public function __construct(){
+	public function __construct(){ yeah(__METHOD__);
 		// pass
 	}
 
@@ -34,7 +34,7 @@ class Requests_Hooks implements Requests_Hooker {
 	 * @param callback $callback Function/method to call on event
 	 * @param int $priority Priority number. <0 is executed earlier, >0 is executed later
 	 */
-	public function register($hook, $callback, $priority = 0){
+	public function register($hook, $callback, $priority = 0){ yeah(__METHOD__);
 		if (!isset($this->hooks[$hook])){
 			$this->hooks[$hook] = array();
 		}
@@ -52,7 +52,7 @@ class Requests_Hooks implements Requests_Hooker {
 	 * @param array $parameters Parameters to pass to callbacks
 	 * @return boolean Successfulness
 	 */
-	public function dispatch($hook, $parameters = array()){
+	public function dispatch($hook, $parameters = array()){ yeah(__METHOD__);
 		if (empty($this->hooks[$hook])){
 			return false;
 		}

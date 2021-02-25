@@ -43,7 +43,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 	 *
 	 * @since 2.8.0
 	 */
-	public function upgrade_strings() {
+	public function upgrade_strings() { yeah(__METHOD__);
 		$this->strings['up_to_date'] = __('The plugin is at the latest version.');
 		$this->strings['no_package'] = __('Update package not available.');
 		/* translators: %s: package URL */
@@ -61,7 +61,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 	 *
 	 * @since 2.8.0
 	 */
-	public function install_strings() {
+	public function install_strings() { yeah(__METHOD__);
 		$this->strings['no_package'] = __('Installation package not available.');
 		/* translators: %s: package URL */
 		$this->strings['downloading_package'] = sprintf( __( 'Downloading installation package from %s&#8230;' ), '<span class="code">%s</span>' );
@@ -87,7 +87,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 	 * }
 	 * @return bool|WP_Error True if the installation was successful, false or a WP_Error otherwise.
 	 */
-	public function install( $package, $args = array() ) {
+	public function install( $package, $args = array() ) { yeah(__METHOD__);
 
 		$defaults = array(
 			'clear_update_cache' => true,
@@ -141,7 +141,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 	 * }
 	 * @return bool|WP_Error True if the upgrade was successful, false or a WP_Error object otherwise.
 	 */
-	public function upgrade( $plugin, $args = array() ) {
+	public function upgrade( $plugin, $args = array() ) { yeah(__METHOD__);
 
 		$defaults = array(
 			'clear_update_cache' => true,
@@ -212,7 +212,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 	 * }
 	 * @return array|false An array of results indexed by plugin file, or false if unable to connect to the filesystem.
 	 */
-	public function bulk_upgrade( $plugins, $args = array() ) {
+	public function bulk_upgrade( $plugins, $args = array() ) { yeah(__METHOD__);
 
 		$defaults = array(
 			'clear_update_cache' => true,
@@ -327,7 +327,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 	 * @return string|WP_Error The source as passed, or a WP_Error object
 	 *                         if no plugins were found.
 	 */
-	public function check_package($source) {
+	public function check_package($source) { yeah(__METHOD__);
 		global $wp_filesystem;
 
 		if ( is_wp_error($source) )
@@ -365,7 +365,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 	 *
 	 * @return string|false The full path to the main plugin file, or false.
 	 */
-	public function plugin_info() {
+	public function plugin_info() { yeah(__METHOD__);
 		if ( !is_array($this->result) )
 			return false;
 		if ( empty($this->result['destination_name']) )
@@ -392,7 +392,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 	 * @param array          $plugin Plugin package arguments.
 	 * @return bool|WP_Error The passed in $return param or WP_Error.
 	 */
-	public function deactivate_plugin_before_upgrade($return, $plugin) {
+	public function deactivate_plugin_before_upgrade($return, $plugin) { yeah(__METHOD__);
 
 		if ( is_wp_error($return) ) //Bypass.
 			return $return;
@@ -429,7 +429,7 @@ class Plugin_Upgrader extends WP_Upgrader {
 	 * @param array         $plugin
 	 * @return WP_Error|bool
 	 */
-	public function delete_old_plugin($removed, $local_destination, $remote_destination, $plugin) {
+	public function delete_old_plugin($removed, $local_destination, $remote_destination, $plugin) { yeah(__METHOD__);
 		global $wp_filesystem;
 
 		if ( is_wp_error($removed) )

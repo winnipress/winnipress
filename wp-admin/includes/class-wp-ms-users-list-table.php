@@ -20,7 +20,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @return bool
 	 */
-	public function ajax_user_can() {
+	public function ajax_user_can() { yeah(__METHOD__);
 		return current_user_can( 'manage_network_users' );
 	}
 
@@ -31,7 +31,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 * @global wpdb   $wpdb
 	 * @global string $mode
 	 */
-	public function prepare_items() {
+	public function prepare_items() { yeah(__METHOD__);
 		global $usersearch, $role, $wpdb, $mode;
 
 		$usersearch = isset( $_REQUEST['s'] ) ? wp_unslash( trim( $_REQUEST['s'] ) ) : '';
@@ -106,7 +106,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_bulk_actions() {
+	protected function get_bulk_actions() { yeah(__METHOD__);
 		$actions = array();
 		if ( current_user_can( 'delete_users' ) )
 			$actions['delete'] = __( 'Delete' );
@@ -118,7 +118,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 
 	/**
 	 */
-	public function no_items() {
+	public function no_items() { yeah(__METHOD__);
 		_e( 'No users found.' );
 	}
 
@@ -127,7 +127,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 * @global string $role
 	 * @return array
 	 */
-	protected function get_views() {
+	protected function get_views() { yeah(__METHOD__);
 		global $role;
 
 		$total_users = get_user_count();
@@ -148,7 +148,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @param string $which
 	 */
-	protected function pagination( $which ) {
+	protected function pagination( $which ) { yeah(__METHOD__);
 		global $mode;
 
 		parent::pagination ( $which );
@@ -162,7 +162,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	public function get_columns() {
+	public function get_columns() { yeah(__METHOD__);
 		$users_columns = array(
 			'cb'         => '<input type="checkbox" />',
 			'username'   => __( 'Username' ),
@@ -186,7 +186,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_sortable_columns() {
+	protected function get_sortable_columns() { yeah(__METHOD__);
 		return array(
 			'username'   => 'login',
 			'name'       => 'name',
@@ -202,7 +202,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_User $user The current WP_User object.
 	 */
-	public function column_cb( $user ) {
+	public function column_cb( $user ) { yeah(__METHOD__);
 		if ( is_super_admin( $user->ID ) ) {
 			return;
 		}
@@ -219,7 +219,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_User $user The current WP_User object.
 	 */
-	public function column_id( $user ) {
+	public function column_id( $user ) { yeah(__METHOD__);
 		echo $user->ID;
 	}
 
@@ -230,7 +230,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_User $user The current WP_User object.
 	 */
-	public function column_username( $user ) {
+	public function column_username( $user ) { yeah(__METHOD__);
 		$super_admins = get_super_admins();
 		$avatar	= get_avatar( $user->user_email, 32 );
 		$edit_link = esc_url( add_query_arg( 'wp_http_referer', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), get_edit_user_link( $user->ID ) ) );
@@ -252,7 +252,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_User $user The current WP_User object.
 	 */
-	public function column_name( $user ) {
+	public function column_name( $user ) { yeah(__METHOD__);
 		if ( $user->first_name && $user->last_name ) {
 			echo "$user->first_name $user->last_name";
 		} elseif ( $user->first_name ) {
@@ -271,7 +271,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_User $user The current WP_User object.
 	 */
-	public function column_email( $user ) {
+	public function column_email( $user ) { yeah(__METHOD__);
 		echo "<a href='" . esc_url( "mailto:$user->user_email" ) . "'>$user->user_email</a>";
 	}
 
@@ -284,7 +284,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_User $user The current WP_User object.
 	 */
-	public function column_registered( $user ) {
+	public function column_registered( $user ) { yeah(__METHOD__);
 		global $mode;
 		if ( 'list' === $mode ) {
 			$date = __( 'Y/m/d' );
@@ -302,7 +302,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 * @param string  $data
 	 * @param string  $primary
 	 */
-	protected function _column_blogs( $user, $classes, $data, $primary ) {
+	protected function _column_blogs( $user, $classes, $data, $primary ) { yeah(__METHOD__);
 		echo '<td class="', $classes, ' has-row-actions" ', $data, '>';
 		echo $this->column_blogs( $user );
 		echo $this->handle_row_actions( $user, 'blogs', $primary );
@@ -316,7 +316,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_User $user The current WP_User object.
 	 */
-	public function column_blogs( $user ) {
+	public function column_blogs( $user ) { yeah(__METHOD__);
 		$blogs = get_blogs_of_user( $user->ID, true );
 		if ( !is_array( $blogs ) ) {
 			return;
@@ -381,12 +381,12 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 * @param WP_User $user       The current WP_User object.
 	 * @param string $column_name The current column name.
 	 */
-	public function column_default( $user, $column_name ) {
+	public function column_default( $user, $column_name ) { yeah(__METHOD__);
 		/** This filter is documented in wp-admin/includes/class-wp-users-list-table.php */
 		echo apply_filters( 'manage_users_custom_column', '', $column_name, $user->ID );
 	}
 
-	public function display_rows() {
+	public function display_rows() { yeah(__METHOD__);
 		foreach ( $this->items as $user ) {
 			$class = '';
 
@@ -413,7 +413,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 *
 	 * @return string Name of the default primary column, in this case, 'username'.
 	 */
-	protected function get_default_primary_column_name() {
+	protected function get_default_primary_column_name() { yeah(__METHOD__);
 		return 'username';
 	}
 
@@ -427,7 +427,7 @@ class WP_MS_Users_List_Table extends WP_List_Table {
 	 * @param string $primary     Primary column name.
 	 * @return string Row actions output for users in Multisite.
 	 */
-	protected function handle_row_actions( $user, $column_name, $primary ) {
+	protected function handle_row_actions( $user, $column_name, $primary ) { yeah(__METHOD__);
 		if ( $primary !== $column_name ) {
 			return '';
 		}

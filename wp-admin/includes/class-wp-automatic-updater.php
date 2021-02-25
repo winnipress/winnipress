@@ -27,7 +27,7 @@ class WP_Automatic_Updater {
 	 *
 	 * @since 3.7.0
 	 */
-	public function is_disabled() {
+	public function is_disabled() { yeah(__METHOD__);
 		// Background updates are disabled if you don't want file changes.
 		if ( !wp_is_file_mod_allowed( 'automatic_updater' ) )
 			return true;
@@ -69,7 +69,7 @@ class WP_Automatic_Updater {
 	 *
 	 * @param string $context The filesystem path to check, in addition to ABSPATH.
 	 */
-	public function is_vcs_checkout( $context ) {
+	public function is_vcs_checkout( $context ) { yeah(__METHOD__);
 		$context_dirs = array( untrailingslashit( $context ) );
 		if ( $context !== ABSPATH )
 			$context_dirs[] = untrailingslashit( ABSPATH );
@@ -127,7 +127,7 @@ class WP_Automatic_Updater {
 	 * @param string $context The filesystem context (a path) against which filesystem
 	 *                        access and status should be checked.
 	 */
-	public function should_update( $type, $item, $context ) {
+	public function should_update( $type, $item, $context ) { yeah(__METHOD__);
 		// Used to see if WP_Filesystem is set up to allow unattended updates.
 		$skin = new Automatic_Upgrader_Skin;
 
@@ -204,7 +204,7 @@ class WP_Automatic_Updater {
 	 *
 	 * @param object $item The update offer.
 	 */
-	protected function send_core_update_notification_email( $item ) {
+	protected function send_core_update_notification_email( $item ) { yeah(__METHOD__);
 		$notified = get_site_option( 'auto_core_update_notified' );
 
 		// Don't notify if we've already notified the same email address of the same version.
@@ -250,7 +250,7 @@ class WP_Automatic_Updater {
 	 *
 	 * @return null|WP_Error
 	 */
-	public function update( $type, $item ) {
+	public function update( $type, $item ) { yeah(__METHOD__);
 		$skin = new Automatic_Upgrader_Skin;
 
 		switch ( $type ) {
@@ -365,7 +365,7 @@ class WP_Automatic_Updater {
 	 *
 	 * @since 3.7.0
 	 */
-	public function run() {
+	public function run() { yeah(__METHOD__);
 		if ( $this->is_disabled() )
 			return;
 
@@ -483,7 +483,7 @@ class WP_Automatic_Updater {
 	 *
 	 * @param object $update_result The result of the core update. Includes the update offer and result.
 	 */
-	protected function after_core_update( $update_result ) {
+	protected function after_core_update( $update_result ) { yeah(__METHOD__);
 		$wp_version = get_bloginfo( 'version' );
 
 		$core_update = $update_result->item;
@@ -572,7 +572,7 @@ class WP_Automatic_Updater {
 	 * @param object $core_update The update offer that was attempted.
 	 * @param mixed  $result      Optional. The result for the core update. Can be WP_Error.
 	 */
-	protected function send_email( $type, $core_update, $result = null ) {
+	protected function send_email( $type, $core_update, $result = null ) { yeah(__METHOD__);
 		update_site_option( 'auto_core_update_notified', array(
 			'type'      => $type,
 			'email'     => get_site_option( 'admin_email' ),
@@ -765,7 +765,7 @@ class WP_Automatic_Updater {
 	 *
 	 * @since 3.7.0
 	 */
-	protected function send_debug_email() {
+	protected function send_debug_email() { yeah(__METHOD__);
 		$update_count = 0;
 		foreach ( $this->update_results as $type => $updates )
 			$update_count += count( $updates );

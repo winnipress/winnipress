@@ -32,7 +32,7 @@ class WP_Upgrader_Skin {
 	 *
 	 * @param array $args
 	 */
-	public function __construct($args = array()) {
+	public function __construct($args = array()) { yeah(__METHOD__);
 		$defaults = array( 'url' => '', 'nonce' => '', 'title' => '', 'context' => false);
 		$this->options = wp_parse_args($args, $defaults);
 	}
@@ -41,7 +41,7 @@ class WP_Upgrader_Skin {
 	 *
 	 * @param WP_Upgrader $upgrader
 	 */
-	public function set_upgrader(&$upgrader) {
+	public function set_upgrader(&$upgrader) { yeah(__METHOD__);
 		if ( is_object($upgrader))
 			$this->upgrader =& $upgrader;
 		$this->add_strings();
@@ -49,7 +49,7 @@ class WP_Upgrader_Skin {
 
 	/**
 	 */
-	public function add_strings() {
+	public function add_strings() { yeah(__METHOD__);
 	}
 
 	/**
@@ -59,7 +59,7 @@ class WP_Upgrader_Skin {
 	 *
 	 * @param string|bool|WP_Error $result The result of an upgrade.
 	 */
-	public function set_result( $result) {
+	public function set_result( $result) { yeah(__METHOD__);
 		$this->result = $result;
 	}
 
@@ -79,7 +79,7 @@ class WP_Upgrader_Skin {
 	 * @param bool   $allow_relaxed_file_ownership Optional. Whether to allow Group/World writable. Default false.
 	 * @return bool False on failure, true on success.
 	 */
-	public function request_filesystem_credentials( $error = false, $context = '', $allow_relaxed_file_ownership = false) {
+	public function request_filesystem_credentials( $error = false, $context = '', $allow_relaxed_file_ownership = false) { yeah(__METHOD__);
 		$url = $this->options['url'];
 		if ( !$context) {
 			$context = $this->options['context'];
@@ -95,7 +95,7 @@ class WP_Upgrader_Skin {
 
 	/**
 	 */
-	public function header() {
+	public function header() { yeah(__METHOD__);
 		if ( $this->done_header) {
 			return;
 		}
@@ -106,7 +106,7 @@ class WP_Upgrader_Skin {
 
 	/**
 	 */
-	public function footer() {
+	public function footer() { yeah(__METHOD__);
 		if ( $this->done_footer) {
 			return;
 		}
@@ -118,7 +118,7 @@ class WP_Upgrader_Skin {
 	 *
 	 * @param string|WP_Error $errors
 	 */
-	public function error($errors) {
+	public function error($errors) { yeah(__METHOD__);
 		if ( !$this->done_header)
 			$this->header();
 		if ( is_string($errors)) {
@@ -137,7 +137,7 @@ class WP_Upgrader_Skin {
 	 *
 	 * @param string $string
 	 */
-	public function feedback($string) {
+	public function feedback($string) { yeah(__METHOD__);
 		if ( isset( $this->upgrader->strings[$string]))
 			$string = $this->upgrader->strings[$string];
 
@@ -157,11 +157,11 @@ class WP_Upgrader_Skin {
 
 	/**
 	 */
-	public function before() {}
+	public function before() { yeah(__METHOD__);}
 
 	/**
 	 */
-	public function after() {}
+	public function after() { yeah(__METHOD__);}
 
 	/**
 	 * Output JavaScript that calls function to decrement the update counts.
@@ -171,7 +171,7 @@ class WP_Upgrader_Skin {
 	 * @param string $type Type of update count to decrement. Likely values include 'plugin',
 	 *                     'theme', 'translation', etc.
 	 */
-	protected function decrement_update_count( $type) {
+	protected function decrement_update_count( $type) { yeah(__METHOD__);
 		if ( !$this->result || is_wp_error( $this->result) || 'up_to_date' === $this->result) {
 			return;
 		}
@@ -184,7 +184,7 @@ class WP_Upgrader_Skin {
 				</script>';
 		} else {
 			echo '<script type="text/javascript">
-					(function( wp) {
+					(function( wp) { yeah(__METHOD__);
 						if ( wp && wp.updates.decrementCount) {
 							wp.updates.decrementCount( "' . $type . '");
 						}
@@ -195,9 +195,9 @@ class WP_Upgrader_Skin {
 
 	/**
 	 */
-	public function bulk_header() {}
+	public function bulk_header() { yeah(__METHOD__);}
 
 	/**
 	 */
-	public function bulk_footer() {}
+	public function bulk_footer() { yeah(__METHOD__);}
 }

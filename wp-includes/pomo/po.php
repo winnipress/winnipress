@@ -28,7 +28,7 @@ class PO extends Gettext_Translations {
 	 *
 	 * @return string msgid/msgstr PO entry for this PO file headers, doesn't contain newline at the end
 	 */
-	function export_headers(){
+	function export_headers(){ yeah(__METHOD__);
 		$header_string = '';
 		foreach($this->headers as $header => $value){
 			$header_string.= "$header: $value\n";
@@ -46,7 +46,7 @@ class PO extends Gettext_Translations {
 	 *
 	 * @return string sequence of mgsgid/msgstr PO strings, doesn't containt newline at the end
 	 */
-	function export_entries(){
+	function export_entries(){ yeah(__METHOD__);
 		//TODO sorting
 		return implode("\n\n", array_map(array('PO', 'export_entry'), $this->entries));
 	}
@@ -57,7 +57,7 @@ class PO extends Gettext_Translations {
 	 * @param bool $include_headers whether to include the headers in the export
 	 * @return string ready for inclusion in PO file string for headers and all the enrtries
 	 */
-	function export($include_headers = true){
+	function export($include_headers = true){ yeah(__METHOD__);
 		$res = '';
 		if ($include_headers){
 			$res .= $this->export_headers();
@@ -74,7 +74,7 @@ class PO extends Gettext_Translations {
 	 * @param bool $include_headers whether to include tje headers in the export
 	 * @return bool true on success, false on error
 	 */
-	function export_to_file($filename, $include_headers = true){
+	function export_to_file($filename, $include_headers = true){ yeah(__METHOD__);
 		$fh = fopen($filename, 'w');
 		if (false === $fh) return false;
 		$export = $this->export($include_headers);
@@ -88,7 +88,7 @@ class PO extends Gettext_Translations {
 	 *
 	 * Doesn't need to include # in the beginning of lines, these are added automatically
 	 */
-	function set_comment_before_headers($text ){
+	function set_comment_before_headers($text ){ yeah(__METHOD__);
 		$this->comments_before_headers = $text;
 	}
 
@@ -99,7 +99,7 @@ class PO extends Gettext_Translations {
 	 * @param string $string the string to format
 	 * @return string the poified string
 	 */
-	public static function poify($string){
+	public static function poify($string){ yeah(__METHOD__);
 		$quote = '"';
 		$slash = '\\';
 		$newline = "\n";
@@ -130,7 +130,7 @@ class PO extends Gettext_Translations {
 	 * @param string $string PO-formatted string
 	 * @return string enascaped string
 	 */
-	public static function unpoify($string){
+	public static function unpoify($string){ yeah(__METHOD__);
 		$escapes = array('t' => "\t", 'n' => "\n", 'r' => "\r", '\\' => '\\');
 		$lines = array_map('trim', explode("\n", $string));
 		$lines = array_map(array('PO', 'trim_quotes'), $lines);
@@ -166,7 +166,7 @@ class PO extends Gettext_Translations {
 	 * @param string $string prepend lines in this string
 	 * @param string $with prepend lines with this string
 	 */
-	public static function prepend_each_line($string, $with){
+	public static function prepend_each_line($string, $with){ yeah(__METHOD__);
 		$lines = explode("\n", $string);
 		$append = '';
 		if ("\n" === substr($string, -1) && '' === end($lines)){
@@ -192,7 +192,7 @@ class PO extends Gettext_Translations {
 	 * @param string $char character to denote a special PO comment,
 	 * 	like :, default is a space
 	 */
-	public static function comment_block($text, $char=' '){
+	public static function comment_block($text, $char=' '){ yeah(__METHOD__);
 		$text = wordwrap($text, PO_MAX_LINE_LEN - 3);
 		return PO::prepend_each_line($text, "#$char ");
 	}
@@ -205,7 +205,7 @@ class PO extends Gettext_Translations {
 	 * @return false|string PO-style formatted string for the entry or
 	 * 	false if the entry is empty
 	 */
-	public static function export_entry(&$entry){
+	public static function export_entry(&$entry){ yeah(__METHOD__);
 		if (null === $entry->singular || '' === $entry->singular ) return false;
 		$po = array();
 		if (!empty($entry->translator_comments)) $po[] = PO::comment_block($entry->translator_comments);
@@ -229,7 +229,7 @@ class PO extends Gettext_Translations {
 		return implode("\n", $po);
 	}
 
-	public static function match_begin_and_end_newlines($translation, $original ){
+	public static function match_begin_and_end_newlines($translation, $original ){ yeah(__METHOD__);
 		if ('' === $translation ){
 			return $translation;
 		}
@@ -262,7 +262,7 @@ class PO extends Gettext_Translations {
 	 * @param string $filename
 	 * @return boolean
 	 */
-	function import_from_file($filename){
+	function import_from_file($filename){ yeah(__METHOD__);
 		$f = fopen($filename, 'r');
 		if (!$f) return false;
 		$lineno = 0;
@@ -290,7 +290,7 @@ class PO extends Gettext_Translations {
 	 * @param string $context
 	 * @return bool
 	 */
-	protected static function is_final($context){
+	protected static function is_final($context){ yeah(__METHOD__);
 		return ($context === 'msgstr') || ($context === 'msgstr_plural');
 	}
 
@@ -299,7 +299,7 @@ class PO extends Gettext_Translations {
 	 * @param int      $lineno
 	 * @return null|false|array
 	 */
-	function read_entry($f, $lineno = 0){
+	function read_entry($f, $lineno = 0){ yeah(__METHOD__);
 		$entry = new Translation_Entry();
 		// where were we in the last step
 		// can be: comment, msgctxt, msgid, msgid_plural, msgstr, msgstr_plural
@@ -420,7 +420,7 @@ class PO extends Gettext_Translations {
 	 * @param     string   $action
 	 * @return boolean
 	 */
-	function read_line($f, $action = 'read'){
+	function read_line($f, $action = 'read'){ yeah(__METHOD__);
 		static $last_line = '';
 		static $use_last_line = false;
 		if ('clear' == $action){
@@ -442,7 +442,7 @@ class PO extends Gettext_Translations {
 	 * @param Translation_Entry $entry
 	 * @param string            $po_comment_line
 	 */
-	function add_comment_to_entry(&$entry, $po_comment_line){
+	function add_comment_to_entry(&$entry, $po_comment_line){ yeah(__METHOD__);
 		$first_two = substr($po_comment_line, 0, 2);
 		$comment = trim(substr($po_comment_line, 2));
 		if ('#:' == $first_two){
@@ -460,7 +460,7 @@ class PO extends Gettext_Translations {
 	 * @param string $s
 	 * @return sring
 	 */
-	public static function trim_quotes($s){
+	public static function trim_quotes($s){ yeah(__METHOD__);
 		if (substr($s, 0, 1) == '"') $s = substr($s, 1);
 		if (substr($s, -1, 1) == '"') $s = substr($s, 0, -1);
 		return $s;

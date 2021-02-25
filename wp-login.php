@@ -30,7 +30,7 @@ if(force_ssl_admin() && !is_ssl()){
  * @param string   $message  Optional. Message to display in header. Default empty.
  * @param WP_Error $wp_error Optional. The error to pass. Default is a WP_Error instance.
  */
-function login_header($title = 'Log In', $message = '', $wp_error = null){
+function login_header($title = 'Log In', $message = '', $wp_error = null){ yeah(__METHOD__);
 	global $error, $interim_login, $action;
 
 	// Don't index any of these forms
@@ -244,7 +244,7 @@ function login_header($title = 'Log In', $message = '', $wp_error = null){
  *
  * @param string $input_id Which input to auto-focus
  */
-function login_footer($input_id = ''){
+function login_footer($input_id = ''){ yeah(__METHOD__);
 	global $interim_login;
 
 	// Don't allow interim logins to navigate away from the page.
@@ -281,7 +281,7 @@ function login_footer($input_id = ''){
 /**
  * @since 3.0.0
  */
-function wp_shake_js(){
+function wp_shake_js(){ yeah(__METHOD__);
 ?>
 <script type="text/javascript">
 addLoadEvent = function(func){if(typeof jQuery!="undefined")jQuery(document).ready(func);else if(typeof wpOnload!='function'){wpOnload=func;}else{var oldonload=wpOnload;wpOnload=function(){oldonload();func();}}};
@@ -296,7 +296,7 @@ addLoadEvent(function(){ var p=new Array(15,30,15,0,-15,-30,-15,0);p=p.concat(p.
 /**
  * @since 3.7.0
  */
-function wp_login_viewport_meta(){
+function wp_login_viewport_meta(){ yeah(__METHOD__);
 	?>
 	<meta name="viewport" content="width=device-width" />
 	<?php
@@ -307,7 +307,7 @@ function wp_login_viewport_meta(){
  *
  * @return bool|WP_Error True: when finish. WP_Error on error
  */
-function retrieve_password(){
+function retrieve_password(){ yeah(__METHOD__);
 	$errors = new WP_Error();
 
 	if(empty($_POST['user_login']) || !is_string($_POST['user_login'])){

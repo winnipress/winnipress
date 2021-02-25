@@ -27,7 +27,7 @@ define('REST_API_VERSION', '2.0' );
  *                          false merges (with newer overriding if duplicate keys exist). Default false.
  * @return bool True on success, false on error.
  */
-function register_rest_route($namespace, $route, $args = array(), $override = false ){
+function register_rest_route($namespace, $route, $args = array(), $override = false ){ yeah(__METHOD__);
 	if (empty($namespace ) ){
 		/*
 		 * Non-namespaced routes are not allowed, with the exception of the main
@@ -97,7 +97,7 @@ function register_rest_route($namespace, $route, $args = array(), $override = fa
  *                                              this field. Default is 'null', no schema entry will be returned.
  * }
  */
-function register_rest_field($object_type, $attribute, $args = array() ){
+function register_rest_field($object_type, $attribute, $args = array() ){ yeah(__METHOD__);
 	$defaults = array(
 		'get_callback'    => null,
 		'update_callback' => null,
@@ -123,7 +123,7 @@ function register_rest_field($object_type, $attribute, $args = array() ){
  * @see rest_api_register_rewrites()
  * @global WP $wp Current WordPress environment instance.
  */
-function rest_api_init(){
+function rest_api_init(){ yeah(__METHOD__);
 	rest_api_register_rewrites();
 
 	global $wp;
@@ -138,7 +138,7 @@ function rest_api_init(){
  * @see add_rewrite_rule()
  * @global WP_Rewrite $wp_rewrite
  */
-function rest_api_register_rewrites(){
+function rest_api_register_rewrites(){ yeah(__METHOD__);
 	global $wp_rewrite;
 
 	add_rewrite_rule('^' . rest_get_url_prefix() . '/?$','index.php?rest_route=/','top' );
@@ -155,7 +155,7 @@ function rest_api_register_rewrites(){
  *
  * @since 4.4.0
  */
-function rest_api_default_filters(){
+function rest_api_default_filters(){ yeah(__METHOD__);
 	// Deprecated reporting.
 	add_action('deprecated_function_run', 'rest_handle_deprecated_function', 10, 3 );
 	add_filter('deprecated_function_trigger_error', '__return_false' );
@@ -175,7 +175,7 @@ function rest_api_default_filters(){
  *
  * @since 4.7.0
  */
-function create_initial_rest_routes(){
+function create_initial_rest_routes(){ yeah(__METHOD__);
 	foreach (get_post_types(array('show_in_rest' => true ), 'objects' ) as $post_type ){
 		$class = !empty($post_type->rest_controller_class ) ? $post_type->rest_controller_class : 'WP_REST_Posts_Controller';
 
@@ -242,7 +242,7 @@ function create_initial_rest_routes(){
  *
  * @global WP             $wp             Current WordPress environment instance.
  */
-function rest_api_loaded(){
+function rest_api_loaded(){ yeah(__METHOD__);
 	if (empty($GLOBALS['wp']->query_vars['rest_route'] ) ){
 		return;
 	}
@@ -276,7 +276,7 @@ function rest_api_loaded(){
  *
  * @return string Prefix.
  */
-function rest_get_url_prefix(){
+function rest_get_url_prefix(){ yeah(__METHOD__);
 	/**
 	 * Filters the REST URL prefix.
 	 *
@@ -302,7 +302,7 @@ function rest_get_url_prefix(){
  * @param string $scheme  Optional. Sanitization scheme. Default 'rest'.
  * @return string Full URL to the endpoint.
  */
-function get_rest_url($blog_id = null, $path = '/', $scheme = 'rest' ){
+function get_rest_url($blog_id = null, $path = '/', $scheme = 'rest' ){ yeah(__METHOD__);
 	if (empty($path ) ){
 		$path = '/';
 	}
@@ -371,7 +371,7 @@ function get_rest_url($blog_id = null, $path = '/', $scheme = 'rest' ){
  * @param string $scheme Optional. Sanitization scheme. Default 'json'.
  * @return string Full URL to the endpoint.
  */
-function rest_url($path = '', $scheme = 'json' ){
+function rest_url($path = '', $scheme = 'json' ){ yeah(__METHOD__);
 	return get_rest_url(null, $path, $scheme );
 }
 
@@ -385,7 +385,7 @@ function rest_url($path = '', $scheme = 'json' ){
  * @param WP_REST_Request|string $request Request.
  * @return WP_REST_Response REST response.
  */
-function rest_do_request($request ){
+function rest_do_request($request ){ yeah(__METHOD__);
 	$request = rest_ensure_request($request );
 	return rest_get_server()->dispatch($request );
 }
@@ -401,7 +401,7 @@ function rest_do_request($request ){
  *
  * @return WP_REST_Server REST server instance.
  */
-function rest_get_server(){
+function rest_get_server(){ yeah(__METHOD__);
 	/* @var WP_REST_Server $wp_rest_server */
 	global $wp_rest_server;
 
@@ -443,7 +443,7 @@ function rest_get_server(){
  * @param array|WP_REST_Request $request Request to check.
  * @return WP_REST_Request REST request instance.
  */
-function rest_ensure_request($request ){
+function rest_ensure_request($request ){ yeah(__METHOD__);
 	if ($request instanceof WP_REST_Request ){
 		return $request;
 	}
@@ -465,7 +465,7 @@ function rest_ensure_request($request ){
  *                                is already an instance, WP_HTTP_Response, otherwise
  *                                returns a new WP_REST_Response instance.
  */
-function rest_ensure_response($response ){
+function rest_ensure_response($response ){ yeah(__METHOD__);
 	if (is_wp_error($response ) ){
 		return $response;
 	}
@@ -486,7 +486,7 @@ function rest_ensure_response($response ){
  * @param string $replacement The function that should have been called.
  * @param string $version     Version.
  */
-function rest_handle_deprecated_function($function, $replacement, $version ){
+function rest_handle_deprecated_function($function, $replacement, $version ){ yeah(__METHOD__);
 	if (!WP_DEBUG || headers_sent() ){
 		return;
 	}
@@ -510,7 +510,7 @@ function rest_handle_deprecated_function($function, $replacement, $version ){
  * @param string $message     A message regarding the change.
  * @param string $version     Version.
  */
-function rest_handle_deprecated_argument($function, $message, $version ){
+function rest_handle_deprecated_argument($function, $message, $version ){ yeah(__METHOD__);
 	if (!WP_DEBUG || headers_sent() ){
 		return;
 	}
@@ -533,7 +533,7 @@ function rest_handle_deprecated_argument($function, $message, $version ){
  * @param mixed $value Response data.
  * @return mixed Response data.
  */
-function rest_send_cors_headers($value ){
+function rest_send_cors_headers($value ){ yeah(__METHOD__);
 	$origin = get_http_origin();
 
 	if ($origin ){
@@ -565,7 +565,7 @@ function rest_send_cors_headers($value ){
  * @param WP_REST_Request $request  The request that was used to make current response.
  * @return WP_REST_Response Modified response, either response or `null` to indicate pass-through.
  */
-function rest_handle_options_request($response, $handler, $request ){
+function rest_handle_options_request($response, $handler, $request ){ yeah(__METHOD__);
 	if (!empty($response ) || $request->get_method() !== 'OPTIONS' ){
 		return $response;
 	}
@@ -599,7 +599,7 @@ function rest_handle_options_request($response, $handler, $request ){
  * @param WP_REST_Request  $request  The request that was used to make current response.
  * @return WP_REST_Response Response to be served, with "Allow" header if route has allowed methods.
  */
-function rest_send_allow_header($response, $server, $request ){
+function rest_send_allow_header($response, $server, $request ){ yeah(__METHOD__);
 	$matched_route = $response->get_matched_route();
 
 	if (!$matched_route ){
@@ -646,7 +646,7 @@ function rest_send_allow_header($response, $server, $request ){
  *
  * @return WP_REST_Response Response to be served, trimmed down to contain a subset of fields.
  */
-function rest_filter_response_fields($response, $server, $request ){
+function rest_filter_response_fields($response, $server, $request ){ yeah(__METHOD__);
 	if (!isset($request['_fields'] ) || $response->is_error() ){
 		return $response;
 	}
@@ -685,7 +685,7 @@ function rest_filter_response_fields($response, $server, $request ){
  *
  * @see get_rest_url()
  */
-function rest_output_rsd(){
+function rest_output_rsd(){ yeah(__METHOD__);
 	$api_root = get_rest_url();
 
 	if (empty($api_root ) ){
@@ -703,7 +703,7 @@ function rest_output_rsd(){
  *
  * @see get_rest_url()
  */
-function rest_output_link_wp_head(){
+function rest_output_link_wp_head(){ yeah(__METHOD__);
 	$api_root = get_rest_url();
 
 	if (empty($api_root ) ){
@@ -718,7 +718,7 @@ function rest_output_link_wp_head(){
  *
  * @since 4.4.0
  */
-function rest_output_link_header(){
+function rest_output_link_header(){ yeah(__METHOD__);
 	if (headers_sent() ){
 		return;
 	}
@@ -748,7 +748,7 @@ function rest_output_link_header(){
  *                               if not.
  * @return WP_Error|mixed|bool WP_Error if the cookie is invalid, the $result, otherwise true.
  */
-function rest_cookie_check_errors($result ){
+function rest_cookie_check_errors($result ){ yeah(__METHOD__);
 	if (!empty($result ) ){
 		return $result;
 	}
@@ -802,7 +802,7 @@ function rest_cookie_check_errors($result ){
  * @see current_action()
  * @global mixed $wp_rest_auth_cookie
  */
-function rest_cookie_collect_status(){
+function rest_cookie_collect_status(){ yeah(__METHOD__);
 	global $wp_rest_auth_cookie;
 
 	$status_type = current_action();
@@ -825,7 +825,7 @@ function rest_cookie_collect_status(){
  *                          the timestamp's timezone. Default false.
  * @return int Unix timestamp.
  */
-function rest_parse_date($date, $force_utc = false ){
+function rest_parse_date($date, $force_utc = false ){ yeah(__METHOD__);
 	if ($force_utc ){
 		$date = preg_replace('/[+-]\d+:?\d+$/', '+00:00', $date );
 	}
@@ -851,7 +851,7 @@ function rest_parse_date($date, $force_utc = false ){
  * @return array|null Local and UTC datetime strings, in MySQL datetime format (Y-m-d H:i:s),
  *                    null on failure.
  */
-function rest_get_date_with_gmt($date, $is_utc = false ){
+function rest_get_date_with_gmt($date, $is_utc = false ){ yeah(__METHOD__);
 	// Whether or not the original date actually has a timezone string
 	// changes the way we need to do timezone conversion.  Store this info
 	// before parsing the date, and use it later.
@@ -885,7 +885,7 @@ function rest_get_date_with_gmt($date, $is_utc = false ){
  *
  * @return integer 401 if the user is not logged in, 403 if the user is logged in.
  */
-function rest_authorization_required_code(){
+function rest_authorization_required_code(){ yeah(__METHOD__);
 	return is_user_logged_in() ? 403 : 401;
 }
 
@@ -899,7 +899,7 @@ function rest_authorization_required_code(){
  * @param  string           $param
  * @return WP_Error|boolean
  */
-function rest_validate_request_arg($value, $request, $param ){
+function rest_validate_request_arg($value, $request, $param ){ yeah(__METHOD__);
 	$attributes = $request->get_attributes();
 	if (!isset($attributes['args'][ $param ] ) || !is_array($attributes['args'][ $param ] ) ){
 		return true;
@@ -919,7 +919,7 @@ function rest_validate_request_arg($value, $request, $param ){
  * @param  string           $param
  * @return mixed
  */
-function rest_sanitize_request_arg($value, $request, $param ){
+function rest_sanitize_request_arg($value, $request, $param ){ yeah(__METHOD__);
 	$attributes = $request->get_attributes();
 	if (!isset($attributes['args'][ $param ] ) || !is_array($attributes['args'][ $param ] ) ){
 		return $value;
@@ -942,7 +942,7 @@ function rest_sanitize_request_arg($value, $request, $param ){
  * @param  string           $param
  * @return mixed
  */
-function rest_parse_request_arg($value, $request, $param ){
+function rest_parse_request_arg($value, $request, $param ){ yeah(__METHOD__);
 	$is_valid = rest_validate_request_arg($value, $request, $param );
 
 	if (is_wp_error($is_valid ) ){
@@ -964,7 +964,7 @@ function rest_parse_request_arg($value, $request, $param ){
  * @param  string $ip IP address.
  * @return string|false The valid IP address, otherwise false.
  */
-function rest_is_ip_address($ip ){
+function rest_is_ip_address($ip ){ yeah(__METHOD__);
 	$ipv4_pattern = '/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/';
 
 	if (!preg_match($ipv4_pattern, $ip ) && !Requests_IPv6::check_ipv6($ip ) ){
@@ -982,7 +982,7 @@ function rest_is_ip_address($ip ){
  * @param bool|string|int $value The value being evaluated.
  * @return boolean Returns the proper associated boolean value.
  */
-function rest_sanitize_boolean($value ){
+function rest_sanitize_boolean($value ){ yeah(__METHOD__);
 	// String values are translated to `true`; make sure 'false' is false.
 	if (is_string($value )  ){
 		$value = strtolower($value );
@@ -1003,7 +1003,7 @@ function rest_sanitize_boolean($value ){
  * @param bool|string $maybe_bool The value being evaluated.
  * @return boolean True if a boolean, otherwise false.
  */
-function rest_is_boolean($maybe_bool ){
+function rest_is_boolean($maybe_bool ){ yeah(__METHOD__);
 	if (is_bool($maybe_bool ) ){
 		return true;
 	}
@@ -1038,7 +1038,7 @@ function rest_is_boolean($maybe_bool ){
  * @param string $email Email address.
  * @return array $urls Gravatar url for each size.
  */
-function rest_get_avatar_urls($email ){
+function rest_get_avatar_urls($email ){ yeah(__METHOD__);
 	$avatar_sizes = rest_get_avatar_sizes();
 
 	$urls = array();
@@ -1056,7 +1056,7 @@ function rest_get_avatar_urls($email ){
  *
  * @return array List of pixel sizes for avatars. Default `[ 24, 48, 96 ]`.
  */
-function rest_get_avatar_sizes(){
+function rest_get_avatar_sizes(){ yeah(__METHOD__);
 	/**
 	 * Filters the REST avatar sizes.
 	 *
@@ -1081,7 +1081,7 @@ function rest_get_avatar_sizes(){
  * @param string $param The parameter name, used in error messages.
  * @return true|WP_Error
  */
-function rest_validate_value_from_schema($value, $args, $param = '' ){
+function rest_validate_value_from_schema($value, $args, $param = '' ){ yeah(__METHOD__);
 	if ('array' === $args['type'] ){
 		if (!is_array($value ) ){
 			$value = preg_split('/[\s,]+/', $value );
@@ -1222,7 +1222,7 @@ function rest_validate_value_from_schema($value, $args, $param = '' ){
  * @param array $args  Schema array to use for sanitization.
  * @return true|WP_Error
  */
-function rest_sanitize_value_from_schema($value, $args ){
+function rest_sanitize_value_from_schema($value, $args ){ yeah(__METHOD__);
 	if ('array' === $args['type'] ){
 		if (empty($args['items'] ) ){
 			return (array) $value;

@@ -26,7 +26,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 * @param WP_REST_Request $request       Optional. Request to prepare items for.
 	 * @return array Array of query arguments.
 	 */
-	protected function prepare_items_query($prepared_args = array(), $request = null ){
+	protected function prepare_items_query($prepared_args = array(), $request = null ){ yeah(__METHOD__);
 		$query_args = parent::prepare_items_query($prepared_args, $request );
 
 		if (empty($query_args['post_status'] ) ){
@@ -62,7 +62,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|true Boolean true if the attachment may be created, or a WP_Error if not.
 	 */
-	public function create_item_permissions_check($request ){
+	public function create_item_permissions_check($request ){ yeah(__METHOD__);
 		$ret = parent::create_item_permissions_check($request );
 
 		if (!$ret || is_wp_error($ret ) ){
@@ -94,7 +94,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response Response object on success, WP_Error object on failure.
 	 */
-	public function create_item($request ){
+	public function create_item($request ){ yeah(__METHOD__);
 
 		if (!empty($request['post'] ) && in_array(get_post_type($request['post'] ), array('revision', 'attachment' ), true ) ){
 			return new WP_Error('rest_invalid_param', __('Invalid parent type.' ), array('status' => 400 ) );
@@ -201,7 +201,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response Response object on success, WP_Error object on failure.
 	 */
-	public function update_item($request ){
+	public function update_item($request ){ yeah(__METHOD__);
 		if (!empty($request['post'] ) && in_array(get_post_type($request['post'] ), array('revision', 'attachment' ), true ) ){
 			return new WP_Error('rest_invalid_param', __('Invalid parent type.' ), array('status' => 400 ) );
 		}
@@ -245,7 +245,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_Error|stdClass $prepared_attachment Post object.
 	 */
-	protected function prepare_item_for_database($request ){
+	protected function prepare_item_for_database($request ){ yeah(__METHOD__);
 		$prepared_attachment = parent::prepare_item_for_database($request );
 
 		// Attachment caption (post_excerpt internally)
@@ -282,7 +282,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response($post, $request ){
+	public function prepare_item_for_response($post, $request ){ yeah(__METHOD__);
 		$response = parent::prepare_item_for_response($post, $request );
 		$fields   = $this->get_fields_for_response($request );
 		$data     = $response->get_data();
@@ -395,7 +395,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @return array Item schema as an array.
 	 */
-	public function get_item_schema(){
+	public function get_item_schema(){ yeah(__METHOD__);
 
 		$schema = parent::get_item_schema();
 
@@ -504,7 +504,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 * @param array $headers HTTP headers from the request.
 	 * @return array|WP_Error Data from wp_handle_sideload().
 	 */
-	protected function upload_from_data($data, $headers ){
+	protected function upload_from_data($data, $headers ){ yeah(__METHOD__);
 		if (empty($data ) ){
 			return new WP_Error('rest_upload_no_data', __('No data supplied.' ), array('status' => 400 ) );
 		}
@@ -608,7 +608,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 * @param string[] $disposition_header List of Content-Disposition header values.
 	 * @return string|null Filename if available, or null if not found.
 	 */
-	public static function get_filename_from_disposition($disposition_header ){
+	public static function get_filename_from_disposition($disposition_header ){ yeah(__METHOD__);
 		// Get the filename.
 		$filename = null;
 
@@ -656,7 +656,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @return array Query parameters for the attachment collection as an array.
 	 */
-	public function get_collection_params(){
+	public function get_collection_params(){ yeah(__METHOD__);
 		$params = parent::get_collection_params();
 		$params['status']['default'] = 'inherit';
 		$params['status']['items']['enum'] = array('inherit', 'private', 'trash' );
@@ -688,7 +688,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 * @param string          $parameter Additional parameter to pass for validation.
 	 * @return WP_Error|bool True if the user may query, WP_Error if not.
 	 */
-	public function validate_user_can_query_private_statuses($value, $request, $parameter ){
+	public function validate_user_can_query_private_statuses($value, $request, $parameter ){ yeah(__METHOD__);
 		if ('inherit' === $value ){
 			return true;
 		}
@@ -705,7 +705,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 * @param array $headers HTTP headers from the request.
 	 * @return array|WP_Error Data from wp_handle_upload().
 	 */
-	protected function upload_from_file($files, $headers ){
+	protected function upload_from_file($files, $headers ){ yeah(__METHOD__);
 		if (empty($files ) ){
 			return new WP_Error('rest_upload_no_data', __('No data supplied.' ), array('status' => 400 ) );
 		}
@@ -757,7 +757,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @return array Array of supported media types.
 	 */
-	protected function get_media_types(){
+	protected function get_media_types(){ yeah(__METHOD__);
 		$media_types = array();
 
 		foreach (get_allowed_mime_types() as $mime_type ){
@@ -783,7 +783,7 @@ class WP_REST_Attachments_Controller extends WP_REST_Posts_Controller {
 	 * @param array $file $_FILES array for a given file.
 	 * @return true|WP_Error True if can upload, error for errors.
 	 */
-	protected function check_upload_size($file ){
+	protected function check_upload_size($file ){ yeah(__METHOD__);
 		if (!is_multisite() ){
 			return true;
 		}

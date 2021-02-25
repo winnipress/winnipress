@@ -25,7 +25,7 @@ class Language_Pack_Upgrader_Skin extends WP_Upgrader_Skin {
 	 *
 	 * @param array $args
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( $args = array() ) { yeah(__METHOD__);
 		$defaults = array( 'url' => '', 'nonce' => '', 'title' => __( 'Update Translations' ), 'skip_header_footer' => false );
 		$args = wp_parse_args( $args, $defaults );
 		if ( $args['skip_header_footer'] ) {
@@ -38,7 +38,7 @@ class Language_Pack_Upgrader_Skin extends WP_Upgrader_Skin {
 
 	/**
 	 */
-	public function before() {
+	public function before() { yeah(__METHOD__);
 		$name = $this->upgrader->get_name_for_update( $this->language_update );
 
 		echo '<div class="update-messages lp-show-latest">';
@@ -50,7 +50,7 @@ class Language_Pack_Upgrader_Skin extends WP_Upgrader_Skin {
 	 *
 	 * @param string|WP_Error $error
 	 */
-	public function error( $error ) {
+	public function error( $error ) { yeah(__METHOD__);
 		echo '<div class="lp-error">';
 		parent::error( $error );
 		echo '</div>';
@@ -58,13 +58,13 @@ class Language_Pack_Upgrader_Skin extends WP_Upgrader_Skin {
 
 	/**
 	 */
-	public function after() {
+	public function after() { yeah(__METHOD__);
 		echo '</div>';
 	}
 
 	/**
 	 */
-	public function bulk_footer() {
+	public function bulk_footer() { yeah(__METHOD__);
 		$this->decrement_update_count( 'translation' );
 		$update_actions = array();
 		$update_actions['updates_page'] = '<a href="' . self_admin_url( 'update-core.php' ) . '" target="_parent">' . __( 'Return to WordPress Updates page' ) . '</a>';

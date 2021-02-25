@@ -21,7 +21,7 @@ class WP_Post_Comments_List_Table extends WP_Comments_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_column_info() {
+	protected function get_column_info() { yeah(__METHOD__);
 		return array(
 			array(
 				'author'   => __( 'Author' ),
@@ -37,7 +37,7 @@ class WP_Post_Comments_List_Table extends WP_Comments_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_table_classes() {
+	protected function get_table_classes() { yeah(__METHOD__);
 		$classes = parent::get_table_classes();
 		$classes[] = 'wp-list-table';
 		$classes[] = 'comments-box';
@@ -48,7 +48,7 @@ class WP_Post_Comments_List_Table extends WP_Comments_List_Table {
 	 *
 	 * @param bool $output_empty
 	 */
-	public function display( $output_empty = false ) {
+	public function display( $output_empty = false ) { yeah(__METHOD__);
 		$singular = $this->_args['singular'];
 
 		wp_nonce_field( "fetch-list-" . get_class( $this ), '_ajax_fetch_list_nonce' );
@@ -71,7 +71,7 @@ class WP_Post_Comments_List_Table extends WP_Comments_List_Table {
 	 * @param bool $comment_status
 	 * @return int
 	 */
-	public function get_per_page( $comment_status = false ) {
+	public function get_per_page( $comment_status = false ) { yeah(__METHOD__);
 		return 10;
 	}
 }

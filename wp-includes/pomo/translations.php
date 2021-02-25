@@ -21,7 +21,7 @@ class Translations {
 	 * @param array|Translation_Entry $entry
 	 * @return bool true on success, false if the entry doesn't have a key
 	 */
-	function add_entry($entry){
+	function add_entry($entry){ yeah(__METHOD__);
 		if (is_array($entry)){
 			$entry = new Translation_Entry($entry);
 		}
@@ -35,7 +35,7 @@ class Translations {
 	 * @param array|Translation_Entry $entry
 	 * @return bool
 	 */
-	function add_entry_or_merge($entry){
+	function add_entry_or_merge($entry){ yeah(__METHOD__);
 		if (is_array($entry)){
 			$entry = new Translation_Entry($entry);
 		}
@@ -58,14 +58,14 @@ class Translations {
 	 * @param string $header header name, without trailing :
 	 * @param string $value header value, without trailing \n
 	 */
-	function set_header($header, $value){
+	function set_header($header, $value){ yeah(__METHOD__);
 		$this->headers[$header] = $value;
 	}
 
 	/**
 	 * @param array $headers
 	 */
-	function set_headers($headers){
+	function set_headers($headers){ yeah(__METHOD__);
 		foreach($headers as $header => $value){
 			$this->set_header($header, $value);
 		}
@@ -74,14 +74,14 @@ class Translations {
 	/**
 	 * @param string $header
 	 */
-	function get_header($header){
+	function get_header($header){ yeah(__METHOD__);
 		return isset($this->headers[$header])? $this->headers[$header] : false;
 	}
 
 	/**
 	 * @param Translation_Entry $entry
 	 */
-	function translate_entry(&$entry){
+	function translate_entry(&$entry){ yeah(__METHOD__);
 		$key = $entry->key();
 		return isset($this->entries[$key])? $this->entries[$key] : false;
 	}
@@ -91,7 +91,7 @@ class Translations {
 	 * @param string $context
 	 * @return string
 	 */
-	function translate($singular, $context=null){
+	function translate($singular, $context=null){ yeah(__METHOD__);
 		$entry = new Translation_Entry(array('singular' => $singular, 'context' => $context));
 		$translated = $this->translate_entry($entry);
 		return ($translated && !empty($translated->translations))? $translated->translations[0] : $singular;
@@ -108,14 +108,14 @@ class Translations {
 	 *
 	 * @param integer $count number of items
 	 */
-	function select_plural_form($count){
+	function select_plural_form($count){ yeah(__METHOD__);
 		return 1 == $count? 0 : 1;
 	}
 
 	/**
 	 * @return int
 	 */
-	function get_plural_forms_count(){
+	function get_plural_forms_count(){ yeah(__METHOD__);
 		return 2;
 	}
 
@@ -125,7 +125,7 @@ class Translations {
 	 * @param int    $count
 	 * @param string $context
 	 */
-	function translate_plural($singular, $plural, $count, $context = null){
+	function translate_plural($singular, $plural, $count, $context = null){ yeah(__METHOD__);
 		$entry = new Translation_Entry(array('singular' => $singular, 'plural' => $plural, 'context' => $context));
 		$translated = $this->translate_entry($entry);
 		$index = $this->select_plural_form($count);
@@ -144,7 +144,7 @@ class Translations {
 	 * @param Object $other Another Translation object, whose translations will be merged in this one (passed by reference).
 	 * @return void
 	 **/
-	function merge_with(&$other){
+	function merge_with(&$other){ yeah(__METHOD__);
 		foreach($other->entries as $entry ){
 			$this->entries[$entry->key()] = $entry;
 		}
@@ -153,7 +153,7 @@ class Translations {
 	/**
 	 * @param object $other
 	 */
-	function merge_originals_with(&$other){
+	function merge_originals_with(&$other){ yeah(__METHOD__);
 		foreach($other->entries as $entry ){
 			if (!isset($this->entries[$entry->key()] ) )
 				$this->entries[$entry->key()] = $entry;
@@ -172,7 +172,7 @@ class Gettext_Translations extends Translations {
 	 *
 	 * @param int $count
 	 */
-	function gettext_select_plural_form($count){
+	function gettext_select_plural_form($count){ yeah(__METHOD__);
 		if (!isset($this->_gettext_select_plural_form) || is_null($this->_gettext_select_plural_form)){
 			list($nplurals, $expression ) = $this->nplurals_and_expression_from_header($this->get_header('Plural-Forms'));
 			$this->_nplurals = $nplurals;
@@ -185,7 +185,7 @@ class Gettext_Translations extends Translations {
 	 * @param string $header
 	 * @return array
 	 */
-	function nplurals_and_expression_from_header($header){
+	function nplurals_and_expression_from_header($header){ yeah(__METHOD__);
 		if (preg_match('/^\s*nplurals\s*=\s*(\d+)\s*;\s+plural\s*=\s*(.+)$/', $header, $matches)){
 			$nplurals = (int)$matches[1];
 			$expression = trim($matches[2] );
@@ -201,7 +201,7 @@ class Gettext_Translations extends Translations {
 	 * @param int    $nplurals
 	 * @param string $expression
 	 */
-	function make_plural_form_function($nplurals, $expression){
+	function make_plural_form_function($nplurals, $expression){ yeah(__METHOD__);
 		try {
 			$handler = new Plural_Forms(rtrim($expression, ';' ) );
 			return array($handler, 'get' );
@@ -218,7 +218,7 @@ class Gettext_Translations extends Translations {
 	 * @param string $expression the expression without parentheses
 	 * @return string the expression with parentheses added
 	 */
-	function parenthesize_plural_exression($expression){
+	function parenthesize_plural_exression($expression){ yeah(__METHOD__);
 		$expression .= ';';
 		$res = '';
 		$depth = 0;
@@ -247,7 +247,7 @@ class Gettext_Translations extends Translations {
 	 * @param string $translation
 	 * @return array
 	 */
-	function make_headers($translation){
+	function make_headers($translation){ yeah(__METHOD__);
 		$headers = array();
 		// sometimes \ns are used instead of real new lines
 		$translation = str_replace('\n', "\n", $translation);
@@ -264,7 +264,7 @@ class Gettext_Translations extends Translations {
 	 * @param string $header
 	 * @param string $value
 	 */
-	function set_header($header, $value){
+	function set_header($header, $value){ yeah(__METHOD__);
 		parent::set_header($header, $value);
 		if ('Plural-Forms' == $header){
 			list($nplurals, $expression ) = $this->nplurals_and_expression_from_header($this->get_header('Plural-Forms'));
@@ -283,7 +283,7 @@ class NOOP_Translations {
 	var $entries = array();
 	var $headers = array();
 
-	function add_entry($entry){
+	function add_entry($entry){ yeah(__METHOD__);
 		return true;
 	}
 
@@ -292,21 +292,21 @@ class NOOP_Translations {
 	 * @param string $header
 	 * @param string $value
 	 */
-	function set_header($header, $value){
+	function set_header($header, $value){ yeah(__METHOD__);
 	}
 
 	/**
 	 *
 	 * @param array $headers
 	 */
-	function set_headers($headers){
+	function set_headers($headers){ yeah(__METHOD__);
 	}
 
 	/**
 	 * @param string $header
 	 * @return false
 	 */
-	function get_header($header){
+	function get_header($header){ yeah(__METHOD__);
 		return false;
 	}
 
@@ -314,7 +314,7 @@ class NOOP_Translations {
 	 * @param Translation_Entry $entry
 	 * @return false
 	 */
-	function translate_entry(&$entry){
+	function translate_entry(&$entry){ yeah(__METHOD__);
 		return false;
 	}
 
@@ -322,7 +322,7 @@ class NOOP_Translations {
 	 * @param string $singular
 	 * @param string $context
 	 */
-	function translate($singular, $context=null){
+	function translate($singular, $context=null){ yeah(__METHOD__);
 		return $singular;
 	}
 
@@ -331,14 +331,14 @@ class NOOP_Translations {
 	 * @param int $count
 	 * @return bool
 	 */
-	function select_plural_form($count){
+	function select_plural_form($count){ yeah(__METHOD__);
 		return 1 == $count? 0 : 1;
 	}
 
 	/**
 	 * @return int
 	 */
-	function get_plural_forms_count(){
+	function get_plural_forms_count(){ yeah(__METHOD__);
 		return 2;
 	}
 
@@ -348,14 +348,14 @@ class NOOP_Translations {
 	 * @param int    $count
 	 * @param string $context
 	 */
-	function translate_plural($singular, $plural, $count, $context = null){
+	function translate_plural($singular, $plural, $count, $context = null){ yeah(__METHOD__);
 			return 1 == $count? $singular : $plural;
 	}
 
 	/**
 	 * @param object $other
 	 */
-	function merge_with(&$other){
+	function merge_with(&$other){ yeah(__METHOD__);
 	}
 }
 endif;

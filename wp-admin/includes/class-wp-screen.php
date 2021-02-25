@@ -194,7 +194,7 @@ final class WP_Screen {
 	 * 	                                  Defaults to the current $hook_suffix global.
 	 * @return WP_Screen Screen object.
 	 */
-	public static function get( $hook_name = '') {
+	public static function get( $hook_name = '') { yeah(__METHOD__);
 		if ( $hook_name instanceof WP_Screen) {
 			return $hook_name;
 		}
@@ -362,7 +362,7 @@ final class WP_Screen {
 	 * @global string    $taxnow
 	 * @global string    $typenow
 	 */
-	public function set_current_screen() {
+	public function set_current_screen() { yeah(__METHOD__);
 		global $current_screen, $taxnow, $typenow;
 		$current_screen = $this;
 		$taxnow = $this->taxonomy;
@@ -383,7 +383,7 @@ final class WP_Screen {
 	 *
 	 * @since 3.3.0
 	 */
-	private function __construct() {}
+	private function __construct() { yeah(__METHOD__);}
 
 	/**
 	 * Indicates whether the screen is in a particular admin
@@ -394,7 +394,7 @@ final class WP_Screen {
 	 *                      If empty any of the three admins will result in true.
 	 * @return bool True if the screen is in the indicated admin, false otherwise.
 	 */
-	public function in_admin( $admin = null) {
+	public function in_admin( $admin = null) { yeah(__METHOD__);
 		if ( empty( $admin))
 			return (bool) $this->in_admin;
 
@@ -411,7 +411,7 @@ final class WP_Screen {
 	 * @param WP_Screen $screen A screen object.
 	 * @param string $help Help text.
 	 */
-	public static function add_old_compat_help( $screen, $help) {
+	public static function add_old_compat_help( $screen, $help) { yeah(__METHOD__);
 		self::$_old_compat_help[ $screen->id ] = $help;
 	}
 
@@ -423,7 +423,7 @@ final class WP_Screen {
 	 *
 	 * @param string $parent_file The parent file of the screen. Typically the $parent_file global.
 	 */
-	public function set_parentage( $parent_file) {
+	public function set_parentage( $parent_file) { yeah(__METHOD__);
 		$this->parent_file = $parent_file;
 		list( $this->parent_base) = explode( '?', $parent_file);
 		$this->parent_base = str_replace( '.php', '', $this->parent_base);
@@ -438,7 +438,7 @@ final class WP_Screen {
 	 * @param string $option Option ID
 	 * @param mixed $args Option-dependent arguments.
 	 */
-	public function add_option( $option, $args = array()) {
+	public function add_option( $option, $args = array()) { yeah(__METHOD__);
 		$this->_options[ $option ] = $args;
 	}
 
@@ -449,7 +449,7 @@ final class WP_Screen {
 	 *
 	 * @param string $option Option ID.
 	 */
-	public function remove_option( $option) {
+	public function remove_option( $option) { yeah(__METHOD__);
 		unset( $this->_options[ $option ]);
 	}
 
@@ -458,7 +458,7 @@ final class WP_Screen {
 	 *
 	 * @since 3.8.0
 	 */
-	public function remove_options() {
+	public function remove_options() { yeah(__METHOD__);
 		$this->_options = array();
 	}
 
@@ -469,7 +469,7 @@ final class WP_Screen {
 	 *
 	 * @return array Options with arguments.
 	 */
-	public function get_options() {
+	public function get_options() { yeah(__METHOD__);
 		return $this->_options;
 	}
 
@@ -483,7 +483,7 @@ final class WP_Screen {
 	 *                       Default false.
 	 * @return string The option value if set, null otherwise.
 	 */
-	public function get_option( $option, $key = false) {
+	public function get_option( $option, $key = false) { yeah(__METHOD__);
 		if ( !isset( $this->_options[ $option ]))
 			return null;
 		if ( $key) {
@@ -502,7 +502,7 @@ final class WP_Screen {
 	 *
 	 * @return array Help tabs with arguments.
 	 */
-	public function get_help_tabs() {
+	public function get_help_tabs() { yeah(__METHOD__);
 		$help_tabs = $this->_help_tabs;
 
 		$priorities = array();
@@ -534,7 +534,7 @@ final class WP_Screen {
 	 * @param string $id Help Tab ID.
 	 * @return array Help tab arguments.
 	 */
-	public function get_help_tab( $id) {
+	public function get_help_tab( $id) { yeah(__METHOD__);
 		if ( !isset( $this->_help_tabs[ $id ]))
 			return null;
 		return $this->_help_tabs[ $id ];
@@ -557,7 +557,7 @@ final class WP_Screen {
 	 *     @type int    $priority Optional. The priority of the tab, used for ordering. Default 10.
 	 * }
 	 */
-	public function add_help_tab( $args) {
+	public function add_help_tab( $args) { yeah(__METHOD__);
 		$defaults = array(
 			'title'    => false,
 			'id'       => false,
@@ -584,7 +584,7 @@ final class WP_Screen {
 	 *
 	 * @param string $id The help tab ID.
 	 */
-	public function remove_help_tab( $id) {
+	public function remove_help_tab( $id) { yeah(__METHOD__);
 		unset( $this->_help_tabs[ $id ]);
 	}
 
@@ -593,7 +593,7 @@ final class WP_Screen {
 	 *
 	 * @since 3.3.0
 	 */
-	public function remove_help_tabs() {
+	public function remove_help_tabs() { yeah(__METHOD__);
 		$this->_help_tabs = array();
 	}
 
@@ -604,7 +604,7 @@ final class WP_Screen {
 	 *
 	 * @return string Contents of the help sidebar.
 	 */
-	public function get_help_sidebar() {
+	public function get_help_sidebar() { yeah(__METHOD__);
 		return $this->_help_sidebar;
 	}
 
@@ -616,7 +616,7 @@ final class WP_Screen {
 	 *
 	 * @param string $content Sidebar content in plain text or HTML.
 	 */
-	public function set_help_sidebar( $content) {
+	public function set_help_sidebar( $content) { yeah(__METHOD__);
 		$this->_help_sidebar = $content;
 	}
 
@@ -633,7 +633,7 @@ final class WP_Screen {
 	 *
 	 * @return int Number of columns to display.
 	 */
-	public function get_columns() {
+	public function get_columns() { yeah(__METHOD__);
 		return $this->columns;
 	}
 
@@ -646,7 +646,7 @@ final class WP_Screen {
 	 *
 	 * @return array An associative array of screen reader text strings.
 	 */
-	public function get_screen_reader_content() {
+	public function get_screen_reader_content() { yeah(__METHOD__);
 		return $this->_screen_reader_content;
 	}
 
@@ -658,7 +658,7 @@ final class WP_Screen {
 	 * @param string $key Screen reader text array named key.
 	 * @return string Screen reader text string.
 	 */
-	public function get_screen_reader_text( $key) {
+	public function get_screen_reader_text( $key) { yeah(__METHOD__);
 		if ( !isset( $this->_screen_reader_content[ $key ])) {
 			return null;
 		}
@@ -681,7 +681,7 @@ final class WP_Screen {
 	 *                                      Default 'Items list'.
 	 * }
 	 */
-	public function set_screen_reader_content( $content = array()) {
+	public function set_screen_reader_content( $content = array()) { yeah(__METHOD__);
 		$defaults = array(
 			'heading_views'      => __( 'Filter items list'),
 			'heading_pagination' => __( 'Items list navigation'),
@@ -697,7 +697,7 @@ final class WP_Screen {
 	 *
 	 * @since 4.4.0
 	 */
-	public function remove_screen_reader_content() {
+	public function remove_screen_reader_content() { yeah(__METHOD__);
 		$this->_screen_reader_content = array();
 	}
 
@@ -710,7 +710,7 @@ final class WP_Screen {
 	 *
 	 * @global string $screen_layout_columns
 	 */
-	public function render_screen_meta() {
+	public function render_screen_meta() { yeah(__METHOD__);
 
 		/**
 		 * Filters the legacy contextual help list.
@@ -887,7 +887,7 @@ final class WP_Screen {
 	 *
 	 * @return bool
 	 */
-	public function show_screen_options() {
+	public function show_screen_options() { yeah(__METHOD__);
 		global $wp_meta_boxes;
 
 		if ( is_bool( $this->_show_screen_options))
@@ -951,7 +951,7 @@ final class WP_Screen {
 	 *     @type bool $wrap  Whether the screen-options-wrap div will be included. Defaults to true.
 	 * }
 	 */
-	public function render_screen_options( $options = array()) {
+	public function render_screen_options( $options = array()) { yeah(__METHOD__);
 		$options = wp_parse_args( $options, array(
 			'wrap' => true,
 		));
@@ -1004,7 +1004,7 @@ final class WP_Screen {
 	 *
 	 * @global array $wp_meta_boxes
 	 */
-	public function render_meta_boxes_preferences() {
+	public function render_meta_boxes_preferences() { yeah(__METHOD__);
 		global $wp_meta_boxes;
 
 		if ( !isset( $wp_meta_boxes[ $this->id ])) {
@@ -1044,7 +1044,7 @@ final class WP_Screen {
 	 *
 	 * @since 4.4.0
 	 */
-	public function render_list_table_columns_preferences() {
+	public function render_list_table_columns_preferences() { yeah(__METHOD__);
 
 		$columns = get_column_headers( $this);
 		$hidden  = get_hidden_columns( $this);
@@ -1092,7 +1092,7 @@ final class WP_Screen {
 	 *
 	 * @since 3.3.0
 	 */
-	public function render_screen_layout() {
+	public function render_screen_layout() { yeah(__METHOD__);
 		if ( !$this->get_option( 'layout_columns' ) ) {
 			return;
 		}
@@ -1121,7 +1121,7 @@ final class WP_Screen {
 	 *
 	 * @since 3.3.0
 	 */
-	public function render_per_page_options() {
+	public function render_per_page_options() { yeah(__METHOD__);
 		if ( null === $this->get_option( 'per_page' ) ) {
 			return;
 		}
@@ -1187,7 +1187,7 @@ final class WP_Screen {
 	 *
 	 * @global string $mode List table view mode.
 	 */
-	public function render_view_mode() {
+	public function render_view_mode() { yeah(__METHOD__);
 		$screen = get_current_screen();
 
 		// Currently only enabled for posts lists
@@ -1238,7 +1238,7 @@ final class WP_Screen {
 	 * @param string $key The screen reader text array named key.
 	 * @param string $tag Optional. The HTML tag to wrap the screen reader text. Default h2.
 	 */
-	public function render_screen_reader_content( $key = '', $tag = 'h2' ) {
+	public function render_screen_reader_content( $key = '', $tag = 'h2' ) { yeah(__METHOD__);
 
 		if ( !isset( $this->_screen_reader_content[ $key ] ) ) {
 			return;

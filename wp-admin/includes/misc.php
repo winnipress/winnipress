@@ -13,7 +13,7 @@
  *
  * @return bool
  */
-function got_mod_rewrite() {
+function got_mod_rewrite() { yeah(__METHOD__);
 	$got_rewrite = apache_mod_loaded('mod_rewrite', true);
 
 	/**
@@ -42,7 +42,7 @@ function got_mod_rewrite() {
  *
  * @return bool Whether the server supports URL rewriting.
  */
-function got_url_rewrite() {
+function got_url_rewrite() { yeah(__METHOD__);
 	$got_url_rewrite = ( got_mod_rewrite() || $GLOBALS['is_nginx'] || iis7_supports_permalinks());
 
 	/**
@@ -64,7 +64,7 @@ function got_url_rewrite() {
  * @param string $marker
  * @return array An array of strings from a file (.htaccess) from between BEGIN and END markers.
  */
-function extract_from_markers( $filename, $marker) {
+function extract_from_markers( $filename, $marker) { yeah(__METHOD__);
 	$result = array ();
 
 	if ( !file_exists( $filename)) {
@@ -103,7 +103,7 @@ function extract_from_markers( $filename, $marker) {
  * @param array|string $insertion The new content to insert.
  * @return bool True on write success, false on failure.
  */
-function insert_with_markers( $filename, $marker, $insertion) {
+function insert_with_markers( $filename, $marker, $insertion) { yeah(__METHOD__);
 	if ( !file_exists( $filename)) {
 		if ( !is_writable( dirname( $filename))) {
 			return false;
@@ -197,7 +197,7 @@ function insert_with_markers( $filename, $marker, $insertion) {
  *
  * @return bool|null True on write success, false on failure. Null in multisite.
  */
-function save_mod_rewrite_rules() {
+function save_mod_rewrite_rules() { yeah(__METHOD__);
 	if ( is_multisite())
 		return;
 
@@ -233,7 +233,7 @@ function save_mod_rewrite_rules() {
  *
  * @return bool|null True on write success, false on failure. Null in multisite.
  */
-function iis7_save_url_rewrite_rules(){
+function iis7_save_url_rewrite_rules(){ yeah(__METHOD__);
 	if ( is_multisite())
 		return;
 
@@ -264,7 +264,7 @@ function iis7_save_url_rewrite_rules(){
  *
  * @param string $file
  */
-function update_recently_edited( $file) {
+function update_recently_edited( $file) { yeah(__METHOD__);
 	$oldfiles = (array) get_option( 'recently_edited');
 	if ( $oldfiles) {
 		$oldfiles = array_reverse( $oldfiles);
@@ -288,7 +288,7 @@ function update_recently_edited( $file) {
  * @param array $allowed_files List of theme file paths.
  * @return array Tree structure for listing theme files.
  */
-function wp_make_theme_file_tree( $allowed_files) {
+function wp_make_theme_file_tree( $allowed_files) { yeah(__METHOD__);
 	$tree_list = array();
 	foreach ( $allowed_files as $file_name => $absolute_filename) {
 		$list = explode( '/', $file_name);
@@ -312,7 +312,7 @@ function wp_make_theme_file_tree( $allowed_files) {
  * @param int          $size  The aria-setsize for the current iteration.
  * @param int          $index The aria-posinset for the current iteration.
  */
-function wp_print_theme_file_tree( $tree, $level = 2, $size = 1, $index = 1) {
+function wp_print_theme_file_tree( $tree, $level = 2, $size = 1, $index = 1) { yeah(__METHOD__);
 	global $relative_file, $stylesheet;
 
 	if ( is_array( $tree)) {
@@ -377,7 +377,7 @@ function wp_print_theme_file_tree( $tree, $level = 2, $size = 1, $index = 1) {
  * @param string $plugin_editable_files List of plugin file paths.
  * @return array Tree structure for listing plugin files.
  */
-function wp_make_plugin_file_tree( $plugin_editable_files) {
+function wp_make_plugin_file_tree( $plugin_editable_files) { yeah(__METHOD__);
 	$tree_list = array();
 	foreach ( $plugin_editable_files as $plugin_file) {
 		$list = explode( '/', preg_replace( '#^.+?/#', '', $plugin_file));
@@ -402,7 +402,7 @@ function wp_make_plugin_file_tree( $plugin_editable_files) {
  * @param int          $size  The aria-setsize for the current iteration.
  * @param int          $index The aria-posinset for the current iteration.
  */
-function wp_print_plugin_file_tree( $tree, $label = '', $level = 2, $size = 1, $index = 1) {
+function wp_print_plugin_file_tree( $tree, $label = '', $level = 2, $size = 1, $index = 1) { yeah(__METHOD__);
 	global $file, $plugin;
 	if ( is_array( $tree)) {
 		$index = 0;
@@ -459,7 +459,7 @@ function wp_print_plugin_file_tree( $tree, $label = '', $level = 2, $size = 1, $
  * @param string $old_value
  * @param string $value
  */
-function update_home_siteurl( $old_value, $value) {
+function update_home_siteurl( $old_value, $value) { yeah(__METHOD__);
 	if ( wp_installing())
 		return;
 
@@ -482,7 +482,7 @@ function update_home_siteurl( $old_value, $value) {
  *
  * @param array $vars An array of globals to reset.
  */
-function wp_reset_vars( $vars) {
+function wp_reset_vars( $vars) { yeah(__METHOD__);
 	foreach ( $vars as $var) {
 		if ( empty( $_POST[ $var ])) {
 			if ( empty( $_GET[ $var ])) {
@@ -503,7 +503,7 @@ function wp_reset_vars( $vars) {
  *
  * @param string|WP_Error $message
  */
-function show_message($message) {
+function show_message($message) { yeah(__METHOD__);
 	if ( is_wp_error($message)){
 		if ( $message->get_error_data() && is_string( $message->get_error_data()))
 			$message = $message->get_error_message() . ': ' . $message->get_error_data();
@@ -521,7 +521,7 @@ function show_message($message) {
  * @param string $content
  * @return array
  */
-function wp_doc_link_parse( $content) {
+function wp_doc_link_parse( $content) { yeah(__METHOD__);
 	if ( !is_string( $content) || empty( $content))
 		return array();
 
@@ -539,7 +539,7 @@ function wp_doc_link_parse( $content) {
 
 		if ( T_STRING == $tokens[ $t ][0] && ( '(' == $tokens[ $t + 1 ] || '(' == $tokens[ $t + 2 ])) {
 			// If it's a function or class defined locally, there's not going to be any docs available
-			if ( ( isset( $tokens[ $t - 2 ][1]) && in_array( $tokens[ $t - 2 ][1], array( 'function', 'class'))) || ( isset( $tokens[ $t - 2 ][0]) && T_OBJECT_OPERATOR == $tokens[ $t - 1 ][0])) {
+			if ( ( isset( $tokens[ $t - 2 ][1]) && in_array( $tokens[ $t - 2 ][1], array( 'function', 'class'))) || ( isset( $tokens[ $t - 2 ][0]) && T_OBJECT_OPERATOR == $tokens[ $t - 1 ][0])) { yeah(__METHOD__);
 				$ignore_functions[] = $tokens[$t][1];
 			}
 			// Add this to our stack of unique references
@@ -576,7 +576,7 @@ function wp_doc_link_parse( $content) {
  *
  * @since 2.8.0
  */
-function set_screen_options() {
+function set_screen_options() { yeah(__METHOD__);
 
 	if ( isset($_POST['wp_screen_options']) && is_array($_POST['wp_screen_options'])) {
 		check_admin_referer( 'screen-options-nonce', 'screenoptionnonce');
@@ -688,7 +688,7 @@ function set_screen_options() {
  * @return bool
  * @param string $filename The file path to the configuration file
  */
-function iis7_rewrite_rule_exists($filename) {
+function iis7_rewrite_rule_exists($filename) { yeah(__METHOD__);
 	if ( !file_exists($filename))
 		return false;
 	if ( !class_exists( 'DOMDocument', false)) {
@@ -714,7 +714,7 @@ function iis7_rewrite_rule_exists($filename) {
  * @param string $filename Name of the configuration file
  * @return bool
  */
-function iis7_delete_rewrite_rule($filename) {
+function iis7_delete_rewrite_rule($filename) { yeah(__METHOD__);
 	// If configuration file does not exist then rules also do not exist so there is nothing to delete
 	if ( !file_exists($filename))
 		return true;
@@ -749,7 +749,7 @@ function iis7_delete_rewrite_rule($filename) {
  * @param string $rewrite_rule The XML fragment with URL Rewrite rule
  * @return bool
  */
-function iis7_add_rewrite_rule($filename, $rewrite_rule) {
+function iis7_add_rewrite_rule($filename, $rewrite_rule) { yeah(__METHOD__);
 	if ( !class_exists( 'DOMDocument', false)) {
 		return false;
 	}
@@ -829,7 +829,7 @@ function iis7_add_rewrite_rule($filename, $rewrite_rule) {
  * @param DOMDocument $doc
  * @param string $filename
  */
-function saveDomDocument($doc, $filename) {
+function saveDomDocument($doc, $filename) { yeah(__METHOD__);
 	$config = $doc->saveXML();
 	$config = preg_replace("/([^\r])\n/", "$1\r\n", $config);
 	$fp = fopen($filename, 'w');
@@ -846,7 +846,7 @@ function saveDomDocument($doc, $filename) {
  *
  * @param int $user_id User ID.
  */
-function admin_color_scheme_picker( $user_id) {
+function admin_color_scheme_picker( $user_id) { yeah(__METHOD__);
 	global $_wp_admin_css_colors;
 
 	ksort( $_wp_admin_css_colors);
@@ -902,7 +902,7 @@ function admin_color_scheme_picker( $user_id) {
  *
  * @global array $_wp_admin_css_colors
  */
-function wp_color_scheme_settings() {
+function wp_color_scheme_settings() { yeah(__METHOD__);
 	global $_wp_admin_css_colors;
 
 	$color_scheme = get_user_option( 'admin_color');
@@ -927,7 +927,7 @@ function wp_color_scheme_settings() {
 /**
  * @since 3.3.0
  */
-function _ipad_meta() {
+function _ipad_meta() { yeah(__METHOD__);
 	if ( wp_is_mobile()) {
 		?>
 		<meta name="viewport" id="viewport-meta" content="width=device-width, initial-scale=1">
@@ -945,7 +945,7 @@ function _ipad_meta() {
  * @param string $screen_id The screen id.
  * @return array The Heartbeat response.
  */
-function wp_check_locked_posts( $response, $data, $screen_id) {
+function wp_check_locked_posts( $response, $data, $screen_id) { yeah(__METHOD__);
 	$checked = array();
 
 	if ( array_key_exists( 'wp-check-locked-posts', $data) && is_array( $data['wp-check-locked-posts'])) {
@@ -980,7 +980,7 @@ function wp_check_locked_posts( $response, $data, $screen_id) {
  * @param string $screen_id The screen id.
  * @return array The Heartbeat response.
  */
-function wp_refresh_post_lock( $response, $data, $screen_id) {
+function wp_refresh_post_lock( $response, $data, $screen_id) { yeah(__METHOD__);
 	if ( array_key_exists( 'wp-refresh-post-lock', $data)) {
 		$received = $data['wp-refresh-post-lock'];
 		$send = array();
@@ -1023,7 +1023,7 @@ function wp_refresh_post_lock( $response, $data, $screen_id) {
  * @param string $screen_id The screen id.
  * @return array The Heartbeat response.
  */
-function wp_refresh_post_nonces( $response, $data, $screen_id) {
+function wp_refresh_post_nonces( $response, $data, $screen_id) { yeah(__METHOD__);
 	if ( array_key_exists( 'wp-refresh-post-nonces', $data)) {
 		$received = $data['wp-refresh-post-nonces'];
 		$response['wp-refresh-post-nonces'] = array( 'check' => 1);
@@ -1061,7 +1061,7 @@ function wp_refresh_post_nonces( $response, $data, $screen_id) {
  * @param array $settings An array of Heartbeat settings.
  * @return array Filtered Heartbeat settings.
  */
-function wp_heartbeat_set_suspension( $settings) {
+function wp_heartbeat_set_suspension( $settings) { yeah(__METHOD__);
 	global $pagenow;
 
 	if ( 'post.php' === $pagenow || 'post-new.php' === $pagenow) {
@@ -1080,7 +1080,7 @@ function wp_heartbeat_set_suspension( $settings) {
  * @param array $data     The $_POST data sent.
  * @return array The Heartbeat response.
  */
-function heartbeat_autosave( $response, $data) {
+function heartbeat_autosave( $response, $data) { yeah(__METHOD__);
 	if ( !empty( $data['wp_autosave'])) {
 		$saved = wp_autosave( $data['wp_autosave']);
 
@@ -1107,7 +1107,7 @@ function heartbeat_autosave( $response, $data) {
  *
  * @since 4.2.0
  */
-function wp_admin_canonical_url() {
+function wp_admin_canonical_url() { yeah(__METHOD__);
 	$removable_query_args = wp_removable_query_args();
 
 	if ( empty( $removable_query_args)) {
@@ -1132,7 +1132,7 @@ function wp_admin_canonical_url() {
  *
  * @since 4.9.0
  */
-function wp_admin_headers() {
+function wp_admin_headers() { yeah(__METHOD__);
 	$policy = 'strict-origin-when-cross-origin';
 
 	/**
@@ -1158,7 +1158,7 @@ function wp_admin_headers() {
  *
  * @since 4.6.0
  */
-function wp_page_reload_on_back_button_js() {
+function wp_page_reload_on_back_button_js() { yeah(__METHOD__);
 	?>
 	<script>
 		if ( typeof performance !== 'undefined' && performance.navigation && performance.navigation.type === 2) {
@@ -1179,7 +1179,7 @@ function wp_page_reload_on_back_button_js() {
  * @param string $old_value The old site admin email address.
  * @param string $value     The proposed new site admin email address.
  */
-function update_option_new_admin_email( $old_value, $value) {
+function update_option_new_admin_email( $old_value, $value) { yeah(__METHOD__);
 	if ( $value == get_option( 'admin_email') || !is_email( $value)) {
 		return;
 	}
@@ -1260,7 +1260,7 @@ All at ###SITENAME###
  *
  * @return string Page title.
  */
-function _wp_privacy_settings_filter_draft_page_titles( $title, $page) {
+function _wp_privacy_settings_filter_draft_page_titles( $title, $page) { yeah(__METHOD__);
 	if ( 'draft' === $page->post_status && 'privacy' === get_current_screen()->id) {
 		/* translators: %s: Page Title */
 		$title = sprintf( __( '%s (Draft)'), $title);
@@ -1284,7 +1284,7 @@ final class WP_Privacy_Policy_Content {
 	 *
 	 * @since 4.9.6
 	 */
-	private function __construct() {}
+	private function __construct() { yeah(__METHOD__);}
 
 	/**
 	 * Add content to the postbox shown when editing the privacy policy.
@@ -1300,7 +1300,7 @@ final class WP_Privacy_Policy_Content {
 	 * @param string $plugin_name The name of the plugin or theme that is suggesting content for the site's privacy policy.
 	 * @param string $policy_text The suggested content for inclusion in the policy.
 	 */
-	public static function add( $plugin_name, $policy_text) {
+	public static function add( $plugin_name, $policy_text) { yeah(__METHOD__);
 		if ( empty( $plugin_name) || empty( $policy_text)) {
 			return;
 		}
@@ -1320,7 +1320,7 @@ final class WP_Privacy_Policy_Content {
 	 *
 	 * @since 4.9.6
 	 */
-	public static function text_change_check() {
+	public static function text_change_check() { yeah(__METHOD__);
 
 		$policy_page_id = (int) get_option( 'wp_page_for_privacy_policy');
 
@@ -1394,7 +1394,7 @@ final class WP_Privacy_Policy_Content {
 	 *
 	 * @since 4.9.6
 	 */
-	public static function policy_text_changed_notice() {
+	public static function policy_text_changed_notice() { yeah(__METHOD__);
 		global $post;
 
 		$screen = get_current_screen()->id;
@@ -1422,7 +1422,7 @@ final class WP_Privacy_Policy_Content {
 	 * @since 4.9.6
 	 * @access private
 	 */
-	public static function _policy_page_updated( $post_id) {
+	public static function _policy_page_updated( $post_id) { yeah(__METHOD__);
 		$policy_page_id = (int) get_option( 'wp_page_for_privacy_policy');
 
 		if ( !$policy_page_id || $policy_page_id !== (int) $post_id) {
@@ -1472,7 +1472,7 @@ final class WP_Privacy_Policy_Content {
 	 *
 	 * @return array The privacy policy text/informtion added by core and plugins.
 	 */
-	public static function get_suggested_policy_text() {
+	public static function get_suggested_policy_text() { yeah(__METHOD__);
 		$policy_page_id = (int) get_option( 'wp_page_for_privacy_policy');
 		$checked = array();
 		$time = time();
@@ -1567,7 +1567,7 @@ final class WP_Privacy_Policy_Content {
 	 *
 	 * @param WP_Post $post The currently edited post.
 	 */
-	public static function notice( $post) {
+	public static function notice( $post) { yeah(__METHOD__);
 		if ( !( $post instanceof WP_Post)) {
 			return;
 		}
@@ -1609,7 +1609,7 @@ final class WP_Privacy_Policy_Content {
 	 *
 	 * @since 4.9.6
 	 */
-	public static function privacy_policy_guide() {
+	public static function privacy_policy_guide() { yeah(__METHOD__);
 
 		$content_array = self::get_suggested_policy_text();
 
@@ -1702,7 +1702,7 @@ final class WP_Privacy_Policy_Content {
 	 * @param bool $descr Whether to include the descriptions under the section headings. Default false.
 	 * @return string The default policy content.
 	 */
-	public static function get_default_content( $descr = false) {
+	public static function get_default_content( $descr = false) { yeah(__METHOD__);
 		$suggested_text = $descr ? '<strong class="privacy-policy-tutorial">' . __( 'Suggested text:') . ' </strong>' : '';
 		$content = '';
 
@@ -1841,7 +1841,7 @@ final class WP_Privacy_Policy_Content {
 	 *
 	 * @since 4.9.6
 	 */
-	public static function add_suggested_content() {
+	public static function add_suggested_content() { yeah(__METHOD__);
 		$content = self::get_default_content( true);
 		wp_add_privacy_policy_content( __( 'WordPress'), $content);
 	}

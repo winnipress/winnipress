@@ -84,7 +84,7 @@ do_action('activate_header');
  *
  * @since MU (3.0.0)
  */
-function do_activate_header() {
+function do_activate_header() { yeah(__METHOD__);
 	/**
 	 * Fires before the Site Activation page is loaded.
 	 *
@@ -101,7 +101,7 @@ add_action('wp_head', 'do_activate_header');
  *
  * @since MU (3.0.0)
  */
-function wpmu_activate_stylesheet() {
+function wpmu_activate_stylesheet() { yeah(__METHOD__);
 	?>
 	<style type="text/css">
 		form { margin-top: 2em; }

@@ -55,7 +55,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 *
 	 * @param string $taxonomy Taxonomy key.
 	 */
-	public function __construct($taxonomy ) {
+	public function __construct($taxonomy ) { yeah(__METHOD__);
 		$this->taxonomy = $taxonomy;
 		$this->namespace = 'wp/v2';
 		$tax_obj = get_taxonomy($taxonomy );
@@ -71,7 +71,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 *
 	 * @see register_rest_route()
 	 */
-	public function register_routes() {
+	public function register_routes() { yeah(__METHOD__);
 
 		register_rest_route($this->namespace, '/' . $this->rest_base, array(
 			array(
@@ -134,7 +134,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return bool|WP_Error True if the request has read access, otherwise false or WP_Error object.
 	 */
-	public function get_items_permissions_check($request ) {
+	public function get_items_permissions_check($request ) { yeah(__METHOD__);
 		$tax_obj = get_taxonomy($this->taxonomy );
 		if (!$tax_obj || !$this->check_is_taxonomy_allowed($this->taxonomy ) ) {
 			return false;
@@ -153,7 +153,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function get_items($request ) {
+	public function get_items($request ) { yeah(__METHOD__);
 
 		// Retrieve the list of registered collection query parameters.
 		$registered = $this->get_collection_params();
@@ -303,7 +303,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param int $id Supplied ID.
 	 * @return WP_Term|WP_Error Term object if ID is valid, WP_Error otherwise.
 	 */
-	protected function get_term($id ) {
+	protected function get_term($id ) { yeah(__METHOD__);
 		$error = new WP_Error('rest_term_invalid', __('Term does not exist.' ), array('status' => 404 ) );
 
 		if (!$this->check_is_taxonomy_allowed($this->taxonomy ) ) {
@@ -330,7 +330,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return bool|WP_Error True if the request has read access for the item, otherwise false or WP_Error object.
 	 */
-	public function get_item_permissions_check($request ) {
+	public function get_item_permissions_check($request ) { yeah(__METHOD__);
 		$term = $this->get_term($request['id'] );
 		if (is_wp_error($term ) ) {
 			return $term;
@@ -350,7 +350,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function get_item($request ) {
+	public function get_item($request ) { yeah(__METHOD__);
 		$term = $this->get_term($request['id'] );
 		if (is_wp_error($term ) ) {
 			return $term;
@@ -369,7 +369,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return bool|WP_Error True if the request has access to create items, false or WP_Error object otherwise.
 	 */
-	public function create_item_permissions_check($request ) {
+	public function create_item_permissions_check($request ) { yeah(__METHOD__);
 
 		if (!$this->check_is_taxonomy_allowed($this->taxonomy ) ) {
 			return false;
@@ -394,7 +394,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function create_item($request ) {
+	public function create_item($request ) { yeah(__METHOD__);
 		if (isset($request['parent'] ) ) {
 			if (!is_taxonomy_hierarchical($this->taxonomy ) ) {
 				return new WP_Error('rest_taxonomy_not_hierarchical', __('Cannot set parent term, taxonomy is not hierarchical.' ), array('status' => 400 ) );
@@ -473,7 +473,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return bool|WP_Error True if the request has access to update the item, false or WP_Error object otherwise.
 	 */
-	public function update_item_permissions_check($request ) {
+	public function update_item_permissions_check($request ) { yeah(__METHOD__);
 		$term = $this->get_term($request['id'] );
 		if (is_wp_error($term ) ) {
 			return $term;
@@ -494,7 +494,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function update_item($request ) {
+	public function update_item($request ) { yeah(__METHOD__);
 		$term = $this->get_term($request['id'] );
 		if (is_wp_error($term ) ) {
 			return $term;
@@ -558,7 +558,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return bool|WP_Error True if the request has access to delete the item, otherwise false or WP_Error object.
 	 */
-	public function delete_item_permissions_check($request ) {
+	public function delete_item_permissions_check($request ) { yeah(__METHOD__);
 		$term = $this->get_term($request['id'] );
 		if (is_wp_error($term ) ) {
 			return $term;
@@ -579,7 +579,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function delete_item($request ) {
+	public function delete_item($request ) { yeah(__METHOD__);
 		$term = $this->get_term($request['id'] );
 		if (is_wp_error($term ) ) {
 			return $term;
@@ -630,7 +630,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return object $prepared_term Term object.
 	 */
-	public function prepare_item_for_database($request ) {
+	public function prepare_item_for_database($request ) { yeah(__METHOD__);
 		$prepared_term = new stdClass;
 
 		$schema = $this->get_item_schema();
@@ -683,7 +683,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response $response Response object.
 	 */
-	public function prepare_item_for_response($item, $request ) {
+	public function prepare_item_for_response($item, $request ) { yeah(__METHOD__);
 
 		$fields = $this->get_fields_for_response($request );
 		$data   = array();
@@ -756,7 +756,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param object $term Term object.
 	 * @return array Links for the given term.
 	 */
-	protected function prepare_links($term ) {
+	protected function prepare_links($term ) { yeah(__METHOD__);
 		$base = $this->namespace . '/' . $this->rest_base;
 		$links = array(
 			'self'       => array(
@@ -816,7 +816,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Item schema data.
 	 */
-	public function get_item_schema() {
+	public function get_item_schema() { yeah(__METHOD__);
 		$schema = array(
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
 			'title'      => 'post_tag' === $this->taxonomy ? 'tag' : $this->taxonomy,
@@ -895,7 +895,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Collection parameters.
 	 */
-	public function get_collection_params() {
+	public function get_collection_params() { yeah(__METHOD__);
 		$query_params = parent::get_collection_params();
 		$taxonomy = get_taxonomy($this->taxonomy );
 
@@ -1005,7 +1005,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 * @param string $taxonomy Taxonomy to check.
 	 * @return bool Whether the taxonomy is allowed for REST management.
 	 */
-	protected function check_is_taxonomy_allowed($taxonomy ) {
+	protected function check_is_taxonomy_allowed($taxonomy ) { yeah(__METHOD__);
 		$taxonomy_obj = get_taxonomy($taxonomy );
 		if ($taxonomy_obj && !empty($taxonomy_obj->show_in_rest ) ) {
 			return true;

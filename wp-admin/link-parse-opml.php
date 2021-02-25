@@ -30,7 +30,7 @@ global $opml;
  * @param string $tagName XML element name.
  * @param array $attrs XML element attributes.
  */
-function startElement($parser, $tagName, $attrs) {
+function startElement($parser, $tagName, $attrs) { yeah(__METHOD__);
 	global $names, $urls, $targets, $descriptions, $feeds;
 
 	if ('OUTLINE' === $tagName) {
@@ -67,12 +67,12 @@ function startElement($parser, $tagName, $attrs) {
  * @param mixed $parser XML Parser resource.
  * @param string $tagName XML tag name.
  */
-function endElement($parser, $tagName) {
+function endElement($parser, $tagName) { yeah(__METHOD__);
 	// Nothing to do.
 }
 
 // Create an XML parser
-if (!function_exists('xml_parser_create')) {
+if (!function_exists('xml_parser_create')) { 
 	trigger_error(__("PHP's XML extension is not available. Please contact your hosting provider to enable PHP's XML extension."));
 	wp_die(__("PHP's XML extension is not available. Please contact your hosting provider to enable PHP's XML extension."));
 }

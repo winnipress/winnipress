@@ -23,7 +23,7 @@ class WP_Theme_Install_List_Table extends WP_Themes_List_Table {
 	 *
 	 * @return bool
 	 */
-	public function ajax_user_can() {
+	public function ajax_user_can() { yeah(__METHOD__);
 		return current_user_can( 'install_themes');
 	}
 
@@ -35,7 +35,7 @@ class WP_Theme_Install_List_Table extends WP_Themes_List_Table {
 	 * @global string $type
 	 * @global array  $theme_field_defaults
 	 */
-	public function prepare_items() {
+	public function prepare_items() { yeah(__METHOD__);
 		include( ABSPATH . 'wp-admin/includes/theme-install.php');
 
 		global $tabs, $tab, $paged, $type, $theme_field_defaults;
@@ -155,7 +155,7 @@ class WP_Theme_Install_List_Table extends WP_Themes_List_Table {
 
 	/**
 	 */
-	public function no_items() {
+	public function no_items() { yeah(__METHOD__);
 		_e( 'No themes match your request.');
 	}
 
@@ -165,7 +165,7 @@ class WP_Theme_Install_List_Table extends WP_Themes_List_Table {
 	 * @global string $tab
 	 * @return array
 	 */
-	protected function get_views() {
+	protected function get_views() { yeah(__METHOD__);
 		global $tabs, $tab;
 
 		$display_tabs = array();
@@ -180,7 +180,7 @@ class WP_Theme_Install_List_Table extends WP_Themes_List_Table {
 
 	/**
 	 */
-	public function display() {
+	public function display() { yeah(__METHOD__);
 		wp_nonce_field( "fetch-list-" . get_class( $this), '_ajax_fetch_list_nonce');
 ?>
 		<div class="tablenav top themes">
@@ -208,7 +208,7 @@ class WP_Theme_Install_List_Table extends WP_Themes_List_Table {
 
 	/**
 	 */
-	public function display_rows() {
+	public function display_rows() { yeah(__METHOD__);
 		$themes = $this->items;
 		foreach ( $themes as $theme) {
 				?>
@@ -243,7 +243,7 @@ class WP_Theme_Install_List_Table extends WP_Themes_List_Table {
 	 *     @type string $download_link  Theme ZIP download URL.
 	 * }
 	 */
-	public function single_row( $theme) {
+	public function single_row( $theme) { yeah(__METHOD__);
 		global $themes_allowedtags;
 
 		if ( empty( $theme))
@@ -323,7 +323,7 @@ class WP_Theme_Install_List_Table extends WP_Themes_List_Table {
 	/**
 	 * Prints the wrapper for the theme installer.
 	 */
-	public function theme_installer() {
+	public function theme_installer() { yeah(__METHOD__);
 		?>
 		<div id="theme-installer" class="wp-full-overlay expanded">
 			<div class="wp-full-overlay-sidebar">
@@ -352,7 +352,7 @@ class WP_Theme_Install_List_Table extends WP_Themes_List_Table {
 	 *
 	 * @param object $theme - A WordPress.org Theme API object.
 	 */
-	public function theme_installer_single( $theme) {
+	public function theme_installer_single( $theme) { yeah(__METHOD__);
 		?>
 		<div id="theme-installer" class="wp-full-overlay single-theme">
 			<div class="wp-full-overlay-sidebar">
@@ -372,7 +372,7 @@ class WP_Theme_Install_List_Table extends WP_Themes_List_Table {
 	 *
 	 * @param object $theme - A WordPress.org Theme API object.
 	 */
-	public function install_theme_info( $theme) {
+	public function install_theme_info( $theme) { yeah(__METHOD__);
 		global $themes_allowedtags;
 
 		if ( empty( $theme))
@@ -438,7 +438,7 @@ class WP_Theme_Install_List_Table extends WP_Themes_List_Table {
 	 *
 	 * @param array $extra_args Unused.
 	 */
-	public function _js_vars( $extra_args = array()) {
+	public function _js_vars( $extra_args = array()) { yeah(__METHOD__);
 		global $tab, $type;
 		parent::_js_vars( compact( 'tab', 'type'));
 	}
@@ -451,7 +451,7 @@ class WP_Theme_Install_List_Table extends WP_Themes_List_Table {
 	 * @param object $theme - A WordPress.org Theme API object.
 	 * @return string Theme status.
 	 */
-	private function _get_theme_status( $theme) {
+	private function _get_theme_status( $theme) { yeah(__METHOD__);
 		$status = 'install';
 
 		$installed_theme = wp_get_theme( $theme->slug);

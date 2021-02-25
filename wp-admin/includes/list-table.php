@@ -19,7 +19,7 @@
  * @param array $args Optional. Arguments to pass to the class. Accepts 'screen'.
  * @return object|bool Object on success, false if the class does not exist.
  */
-function _get_list_table( $class, $args = array()) {
+function _get_list_table( $class, $args = array()) { yeah(__METHOD__);
 	$core_classes = array(
 		//Site Admin
 		'WP_Posts_List_Table' => 'posts',
@@ -65,7 +65,7 @@ function _get_list_table( $class, $args = array()) {
  * @param array $columns An array of columns with column IDs as the keys and translated column names as the values
  * @see get_column_headers(), print_column_headers(), get_hidden_columns()
  */
-function register_column_headers($screen, $columns) {
+function register_column_headers($screen, $columns) { yeah(__METHOD__);
 	new _WP_List_Table_Compat( $screen, $columns);
 }
 
@@ -77,7 +77,7 @@ function register_column_headers($screen, $columns) {
  * @param string|WP_Screen $screen  The screen hook name or screen object.
  * @param bool             $with_id Whether to set the id attribute or not.
  */
-function print_column_headers( $screen, $with_id = true) {
+function print_column_headers( $screen, $with_id = true) { yeah(__METHOD__);
 	$wp_list_table = new _WP_List_Table_Compat($screen);
 
 	$wp_list_table->print_column_headers( $with_id);

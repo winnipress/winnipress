@@ -13,7 +13,7 @@
  *
  * @return int|WP_Error WP_Error or User ID.
  */
-function add_user() {
+function add_user() { yeah(__METHOD__);
 	return edit_user();
 }
 
@@ -27,7 +27,7 @@ function add_user() {
  * @param int $user_id Optional. User ID.
  * @return int|WP_Error user id of the updated user
  */
-function edit_user( $user_id = 0) {
+function edit_user( $user_id = 0) { yeah(__METHOD__);
 	$wp_roles = wp_roles();
 	$user = new stdClass;
 	if ( $user_id) {
@@ -228,7 +228,7 @@ function edit_user( $user_id = 0) {
  *
  * @return array
  */
-function get_editable_roles() {
+function get_editable_roles() { yeah(__METHOD__);
 	$all_roles = wp_roles()->roles;
 
 	/**
@@ -251,7 +251,7 @@ function get_editable_roles() {
  * @param int $user_id User ID.
  * @return WP_User|bool WP_User object on success, false on failure.
  */
-function get_user_to_edit( $user_id) {
+function get_user_to_edit( $user_id) { yeah(__METHOD__);
 	$user = get_userdata( $user_id);
 
 	if ( $user)
@@ -270,7 +270,7 @@ function get_user_to_edit( $user_id) {
  * @param int $user_id User ID.
  * @return array
  */
-function get_users_drafts( $user_id) {
+function get_users_drafts( $user_id) { yeah(__METHOD__);
 	global $wpdb;
 	$query = $wpdb->prepare("SELECT ID, post_title FROM $wpdb->posts WHERE post_type = 'post' AND post_status = 'draft' AND post_author = %d ORDER BY post_modified DESC", $user_id);
 
@@ -301,7 +301,7 @@ function get_users_drafts( $user_id) {
  * @param int $reassign Optional. Reassign posts and links to new User ID.
  * @return bool True when finished.
  */
-function wp_delete_user( $id, $reassign = null) {
+function wp_delete_user( $id, $reassign = null) { yeah(__METHOD__);
 	global $wpdb;
 
 	if ( !is_numeric( $id)) {
@@ -414,7 +414,7 @@ function wp_delete_user( $id, $reassign = null) {
  *
  * @param int $id User ID.
  */
-function wp_revoke_user($id) {
+function wp_revoke_user($id) { yeah(__METHOD__);
 	$id = (int) $id;
 
 	$user = new WP_User($id);
@@ -428,7 +428,7 @@ function wp_revoke_user($id) {
  *
  * @param false $errors Deprecated.
  */
-function default_password_nag_handler($errors = false) {
+function default_password_nag_handler($errors = false) { yeah(__METHOD__);
 	global $user_ID;
 	// Short-circuit it.
 	if ( !get_user_option('default_password_nag'))
@@ -447,7 +447,7 @@ function default_password_nag_handler($errors = false) {
  * @param int    $user_ID
  * @param object $old_data
  */
-function default_password_nag_edit_user($user_ID, $old_data) {
+function default_password_nag_edit_user($user_ID, $old_data) { yeah(__METHOD__);
 	// Short-circuit it.
 	if ( !get_user_option('default_password_nag', $user_ID))
 		return;
@@ -466,7 +466,7 @@ function default_password_nag_edit_user($user_ID, $old_data) {
  *
  * @global string $pagenow
  */
-function default_password_nag() {
+function default_password_nag() { yeah(__METHOD__);
 	global $pagenow;
 	// Short-circuit it.
 	if ( 'profile.php' == $pagenow || !get_user_option('default_password_nag'))
@@ -486,14 +486,14 @@ function default_password_nag() {
  * @since 3.5.0
  * @access private
  */
-function delete_users_add_js() { ?>
+function delete_users_add_js() { yeah(__METHOD__); ?>
 <script>
-jQuery(document).ready( function($) {
+jQuery(document).ready( function($) { yeah(__METHOD__);
 	var submit = $('#submit').prop('disabled', true);
-	$('input[name="delete_option"]').one('change', function() {
+	$('input[name="delete_option"]').one('change', function() { yeah(__METHOD__);
 		submit.prop('disabled', false);
 	});
-	$('#reassign_user').focus( function() {
+	$('#reassign_user').focus( function() { yeah(__METHOD__);
 		$('#delete_option1').prop('checked', true).trigger('change');
 	});
 });
@@ -510,7 +510,7 @@ jQuery(document).ready( function($) {
  *
  * @param object $user User data object
  */
-function use_ssl_preference($user) {
+function use_ssl_preference($user) { yeah(__METHOD__);
 ?>
 	<tr class="user-use-ssl-wrap">
 		<th scope="row"><?php _e('Use https')?></th>
@@ -524,7 +524,7 @@ function use_ssl_preference($user) {
  * @param string $text
  * @return string
  */
-function admin_created_user_email( $text) {
+function admin_created_user_email( $text) { yeah(__METHOD__);
 	$roles = get_editable_roles();
 	$role = $roles[ $_REQUEST['role'] ];
 	/* translators: 1: Site name, 2: site URL, 3: role */
@@ -547,7 +547,7 @@ Please click the following link to activate your user account:
  * @param int $request_id Request ID.
  * @return bool|WP_Error Returns true/false based on the success of sending the email, or a WP_Error object.
  */
-function _wp_privacy_resend_request( $request_id) {
+function _wp_privacy_resend_request( $request_id) { yeah(__METHOD__);
 	$request_id = absint( $request_id);
 	$request    = get_post( $request_id);
 
@@ -575,7 +575,7 @@ function _wp_privacy_resend_request( $request_id) {
  * @param  int          $request_id Request ID.
  * @return int|WP_Error $request    Request ID on success or WP_Error.
  */
-function _wp_privacy_completed_request( $request_id) {
+function _wp_privacy_completed_request( $request_id) { yeah(__METHOD__);
 	$request_id   = absint( $request_id);
 	$request_data = wp_get_user_request_data( $request_id);
 
@@ -599,7 +599,7 @@ function _wp_privacy_completed_request( $request_id) {
  * @since 4.9.6
  * @access private
  */
-function _wp_personal_data_handle_actions() {
+function _wp_personal_data_handle_actions() { yeah(__METHOD__);
 	if ( isset( $_POST['privacy_action_email_retry'])) {
 		check_admin_referer( 'bulk-privacy_requests');
 
@@ -709,7 +709,7 @@ function _wp_personal_data_handle_actions() {
  * @since 4.9.6
  * @access private
  */
-function _wp_personal_data_cleanup_requests() {
+function _wp_personal_data_cleanup_requests() { yeah(__METHOD__);
 	/** This filter is documented in wp-includes/user.php */
 	$expires        = (int) apply_filters( 'user_request_key_expiration', DAY_IN_SECONDS);
 
@@ -743,7 +743,7 @@ function _wp_personal_data_cleanup_requests() {
  * @since 4.9.6
  * @access private
  */
-function _wp_personal_data_export_page() {
+function _wp_personal_data_export_page() { yeah(__METHOD__);
 	if ( !current_user_can( 'export_others_personal_data')) {
 		wp_die( __( 'Sorry, you are not allowed to export personal data on this site.'));
 	}
@@ -808,7 +808,7 @@ function _wp_personal_data_export_page() {
  * @since 4.9.6
  * @access private
  */
-function _wp_personal_data_removal_page() {
+function _wp_personal_data_removal_page() { yeah(__METHOD__);
 	/*
 	 * Require both caps in order to make it explicitly clear that delegating
 	 * erasure from network admins to single-site admins will give them the
@@ -897,7 +897,7 @@ function _wp_personal_data_removal_page() {
  * @param int    $request_id    The request ID for this personal data erasure.
  * @return array The filtered response.
  */
-function wp_privacy_process_personal_data_erasure_page( $response, $eraser_index, $email_address, $page, $request_id) {
+function wp_privacy_process_personal_data_erasure_page( $response, $eraser_index, $email_address, $page, $request_id) { yeah(__METHOD__);
 	/*
 	 * If the eraser response is malformed, don't attempt to consume it; let it
 	 * pass through, so that the default Ajax processing will generate a warning
@@ -958,7 +958,7 @@ function wp_privacy_process_personal_data_erasure_page( $response, $eraser_index
  * @since 4.9.6
  * @access private
  */
-function _wp_privacy_hook_requests_page() {
+function _wp_privacy_hook_requests_page() { yeah(__METHOD__);
 	add_submenu_page( 'tools.php', __( 'Export Personal Data'), __( 'Export Personal Data'), 'export_others_personal_data', 'export_personal_data', '_wp_personal_data_export_page');
 	add_submenu_page( 'tools.php', __( 'Erase Personal Data'), __( 'Erase Personal Data'), 'erase_others_personal_data', 'remove_personal_data', '_wp_personal_data_removal_page');
 }
@@ -969,7 +969,7 @@ function _wp_privacy_hook_requests_page() {
  * @since 4.9.8
  * @access private
  */
-function _wp_privacy_requests_screen_options() {
+function _wp_privacy_requests_screen_options() { yeah(__METHOD__);
 	$args = array(
 		'option'  => str_replace( 'tools_page_', '', get_current_screen()->id) . '_requests_per_page',
 	);
@@ -1016,7 +1016,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @return array Array of columns.
 	 */
-	public function get_columns() {
+	public function get_columns() { yeah(__METHOD__);
 		$columns = array(
 			'cb'                => '<input type="checkbox" />',
 			'email'             => __( 'Requester'),
@@ -1034,7 +1034,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @return array Default sortable columns.
 	 */
-	protected function get_sortable_columns() {
+	protected function get_sortable_columns() { yeah(__METHOD__);
 		return array();
 	}
 
@@ -1045,7 +1045,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @return string Default primary column name.
 	 */
-	protected function get_default_primary_column_name() {
+	protected function get_default_primary_column_name() { yeah(__METHOD__);
 		return 'email';
 	}
 
@@ -1056,7 +1056,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @return object Number of posts for each status.
 	 */
-	protected function get_request_counts() {
+	protected function get_request_counts() { yeah(__METHOD__);
 		global $wpdb;
 
 		$cache_key = $this->post_type . '-' . $this->request_type;
@@ -1093,7 +1093,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @return array Associative array of views in the format of $view_name => $view_markup.
 	 */
-	protected function get_views() {
+	protected function get_views() { yeah(__METHOD__);
 		$current_status = isset( $_REQUEST['filter-status']) ? sanitize_text_field( $_REQUEST['filter-status']) : '';
 		$statuses       = _wp_privacy_statuses();
 		$views          = array();
@@ -1118,7 +1118,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @return array List of bulk actions.
 	 */
-	protected function get_bulk_actions() {
+	protected function get_bulk_actions() { yeah(__METHOD__);
 		return array(
 			'delete' => __( 'Remove'),
 			'resend' => __( 'Resend email'),
@@ -1130,7 +1130,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @since 4.9.6
 	 */
-	public function process_bulk_action() {
+	public function process_bulk_action() { yeah(__METHOD__);
 		$action      = $this->current_action();
 		$request_ids = isset( $_REQUEST['request_id']) ? wp_parse_id_list( wp_unslash( $_REQUEST['request_id'])) : array();
 		
@@ -1181,7 +1181,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @since 4.9.6
 	 */
-	public function prepare_items() {
+	public function prepare_items() { yeah(__METHOD__);
 		global $wpdb;
 
 		$primary               = $this->get_primary_column_name();
@@ -1233,7 +1233,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 * @param WP_User_Request $item Item being shown.
 	 * @return string Checkbox column markup.
 	 */
-	public function column_cb( $item) {
+	public function column_cb( $item) { yeah(__METHOD__);
 		return sprintf( '<input type="checkbox" name="request_id[]" value="%1$s" /><span class="spinner"></span>', esc_attr( $item->ID));
 	}
 
@@ -1245,7 +1245,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 * @param WP_User_Request $item Item being shown.
 	 * @return string Status column markup.
 	 */
-	public function column_status( $item) {
+	public function column_status( $item) { yeah(__METHOD__);
 		$status        = get_post_status( $item->ID);
 		$status_object = get_post_status_object( $status);
 
@@ -1282,7 +1282,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 * @param int $timestamp Event timestamp.
 	 * @return string Human readable date.
 	 */
-	protected function get_timestamp_as_date( $timestamp) {
+	protected function get_timestamp_as_date( $timestamp) { yeah(__METHOD__);
 		if ( empty( $timestamp)) {
 			return '';
 		}
@@ -1306,7 +1306,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 * @param string          $column_name Name of column being shown.
 	 * @return string Default column output.
 	 */
-	public function column_default( $item, $column_name) {
+	public function column_default( $item, $column_name) { yeah(__METHOD__);
 		$cell_value = $item->$column_name;
 
 		if ( in_array( $column_name, array( 'created_timestamp'), true)) {
@@ -1324,7 +1324,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 * @param WP_User_Request $item Item being shown.
 	 * @return string Email column markup.
 	 */
-	public function column_email( $item) {
+	public function column_email( $item) { yeah(__METHOD__);
 		return sprintf( '<a href="%1$s">%2$s</a> %3$s', esc_url( 'mailto:' . $item->email), $item->email, $this->row_actions( array()));
 	}
 
@@ -1335,7 +1335,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @param WP_User_Request $item Item being shown.
 	 */
-	public function column_next_steps( $item) {}
+	public function column_next_steps( $item) { yeah(__METHOD__);}
 
 	/**
 	 * Generates content for a single row of the table,
@@ -1344,7 +1344,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @param WP_User_Request $item The current item.
 	 */
-	public function single_row( $item) {
+	public function single_row( $item) { yeah(__METHOD__);
 		$status = $item->status;
 
 		echo '<tr id="request-' . esc_attr( $item->ID) . '" class="status-' . esc_attr( $status) . '">';
@@ -1357,7 +1357,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @since 4.9.6
 	 */
-	public function embed_scripts() {}
+	public function embed_scripts() { yeah(__METHOD__);}
 }
 
 /**
@@ -1392,7 +1392,7 @@ class WP_Privacy_Data_Export_Requests_Table extends WP_Privacy_Requests_Table {
 	 * @param WP_User_Request $item Item being shown.
 	 * @return string Email column markup.
 	 */
-	public function column_email( $item) {
+	public function column_email( $item) { yeah(__METHOD__);
 		/** This filter is documented in wp-admin/includes/ajax-actions.php */
 		$exporters       = apply_filters( 'wp_privacy_personal_data_exporters', array());
 		$exporters_count = count( $exporters);
@@ -1426,7 +1426,7 @@ class WP_Privacy_Data_Export_Requests_Table extends WP_Privacy_Requests_Table {
 	 *
 	 * @param WP_User_Request $item Item being shown.
 	 */
-	public function column_next_steps( $item) {
+	public function column_next_steps( $item) { yeah(__METHOD__);
 		$status = $item->status;
 
 		switch ( $status) {
@@ -1501,7 +1501,7 @@ class WP_Privacy_Data_Removal_Requests_Table extends WP_Privacy_Requests_Table {
 	 * @param WP_User_Request $item Item being shown.
 	 * @return string Email column markup.
 	 */
-	public function column_email( $item) {
+	public function column_email( $item) { yeah(__METHOD__);
 		$row_actions = array();
 
 		// Allow the administrator to "force remove" the personal data even if confirmation has not yet been received.
@@ -1540,7 +1540,7 @@ class WP_Privacy_Data_Removal_Requests_Table extends WP_Privacy_Requests_Table {
 	 *
 	 * @param WP_User_Request $item Item being shown.
 	 */
-	public function column_next_steps( $item) {
+	public function column_next_steps( $item) { yeah(__METHOD__);
 		$status = $item->status;
 
 		switch ( $status) {

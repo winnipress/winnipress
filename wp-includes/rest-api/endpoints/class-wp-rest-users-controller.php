@@ -29,7 +29,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 *
 	 * @since 4.7.0
 	 */
-	public function __construct() {
+	public function __construct() { yeah(__METHOD__);
 		$this->namespace = 'wp/v2';
 		$this->rest_base = 'users';
 
@@ -43,7 +43,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 *
 	 * @see register_rest_route()
 	 */
-	public function register_routes() {
+	public function register_routes() { yeah(__METHOD__);
 
 		register_rest_route($this->namespace, '/' . $this->rest_base, array(
 			array(
@@ -152,7 +152,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 *
 	 * @return int|bool|WP_Error
 	 */
-	public function check_reassign($value, $request, $param ) {
+	public function check_reassign($value, $request, $param ) { yeah(__METHOD__);
 		if (is_numeric($value ) ) {
 			return $value;
 		}
@@ -172,7 +172,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return true|WP_Error True if the request has read access, otherwise WP_Error object.
 	 */
-	public function get_items_permissions_check($request ) {
+	public function get_items_permissions_check($request ) { yeah(__METHOD__);
 		// Check if roles is specified in GET request and if user can list users.
 		if (!empty($request['roles'] ) && !current_user_can('list_users' ) ) {
 			return new WP_Error('rest_user_cannot_view', __('Sorry, you are not allowed to filter users by role.' ), array('status' => rest_authorization_required_code() ) );
@@ -211,7 +211,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function get_items($request ) {
+	public function get_items($request ) { yeah(__METHOD__);
 
 		// Retrieve the list of registered collection query parameters.
 		$registered = $this->get_collection_params();
@@ -346,7 +346,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param int $id Supplied ID.
 	 * @return WP_User|WP_Error True if ID is valid, WP_Error otherwise.
 	 */
-	protected function get_user($id ) {
+	protected function get_user($id ) { yeah(__METHOD__);
 		$error = new WP_Error('rest_user_invalid_id', __('Invalid user ID.' ), array('status' => 404 ) );
 		if ((int) $id <= 0 ) {
 			return $error;
@@ -372,7 +372,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return true|WP_Error True if the request has read access for the item, otherwise WP_Error object.
 	 */
-	public function get_item_permissions_check($request ) {
+	public function get_item_permissions_check($request ) { yeah(__METHOD__);
 		$user = $this->get_user($request['id'] );
 		if (is_wp_error($user ) ) {
 			return $user;
@@ -401,7 +401,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function get_item($request ) {
+	public function get_item($request ) { yeah(__METHOD__);
 		$user = $this->get_user($request['id'] );
 		if (is_wp_error($user ) ) {
 			return $user;
@@ -421,7 +421,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function get_current_item($request ) {
+	public function get_current_item($request ) { yeah(__METHOD__);
 		$current_user_id = get_current_user_id();
 
 		if (empty($current_user_id ) ) {
@@ -444,7 +444,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return true|WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
-	public function create_item_permissions_check($request ) {
+	public function create_item_permissions_check($request ) { yeah(__METHOD__);
 
 		if (!current_user_can('create_users' ) ) {
 			return new WP_Error('rest_cannot_create_user', __('Sorry, you are not allowed to create new users.' ), array('status' => rest_authorization_required_code() ) );
@@ -461,7 +461,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function create_item($request ) {
+	public function create_item($request ) { yeah(__METHOD__);
 		if (!empty($request['id'] ) ) {
 			return new WP_Error('rest_user_exists', __('Cannot create existing user.' ), array('status' => 400 ) );
 		}
@@ -572,7 +572,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return true|WP_Error True if the request has access to update the item, WP_Error object otherwise.
 	 */
-	public function update_item_permissions_check($request ) {
+	public function update_item_permissions_check($request ) { yeah(__METHOD__);
 		$user = $this->get_user($request['id'] );
 		if (is_wp_error($user ) ) {
 			return $user;
@@ -607,7 +607,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function update_item($request ) {
+	public function update_item($request ) { yeah(__METHOD__);
 		$user = $this->get_user($request['id'] );
 		if (is_wp_error($user ) ) {
 			return $user;
@@ -692,7 +692,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return true|WP_Error True if the request has access to update the item, WP_Error object otherwise.
 	 */
-	public function update_current_item_permissions_check($request ) {
+	public function update_current_item_permissions_check($request ) { yeah(__METHOD__);
 		$request['id'] = get_current_user_id();
 
 		return $this->update_item_permissions_check($request );
@@ -706,7 +706,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	function update_current_item($request ) {
+	function update_current_item($request ) { yeah(__METHOD__);
 		$request['id'] = get_current_user_id();
 
 		return $this->update_item($request );
@@ -720,7 +720,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return true|WP_Error True if the request has access to delete the item, WP_Error object otherwise.
 	 */
-	public function delete_item_permissions_check($request ) {
+	public function delete_item_permissions_check($request ) { yeah(__METHOD__);
 		$user = $this->get_user($request['id'] );
 		if (is_wp_error($user ) ) {
 			return $user;
@@ -741,7 +741,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	public function delete_item($request ) {
+	public function delete_item($request ) { yeah(__METHOD__);
 		// We don't support delete requests in multisite.
 		if (is_multisite() ) {
 			return new WP_Error('rest_cannot_delete', __('The user cannot be deleted.' ), array('status' => 501 ) );
@@ -805,7 +805,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return true|WP_Error True if the request has access to delete the item, WP_Error object otherwise.
 	 */
-	public function delete_current_item_permissions_check($request ) {
+	public function delete_current_item_permissions_check($request ) { yeah(__METHOD__);
 		$request['id'] = get_current_user_id();
 
 		return $this->delete_item_permissions_check($request );
@@ -819,7 +819,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
-	function delete_current_item($request ) {
+	function delete_current_item($request ) { yeah(__METHOD__);
 		$request['id'] = get_current_user_id();
 
 		return $this->delete_item($request );
@@ -834,7 +834,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response($user, $request ) {
+	public function prepare_item_for_response($user, $request ) { yeah(__METHOD__);
 
 		$data   = array();
 		$fields = $this->get_fields_for_response($request );
@@ -942,7 +942,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_Post $user User object.
 	 * @return array Links for the given user.
 	 */
-	protected function prepare_links($user ) {
+	protected function prepare_links($user ) { yeah(__METHOD__);
 		$links = array(
 			'self' => array(
 				'href' => rest_url(sprintf('%s/%s/%d', $this->namespace, $this->rest_base, $user->ID ) ),
@@ -963,7 +963,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return object $prepared_user User object.
 	 */
-	protected function prepare_item_for_database($request ) {
+	protected function prepare_item_for_database($request ) { yeah(__METHOD__);
 		$prepared_user = new stdClass;
 
 		$schema = $this->get_item_schema();
@@ -1044,7 +1044,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @return true|WP_Error True if the current user is allowed to make the role change,
 	 *                       otherwise a WP_Error object.
 	 */
-	protected function check_role_update($user_id, $roles ) {
+	protected function check_role_update($user_id, $roles ) { yeah(__METHOD__);
 		global $wp_roles;
 
 		foreach ($roles as $role ) {
@@ -1094,7 +1094,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param  string           $param   The parameter name.
 	 * @return WP_Error|string The sanitized username, if valid, otherwise an error.
 	 */
-	public function check_username($value, $request, $param ) {
+	public function check_username($value, $request, $param ) { yeah(__METHOD__);
 		$username = (string) $value;
 
 		if (!validate_username($username ) ) {
@@ -1123,7 +1123,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 * @param  string           $param   The parameter name.
 	 * @return WP_Error|string The sanitized password, if valid, otherwise an error.
 	 */
-	public function check_user_password($value, $request, $param ) {
+	public function check_user_password($value, $request, $param ) { yeah(__METHOD__);
 		$password = (string) $value;
 
 		if (empty($password ) ) {
@@ -1144,7 +1144,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Item schema data.
 	 */
-	public function get_item_schema() {
+	public function get_item_schema() { yeah(__METHOD__);
 		$schema = array(
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
 			'title'      => 'user',
@@ -1311,7 +1311,7 @@ class WP_REST_Users_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Collection parameters.
 	 */
-	public function get_collection_params() {
+	public function get_collection_params() { yeah(__METHOD__);
 		$query_params = parent::get_collection_params();
 
 		$query_params['context']['default'] = 'view';

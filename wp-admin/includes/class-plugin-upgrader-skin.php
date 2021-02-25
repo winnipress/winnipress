@@ -24,7 +24,7 @@ class Plugin_Upgrader_Skin extends WP_Upgrader_Skin {
 	 *
 	 * @param array $args
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( $args = array() ) { yeah(__METHOD__);
 		$defaults = array( 'url' => '', 'plugin' => '', 'nonce' => '', 'title' => __('Update Plugin') );
 		$args = wp_parse_args($args, $defaults);
 
@@ -38,7 +38,7 @@ class Plugin_Upgrader_Skin extends WP_Upgrader_Skin {
 
 	/**
 	 */
-	public function after() {
+	public function after() { yeah(__METHOD__);
 		$this->plugin = $this->upgrader->plugin_info();
 		if ( !empty($this->plugin) && !is_wp_error($this->result) && $this->plugin_active ){
 			// Currently used only when JS is off for a single plugin update?

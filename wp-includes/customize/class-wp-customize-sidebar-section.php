@@ -39,7 +39,7 @@ class WP_Customize_Sidebar_Section extends WP_Customize_Section {
 	 *
 	 * @return array The array to be exported to the client as JSON.
 	 */
-	public function json() {
+	public function json() { yeah(__METHOD__);
 		$json = parent::json();
 		$json['sidebarId'] = $this->sidebar_id;
 		return $json;
@@ -52,7 +52,7 @@ class WP_Customize_Sidebar_Section extends WP_Customize_Section {
 	 *
 	 * @return bool Whether sidebar is rendered.
 	 */
-	public function active_callback() {
+	public function active_callback() { yeah(__METHOD__);
 		return $this->manager->widgets->is_sidebar_rendered($this->sidebar_id );
 	}
 }

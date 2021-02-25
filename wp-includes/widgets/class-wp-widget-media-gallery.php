@@ -21,7 +21,7 @@ class WP_Widget_Media_Gallery extends WP_Widget_Media {
 	 *
 	 * @since 4.9.0
 	 */
-	public function __construct() {
+	public function __construct() { yeah(__METHOD__);
 		parent::__construct('media_gallery', __('Gallery' ), array(
 			'description' => __('Displays an image gallery.' ),
 			'mime_type'   => 'image',
@@ -45,7 +45,7 @@ class WP_Widget_Media_Gallery extends WP_Widget_Media {
 	 * @link https://core.trac.wordpress.org/ticket/35574
 	 * @return array Schema for properties.
 	 */
-	public function get_instance_schema() {
+	public function get_instance_schema() { yeah(__METHOD__);
 		$schema = array(
 			'title' => array(
 				'type' => 'string',
@@ -102,7 +102,7 @@ class WP_Widget_Media_Gallery extends WP_Widget_Media {
 	 * @param array $instance Widget instance props.
 	 * @return void
 	 */
-	public function render_media($instance ) {
+	public function render_media($instance ) { yeah(__METHOD__);
 		$instance = array_merge(wp_list_pluck($this->get_instance_schema(), 'default' ), $instance );
 
 		$shortcode_atts = array_merge(
@@ -126,7 +126,7 @@ class WP_Widget_Media_Gallery extends WP_Widget_Media {
 	 *
 	 * @since 4.9.0
 	 */
-	public function enqueue_admin_scripts() {
+	public function enqueue_admin_scripts() { yeah(__METHOD__);
 		parent::enqueue_admin_scripts();
 
 		$handle = 'media-gallery-widget';
@@ -164,14 +164,14 @@ class WP_Widget_Media_Gallery extends WP_Widget_Media {
 	 *
 	 * @since 4.9.0
 	 */
-	public function render_control_template_scripts() {
+	public function render_control_template_scripts() { yeah(__METHOD__);
 		parent::render_control_template_scripts();
 		?>
 		<script type="text/html" id="tmpl-wp-media-widget-gallery-preview">
 			<# var describedById = 'describedBy-' + String(Math.random() ); #>
 			<# if (data.ids.length ) { #>
 				<div class="gallery media-widget-gallery-preview">
-					<# _.each(data.ids, function(id, index ) { #>
+					<# _.each(data.ids, function(id, index ) { yeah(__METHOD__); #>
 						<#
 						var attachment = data.attachments[ id ];
 						if (!attachment ) {
@@ -214,7 +214,7 @@ class WP_Widget_Media_Gallery extends WP_Widget_Media {
 	 * @param array $instance Widget instance props.
 	 * @return bool Whether widget has content.
 	 */
-	protected function has_content($instance ) {
+	protected function has_content($instance ) { yeah(__METHOD__);
 		if (!empty($instance['ids'] ) ) {
 			$attachments = wp_parse_id_list($instance['ids'] );
 			foreach ($attachments as $attachment ) {

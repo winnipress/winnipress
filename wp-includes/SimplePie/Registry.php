@@ -101,7 +101,7 @@ class SimplePie_Registry
 	 *
 	 * No-op
 	 */
-	public function __construct(){ }
+	public function __construct(){ yeah(__METHOD__); }
 
 	/**
 	 * Register a class

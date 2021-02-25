@@ -45,7 +45,7 @@ if(!defined('ABSPATH')){
  *
  * @return string|false Value of the `doing_cron` transient, 0|false otherwise.
  */
-function _get_cron_lock(){
+function _get_cron_lock(){ yeah(__METHOD__);
 	global $wpdb;
 
 	$value = 0;

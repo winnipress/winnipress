@@ -21,7 +21,7 @@ class WP_REST_Settings_Controller extends WP_REST_Controller {
 	 *
 	 * @since 4.7.0
 	 */
-	public function __construct() {
+	public function __construct() { yeah(__METHOD__);
 		$this->namespace = 'wp/v2';
 		$this->rest_base = 'settings';
 	}
@@ -33,7 +33,7 @@ class WP_REST_Settings_Controller extends WP_REST_Controller {
 	 *
 	 * @see register_rest_route()
 	 */
-	public function register_routes() {
+	public function register_routes() { yeah(__METHOD__);
 
 		register_rest_route($this->namespace, '/' . $this->rest_base, array(
 			array(
@@ -61,7 +61,7 @@ class WP_REST_Settings_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return bool True if the request has read access for the item, otherwise false.
 	 */
-	public function get_item_permissions_check($request ) {
+	public function get_item_permissions_check($request ) { yeah(__METHOD__);
 		return current_user_can('manage_options' );
 	}
 
@@ -73,7 +73,7 @@ class WP_REST_Settings_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return array|WP_Error Array on success, or WP_Error object on failure.
 	 */
-	public function get_item($request ) {
+	public function get_item($request ) { yeah(__METHOD__);
 		$options  = $this->get_registered_options();
 		$response = array();
 
@@ -118,7 +118,7 @@ class WP_REST_Settings_Controller extends WP_REST_Controller {
 	 * @param array $schema Schema to match.
 	 * @return mixed The prepared value.
 	 */
-	protected function prepare_value($value, $schema ) {
+	protected function prepare_value($value, $schema ) { yeah(__METHOD__);
 		// If the value is not valid by the schema, set the value to null. Null
 		// values are specifcally non-destructive so this will not cause overwriting
 		// the current invalid value to null.
@@ -136,7 +136,7 @@ class WP_REST_Settings_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return array|WP_Error Array on success, or error object on failure.
 	 */
-	public function update_item($request ) {
+	public function update_item($request ) { yeah(__METHOD__);
 		$options = $this->get_registered_options();
 
 		$params  = $request->get_params();
@@ -205,7 +205,7 @@ class WP_REST_Settings_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Array of registered options.
 	 */
-	protected function get_registered_options() {
+	protected function get_registered_options() { yeah(__METHOD__);
 		$rest_options = array();
 
 		foreach (get_registered_settings() as $name => $args ) {
@@ -263,7 +263,7 @@ class WP_REST_Settings_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Item schema data.
 	 */
-	public function get_item_schema() {
+	public function get_item_schema() { yeah(__METHOD__);
 		$options = $this->get_registered_options();
 
 		$schema = array(
@@ -297,7 +297,7 @@ class WP_REST_Settings_Controller extends WP_REST_Controller {
 	 * @param  string          $param   The parameter name.
 	 * @return mixed|WP_Error
 	 */
-	public function sanitize_callback($value, $request, $param ) {
+	public function sanitize_callback($value, $request, $param ) { yeah(__METHOD__);
 		if (is_null($value ) ) {
 			return $value;
 		}
@@ -316,7 +316,7 @@ class WP_REST_Settings_Controller extends WP_REST_Controller {
 	 * @param array $schema The schema array.
 	 * @return array
 	 */
-	protected function set_additional_properties_to_false($schema ) {
+	protected function set_additional_properties_to_false($schema ) { yeah(__METHOD__);
 		switch ($schema['type'] ) {
 			case 'object':
 				foreach ($schema['properties'] as $key => $child_schema ) {

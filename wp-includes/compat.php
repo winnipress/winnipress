@@ -7,8 +7,8 @@
  */
 
 // If gettext isn't available
-if ( !function_exists('_') ) {
-	function _($string) {
+if ( !function_exists('_') ) { 
+	function _($string) { yeah(__METHOD__);
 		return $string;
 	}
 }
@@ -27,7 +27,7 @@ if ( !function_exists('_') ) {
  *             false  : Used for testing - return false for future calls to this function
  *             'reset': Used for testing - restore default behavior of this function
  */
-function _wp_can_use_pcre_u( $set = null ) {
+function _wp_can_use_pcre_u( $set = null ) { yeah(__METHOD__);
 	static $utf8_pcre = 'reset';
 
 	if ( null !== $set ) {
@@ -57,7 +57,7 @@ if ( !function_exists( 'mb_substr' ) ) :
 	 * @param string|null $encoding Optional. Character encoding to use. Default null.
 	 * @return string Extracted substring.
 	 */
-	function mb_substr( $str, $start, $length = null, $encoding = null ) {
+	function mb_substr( $str, $start, $length = null, $encoding = null ) { yeah(__METHOD__);
 		return _mb_substr( $str, $start, $length, $encoding );
 	}
 endif;
@@ -79,7 +79,7 @@ endif;
  * @param string|null $encoding Optional. Character encoding to use. Default null.
  * @return string Extracted substring.
  */
-function _mb_substr( $str, $start, $length = null, $encoding = null ) {
+function _mb_substr( $str, $start, $length = null, $encoding = null ) { yeah(__METHOD__);
 	if ( null === $encoding ) {
 		$encoding = get_option( 'blog_charset' );
 	}
@@ -144,7 +144,7 @@ if ( !function_exists( 'mb_strlen' ) ) :
 	 * @param string|null $encoding Optional. Character encoding to use. Default null.
 	 * @return int String length of `$str`.
 	 */
-	function mb_strlen( $str, $encoding = null ) {
+	function mb_strlen( $str, $encoding = null ) { yeah(__METHOD__);
 		return _mb_strlen( $str, $encoding );
 	}
 endif;
@@ -163,7 +163,7 @@ endif;
  * @param string|null $encoding Optional. Character encoding to use. Default null.
  * @return int String length of `$str`.
  */
-function _mb_strlen( $str, $encoding = null ) {
+function _mb_strlen( $str, $encoding = null ) { yeah(__METHOD__);
 	if ( null === $encoding ) {
 		$encoding = get_option( 'blog_charset' );
 	}
@@ -233,7 +233,7 @@ if ( !function_exists('hash_hmac') ):
  * @return string|false The hash in output determined by `$raw_output`. False if `$algo`
  *                      is unknown or invalid.
  */
-function hash_hmac($algo, $data, $key, $raw_output = false) {
+function hash_hmac($algo, $data, $key, $raw_output = false) { yeah(__METHOD__);
 	return _hash_hmac($algo, $data, $key, $raw_output);
 }
 endif;
@@ -252,7 +252,7 @@ endif;
  * @return string|false The hash in output determined by `$raw_output`. False if `$algo`
  *                      is unknown or invalid.
  */
-function _hash_hmac($algo, $data, $key, $raw_output = false) {
+function _hash_hmac($algo, $data, $key, $raw_output = false) { yeah(__METHOD__);
 	$packs = array('md5' => 'H32', 'sha1' => 'H40');
 
 	if ( !isset($packs[$algo]) )
@@ -275,8 +275,8 @@ function _hash_hmac($algo, $data, $key, $raw_output = false) {
 	return $hmac;
 }
 
-if ( !function_exists('json_encode') ) {
-	function json_encode( $string ) {
+if ( !function_exists('json_encode') ) { 
+	function json_encode( $string ) { yeah(__METHOD__);
 		global $wp_json;
 
 		if ( !( $wp_json instanceof Services_JSON ) ) {
@@ -288,14 +288,14 @@ if ( !function_exists('json_encode') ) {
 	}
 }
 
-if ( !function_exists('json_decode') ) {
+if ( !function_exists('json_decode') ) { 
 	/**
 	 * @global Services_JSON $wp_json
 	 * @param string $string
 	 * @param bool   $assoc_array
 	 * @return object|array
 	 */
-	function json_decode( $string, $assoc_array = false ) {
+	function json_decode( $string, $assoc_array = false ) { yeah(__METHOD__);
 		global $wp_json;
 
 		if ( !($wp_json instanceof Services_JSON ) ) {
@@ -313,7 +313,7 @@ if ( !function_exists('json_decode') ) {
 	 * @param object $data
 	 * @return array
 	 */
-	function _json_decode_object_helper($data) {
+	function _json_decode_object_helper($data) { yeah(__METHOD__);
 		if ( is_object($data) )
 			$data = get_object_vars($data);
 		return is_array($data) ? array_map(__FUNCTION__, $data) : $data;
@@ -336,7 +336,7 @@ if ( !function_exists( 'hash_equals' ) ) :
  * @param string $b Actual, user supplied, string.
  * @return bool Whether strings are equal.
  */
-function hash_equals( $a, $b ) {
+function hash_equals( $a, $b ) { yeah(__METHOD__);
 	$a_length = strlen( $a );
 	if ( $a_length !== strlen( $b ) ) {
 		return false;
@@ -369,9 +369,9 @@ if ( !function_exists( 'json_last_error_msg' ) ) :
 	 * @return bool|string Returns the error message on success, "No Error" if no error has occurred,
 	 *                     or false on failure.
 	 */
-	function json_last_error_msg() {
+	function json_last_error_msg() { yeah(__METHOD__);
 		// See https://core.trac.wordpress.org/ticket/27799.
-		if ( !function_exists( 'json_last_error' ) ) {
+		if ( !function_exists( 'json_last_error' ) ) { 
 			return false;
 		}
 
@@ -431,7 +431,7 @@ if ( !interface_exists( 'JsonSerializable' ) ) {
 }
 
 // random_int was introduced in PHP 7.0
-if ( !function_exists( 'random_int' ) ) {
+if ( !function_exists( 'random_int' ) ) { 
 	require ABSPATH . WPINC . '/random_compat/random.php';
 }
 
@@ -457,7 +457,7 @@ if ( !function_exists( 'array_replace_recursive' ) ) :
 	 *
 	 * @return array
 	 */
-	function array_replace_recursive( $base = array(), $replacements = array() ) {
+	function array_replace_recursive( $base = array(), $replacements = array() ) { yeah(__METHOD__);
 		foreach ( array_slice( func_get_args(), 1 ) as $replacements ) {
 			$bref_stack = array( &$base );
 			$head_stack = array( $replacements );
@@ -494,11 +494,11 @@ endif;
  * function declaration. Function availability is checked here, and the
  * autoloader is included only if necessary.
  */
-if ( !function_exists( 'spl_autoload_register' ) ) {
+if ( !function_exists( 'spl_autoload_register' ) ) { 
 	require_once ABSPATH . WPINC . '/spl-autoload-compat.php';
 }
 
-if ( !function_exists( 'is_countable' ) ) {
+if ( !function_exists( 'is_countable' ) ) { 
 	/**
 	 * Polyfill for is_countable() function added in PHP 7.3.
 	 *
@@ -511,7 +511,7 @@ if ( !function_exists( 'is_countable' ) ) {
 	 *
 	 * @return bool True if `$var` is countable, false otherwise.
 	 */
-	function is_countable( $var ) {
+	function is_countable( $var ) { yeah(__METHOD__);
 		return ( is_array( $var )
 			|| $var instanceof Countable
 			|| $var instanceof SimpleXMLElement
@@ -520,7 +520,7 @@ if ( !function_exists( 'is_countable' ) ) {
 	}
 }
 
-if ( !function_exists( 'is_iterable' ) ) {
+if ( !function_exists( 'is_iterable' ) ) { 
 	/**
 	 * Polyfill for is_iterable() function added in PHP 7.1.
 	 *
@@ -533,7 +533,7 @@ if ( !function_exists( 'is_iterable' ) ) {
 	 *
 	 * @return bool True if `$var` is iterable, false otherwise.
 	 */
-	function is_iterable( $var ) {
+	function is_iterable( $var ) { yeah(__METHOD__);
 		return ( is_array( $var ) || $var instanceof Traversable );
 	}
 }

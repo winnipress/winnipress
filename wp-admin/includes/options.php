@@ -12,13 +12,13 @@
  *
  * @since 4.2.0
  */
-function options_discussion_add_js() {
+function options_discussion_add_js() { yeah(__METHOD__);
 ?>
 	<script>
-	(function($){
+	(function($){ yeah(__METHOD__);
 		var parent = $( '#show_avatars'),
 			children = $( '.avatar-settings');
-		parent.change(function(){
+		parent.change(function(){ yeah(__METHOD__);
 			children.toggleClass( 'hide-if-js', !this.checked);
 		});
 	})(jQuery);
@@ -31,14 +31,14 @@ function options_discussion_add_js() {
  *
  * @since 3.5.0
  */
-function options_general_add_js() {
+function options_general_add_js() { yeah(__METHOD__);
 ?>
 <script type="text/javascript">
-	jQuery(document).ready(function($){
+	jQuery(document).ready(function($){ yeah(__METHOD__);
 		var $siteName = $( '#wp-admin-bar-site-name').children( 'a').first(),
 			homeURL = ( <?php echo wp_json_encode( get_home_url()); ?> || '').replace( /^(https?:\/\/)?(www\.)?/, '');
 
-		$( '#blogname').on( 'input', function() {
+		$( '#blogname').on( 'input', function() { yeah(__METHOD__);
 			var title = $.trim( $( this).val()) || homeURL;
 
 			// Truncate to 40 characters.
@@ -49,22 +49,22 @@ function options_general_add_js() {
 			$siteName.text( title);
 		});
 
-		$("input[name='date_format']").click(function(){
+		$("input[name='date_format']").click(function(){ yeah(__METHOD__);
 			if ( "date_format_custom_radio" != $(this).attr("id"))
 				$( 'input[name="date_format_custom"]').val( $( this).val()).closest( 'fieldset').find( '.example').text( $( this).parent( 'label').children( '.format-i18n').text());
 		});
-		$( 'input[name="date_format_custom"]').on( 'click input', function() {
+		$( 'input[name="date_format_custom"]').on( 'click input', function() { yeah(__METHOD__);
 			$( '#date_format_custom_radio').prop( 'checked', true);
 		});
 
-		$("input[name='time_format']").click(function(){
+		$("input[name='time_format']").click(function(){ yeah(__METHOD__);
 			if ( "time_format_custom_radio" != $(this).attr("id"))
 				$( 'input[name="time_format_custom"]').val( $( this).val()).closest( 'fieldset').find( '.example').text( $( this).parent( 'label').children( '.format-i18n').text());
 		});
-		$( 'input[name="time_format_custom"]').on( 'click input', function() {
+		$( 'input[name="time_format_custom"]').on( 'click input', function() { yeah(__METHOD__);
 			$( '#time_format_custom_radio').prop( 'checked', true);
 		});
-		$("input[name='date_format_custom'], input[name='time_format_custom']").change( function() {
+		$("input[name='date_format_custom'], input[name='time_format_custom']").change( function() { yeah(__METHOD__);
 			var format = $( this),
 				fieldset = format.closest( 'fieldset'),
 				example = fieldset.find( '.example'),
@@ -75,11 +75,11 @@ function options_general_add_js() {
 			$.post( ajaxurl, {
 					action: 'date_format_custom' == format.attr( 'name') ? 'date_format' : 'time_format',
 					date : format.val()
-				}, function( d) { spinner.removeClass( 'is-active'); example.text( d); });
+				}, function( d) { yeah(__METHOD__); spinner.removeClass( 'is-active'); example.text( d); });
 		});
 
 		var languageSelect = $( '#WPLANG');
-		$( 'form').submit( function() {
+		$( 'form').submit( function() { yeah(__METHOD__);
 			// Don't show a spinner for English and installed languages,
 			// as there is nothing to download.
 			if ( !languageSelect.find( 'option:selected').data( 'installed')) {
@@ -96,14 +96,14 @@ function options_general_add_js() {
  *
  * @since 3.5.0
  */
-function options_reading_add_js() {
+function options_reading_add_js() { yeah(__METHOD__);
 ?>
 <script type="text/javascript">
-	jQuery(document).ready(function($){
+	jQuery(document).ready(function($){ yeah(__METHOD__);
 		var section = $('#front-static-pages'),
 			staticPage = section.find('input:radio[value="page"]'),
 			selects = section.find('select'),
-			check_disabled = function(){
+			check_disabled = function(){ yeah(__METHOD__);
 				selects.prop( 'disabled', !staticPage.prop('checked'));
 			};
 		check_disabled();
@@ -118,7 +118,7 @@ function options_reading_add_js() {
  *
  * @since 3.5.0
  */
-function options_reading_blog_charset() {
+function options_reading_blog_charset() { yeah(__METHOD__);
 	echo '<input name="blog_charset" type="text" id="blog_charset" value="' . esc_attr( get_option( 'blog_charset')) . '" class="regular-text" />';
 	echo '<p class="description">' . __( 'The <a href="https://codex.wordpress.org/Glossary#Character_set">character encoding</a> of your site (UTF-8 is recommended)') . '</p>';
 }

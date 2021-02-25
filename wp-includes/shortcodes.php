@@ -60,7 +60,7 @@ $shortcode_tags = array();
  *                           or null if not set (`$content`), and finally the shortcode tag
  *                           itself (`$shortcode_tag`), in that order.
  */
-function add_shortcode($tag, $callback ){
+function add_shortcode($tag, $callback ){ yeah(__METHOD__);
 	global $shortcode_tags;
 
 	if ('' == trim($tag ) ){
@@ -88,7 +88,7 @@ function add_shortcode($tag, $callback ){
  *
  * @param string $tag Shortcode tag to remove hook for.
  */
-function remove_shortcode($tag){
+function remove_shortcode($tag){ yeah(__METHOD__);
 	global $shortcode_tags;
 
 	unset($shortcode_tags[$tag]);
@@ -105,7 +105,7 @@ function remove_shortcode($tag){
  *
  * @global array $shortcode_tags
  */
-function remove_all_shortcodes(){
+function remove_all_shortcodes(){ yeah(__METHOD__);
 	global $shortcode_tags;
 
 	$shortcode_tags = array();
@@ -121,7 +121,7 @@ function remove_all_shortcodes(){
  * @param string $tag Shortcode tag to check.
  * @return bool Whether the given shortcode exists.
  */
-function shortcode_exists($tag ){
+function shortcode_exists($tag ){ yeah(__METHOD__);
 	global $shortcode_tags;
 	return array_key_exists($tag, $shortcode_tags );
 }
@@ -137,7 +137,7 @@ function shortcode_exists($tag ){
  * @param string $tag     Shortcode tag to check.
  * @return bool Whether the passed content contains the given shortcode.
  */
-function has_shortcode($content, $tag ){
+function has_shortcode($content, $tag ){ yeah(__METHOD__);
 	if (false === strpos($content, '[' ) ){
 		return false;
 	}
@@ -173,7 +173,7 @@ function has_shortcode($content, $tag ){
  * @param bool $ignore_html When true, shortcodes inside HTML elements will be skipped.
  * @return string Content with shortcodes filtered out.
  */
-function do_shortcode($content, $ignore_html = false ){
+function do_shortcode($content, $ignore_html = false ){ yeah(__METHOD__);
 	global $shortcode_tags;
 
 	if (false === strpos($content, '[' ) ){
@@ -225,7 +225,7 @@ function do_shortcode($content, $ignore_html = false ){
  * @param array $tagnames Optional. List of shortcodes to find. Defaults to all registered shortcodes.
  * @return string The shortcode search regular expression
  */
-function get_shortcode_regex($tagnames = null ){
+function get_shortcode_regex($tagnames = null ){ yeah(__METHOD__);
 	global $shortcode_tags;
 
 	if (empty($tagnames ) ){
@@ -278,7 +278,7 @@ function get_shortcode_regex($tagnames = null ){
  * @param array $m Regular expression match array
  * @return string|false False on failure.
  */
-function do_shortcode_tag($m ){
+function do_shortcode_tag($m ){ yeah(__METHOD__);
 	global $shortcode_tags;
 
 	// allow [[foo]] syntax for escaping a tag
@@ -346,7 +346,7 @@ function do_shortcode_tag($m ){
  * @param array $tagnames List of shortcodes to find.
  * @return string Content with shortcodes filtered out.
  */
-function do_shortcodes_in_html_tags($content, $ignore_html, $tagnames ){
+function do_shortcodes_in_html_tags($content, $ignore_html, $tagnames ){ yeah(__METHOD__);
 	// Normalize entities in unfiltered HTML before adding placeholders.
 	$trans = array('&#91;' => '&#091;', '&#93;' => '&#093;' );
 	$content = strtr($content, $trans );
@@ -445,7 +445,7 @@ function do_shortcodes_in_html_tags($content, $ignore_html, $tagnames ){
  * @param string $content Content to search for placeholders.
  * @return string Content with placeholders removed.
  */
-function unescape_invalid_shortcodes($content ){
+function unescape_invalid_shortcodes($content ){ yeah(__METHOD__);
         // Clean up entire string, avoids re-parsing HTML.
         $trans = array('&#91;' => '[', '&#93;' => ']' );
         $content = strtr($content, $trans );
@@ -460,7 +460,7 @@ function unescape_invalid_shortcodes($content ){
  *
  * @return string The shortcode attribute regular expression
  */
-function get_shortcode_atts_regex(){
+function get_shortcode_atts_regex(){ yeah(__METHOD__);
 	return '/([\w-]+)\s*=\s*"([^"]*)"(?:\s|$)|([\w-]+)\s*=\s*\'([^\']*)\'(?:\s|$)|([\w-]+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|\'([^\']*)\'(?:\s|$)|(\S+)(?:\s|$)/';
 }
 
@@ -479,7 +479,7 @@ function get_shortcode_atts_regex(){
  *                      Returns empty string if trim($text ) == ''.
  *                      All other matches are checked for not empty().
  */
-function shortcode_parse_atts($text){
+function shortcode_parse_atts($text){ yeah(__METHOD__);
 	$atts = array();
 	$pattern = get_shortcode_atts_regex();
 	$text = preg_replace("/[\x{00a0}\x{200b}]+/u", " ", $text);
@@ -530,7 +530,7 @@ function shortcode_parse_atts($text){
  * @param string $shortcode Optional. The name of the shortcode, provided for context to enable filtering
  * @return array Combined and filtered attribute list.
  */
-function shortcode_atts($pairs, $atts, $shortcode = '' ){
+function shortcode_atts($pairs, $atts, $shortcode = '' ){ yeah(__METHOD__);
 	$atts = (array)$atts;
 	$out = array();
 	foreach ($pairs as $name => $default){
@@ -570,7 +570,7 @@ function shortcode_atts($pairs, $atts, $shortcode = '' ){
  * @param string $content Content to remove shortcode tags.
  * @return string Content without shortcode tags.
  */
-function strip_shortcodes($content ){
+function strip_shortcodes($content ){ yeah(__METHOD__);
 	global $shortcode_tags;
 
 	if (false === strpos($content, '[' ) ){
@@ -620,7 +620,7 @@ function strip_shortcodes($content ){
  * @param array $m RegEx matches against post content.
  * @return string|false The content stripped of the tag, otherwise false.
  */
-function strip_shortcode_tag($m ){
+function strip_shortcode_tag($m ){ yeah(__METHOD__);
 	// allow [[foo]] syntax for escaping a tag
 	if ($m[1] == '[' && $m[6] == ']' ){
 		return substr($m[0], 1, -1);

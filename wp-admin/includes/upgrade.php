@@ -36,7 +36,7 @@ if(!function_exists('wp_install')) :
  * @param string $language      Optional. Language chosen. Default empty.
  * @return array Array keys 'url', 'user_id', 'password', and 'password_message'.
  */
-function wp_install($blog_title, $user_name, $user_email, $public, $deprecated = '', $user_password = '', $language = ''){
+function wp_install($blog_title, $user_name, $user_email, $public, $deprecated = '', $user_password = '', $language = ''){ yeah(__METHOD__);
 	if(!empty($deprecated))
 		_deprecated_argument(__FUNCTION__, '2.6.0');
 
@@ -127,7 +127,7 @@ if(!function_exists('wp_install_defaults')) :
  *
  * @param int $user_id User ID.
  */
-function wp_install_defaults($user_id){
+function wp_install_defaults($user_id){ yeah(__METHOD__);
 	global $wpdb, $wp_rewrite, $table_prefix;
 
 	// Default category
@@ -341,7 +341,7 @@ endif;
  *
  * @return bool Whether pretty permalinks are enabled. False otherwise.
  */
-function wp_install_maybe_enable_pretty_permalinks(){
+function wp_install_maybe_enable_pretty_permalinks(){ yeah(__METHOD__);
 	global $wp_rewrite;
 
 	// Bail if a permalink structure is already enabled.
@@ -419,7 +419,7 @@ if(!function_exists('wp_new_blog_notification')) :
  * @param int    $user_id    User ID.
  * @param string $password   User's Password.
  */
-function wp_new_blog_notification($blog_title, $blog_url, $user_id, $password){
+function wp_new_blog_notification($blog_title, $blog_url, $user_id, $password){ yeah(__METHOD__);
 	$user = new WP_User($user_id);
 	$email = $user->user_email;
 	$name = $user->user_login;
@@ -457,7 +457,7 @@ if(!function_exists('wp_upgrade')) :
  * @global int  $wp_db_version
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function wp_upgrade(){
+function wp_upgrade(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wp_db_version, $wpdb;
 
 	$wp_current_db_version = __get_option('db_version');
@@ -512,7 +512,7 @@ endif;
  * @global int $wp_current_db_version
  * @global int $wp_db_version
  */
-function upgrade_all(){
+function upgrade_all(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wp_db_version;
 	$wp_current_db_version = __get_option('db_version');
 
@@ -630,7 +630,7 @@ function upgrade_all(){
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function upgrade_100(){
+function upgrade_100(){ yeah(__METHOD__);
 	global $wpdb;
 
 	// Get the title and ID of every post, post_name to check if it already has a value
@@ -689,7 +689,7 @@ function upgrade_100(){
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function upgrade_101(){
+function upgrade_101(){ yeah(__METHOD__);
 	global $wpdb;
 
 	// Clean up indices, add a few
@@ -710,7 +710,7 @@ function upgrade_101(){
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function upgrade_110(){
+function upgrade_110(){ yeah(__METHOD__);
 	global $wpdb;
 
 	// Set user_nicename.
@@ -773,7 +773,7 @@ function upgrade_110(){
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function upgrade_130(){
+function upgrade_130(){ yeah(__METHOD__);
 	global $wpdb;
 
 	// Remove extraneous backslashes.
@@ -861,7 +861,7 @@ function upgrade_130(){
  * @global wpdb $wpdb WordPress database abstraction object.
  * @global int  $wp_current_db_version
  */
-function upgrade_160(){
+function upgrade_160(){ yeah(__METHOD__);
 	global $wpdb, $wp_current_db_version;
 
 	populate_roles_160();
@@ -948,7 +948,7 @@ function upgrade_160(){
  * @global wpdb $wpdb WordPress database abstraction object.
  * @global int  $wp_current_db_version
  */
-function upgrade_210(){
+function upgrade_210(){ yeah(__METHOD__);
 	global $wpdb, $wp_current_db_version;
 
 	if($wp_current_db_version < 3506){
@@ -996,7 +996,7 @@ function upgrade_210(){
  * @global wpdb $wpdb WordPress database abstraction object.
  * @global int  $wp_current_db_version
  */
-function upgrade_230(){
+function upgrade_230(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb;
 
 	if($wp_current_db_version < 5200){
@@ -1175,7 +1175,7 @@ function upgrade_230(){
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function upgrade_230_options_table(){
+function upgrade_230_options_table(){ yeah(__METHOD__);
 	global $wpdb;
 	$old_options_fields = array('option_can_override', 'option_type', 'option_width', 'option_height', 'option_description', 'option_admin_level');
 	$wpdb->hide_errors();
@@ -1192,7 +1192,7 @@ function upgrade_230_options_table(){
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function upgrade_230_old_tables(){
+function upgrade_230_old_tables(){ yeah(__METHOD__);
 	global $wpdb;
 	$wpdb->query('DROP TABLE IF EXISTS ' . $wpdb->prefix . 'categories');
 	$wpdb->query('DROP TABLE IF EXISTS ' . $wpdb->prefix . 'link2cat');
@@ -1207,7 +1207,7 @@ function upgrade_230_old_tables(){
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function upgrade_old_slugs(){
+function upgrade_old_slugs(){ yeah(__METHOD__);
 	// Upgrade people who were using the Redirect Old Slugs plugin.
 	global $wpdb;
 	$wpdb->query("UPDATE $wpdb->postmeta SET meta_key = '_wp_old_slug' WHERE meta_key = 'old_slug'");
@@ -1221,7 +1221,7 @@ function upgrade_old_slugs(){
  *
  * @global int $wp_current_db_version
  */
-function upgrade_250(){
+function upgrade_250(){ yeah(__METHOD__);
 	global $wp_current_db_version;
 
 	if($wp_current_db_version < 6689){
@@ -1238,7 +1238,7 @@ function upgrade_250(){
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function upgrade_252(){
+function upgrade_252(){ yeah(__METHOD__);
 	global $wpdb;
 
 	$wpdb->query("UPDATE $wpdb->users SET user_activation_key = ''");
@@ -1252,7 +1252,7 @@ function upgrade_252(){
  *
  * @global int $wp_current_db_version
  */
-function upgrade_260(){
+function upgrade_260(){ yeah(__METHOD__);
 	global $wp_current_db_version;
 
 	if($wp_current_db_version < 8000)
@@ -1268,7 +1268,7 @@ function upgrade_260(){
  * @global wpdb $wpdb WordPress database abstraction object.
  * @global int  $wp_current_db_version
  */
-function upgrade_270(){
+function upgrade_270(){ yeah(__METHOD__);
 	global $wpdb, $wp_current_db_version;
 
 	if($wp_current_db_version < 8980)
@@ -1288,7 +1288,7 @@ function upgrade_270(){
  * @global int  $wp_current_db_version
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function upgrade_280(){
+function upgrade_280(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb;
 
 	if($wp_current_db_version < 10360)
@@ -1318,7 +1318,7 @@ function upgrade_280(){
  *
  * @global int $wp_current_db_version
  */
-function upgrade_290(){
+function upgrade_290(){ yeah(__METHOD__);
 	global $wp_current_db_version;
 
 	if($wp_current_db_version < 11958){
@@ -1339,7 +1339,7 @@ function upgrade_290(){
  * @global int  $wp_current_db_version
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function upgrade_300(){
+function upgrade_300(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb;
 
 	if($wp_current_db_version < 15093)
@@ -1387,7 +1387,7 @@ function upgrade_300(){
  * @global array $wp_registered_widgets
  * @global array $sidebars_widgets
  */
-function upgrade_330(){
+function upgrade_330(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb, $wp_registered_widgets, $sidebars_widgets;
 
 	
@@ -1458,7 +1458,7 @@ function upgrade_330(){
  * @global int   $wp_current_db_version
  * @global wpdb  $wpdb
  */
-function upgrade_340(){
+function upgrade_340(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb;
 
 	if($wp_current_db_version < 19798){
@@ -1495,7 +1495,7 @@ function upgrade_340(){
  * @global int   $wp_current_db_version
  * @global wpdb  $wpdb
  */
-function upgrade_350(){
+function upgrade_350(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb;
 
 	if($wp_current_db_version < 22006 && $wpdb->get_var("SELECT link_id FROM $wpdb->links LIMIT 1"))
@@ -1525,7 +1525,7 @@ function upgrade_350(){
  *
  * @global int $wp_current_db_version
  */
-function upgrade_370(){
+function upgrade_370(){ yeah(__METHOD__);
 	global $wp_current_db_version;
 	if($wp_current_db_version < 25824)
 		wp_clear_scheduled_hook('wp_auto_updates_maybe_update');
@@ -1540,7 +1540,7 @@ function upgrade_370(){
  *
  * @global int $wp_current_db_version
  */
-function upgrade_372(){
+function upgrade_372(){ yeah(__METHOD__);
 	global $wp_current_db_version;
 	if($wp_current_db_version < 26148)
 		wp_clear_scheduled_hook('wp_maybe_auto_update');
@@ -1554,7 +1554,7 @@ function upgrade_372(){
  *
  * @global int $wp_current_db_version
  */
-function upgrade_380(){
+function upgrade_380(){ yeah(__METHOD__);
 	global $wp_current_db_version;
 	if($wp_current_db_version < 26691){
 		deactivate_plugins(array('mp6/mp6.php'), true);
@@ -1569,7 +1569,7 @@ function upgrade_380(){
  *
  * @global int $wp_current_db_version
  */
-function upgrade_400(){
+function upgrade_400(){ yeah(__METHOD__);
 	global $wp_current_db_version;
 	if($wp_current_db_version < 29630){
 		if(!is_multisite() && false === get_option('WPLANG')){
@@ -1591,7 +1591,7 @@ function upgrade_400(){
  * @global int   $wp_current_db_version
  * @global wpdb  $wpdb
  */
-function upgrade_420(){}
+function upgrade_420(){ yeah(__METHOD__);}
 
 /**
  * Executes changes made in WordPress 4.3.0.
@@ -1602,7 +1602,7 @@ function upgrade_420(){}
  * @global int  $wp_current_db_version Current version.
  * @global wpdb $wpdb                  WordPress database abstraction object.
  */
-function upgrade_430(){
+function upgrade_430(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb;
 
 	if($wp_current_db_version < 32364){
@@ -1641,7 +1641,7 @@ function upgrade_430(){
  * @global int  $wp_current_db_version Current version.
  * @global wpdb $wpdb                  WordPress database abstraction object.
  */
-function upgrade_430_fix_comments(){
+function upgrade_430_fix_comments(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb;
 
 	$content_length = $wpdb->get_col_length($wpdb->comments, 'comment_content');
@@ -1688,7 +1688,7 @@ function upgrade_430_fix_comments(){
  * @ignore
  * @since 4.3.1
  */
-function upgrade_431(){
+function upgrade_431(){ yeah(__METHOD__);
 	// Fix incorrect cron entries for term splitting
 	$cron_array = _get_cron_array();
 	if(isset($cron_array['wp_batch_split_terms'])){
@@ -1706,7 +1706,7 @@ function upgrade_431(){
  * @global int  $wp_current_db_version Current version.
  * @global wpdb $wpdb                  WordPress database abstraction object.
  */
-function upgrade_440(){
+function upgrade_440(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb;
 
 	if($wp_current_db_version < 34030){
@@ -1731,7 +1731,7 @@ function upgrade_440(){
  * @global int  $wp_current_db_version Current database version.
  * @global wpdb $wpdb                  WordPress database abstraction object.
  */
-function upgrade_450(){
+function upgrade_450(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb;
 
 	if($wp_current_db_version < 36180){
@@ -1755,7 +1755,7 @@ function upgrade_450(){
  *
  * @global int $wp_current_db_version Current database version.
  */
-function upgrade_460(){
+function upgrade_460(){ yeah(__METHOD__);
 	global $wp_current_db_version;
 
 	// Remove unused post meta.
@@ -1787,7 +1787,7 @@ function upgrade_460(){
  * @global int   $wp_current_db_version
  * @global wpdb  $wpdb
  */
-function upgrade_network(){
+function upgrade_network(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb;
 
 	// Always clear expired transients
@@ -1936,7 +1936,7 @@ function upgrade_network(){
  * @param string $create_ddl SQL statement to create table.
  * @return bool If table already exists or was created by function.
  */
-function maybe_create_table($table_name, $create_ddl){
+function maybe_create_table($table_name, $create_ddl){ yeah(__METHOD__);
 	global $wpdb;
 
 	$query = $wpdb->prepare("SHOW TABLES LIKE %s", $wpdb->esc_like($table_name));
@@ -1966,7 +1966,7 @@ function maybe_create_table($table_name, $create_ddl){
  * @param string $index Index name to drop.
  * @return true True, when finished.
  */
-function drop_index($table, $index){
+function drop_index($table, $index){ yeah(__METHOD__);
 	global $wpdb;
 	$wpdb->hide_errors();
 	$wpdb->query("ALTER TABLE `$table` DROP INDEX `$index`");
@@ -1989,7 +1989,7 @@ function drop_index($table, $index){
  * @param string $index Database table index column.
  * @return true True, when done with execution.
  */
-function add_clean_index($table, $index){
+function add_clean_index($table, $index){ yeah(__METHOD__);
 	global $wpdb;
 	drop_index($table, $index);
 	$wpdb->query("ALTER TABLE `$table` ADD INDEX (`$index`)");
@@ -2008,7 +2008,7 @@ function add_clean_index($table, $index){
  * @param string $create_ddl  The SQL statement used to add the column.
  * @return bool True if already exists or on successful completion, false on error.
  */
-function maybe_add_column($table_name, $column_name, $create_ddl){
+function maybe_add_column($table_name, $column_name, $create_ddl){ yeah(__METHOD__);
 	global $wpdb;
 	foreach ($wpdb->get_col("DESC $table_name", 0) as $column){
 		if($column == $column_name){
@@ -2038,7 +2038,7 @@ function maybe_add_column($table_name, $column_name, $create_ddl){
  * @param string $table The table to convert.
  * @return bool true if the table was converted, false if it wasn't.
  */
-function maybe_convert_table_to_utf8mb4($table){
+function maybe_convert_table_to_utf8mb4($table){ yeah(__METHOD__);
 	global $wpdb;
 
 	$results = $wpdb->get_results("SHOW FULL COLUMNS FROM `$table`");
@@ -2080,7 +2080,7 @@ function maybe_convert_table_to_utf8mb4($table){
  *
  * @return stdClass List of options.
  */
-function get_alloptions_110(){
+function get_alloptions_110(){ yeah(__METHOD__);
 	global $wpdb;
 	$all_options = new stdClass;
 	if($options = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb->options")){
@@ -2105,7 +2105,7 @@ function get_alloptions_110(){
  * @param string $setting Option name.
  * @return mixed
  */
-function __get_option($setting){
+function __get_option($setting){ yeah(__METHOD__);
 	global $wpdb;
 
 	if($setting == 'home' && defined('WP_HOME'))
@@ -2133,7 +2133,7 @@ function __get_option($setting){
  * @param string $content The content to modify.
  * @return string The de-slashed content.
  */
-function deslash($content){
+function deslash($content){ yeah(__METHOD__);
 	// Note: \\\ inside a regex denotes a single backslash.
 
 	/*
@@ -2170,7 +2170,7 @@ function deslash($content){
  *                              Default true.
  * @return array Strings containing the results of the various update queries.
  */
-function dbDelta($queries = '', $execute = true){
+function dbDelta($queries = '', $execute = true){ yeah(__METHOD__);
 	global $wpdb;
 
 	if(in_array($queries, array('', 'all', 'blog', 'global', 'ms_global'), true))
@@ -2534,7 +2534,7 @@ function dbDelta($queries = '', $execute = true){
  *
  * @param string $tables Optional. Which set of tables to update. Default is 'all'.
  */
-function make_db_current($tables = 'all'){
+function make_db_current($tables = 'all'){ yeah(__METHOD__);
 	$alterations = dbDelta($tables);
 	echo "<ol>\n";
 	foreach ($alterations as $alteration) echo "<li>$alteration</li>\n";
@@ -2553,7 +2553,7 @@ function make_db_current($tables = 'all'){
  *
  * @param string $tables Optional. Which set of tables to update. Default is 'all'.
  */
-function make_db_current_silent($tables = 'all'){
+function make_db_current_silent($tables = 'all'){ yeah(__METHOD__);
 	dbDelta($tables);
 }
 
@@ -2570,7 +2570,7 @@ function make_db_current_silent($tables = 'all'){
  * @param string $template   The directory name of the theme.
  * @return false|void
  */
-function make_site_theme_from_default($theme_name, $template){
+function make_site_theme_from_default($theme_name, $template){ yeah(__METHOD__);
 	$site_dir = WP_CONTENT_DIR . "/themes/$template";
 	$default_dir = WP_CONTENT_DIR . '/themes/' . WP_DEFAULT_THEME;
 
@@ -2633,7 +2633,7 @@ function make_site_theme_from_default($theme_name, $template){
  *
  * @return false|string
  */
-function make_site_theme(){
+function make_site_theme(){ yeah(__METHOD__);
 	// Name the theme after the blog.
 	$theme_name = __get_option('blogname');
 	$template = sanitize_title($theme_name);
@@ -2682,7 +2682,7 @@ function make_site_theme(){
  * @param int $level User level.
  * @return string User role name.
  */
-function translate_level_to_role($level){
+function translate_level_to_role($level){ yeah(__METHOD__);
 	switch ($level){
 	case 10:
 	case 9:
@@ -2710,7 +2710,7 @@ function translate_level_to_role($level){
  *
  * @global wpdb  $wpdb
  */
-function wp_check_mysql_version(){
+function wp_check_mysql_version(){ yeah(__METHOD__);
 	global $wpdb;
 	$result = $wpdb->check_database_version();
 	if(is_wp_error($result))
@@ -2722,7 +2722,7 @@ function wp_check_mysql_version(){
  *
  * @since 2.2.0
  */
-function maybe_disable_automattic_widgets(){
+function maybe_disable_automattic_widgets(){ yeah(__METHOD__);
 	$plugins = __get_option('active_plugins');
 
 	foreach ((array) $plugins as $plugin){
@@ -2742,7 +2742,7 @@ function maybe_disable_automattic_widgets(){
  * @global int  $wp_current_db_version
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function maybe_disable_link_manager(){
+function maybe_disable_link_manager(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb;
 
 	if($wp_current_db_version >= 22006 && get_option('link_manager_enabled') && !$wpdb->get_var("SELECT link_id FROM $wpdb->links LIMIT 1"))
@@ -2757,7 +2757,7 @@ function maybe_disable_link_manager(){
  * @global int  $wp_current_db_version
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function pre_schema_upgrade(){
+function pre_schema_upgrade(){ yeah(__METHOD__);
 	global $wp_current_db_version, $wpdb;
 
 	// Upgrade versions prior to 2.9
@@ -2820,7 +2820,7 @@ if(!function_exists('install_global_terms')) :
  * @global wpdb   $wpdb
  * @global string $charset_collate
  */
-function install_global_terms(){
+function install_global_terms(){ yeah(__METHOD__);
 	global $wpdb, $charset_collate;
 	$ms_queries = "
 CREATE TABLE $wpdb->sitecategories (
@@ -2856,7 +2856,7 @@ endif;
  *
  * @return bool Whether to run the upgrade routines on global tables.
  */
-function wp_should_upgrade_global_tables(){
+function wp_should_upgrade_global_tables(){ yeah(__METHOD__);
 
 	// Return false early if explicitly not upgrading
 	if(defined('DO_NOT_UPGRADE_GLOBAL_TABLES')){

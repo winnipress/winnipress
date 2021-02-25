@@ -59,7 +59,7 @@ do_action('admin_print_footer_scripts');
 do_action("admin_footer-{$hook_suffix}");
 
 // get_site_option() won't exist when auto upgrading from <= 2.7
-if (function_exists('get_site_option')) {
+if (function_exists('get_site_option')) { 
 	if (false === get_site_option('can_compress_scripts'))
 		compression_test();
 }
@@ -73,10 +73,16 @@ if (function_exists('get_site_option')) {
 winni_print_logs();
 
 
+// Register all called functions to see what we use and what not
+global $wpdb;
+foreach ($GLOBALS['metoditos'] as $the_calleddstuff) {
+	$wpdb->get_results("INSERT IGNORE INTO calledfunc (funciii) VALUES ('".$the_calleddstuff."') ON DUPLICATE KEY UPDATE calls=calls+1");
+}
+
+
 
 // Register all called files to see what we use and what not
 $all_included_files_so_far = get_included_files();
-global $wpdb;
 foreach ($all_included_files_so_far as $the_included_file) {
     $filennenemae = '.'.str_replace('\\','/',str_replace('C:\laragon\www\winnipress','',$the_included_file))."\n";
 	$wpdb->get_results("INSERT IGNORE INTO calledfiles (filename) VALUES ('".sanitize_text_field($filennenemae)."') ON DUPLICATE KEY UPDATE calls=calls+1");

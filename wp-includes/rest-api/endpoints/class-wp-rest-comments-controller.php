@@ -29,7 +29,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 *
 	 * @since 4.7.0
 	 */
-	public function __construct(){
+	public function __construct(){ yeah(__METHOD__);
 		$this->namespace = 'wp/v2';
 		$this->rest_base = 'comments';
 
@@ -41,7 +41,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 *
 	 * @since 4.7.0
 	 */
-	public function register_routes(){
+	public function register_routes(){ yeah(__METHOD__);
 
 		register_rest_route($this->namespace, '/' . $this->rest_base, array(
 			array(
@@ -112,7 +112,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|bool True if the request has read access, error object otherwise.
 	 */
-	public function get_items_permissions_check($request ){
+	public function get_items_permissions_check($request ){ yeah(__METHOD__);
 
 		if (!empty($request['post'] ) ){
 			foreach ((array) $request['post'] as $post_id ){
@@ -164,7 +164,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
 	 */
-	public function get_items($request ){
+	public function get_items($request ){ yeah(__METHOD__);
 
 		// Retrieve the list of registered collection query parameters.
 		$registered = $this->get_collection_params();
@@ -308,7 +308,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param int $id Supplied ID.
 	 * @return WP_Comment|WP_Error Comment object if ID is valid, WP_Error otherwise.
 	 */
-	protected function get_comment($id ){
+	protected function get_comment($id ){ yeah(__METHOD__);
 		$error = new WP_Error('rest_comment_invalid_id', __('Invalid comment ID.' ), array('status' => 404 ) );
 		if ((int) $id <= 0 ){
 			return $error;
@@ -338,7 +338,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|bool True if the request has read access for the item, error object otherwise.
 	 */
-	public function get_item_permissions_check($request ){
+	public function get_item_permissions_check($request ){ yeah(__METHOD__);
 		$comment = $this->get_comment($request['id'] );
 		if (is_wp_error($comment ) ){
 			return $comment;
@@ -369,7 +369,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
 	 */
-	public function get_item($request ){
+	public function get_item($request ){ yeah(__METHOD__);
 		$comment = $this->get_comment($request['id'] );
 		if (is_wp_error($comment ) ){
 			return $comment;
@@ -389,7 +389,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|bool True if the request has access to create items, error object otherwise.
 	 */
-	public function create_item_permissions_check($request ){
+	public function create_item_permissions_check($request ){ yeah(__METHOD__);
 		if (!is_user_logged_in() ){
 			if (get_option('comment_registration' ) ){
 				return new WP_Error('rest_comment_login_required', __('Sorry, you must be logged in to comment.' ), array('status' => 401 ) );
@@ -476,7 +476,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
 	 */
-	public function create_item($request ){
+	public function create_item($request ){ yeah(__METHOD__);
 		if (!empty($request['id'] ) ){
 			return new WP_Error('rest_comment_exists', __('Cannot create existing comment.' ), array('status' => 400 ) );
 		}
@@ -643,7 +643,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|bool True if the request has access to update the item, error object otherwise.
 	 */
-	public function update_item_permissions_check($request ){
+	public function update_item_permissions_check($request ){ yeah(__METHOD__);
 		$comment = $this->get_comment($request['id'] );
 		if (is_wp_error($comment ) ){
 			return $comment;
@@ -664,7 +664,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
 	 */
-	public function update_item($request ){
+	public function update_item($request ){ yeah(__METHOD__);
 		$comment = $this->get_comment($request['id'] );
 		if (is_wp_error($comment ) ){
 			return $comment;
@@ -760,7 +760,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|bool True if the request has access to delete the item, error object otherwise.
 	 */
-	public function delete_item_permissions_check($request ){
+	public function delete_item_permissions_check($request ){ yeah(__METHOD__);
 		$comment = $this->get_comment($request['id'] );
 		if (is_wp_error($comment ) ){
 			return $comment;
@@ -780,7 +780,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response Response object on success, or error object on failure.
 	 */
-	public function delete_item($request ){
+	public function delete_item($request ){ yeah(__METHOD__);
 		$comment = $this->get_comment($request['id'] );
 		if (is_wp_error($comment ) ){
 			return $comment;
@@ -850,7 +850,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response($comment, $request ){
+	public function prepare_item_for_response($comment, $request ){ yeah(__METHOD__);
 
 		$fields = $this->get_fields_for_response($request );
 		$data   = array();
@@ -958,7 +958,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_Comment $comment Comment object.
 	 * @return array Links for the given comment.
 	 */
-	protected function prepare_links($comment ){
+	protected function prepare_links($comment ){ yeah(__METHOD__);
 		$links = array(
 			'self' => array(
 				'href' => rest_url(sprintf('%s/%s/%d', $this->namespace, $this->rest_base, $comment->comment_ID ) ),
@@ -1026,7 +1026,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param string $query_param Query parameter.
 	 * @return string The normalized query parameter.
 	 */
-	protected function normalize_query_param($query_param ){
+	protected function normalize_query_param($query_param ){ yeah(__METHOD__);
 		$prefix = 'comment_';
 
 		switch ($query_param ){
@@ -1058,7 +1058,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param string|int $comment_approved comment status.
 	 * @return string Comment status.
 	 */
-	protected function prepare_status_response($comment_approved ){
+	protected function prepare_status_response($comment_approved ){ yeah(__METHOD__);
 
 		switch ($comment_approved ){
 			case 'hold':
@@ -1089,7 +1089,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return array|WP_Error Prepared comment, otherwise WP_Error object.
 	 */
-	protected function prepare_item_for_database($request ){
+	protected function prepare_item_for_database($request ){ yeah(__METHOD__);
 		$prepared_comment = array();
 
 		/*
@@ -1183,7 +1183,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 *
 	 * @return array
 	 */
-	public function get_item_schema(){
+	public function get_item_schema(){ yeah(__METHOD__);
 		$schema = array(
 			'$schema'              => 'http://json-schema.org/draft-04/schema#',
 			'title'                => 'comment',
@@ -1343,7 +1343,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Comments collection parameters.
 	 */
-	public function get_collection_params(){
+	public function get_collection_params(){ yeah(__METHOD__);
 		$query_params = parent::get_collection_params();
 
 		$query_params['context']['default'] = 'view';
@@ -1502,7 +1502,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param int        $comment_id Comment ID.
 	 * @return bool Whether the status was changed.
 	 */
-	protected function handle_status_param($new_status, $comment_id ){
+	protected function handle_status_param($new_status, $comment_id ){ yeah(__METHOD__);
 		$old_status = wp_get_comment_status($comment_id );
 
 		if ($new_status === $old_status ){
@@ -1550,7 +1550,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Request data to check.
 	 * @return bool Whether post can be read.
 	 */
-	protected function check_read_post_permission($post, $request ){
+	protected function check_read_post_permission($post, $request ){ yeah(__METHOD__);
 		$posts_controller = new WP_REST_Posts_Controller($post->post_type );
 		$post_type = get_post_type_object($post->post_type );
 
@@ -1587,7 +1587,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Request data to check.
 	 * @return bool Whether the comment can be read.
 	 */
-	protected function check_read_permission($comment, $request ){
+	protected function check_read_permission($comment, $request ){ yeah(__METHOD__);
 		if (!empty($comment->comment_post_ID ) ){
 			$post = get_post($comment->comment_post_ID );
 			if ($post ){
@@ -1620,7 +1620,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @param object $comment Comment object.
 	 * @return bool Whether the comment can be edited or deleted.
 	 */
-	protected function check_edit_permission($comment ){
+	protected function check_edit_permission($comment ){ yeah(__METHOD__);
 		if (0 === (int) get_current_user_id() ){
 			return false;
 		}
@@ -1647,7 +1647,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 * @return WP_Error|string The sanitized email address, if valid,
 	 *                         otherwise an error.
 	 */
-	public function check_comment_author_email($value, $request, $param ){
+	public function check_comment_author_email($value, $request, $param ){ yeah(__METHOD__);
 		$email = (string) $value;
 		if (empty($email ) ){
 			return $email;

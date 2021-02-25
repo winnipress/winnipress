@@ -143,7 +143,7 @@ class WP_Customize_Panel {
 	 * @param string               $id      An specific ID for the panel.
 	 * @param array                $args    Panel arguments.
 	 */
-	public function __construct($manager, $id, $args = array() ) {
+	public function __construct($manager, $id, $args = array() ) { yeah(__METHOD__);
 		$keys = array_keys(get_object_vars($this ) );
 		foreach ($keys as $key ) {
 			if (isset($args[ $key ] ) ) {
@@ -169,7 +169,7 @@ class WP_Customize_Panel {
 	 *
 	 * @return bool Whether the panel is active to the current preview.
 	 */
-	final public function active() {
+	final public function active() { yeah(__METHOD__);
 		$panel = $this;
 		$active = call_user_func($this->active_callback, $this );
 
@@ -196,7 +196,7 @@ class WP_Customize_Panel {
 	 *
 	 * @return bool Always true.
 	 */
-	public function active_callback() {
+	public function active_callback() { yeah(__METHOD__);
 		return true;
 	}
 
@@ -207,7 +207,7 @@ class WP_Customize_Panel {
 	 *
 	 * @return array The array to be exported to the client as JSON.
 	 */
-	public function json() {
+	public function json() { yeah(__METHOD__);
 		$array = wp_array_slice_assoc((array) $this, array('id', 'description', 'priority', 'type' ) );
 		$array['title'] = html_entity_decode($this->title, ENT_QUOTES, get_bloginfo('charset' ) );
 		$array['content'] = $this->get_content();
@@ -225,7 +225,7 @@ class WP_Customize_Panel {
 	 *
 	 * @return bool False if theme doesn't support the panel or the user doesn't have the capability.
 	 */
-	final public function check_capabilities() {
+	final public function check_capabilities() { yeah(__METHOD__);
 		if ($this->capability && !call_user_func_array('current_user_can', (array) $this->capability ) ) {
 			return false;
 		}
@@ -244,7 +244,7 @@ class WP_Customize_Panel {
 	 *
 	 * @return string Content for the panel.
 	 */
-	final public function get_content() {
+	final public function get_content() { yeah(__METHOD__);
 		ob_start();
 		$this->maybe_render();
 		return trim(ob_get_clean() );
@@ -255,7 +255,7 @@ class WP_Customize_Panel {
 	 *
 	 * @since 4.0.0
 	 */
-	final public function maybe_render() {
+	final public function maybe_render() { yeah(__METHOD__);
 		if (!$this->check_capabilities() ) {
 			return;
 		}
@@ -289,7 +289,7 @@ class WP_Customize_Panel {
 	 *
 	 * @since 4.0.0
 	 */
-	protected function render() {}
+	protected function render() { yeah(__METHOD__);}
 
 	/**
 	 * Render the panel UI in a subclass.
@@ -298,7 +298,7 @@ class WP_Customize_Panel {
 	 *
 	 * @since 4.1.0
 	 */
-	protected function render_content() {}
+	protected function render_content() { yeah(__METHOD__);}
 
 	/**
 	 * Render the panel's JS templates.
@@ -310,7 +310,7 @@ class WP_Customize_Panel {
 	 *
 	 * @see WP_Customize_Manager::register_panel_type()
 	 */
-	public function print_template() {
+	public function print_template() { yeah(__METHOD__);
 		?>
 		<script type="text/html" id="tmpl-customize-panel-<?php echo esc_attr($this->type ); ?>-content">
 			<?php $this->content_template(); ?>
@@ -331,7 +331,7 @@ class WP_Customize_Panel {
 	 *
 	 * @since 4.3.0
 	 */
-	protected function render_template() {
+	protected function render_template() { yeah(__METHOD__);
 		?>
 		<li id="accordion-panel-{{ data.id }}" class="accordion-section control-section control-panel control-panel-{{ data.type }}">
 			<h3 class="accordion-section-title" tabindex="0">
@@ -353,7 +353,7 @@ class WP_Customize_Panel {
 	 *
 	 * @since 4.3.0
 	 */
-	protected function content_template() {
+	protected function content_template() { yeah(__METHOD__);
 		?>
 		<li class="panel-meta customize-info accordion-section <# if (!data.description ) { #> cannot-expand<# } #>">
 			<button class="customize-panel-back" tabindex="-1"><span class="screen-reader-text"><?php _e('Back' ); ?></span></button>

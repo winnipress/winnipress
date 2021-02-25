@@ -21,7 +21,7 @@ require ABSPATH . WPINC . '/SimplePie/Author.php';
  *
  * @since 3.5.0
  */
-function wp_simplepie_autoload($class) {
+function wp_simplepie_autoload($class) { yeah(__METHOD__);
 	if (0 !== strpos($class, 'SimplePie_'))
 		return;
 

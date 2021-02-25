@@ -21,7 +21,7 @@ class WP_Widget_Recent_Posts extends WP_Widget {
 	 *
 	 * @since 2.8.0
 	 */
-	public function __construct() {
+	public function __construct() { yeah(__METHOD__);
 		$widget_ops = array(
 			'classname' => 'widget_recent_entries',
 			'description' => __('Your site&#8217;s most recent Posts.' ),
@@ -40,7 +40,7 @@ class WP_Widget_Recent_Posts extends WP_Widget {
 	 *                        'before_widget', and 'after_widget'.
 	 * @param array $instance Settings for the current Recent Posts widget instance.
 	 */
-	public function widget($args, $instance ) {
+	public function widget($args, $instance ) { yeah(__METHOD__);
 		if (!isset($args['widget_id'] ) ) {
 			$args['widget_id'] = $this->id;
 		}
@@ -112,7 +112,7 @@ class WP_Widget_Recent_Posts extends WP_Widget {
 	 * @param array $old_instance Old settings for this instance.
 	 * @return array Updated settings to save.
 	 */
-	public function update($new_instance, $old_instance ) {
+	public function update($new_instance, $old_instance ) { yeah(__METHOD__);
 		$instance = $old_instance;
 		$instance['title'] = sanitize_text_field($new_instance['title'] );
 		$instance['number'] = (int) $new_instance['number'];
@@ -127,7 +127,7 @@ class WP_Widget_Recent_Posts extends WP_Widget {
 	 *
 	 * @param array $instance Current settings.
 	 */
-	public function form($instance ) {
+	public function form($instance ) { yeah(__METHOD__);
 		$title     = isset($instance['title'] ) ? esc_attr($instance['title'] ) : '';
 		$number    = isset($instance['number'] ) ? absint($instance['number'] ) : 5;
 		$show_date = isset($instance['show_date'] ) ? (bool) $instance['show_date'] : false;

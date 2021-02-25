@@ -47,7 +47,7 @@ class WP_HTTP_Response {
 	 * @param int   $status  Optional. HTTP status code. Default 200.
 	 * @param array $headers Optional. HTTP header map. Default empty array.
 	 */
-	public function __construct($data = null, $status = 200, $headers = array() ) {
+	public function __construct($data = null, $status = 200, $headers = array() ) { yeah(__METHOD__);
 		$this->set_data($data );
 		$this->set_status($status );
 		$this->set_headers($headers );
@@ -60,7 +60,7 @@ class WP_HTTP_Response {
 	 *
 	 * @return array Map of header name to header value.
 	 */
-	public function get_headers() {
+	public function get_headers() { yeah(__METHOD__);
 		return $this->headers;
 	}
 
@@ -71,7 +71,7 @@ class WP_HTTP_Response {
 	 *
 	 * @param array $headers Map of header name to header value.
 	 */
-	public function set_headers($headers ) {
+	public function set_headers($headers ) { yeah(__METHOD__);
 		$this->headers = $headers;
 	}
 
@@ -85,7 +85,7 @@ class WP_HTTP_Response {
 	 * @param bool   $replace Optional. Whether to replace an existing header of the same name.
 	 *                        Default true.
 	 */
-	public function header($key, $value, $replace = true ) {
+	public function header($key, $value, $replace = true ) { yeah(__METHOD__);
 		if ($replace || !isset($this->headers[ $key ] ) ) {
 			$this->headers[ $key ] = $value;
 		} else {
@@ -100,7 +100,7 @@ class WP_HTTP_Response {
 	 *
 	 * @return int The 3-digit HTTP status code.
 	 */
-	public function get_status() {
+	public function get_status() { yeah(__METHOD__);
 		return $this->status;
 	}
 
@@ -111,7 +111,7 @@ class WP_HTTP_Response {
 	 *
 	 * @param int $code HTTP status.
 	 */
-	public function set_status($code ) {
+	public function set_status($code ) { yeah(__METHOD__);
 		$this->status = absint($code );
 	}
 
@@ -122,7 +122,7 @@ class WP_HTTP_Response {
 	 *
 	 * @return mixed Response data.
 	 */
-	public function get_data() {
+	public function get_data() { yeah(__METHOD__);
 		return $this->data;
 	}
 
@@ -133,7 +133,7 @@ class WP_HTTP_Response {
 	 *
 	 * @param mixed $data Response data.
 	 */
-	public function set_data($data ) {
+	public function set_data($data ) { yeah(__METHOD__);
 		$this->data = $data;
 	}
 
@@ -147,7 +147,7 @@ class WP_HTTP_Response {
 	 *
 	 * @return mixed Any JSON-serializable value.
 	 */
-	public function jsonSerialize() {
+	public function jsonSerialize() { yeah(__METHOD__);
 		return $this->get_data();
 	}
 }

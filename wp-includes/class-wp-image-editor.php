@@ -24,7 +24,7 @@ abstract class WP_Image_Editor {
 	 *
 	 * @param string $file Path to the file to load.
 	 */
-	public function __construct($file ) {
+	public function __construct($file ) { yeah(__METHOD__);
 		$this->file = $file;
 	}
 
@@ -40,7 +40,7 @@ abstract class WP_Image_Editor {
 	 * @param array $args
 	 * @return bool
 	 */
-	public static function test($args = array() ) {
+	public static function test($args = array() ) { yeah(__METHOD__);
 		return false;
 	}
 
@@ -56,7 +56,7 @@ abstract class WP_Image_Editor {
 	 * @param string $mime_type
 	 * @return bool
 	 */
-	public static function supports_mime_type($mime_type ) {
+	public static function supports_mime_type($mime_type ) { yeah(__METHOD__);
 		return false;
 	}
 
@@ -176,7 +176,7 @@ abstract class WP_Image_Editor {
 	 *
 	 * @return array {'width'=>int, 'height'=>int}
 	 */
-	public function get_size() {
+	public function get_size() { yeah(__METHOD__);
 		return $this->size;
 	}
 
@@ -189,7 +189,7 @@ abstract class WP_Image_Editor {
 	 * @param int $height
 	 * @return true
 	 */
-	protected function update_size($width = null, $height = null ) {
+	protected function update_size($width = null, $height = null ) { yeah(__METHOD__);
 		$this->size = array(
 			'width' => (int) $width,
 			'height' => (int) $height
@@ -204,7 +204,7 @@ abstract class WP_Image_Editor {
 	 *
 	 * @return int $quality Compression Quality. Range: [1,100]
 	 */
-	public function get_quality() {
+	public function get_quality() { yeah(__METHOD__);
 		if(!$this->quality ) {
 			$this->set_quality();
 		}
@@ -220,7 +220,7 @@ abstract class WP_Image_Editor {
 	 * @param int $quality Compression Quality. Range: [1,100]
 	 * @return true|WP_Error True if set successfully; WP_Error on failure.
 	 */
-	public function set_quality($quality = null ) {
+	public function set_quality($quality = null ) { yeah(__METHOD__);
 		if(null === $quality ) {
 			/**
 			 * Filters the default image compression quality setting.
@@ -289,7 +289,7 @@ abstract class WP_Image_Editor {
 	 * @param string $mime_type
 	 * @return array { filename|null, extension, mime-type }
 	 */
-	protected function get_output_format($filename = null, $mime_type = null ) {
+	protected function get_output_format($filename = null, $mime_type = null ) { yeah(__METHOD__);
 		$new_ext = null;
 
 		// By default, assume specified type takes priority
@@ -350,7 +350,7 @@ abstract class WP_Image_Editor {
 	 * @param string $extension
 	 * @return string filename
 	 */
-	public function generate_filename($suffix = null, $dest_path = null, $extension = null ) {
+	public function generate_filename($suffix = null, $dest_path = null, $extension = null ) { yeah(__METHOD__);
 		// $suffix will be appended to the destination filename, just before the extension
 		if(!$suffix )
 			$suffix = $this->get_suffix();
@@ -374,7 +374,7 @@ abstract class WP_Image_Editor {
 	 *
 	 * @return false|string suffix
 	 */
-	public function get_suffix() {
+	public function get_suffix() { yeah(__METHOD__);
 		if(!$this->get_size() )
 			return false;
 
@@ -391,7 +391,7 @@ abstract class WP_Image_Editor {
 	 * @param array $arguments
 	 * @return bool
 	 */
-	protected function make_image($filename, $function, $arguments ) {
+	protected function make_image($filename, $function, $arguments ) { yeah(__METHOD__);
 		if($stream = wp_is_stream($filename ) ) {
 			ob_start();
 		} else {
@@ -433,7 +433,7 @@ abstract class WP_Image_Editor {
 	 * @param string $extension
 	 * @return string|false
 	 */
-	protected static function get_mime_type($extension = null ) {
+	protected static function get_mime_type($extension = null ) { yeah(__METHOD__);
 		if(!$extension )
 			return false;
 
@@ -460,7 +460,7 @@ abstract class WP_Image_Editor {
 	 * @param string $mime_type
 	 * @return string|false
 	 */
-	protected static function get_extension($mime_type = null ) {
+	protected static function get_extension($mime_type = null ) { yeah(__METHOD__);
 		$extensions = explode('|', array_search($mime_type, wp_get_mime_types() ) );
 
 		if(empty($extensions[0] ) )

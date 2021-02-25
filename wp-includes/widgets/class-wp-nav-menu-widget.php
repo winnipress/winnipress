@@ -21,7 +21,7 @@ class WP_Nav_Menu_Widget extends WP_Widget {
 	 *
 	 * @since 3.0.0
 	 */
-	public function __construct() {
+	public function __construct() { yeah(__METHOD__);
 		$widget_ops = array(
 			'description' => __('Add a navigation menu to your sidebar.' ),
 			'customize_selective_refresh' => true,
@@ -38,7 +38,7 @@ class WP_Nav_Menu_Widget extends WP_Widget {
 	 *                        'before_widget', and 'after_widget'.
 	 * @param array $instance Settings for the current Navigation Menu widget instance.
 	 */
-	public function widget($args, $instance ) {
+	public function widget($args, $instance ) { yeah(__METHOD__);
 		// Get menu
 		$nav_menu = !empty($instance['nav_menu'] ) ? wp_get_nav_menu_object($instance['nav_menu'] ) : false;
 
@@ -93,7 +93,7 @@ class WP_Nav_Menu_Widget extends WP_Widget {
 	 * @param array $old_instance Old settings for this instance.
 	 * @return array Updated settings to save.
 	 */
-	public function update($new_instance, $old_instance ) {
+	public function update($new_instance, $old_instance ) { yeah(__METHOD__);
 		$instance = array();
 		if (!empty($new_instance['title'] ) ) {
 			$instance['title'] = sanitize_text_field($new_instance['title'] );
@@ -112,7 +112,7 @@ class WP_Nav_Menu_Widget extends WP_Widget {
 	 * @param array $instance Current settings.
 	 * @global WP_Customize_Manager $wp_customize
 	 */
-	public function form($instance ) {
+	public function form($instance ) { yeah(__METHOD__);
 		global $wp_customize;
 		$title = isset($instance['title'] ) ? $instance['title'] : '';
 		$nav_menu = isset($instance['nav_menu'] ) ? $instance['nav_menu'] : '';

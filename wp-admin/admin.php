@@ -1,4 +1,16 @@
 <?php
+
+function yeah($met){
+    if(!isset($GLOBALS['metoditos'])){
+        $GLOBALS['metoditos']=array();
+    }
+
+    if (!in_array($met, $GLOBALS['metoditos'])){
+    $GLOBALS['metoditos'][] = $met;
+    }
+}
+
+
 /**
  * WordPress Administration Bootstrap
  *

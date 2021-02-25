@@ -27,7 +27,7 @@ class MO extends Gettext_Translations {
 	 *
 	 * @return string The loaded MO file.
 	 */
-	public function get_filename(){
+	public function get_filename(){ yeah(__METHOD__);
 		return $this->filename;
 	}
 
@@ -36,7 +36,7 @@ class MO extends Gettext_Translations {
 	 *
 	 * @param string $filename MO file to load
 	 */
-	function import_from_file($filename){
+	function import_from_file($filename){ yeah(__METHOD__);
 		$reader = new POMO_FileReader($filename );
 
 		if (!$reader->is_resource() ){
@@ -52,7 +52,7 @@ class MO extends Gettext_Translations {
 	 * @param string $filename
 	 * @return bool
 	 */
-	function export_to_file($filename){
+	function export_to_file($filename){ yeah(__METHOD__);
 		$fh = fopen($filename, 'wb');
 		if (!$fh ) return false;
 		$res = $this->export_to_file_handle($fh );
@@ -63,7 +63,7 @@ class MO extends Gettext_Translations {
 	/**
 	 * @return string|false
 	 */
-	function export(){
+	function export(){ yeah(__METHOD__);
 		$tmp_fh = fopen("php://temp", 'r+');
 		if (!$tmp_fh ) return false;
 		$this->export_to_file_handle($tmp_fh );
@@ -75,7 +75,7 @@ class MO extends Gettext_Translations {
 	 * @param Translation_Entry $entry
 	 * @return bool
 	 */
-	function is_entry_good_for_export($entry ){
+	function is_entry_good_for_export($entry ){ yeah(__METHOD__);
 		if (empty($entry->translations ) ){
 			return false;
 		}
@@ -91,7 +91,7 @@ class MO extends Gettext_Translations {
 	 * @param resource $fh
 	 * @return true
 	 */
-	function export_to_file_handle($fh){
+	function export_to_file_handle($fh){ yeah(__METHOD__);
 		$entries = array_filter($this->entries, array($this, 'is_entry_good_for_export' ) );
 		ksort($entries);
 		$magic = 0x950412de;
@@ -141,7 +141,7 @@ class MO extends Gettext_Translations {
 	 * @param Translation_Entry $entry
 	 * @return string
 	 */
-	function export_original($entry){
+	function export_original($entry){ yeah(__METHOD__);
 		//TODO: warnings for control characters
 		$exported = $entry->singular;
 		if ($entry->is_plural) $exported .= chr(0).$entry->plural;
@@ -153,7 +153,7 @@ class MO extends Gettext_Translations {
 	 * @param Translation_Entry $entry
 	 * @return string
 	 */
-	function export_translations($entry){
+	function export_translations($entry){ yeah(__METHOD__);
 		//TODO: warnings for control characters
 		return $entry->is_plural ? implode(chr(0), $entry->translations) : $entry->translations[0];
 	}
@@ -161,7 +161,7 @@ class MO extends Gettext_Translations {
 	/**
 	 * @return string
 	 */
-	function export_headers(){
+	function export_headers(){ yeah(__METHOD__);
 		$exported = '';
 		foreach($this->headers as $header => $value){
 			$exported.= "$header: $value\n";
@@ -173,7 +173,7 @@ class MO extends Gettext_Translations {
 	 * @param int $magic
 	 * @return string|false
 	 */
-	function get_byteorder($magic){
+	function get_byteorder($magic){ yeah(__METHOD__);
 		// The magic is 0x950412de
 
 		// bug in PHP 5.0.2, see https://savannah.nongnu.org/bugs/?func=detailitem&item_id=10565
@@ -193,7 +193,7 @@ class MO extends Gettext_Translations {
 	/**
 	 * @param POMO_FileReader $reader
 	 */
-	function import_from_reader($reader){
+	function import_from_reader($reader){ yeah(__METHOD__);
 		$endian_string = MO::get_byteorder($reader->readint32());
 		if (false === $endian_string){
 			return false;
@@ -285,7 +285,7 @@ class MO extends Gettext_Translations {
 	 * @param string $translation translation string from MO file. Might contain
 	 * 	0x00 as a plural translations separator
 	 */
-	function &make_entry($original, $translation){
+	function &make_entry($original, $translation){ yeah(__METHOD__);
 		$entry = new Translation_Entry();
 		// look for context
 		$parts = explode(chr(4), $original);
@@ -309,14 +309,14 @@ class MO extends Gettext_Translations {
 	 * @param int $count
 	 * @return string
 	 */
-	function select_plural_form($count){
+	function select_plural_form($count){ yeah(__METHOD__);
 		return $this->gettext_select_plural_form($count);
 	}
 
 	/**
 	 * @return int
 	 */
-	function get_plural_forms_count(){
+	function get_plural_forms_count(){ yeah(__METHOD__);
 		return $this->_nplurals;
 	}
 }

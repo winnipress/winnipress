@@ -23,7 +23,7 @@ class Theme_Installer_Skin extends WP_Upgrader_Skin {
 	 *
 	 * @param array $args
 	 */
-	public function __construct($args = array()) {
+	public function __construct($args = array()) { yeah(__METHOD__);
 		$defaults = array( 'type' => 'web', 'url' => '', 'theme' => '', 'nonce' => '', 'title' => '' );
 		$args = wp_parse_args($args, $defaults);
 
@@ -35,14 +35,14 @@ class Theme_Installer_Skin extends WP_Upgrader_Skin {
 
 	/**
 	 */
-	public function before() {
+	public function before() { yeah(__METHOD__);
 		if ( !empty($this->api) )
 			$this->upgrader->strings['process_success'] = sprintf( $this->upgrader->strings['process_success_specific'], $this->api->name, $this->api->version);
 	}
 
 	/**
 	 */
-	public function after() {
+	public function after() { yeah(__METHOD__);
 		if ( empty($this->upgrader->result['destination_name']) )
 			return;
 

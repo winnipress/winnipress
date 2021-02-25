@@ -71,7 +71,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @param array $args An associative array of arguments.
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( $args = array() ) { yeah(__METHOD__);
 		global $post_type_object, $wpdb;
 
 		parent::__construct( array(
@@ -110,7 +110,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @param bool $display Whether the table layout should be hierarchical.
 	 */
-	public function set_hierarchical_display( $display ) {
+	public function set_hierarchical_display( $display ) { yeah(__METHOD__);
 		$this->hierarchical_display = $display;
 	}
 
@@ -118,7 +118,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @return bool
 	 */
-	public function ajax_user_can() {
+	public function ajax_user_can() { yeah(__METHOD__);
 		return current_user_can( get_post_type_object( $this->screen->post_type )->cap->edit_posts );
 	}
 
@@ -129,7 +129,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 * @global int      $per_page
 	 * @global string   $mode
 	 */
-	public function prepare_items() {
+	public function prepare_items() { yeah(__METHOD__);
 		global $avail_post_stati, $wp_query, $per_page, $mode;
 
 		// is going to call wp()
@@ -185,13 +185,13 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @return bool
 	 */
-	public function has_items() {
+	public function has_items() { yeah(__METHOD__);
 		return have_posts();
 	}
 
 	/**
 	 */
-	public function no_items() {
+	public function no_items() { yeah(__METHOD__);
 		if ( isset( $_REQUEST['post_status'] ) && 'trash' === $_REQUEST['post_status'] )
 			echo get_post_type_object( $this->screen->post_type )->labels->not_found_in_trash;
 		else
@@ -205,7 +205,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @return bool Whether the current view is the "All" view.
 	 */
-	protected function is_base_request() {
+	protected function is_base_request() { yeah(__METHOD__);
 		$vars = $_GET;
 		unset( $vars['paged'] );
 
@@ -228,7 +228,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 * @param string $class Optional. Class attribute. Default empty string.
 	 * @return string The formatted link string.
 	 */
-	protected function get_edit_link( $args, $label, $class = '' ) {
+	protected function get_edit_link( $args, $label, $class = '' ) { yeah(__METHOD__);
 		$url = add_query_arg( $args, 'edit.php' );
 
 		$class_html = $aria_current = '';
@@ -258,7 +258,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 * @global array $avail_post_stati
 	 * @return array
 	 */
-	protected function get_views() {
+	protected function get_views() { yeah(__METHOD__);
 		global $locked_post_status, $avail_post_stati;
 
 		$post_type = $this->screen->post_type;
@@ -385,7 +385,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_bulk_actions() {
+	protected function get_bulk_actions() { yeah(__METHOD__);
 		$actions = array();
 		$post_type_obj = get_post_type_object( $this->screen->post_type );
 
@@ -417,7 +417,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @param string $post_type Post type slug.
 	 */
-	protected function categories_dropdown( $post_type ) {
+	protected function categories_dropdown( $post_type ) { yeah(__METHOD__);
 		global $cat;
 
 		/**
@@ -450,7 +450,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	/**
 	 * @param string $which
 	 */
-	protected function extra_tablenav( $which ) {
+	protected function extra_tablenav( $which ) { yeah(__METHOD__);
 ?>
 		<div class="alignleft actions">
 <?php
@@ -506,7 +506,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @return string
 	 */
-	public function current_action() {
+	public function current_action() { yeah(__METHOD__);
 		if ( isset( $_REQUEST['delete_all'] ) || isset( $_REQUEST['delete_all2'] ) )
 			return 'delete_all';
 
@@ -517,7 +517,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_table_classes() {
+	protected function get_table_classes() { yeah(__METHOD__);
 		return array( 'widefat', 'fixed', 'striped', is_post_type_hierarchical( $this->screen->post_type ) ? 'pages' : 'posts' );
 	}
 
@@ -525,7 +525,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	public function get_columns() {
+	public function get_columns() { yeah(__METHOD__);
 		$post_type = $this->screen->post_type;
 
 		$posts_columns = array();
@@ -612,7 +612,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_sortable_columns() {
+	protected function get_sortable_columns() { yeah(__METHOD__);
 		return array(
 			'title'    => 'title',
 			'parent'   => 'parent',
@@ -627,7 +627,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 * @param array $posts
 	 * @param int $level
 	 */
-	public function display_rows( $posts = array(), $level = 0 ) {
+	public function display_rows( $posts = array(), $level = 0 ) { yeah(__METHOD__);
 		global $wp_query, $per_page;
 
 		if ( empty( $posts ) )
@@ -646,7 +646,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 * @param array $posts
 	 * @param int $level
 	 */
-	private function _display_rows( $posts, $level = 0 ) {
+	private function _display_rows( $posts, $level = 0 ) { yeah(__METHOD__);
 		// Create array of post IDs.
 		$post_ids = array();
 
@@ -666,7 +666,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 * @param int $pagenum
 	 * @param int $per_page
 	 */
-	private function _display_rows_hierarchical( $pages, $pagenum = 1, $per_page = 20 ) {
+	private function _display_rows_hierarchical( $pages, $pagenum = 1, $per_page = 20 ) { yeah(__METHOD__);
 		global $wpdb;
 
 		$level = 0;
@@ -771,7 +771,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 * @param int $per_page
 	 * @param array $to_display List of pages to be displayed. Passed by reference.
 	 */
-	private function _page_rows( &$children_pages, &$count, $parent, $level, $pagenum, $per_page, &$to_display ) {
+	private function _page_rows( &$children_pages, &$count, $parent, $level, $pagenum, $per_page, &$to_display ) { yeah(__METHOD__);
 		if ( !isset( $children_pages[$parent] ) )
 			return;
 
@@ -825,7 +825,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_Post $post The current WP_Post object.
 	 */
-	public function column_cb( $post ) {
+	public function column_cb( $post ) { yeah(__METHOD__);
 		if ( current_user_can( 'edit_post', $post->ID ) ): ?>
 			<label class="screen-reader-text" for="cb-select-<?php the_ID(); ?>"><?php
 				printf( __( 'Select %s' ), _draft_or_post_title() );
@@ -852,7 +852,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 * @param string  $data
 	 * @param string  $primary
 	 */
-	protected function _column_title( $post, $classes, $data, $primary ) {
+	protected function _column_title( $post, $classes, $data, $primary ) { yeah(__METHOD__);
 		echo '<td class="' . $classes . ' page-title" ', $data, '>';
 		echo $this->column_title( $post );
 		echo $this->handle_row_actions( $post, 'title', $primary );
@@ -868,7 +868,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_Post $post The current WP_Post object.
 	 */
-	public function column_title( $post ) {
+	public function column_title( $post ) { yeah(__METHOD__);
 		global $mode;
 
 		if ( $this->hierarchical_display ) {
@@ -968,7 +968,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_Post $post The current WP_Post object.
 	 */
-	public function column_date( $post ) {
+	public function column_date( $post ) { yeah(__METHOD__);
 		global $mode;
 
 		if ( '0000-00-00 00:00:00' === $post->post_date ) {
@@ -1046,7 +1046,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_Post $post The current WP_Post object.
 	 */
-	public function column_comments( $post ) {
+	public function column_comments( $post ) { yeah(__METHOD__);
 		?>
 		<div class="post-com-count-wrapper">
 		<?php
@@ -1065,7 +1065,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_Post $post The current WP_Post object.
 	 */
-	public function column_author( $post ) {
+	public function column_author( $post ) { yeah(__METHOD__);
 		$args = array(
 			'post_type' => $post->post_type,
 			'author' => get_the_author_meta( 'ID' )
@@ -1081,7 +1081,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 * @param WP_Post $post        The current WP_Post object.
 	 * @param string  $column_name The current column name.
 	 */
-	public function column_default( $post, $column_name ) {
+	public function column_default( $post, $column_name ) { yeah(__METHOD__);
 		if ( 'categories' === $column_name ) {
 			$taxonomy = 'category';
 		} elseif ( 'tags' === $column_name ) {
@@ -1168,7 +1168,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 * @param int|WP_Post $post
 	 * @param int         $level
 	 */
-	public function single_row( $post, $level = 0 ) {
+	public function single_row( $post, $level = 0 ) { yeah(__METHOD__);
 		$global_post = get_post();
 
 		$post = get_post( $post );
@@ -1205,7 +1205,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @return string Name of the default primary column, in this case, 'title'.
 	 */
-	protected function get_default_primary_column_name() {
+	protected function get_default_primary_column_name() { yeah(__METHOD__);
 		return 'title';
 	}
 
@@ -1219,7 +1219,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 * @param string $primary     Primary column name.
 	 * @return string Row actions output for posts.
 	 */
-	protected function handle_row_actions( $post, $column_name, $primary ) {
+	protected function handle_row_actions( $post, $column_name, $primary ) { yeah(__METHOD__);
 		if ( $primary !== $column_name ) {
 			return '';
 		}
@@ -1339,7 +1339,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 *
 	 * @global string $mode List table view mode.
 	 */
-	public function inline_edit() {
+	public function inline_edit() { yeah(__METHOD__);
 		global $mode;
 
 		$screen = $this->screen;

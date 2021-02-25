@@ -22,7 +22,7 @@ class WP_Ajax_Response {
 	 *
 	 * @param string|array $args Optional. Will be passed to add() method.
 	 */
-	public function __construct($args = ''){
+	public function __construct($args = ''){ yeah(__METHOD__);
 		if (!empty($args))
 			$this->add($args);
 	}
@@ -61,7 +61,7 @@ class WP_Ajax_Response {
 	 * }
 	 * @return string XML response.
 	 */
-	public function add($args = ''){
+	public function add($args = ''){ yeah(__METHOD__);
 		$defaults = array(
 			'what' => 'object', 'action' => false,
 			'id' => '0', 'old_id' => false,
@@ -142,7 +142,7 @@ class WP_Ajax_Response {
 	 *
 	 * @since 2.1.0
 	 */
-	public function send(){
+	public function send(){ yeah(__METHOD__);
 		header('Content-Type: text/xml; charset=' . get_option('blog_charset'));
 		echo "<?xml version='1.0' encoding='" . get_option('blog_charset') . "' standalone='yes'?><wp_ajax>";
 		foreach ((array) $this->responses as $response)

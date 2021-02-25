@@ -78,7 +78,7 @@ class Plural_Forms {
 	 *
 	 * @param string $str Plural function (just the bit after `plural=` from Plural-Forms)
 	 */
-	public function __construct($str ){
+	public function __construct($str ){ yeah(__METHOD__);
 		$this->parse($str );
 	}
 
@@ -92,7 +92,7 @@ class Plural_Forms {
 	 *
 	 * @param string $str String to parse.
 	 */
-	protected function parse($str ){
+	protected function parse($str ){ yeah(__METHOD__);
 		$pos = 0;
 		$len = strlen($str );
 
@@ -236,7 +236,7 @@ class Plural_Forms {
 	 * @param int $num Number to get plural form for.
 	 * @return int Plural form value.
 	 */
-	public function get($num ){
+	public function get($num ){ yeah(__METHOD__);
 		if (isset($this->cache[ $num ] ) ){
 			return $this->cache[ $num ];
 		}
@@ -251,7 +251,7 @@ class Plural_Forms {
 	 * @param int $n Variable "n" to substitute.
 	 * @return int Plural form value.
 	 */
-	public function execute($n ){
+	public function execute($n ){ yeah(__METHOD__);
 		$stack = array();
 		$i = 0;
 		$total = count($this->tokens );

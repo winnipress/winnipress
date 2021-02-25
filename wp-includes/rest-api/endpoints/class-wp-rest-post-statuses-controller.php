@@ -21,7 +21,7 @@ class WP_REST_Post_Statuses_Controller extends WP_REST_Controller {
 	 *
 	 * @since 4.7.0
 	 */
-	public function __construct(){
+	public function __construct(){ yeah(__METHOD__);
 		$this->namespace = 'wp/v2';
 		$this->rest_base = 'statuses';
 	}
@@ -33,7 +33,7 @@ class WP_REST_Post_Statuses_Controller extends WP_REST_Controller {
 	 *
 	 * @see register_rest_route()
 	 */
-	public function register_routes(){
+	public function register_routes(){ yeah(__METHOD__);
 
 		register_rest_route($this->namespace, '/' . $this->rest_base, array(
 			array(
@@ -72,7 +72,7 @@ class WP_REST_Post_Statuses_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|bool True if the request has read access, WP_Error object otherwise.
 	 */
-	public function get_items_permissions_check($request ){
+	public function get_items_permissions_check($request ){ yeah(__METHOD__);
 		if ('edit' === $request['context'] ){
 			$types = get_post_types(array('show_in_rest' => true ), 'objects' );
 
@@ -95,7 +95,7 @@ class WP_REST_Post_Statuses_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
 	 */
-	public function get_items($request ){
+	public function get_items($request ){ yeah(__METHOD__);
 		$data = array();
 		$statuses = get_post_stati(array('internal' => false ), 'object' );
 		$statuses['trash'] = get_post_status_object('trash' );
@@ -122,7 +122,7 @@ class WP_REST_Post_Statuses_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|bool True if the request has read access for the item, WP_Error object otherwise.
 	 */
-	public function get_item_permissions_check($request ){
+	public function get_item_permissions_check($request ){ yeah(__METHOD__);
 		$status = get_post_status_object($request['status'] );
 
 		if (empty($status ) ){
@@ -146,7 +146,7 @@ class WP_REST_Post_Statuses_Controller extends WP_REST_Controller {
 	 * @param object $status Post status.
 	 * @return bool True if the post status is visible, otherwise false.
 	 */
-	protected function check_read_permission($status ){
+	protected function check_read_permission($status ){ yeah(__METHOD__);
 		if (true === $status->public ){
 			return true;
 		}
@@ -172,7 +172,7 @@ class WP_REST_Post_Statuses_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
 	 */
-	public function get_item($request ){
+	public function get_item($request ){ yeah(__METHOD__);
 		$obj = get_post_status_object($request['status'] );
 
 		if (empty($obj ) ){
@@ -193,7 +193,7 @@ class WP_REST_Post_Statuses_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response Post status data.
 	 */
-	public function prepare_item_for_response($status, $request ){
+	public function prepare_item_for_response($status, $request ){ yeah(__METHOD__);
 
 		$fields = $this->get_fields_for_response($request );
 		$data   = array();
@@ -259,7 +259,7 @@ class WP_REST_Post_Statuses_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Item schema data.
 	 */
-	public function get_item_schema(){
+	public function get_item_schema(){ yeah(__METHOD__);
 		$schema = array(
 			'$schema'              => 'http://json-schema.org/draft-04/schema#',
 			'title'                => 'status',
@@ -320,7 +320,7 @@ class WP_REST_Post_Statuses_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Collection parameters.
 	 */
-	public function get_collection_params(){
+	public function get_collection_params(){ yeah(__METHOD__);
 		return array(
 			'context' => $this->get_context_param(array('default' => 'view' ) ),
 		);

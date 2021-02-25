@@ -47,7 +47,7 @@ class Language_Pack_Upgrader extends WP_Upgrader {
 	 *                                    a Language_Pack_Upgrader instance, the method will bail to
 	 *                                    avoid recursion. Otherwise unused. Default false.
 	 */
-	public static function async_upgrade( $upgrader = false ) {
+	public static function async_upgrade( $upgrader = false ) { yeah(__METHOD__);
 		// Avoid recursion.
 		if ( $upgrader && $upgrader instanceof Language_Pack_Upgrader ) {
 			return;
@@ -108,7 +108,7 @@ class Language_Pack_Upgrader extends WP_Upgrader {
 	 *
 	 * @since 3.7.0
 	 */
-	public function upgrade_strings() {
+	public function upgrade_strings() { yeah(__METHOD__);
 		$this->strings['starting_upgrade'] = __( 'Some of your translations need updating. Sit tight for a few more seconds while we update them as well.' );
 		$this->strings['up_to_date'] = __( 'The translations are up to date.' );
 		$this->strings['no_package'] = __( 'Update package not available.' );
@@ -129,7 +129,7 @@ class Language_Pack_Upgrader extends WP_Upgrader {
 	 *                             Language_Pack_Upgrader::bulk_upgrade(). Default empty array.
 	 * @return array|bool|WP_Error The result of the upgrade, or a WP_Error object instead.
 	 */
-	public function upgrade( $update = false, $args = array() ) {
+	public function upgrade( $update = false, $args = array() ) { yeah(__METHOD__);
 		if ( $update ) {
 			$update = array( $update );
 		}
@@ -160,7 +160,7 @@ class Language_Pack_Upgrader extends WP_Upgrader {
 	 * @return array|bool|WP_Error Will return an array of results, or true if there are no updates,
 	 *                                   false or WP_Error for initial errors.
 	 */
-	public function bulk_upgrade( $language_updates = array(), $args = array() ) {
+	public function bulk_upgrade( $language_updates = array(), $args = array() ) { yeah(__METHOD__);
 		global $wp_filesystem;
 
 		$defaults = array(
@@ -308,7 +308,7 @@ class Language_Pack_Upgrader extends WP_Upgrader {
 	 * @param string|WP_Error $source
 	 * @param string          $remote_source
 	 */
-	public function check_package( $source, $remote_source ) {
+	public function check_package( $source, $remote_source ) { yeah(__METHOD__);
 		global $wp_filesystem;
 
 		if ( is_wp_error( $source ) )
@@ -347,7 +347,7 @@ class Language_Pack_Upgrader extends WP_Upgrader {
 	 * @param object $update The data for an update.
 	 * @return string The name of the item being updated.
 	 */
-	public function get_name_for_update( $update ) {
+	public function get_name_for_update( $update ) { yeah(__METHOD__);
 		switch ( $update->type ) {
 			case 'core':
 				return 'WordPress'; // Not translated

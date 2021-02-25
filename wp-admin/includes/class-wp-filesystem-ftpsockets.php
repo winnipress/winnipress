@@ -23,7 +23,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 *
 	 * @param array $opt
 	 */
-	public function __construct( $opt  = '' ) {
+	public function __construct( $opt  = '' ) { yeah(__METHOD__);
 		$this->method = 'ftpsockets';
 		$this->errors = new WP_Error();
 
@@ -59,7 +59,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 *
 	 * @return bool
 	 */
-	public function connect() {
+	public function connect() { yeah(__METHOD__);
 		if ( !$this->ftp )
 			return false;
 
@@ -110,7 +110,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @return string|false File contents on success, false if no temp file could be opened,
 	 *                      or if the file doesn't exist.
 	 */
-	public function get_contents( $file ) {
+	public function get_contents( $file ) { yeah(__METHOD__);
 		if ( !$this->exists($file) )
 			return false;
 
@@ -150,7 +150,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $file
 	 * @return array
 	 */
-	public function get_contents_array($file) {
+	public function get_contents_array($file) { yeah(__METHOD__);
 		return explode("\n", $this->get_contents($file) );
 	}
 
@@ -161,7 +161,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param int|bool $mode
 	 * @return bool
 	 */
-	public function put_contents($file, $contents, $mode = false ) {
+	public function put_contents($file, $contents, $mode = false ) { yeah(__METHOD__);
 		$temp = wp_tempnam( $file );
 		if ( !$temphandle = @fopen($temp, 'w+') ) {
 			unlink($temp);
@@ -199,7 +199,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 *
 	 * @return string
 	 */
-	public function cwd() {
+	public function cwd() { yeah(__METHOD__);
 		$cwd = $this->ftp->pwd();
 		if ( $cwd )
 			$cwd = trailingslashit($cwd);
@@ -211,7 +211,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $file
 	 * @return bool
 	 */
-	public function chdir($file) {
+	public function chdir($file) { yeah(__METHOD__);
 		return $this->ftp->chdir($file);
 	}
 
@@ -222,7 +222,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param bool $recursive
 	 * @return bool
 	 */
-	public function chmod($file, $mode = false, $recursive = false ) {
+	public function chmod($file, $mode = false, $recursive = false ) { yeah(__METHOD__);
 		if ( !$mode ) {
 			if ( $this->is_file($file) )
 				$mode = FS_CHMOD_FILE;
@@ -248,7 +248,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $file
 	 * @return string
 	 */
-	public function owner($file) {
+	public function owner($file) { yeah(__METHOD__);
 		$dir = $this->dirlist($file);
 		return $dir[$file]['owner'];
 	}
@@ -258,7 +258,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $file
 	 * @return string
 	 */
-	public function getchmod($file) {
+	public function getchmod($file) { yeah(__METHOD__);
 		$dir = $this->dirlist($file);
 		return $dir[$file]['permsn'];
 	}
@@ -268,7 +268,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $file
 	 * @return string
 	 */
-	public function group($file) {
+	public function group($file) { yeah(__METHOD__);
 		$dir = $this->dirlist($file);
 		return $dir[$file]['group'];
 	}
@@ -281,7 +281,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param int|bool $mode
 	 * @return bool
 	 */
-	public function copy($source, $destination, $overwrite = false, $mode = false) {
+	public function copy($source, $destination, $overwrite = false, $mode = false) { yeah(__METHOD__);
 		if ( !$overwrite && $this->exists($destination) )
 			return false;
 
@@ -299,7 +299,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param bool   $overwrite
 	 * @return bool
 	 */
-	public function move($source, $destination, $overwrite = false ) {
+	public function move($source, $destination, $overwrite = false ) { yeah(__METHOD__);
 		return $this->ftp->rename($source, $destination);
 	}
 
@@ -310,7 +310,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $type
 	 * @return bool
 	 */
-	public function delete($file, $recursive = false, $type = false) {
+	public function delete($file, $recursive = false, $type = false) { yeah(__METHOD__);
 		if ( empty($file) )
 			return false;
 		if ( 'f' == $type || $this->is_file($file) )
@@ -326,7 +326,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $file
 	 * @return bool
 	 */
-	public function exists( $file ) {
+	public function exists( $file ) { yeah(__METHOD__);
 		$list = $this->ftp->nlist( $file );
 
 		if ( empty( $list ) && $this->is_dir( $file ) ) {
@@ -342,7 +342,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $file
 	 * @return bool
 	 */
-	public function is_file($file) {
+	public function is_file($file) { yeah(__METHOD__);
 		if ( $this->is_dir($file) )
 			return false;
 		if ( $this->exists($file) )
@@ -355,7 +355,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $path
 	 * @return bool
 	 */
-	public function is_dir($path) {
+	public function is_dir($path) { yeah(__METHOD__);
 		$cwd = $this->cwd();
 		if ( $this->chdir($path) ) {
 			$this->chdir($cwd);
@@ -369,7 +369,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $file
 	 * @return bool
 	 */
-	public function is_readable($file) {
+	public function is_readable($file) { yeah(__METHOD__);
 		return true;
 	}
 
@@ -378,7 +378,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $file
 	 * @return bool
 	 */
-	public function is_writable($file) {
+	public function is_writable($file) { yeah(__METHOD__);
 		return true;
 	}
 
@@ -387,7 +387,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $file
 	 * @return bool
 	 */
-	public function atime($file) {
+	public function atime($file) { yeah(__METHOD__);
 		return false;
 	}
 
@@ -396,7 +396,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $file
 	 * @return int
 	 */
-	public function mtime($file) {
+	public function mtime($file) { yeah(__METHOD__);
 		return $this->ftp->mdtm($file);
 	}
 
@@ -404,7 +404,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param string $file
 	 * @return int
 	 */
-	public function size($file) {
+	public function size($file) { yeah(__METHOD__);
 		return $this->ftp->filesize($file);
 	}
 
@@ -415,7 +415,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param int $atime
 	 * @return bool
 	 */
-	public function touch($file, $time = 0, $atime = 0 ) {
+	public function touch($file, $time = 0, $atime = 0 ) { yeah(__METHOD__);
 		return false;
 	}
 
@@ -427,7 +427,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param mixed  $chgrp
 	 * @return bool
 	 */
-	public function mkdir($path, $chmod = false, $chown = false, $chgrp = false ) {
+	public function mkdir($path, $chmod = false, $chown = false, $chgrp = false ) { yeah(__METHOD__);
 		$path = untrailingslashit($path);
 		if ( empty($path) )
 			return false;
@@ -446,7 +446,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param bool $recursive
 	 * @return bool
 	 */
-	public function rmdir($path, $recursive = false ) {
+	public function rmdir($path, $recursive = false ) { yeah(__METHOD__);
 		return $this->delete($path, $recursive);
 	}
 
@@ -457,7 +457,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 	 * @param bool   $recursive
 	 * @return bool|array
 	 */
-	public function dirlist($path = '.', $include_hidden = true, $recursive = false ) {
+	public function dirlist($path = '.', $include_hidden = true, $recursive = false ) { yeah(__METHOD__);
 		if ( $this->is_file($path) ) {
 			$limit_file = basename($path);
 			$path = dirname($path) . '/';
@@ -511,7 +511,7 @@ class WP_Filesystem_ftpsockets extends WP_Filesystem_Base {
 
 	/**
 	 */
-	public function __destruct() {
+	public function __destruct() { yeah(__METHOD__);
 		$this->ftp->quit();
 	}
 }

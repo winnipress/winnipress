@@ -42,7 +42,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 *
 	 * @param array $args An associative array of arguments.
 	 */
-	public function __construct( $args = array()) {
+	public function __construct( $args = array()) { yeah(__METHOD__);
 		parent::__construct( array(
 			'singular' => 'user',
 			'plural'   => 'users',
@@ -62,7 +62,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 *
 	 * @return bool
 	 */
-	public function ajax_user_can() {
+	public function ajax_user_can() { yeah(__METHOD__);
 		if ( $this->is_site_users)
 			return current_user_can( 'manage_sites');
 		else
@@ -77,7 +77,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 * @global string $role
 	 * @global string $usersearch
 	 */
-	public function prepare_items() {
+	public function prepare_items() { yeah(__METHOD__);
 		global $role, $usersearch;
 
 		$usersearch = isset( $_REQUEST['s']) ? wp_unslash( trim( $_REQUEST['s'])) : '';
@@ -145,7 +145,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 *
 	 * @since 3.1.0
 	 */
-	public function no_items() {
+	public function no_items() { yeah(__METHOD__);
 		_e( 'No users found.');
 	}
 
@@ -162,7 +162,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 *
 	 * @return array An array of HTML links, one for each view.
 	 */
-	protected function get_views() {
+	protected function get_views() { yeah(__METHOD__);
 		global $role;
 
 		$wp_roles = wp_roles();
@@ -226,7 +226,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 *
 	 * @return array Array of bulk actions.
 	 */
-	protected function get_bulk_actions() {
+	protected function get_bulk_actions() { yeah(__METHOD__);
 		$actions = array();
 
 		if ( is_multisite()) {
@@ -248,7 +248,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 * @param string $which Whether this is being invoked above ("top")
 	 *                      or below the table ("bottom").
 	 */
-	protected function extra_tablenav( $which) {
+	protected function extra_tablenav( $which) { yeah(__METHOD__);
 		$id = 'bottom' === $which ? 'new_role2' : 'new_role';
 		$button_id = 'bottom' === $which ? 'changeit2' : 'changeit';
 	?>
@@ -297,7 +297,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 *
 	 * @return string The bulk action required.
 	 */
-	public function current_action() {
+	public function current_action() { yeah(__METHOD__);
 		if ( ( isset( $_REQUEST['changeit']) || isset( $_REQUEST['changeit2'])) &&
 			( !empty( $_REQUEST['new_role']) || !empty( $_REQUEST['new_role2']))) {
 			return 'promote';
@@ -314,7 +314,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 * @return array Array in which the key is the ID of the column,
 	 *               and the value is the description.
 	 */
-	public function get_columns() {
+	public function get_columns() { yeah(__METHOD__);
 		$c = array(
 			'cb'       => '<input type="checkbox" />',
 			'username' => __( 'Username'),
@@ -337,7 +337,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 *
 	 * @return array Array of sortable columns.
 	 */
-	protected function get_sortable_columns() {
+	protected function get_sortable_columns() { yeah(__METHOD__);
 		$c = array(
 			'username' => 'login',
 			'email'    => 'email',
@@ -351,7 +351,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 *
 	 * @since 3.1.0
 	 */
-	public function display_rows() {
+	public function display_rows() { yeah(__METHOD__);
 		// Query the post counts for this page
 		if ( !$this->is_site_users)
 			$post_counts = count_many_users_posts( array_keys( $this->items));
@@ -375,7 +375,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 *                             to zero, as in, a new user has made zero posts.
 	 * @return string Output for a single row.
 	 */
-	public function single_row( $user_object, $style = '', $role = '', $numposts = 0) {
+	public function single_row( $user_object, $style = '', $role = '', $numposts = 0) { yeah(__METHOD__);
 		if ( !( $user_object instanceof WP_User)) {
 			$user_object = get_userdata( (int) $user_object);
 		}
@@ -543,7 +543,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 *
 	 * @return string Name of the default primary column, in this case, 'username'.
 	 */
-	protected function get_default_primary_column_name() {
+	protected function get_default_primary_column_name() { yeah(__METHOD__);
 		return 'username';
 	}
 
@@ -555,7 +555,7 @@ class WP_Users_List_Table extends WP_List_Table {
 	 * @param WP_User $user_object The WP_User object.
 	 * @return array An array of user roles.
 	 */
-	protected function get_role_list( $user_object) {
+	protected function get_role_list( $user_object) { yeah(__METHOD__);
 		$wp_roles = wp_roles();
 
 		$role_list = array();

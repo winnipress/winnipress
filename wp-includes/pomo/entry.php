@@ -40,7 +40,7 @@ class Translation_Entry {
 	 * 	- references (array) -- places in the code this strings is used, in relative_to_root_path/file.php:linenum form
 	 * 	- flags (array) -- flags like php-format
 	 */
-	function __construct($args = array() ){
+	function __construct($args = array() ){ yeah(__METHOD__);
 		// if no singular -- empty object
 		if (!isset($args['singular'])){
 			return;
@@ -58,7 +58,7 @@ class Translation_Entry {
 	/**
 	 * PHP4 constructor.
 	 */
-	public function Translation_Entry($args = array() ){
+	public function Translation_Entry($args = array() ){ yeah(__METHOD__);
 		self::__construct($args );
 	}
 
@@ -67,7 +67,7 @@ class Translation_Entry {
 	 *
 	 * @return string|bool the key or false if the entry is empty
 	 */
-	function key(){
+	function key(){ yeah(__METHOD__);
 		if (null === $this->singular || '' === $this->singular ) return false;
 
 		// Prepend context and EOT, like in MO files
@@ -81,7 +81,7 @@ class Translation_Entry {
 	/**
 	 * @param object $other
 	 */
-	function merge_with(&$other){
+	function merge_with(&$other){ yeah(__METHOD__);
 		$this->flags = array_unique(array_merge($this->flags, $other->flags ) );
 		$this->references = array_unique(array_merge($this->references, $other->references ) );
 		if ($this->extracted_comments != $other->extracted_comments ){

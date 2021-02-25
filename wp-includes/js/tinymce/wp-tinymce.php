@@ -8,7 +8,7 @@ error_reporting(0);
 
 $basepath = dirname(__FILE__);
 
-function get_file($path) {
+function get_file($path) { yeah(__METHOD__);
 
 	if(function_exists('realpath') )
 		$path = realpath($path);

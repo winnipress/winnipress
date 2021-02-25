@@ -36,7 +36,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 *
 	 * @param array $args An associative array of arguments.
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( $args = array() ) { yeah(__METHOD__);
 		global $post_id;
 
 		$post_id = isset( $_REQUEST['p'] ) ? absint( $_REQUEST['p'] ) : 0;
@@ -53,7 +53,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 		) );
 	}
 
-	public function floated_admin_avatar( $name, $comment_ID ) {
+	public function floated_admin_avatar( $name, $comment_ID ) { yeah(__METHOD__);
 		$comment = get_comment( $comment_ID );
 		$avatar = get_avatar( $comment, 32, 'mystery' );
 		return "$avatar $name";
@@ -62,7 +62,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	/**
 	 * @return bool
 	 */
-	public function ajax_user_can() {
+	public function ajax_user_can() { yeah(__METHOD__);
 		return current_user_can('edit_posts');
 	}
 
@@ -73,7 +73,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 * @global string $search
 	 * @global string $comment_type
 	 */
-	public function prepare_items() {
+	public function prepare_items() { yeah(__METHOD__);
 		global $post_id, $comment_status, $search, $comment_type;
 
 		$comment_status = isset( $_REQUEST['comment_status'] ) ? $_REQUEST['comment_status'] : 'all';
@@ -162,7 +162,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 * @param string $comment_status
 	 * @return int
 	 */
-	public function get_per_page( $comment_status = 'all' ) {
+	public function get_per_page( $comment_status = 'all' ) { yeah(__METHOD__);
 		$comments_per_page = $this->get_items_per_page( 'edit_comments_per_page' );
 		/**
 		 * Filters the number of comments listed per page in the comments list table.
@@ -179,7 +179,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 *
 	 * @global string $comment_status
 	 */
-	public function no_items() {
+	public function no_items() { yeah(__METHOD__);
 		global $comment_status;
 
 		if ( 'moderated' === $comment_status ) {
@@ -195,7 +195,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 * @global string $comment_status
 	 * @global string $comment_type
 	 */
-	protected function get_views() {
+	protected function get_views() { yeah(__METHOD__);
 		global $post_id, $comment_status, $comment_type;
 
 		$status_links = array();
@@ -288,7 +288,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_bulk_actions() {
+	protected function get_bulk_actions() { yeah(__METHOD__);
 		global $comment_status;
 
 		$actions = array();
@@ -320,7 +320,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 *
 	 * @param string $which
 	 */
-	protected function extra_tablenav( $which ) {
+	protected function extra_tablenav( $which ) { yeah(__METHOD__);
 		global $comment_status, $comment_type;
 		static $has_items;
 
@@ -381,7 +381,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	/**
 	 * @return string|false
 	 */
-	public function current_action() {
+	public function current_action() { yeah(__METHOD__);
 		if ( isset( $_REQUEST['delete_all'] ) || isset( $_REQUEST['delete_all2'] ) )
 			return 'delete_all';
 
@@ -394,7 +394,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	public function get_columns() {
+	public function get_columns() { yeah(__METHOD__);
 		global $post_id;
 
 		$columns = array();
@@ -419,7 +419,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_sortable_columns() {
+	protected function get_sortable_columns() { yeah(__METHOD__);
 		return array(
 			'author'   => 'comment_author',
 			'response' => 'comment_post_ID',
@@ -434,13 +434,13 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 *
 	 * @return string Name of the default primary column, in this case, 'comment'.
 	 */
-	protected function get_default_primary_column_name() {
+	protected function get_default_primary_column_name() { yeah(__METHOD__);
 		return 'comment';
 	}
 
 	/**
 	 */
-	public function display() {
+	public function display() { yeah(__METHOD__);
 		wp_nonce_field( "fetch-list-" . get_class( $this ), '_ajax_fetch_list_nonce' );
 
 		$this->display_tablenav( 'top' );
@@ -484,7 +484,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_Comment $item
 	 */
-	public function single_row( $item ) {
+	public function single_row( $item ) { yeah(__METHOD__);
 		global $post, $comment;
 
 		$comment = $item;
@@ -519,7 +519,7 @@ class WP_Comments_List_Table extends WP_List_Table {
  	 * @param string     $primary     Primary column name.
  	 * @return string|void Comment row actions output.
  	 */
- 	protected function handle_row_actions( $comment, $column_name, $primary ) {
+ 	protected function handle_row_actions( $comment, $column_name, $primary ) { yeah(__METHOD__);
  		global $comment_status;
 
 		if ( $primary !== $column_name ) {
@@ -627,7 +627,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_Comment $comment The comment object.
 	 */
-	public function column_cb( $comment ) {
+	public function column_cb( $comment ) { yeah(__METHOD__);
 		if ( $this->user_can ) { ?>
 		<label class="screen-reader-text" for="cb-select-<?php echo $comment->comment_ID; ?>"><?php _e( 'Select comment' ); ?></label>
 		<input id="cb-select-<?php echo $comment->comment_ID; ?>" type="checkbox" name="delete_comments[]" value="<?php echo $comment->comment_ID; ?>" />
@@ -638,7 +638,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	/**
 	 * @param WP_Comment $comment The comment object.
 	 */
-	public function column_comment( $comment ) {
+	public function column_comment( $comment ) { yeah(__METHOD__);
 		echo '<div class="comment-author">';
 			$this->column_author( $comment );
 		echo '</div>';
@@ -678,7 +678,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_Comment $comment The comment object.
 	 */
-	public function column_author( $comment ) {
+	public function column_author( $comment ) { yeah(__METHOD__);
 		global $comment_status;
 
 		$author_url = get_comment_author_url( $comment );
@@ -718,7 +718,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_Comment $comment The comment object.
 	 */
-	public function column_date( $comment ) {
+	public function column_date( $comment ) { yeah(__METHOD__);
 		/* translators: 1: comment date, 2: comment time */
 		$submitted = sprintf( __( '%1$s at %2$s' ),
 			/* translators: comment date format. See https://secure.php.net/date */
@@ -743,7 +743,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 *
 	 * @param WP_Comment $comment The comment object.
 	 */
-	public function column_response( $comment ) {
+	public function column_response( $comment ) { yeah(__METHOD__);
 		$post = get_post();
 
 		if ( !$post ) {
@@ -782,7 +782,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	 * @param WP_Comment $comment     The comment object.
 	 * @param string     $column_name The custom column's name.
 	 */
-	public function column_default( $comment, $column_name ) {
+	public function column_default( $comment, $column_name ) { yeah(__METHOD__);
 		/**
 		 * Fires when the default column output is displayed for a single row.
 		 *

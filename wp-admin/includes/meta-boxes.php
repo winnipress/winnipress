@@ -19,7 +19,7 @@
  *     @type array    $args     Extra meta box arguments.
  * }
  */
-function post_submit_meta_box( $post, $args = array()) {
+function post_submit_meta_box( $post, $args = array()) { yeah(__METHOD__);
 	global $action;
 
 	$post_type = $post->post_type;
@@ -320,7 +320,7 @@ if ( !in_array( $post->post_status, array('publish', 'future', 'private')) || 0 
  *
  * @param object $post
  */
-function attachment_submit_meta_box( $post) {
+function attachment_submit_meta_box( $post) { yeah(__METHOD__);
 ?>
 <div class="submitbox" id="submitpost">
 
@@ -405,7 +405,7 @@ function attachment_submit_meta_box( $post) {
  *     @type array    $args     Extra meta box arguments.
  * }
  */
-function post_format_meta_box( $post, $box) {
+function post_format_meta_box( $post, $box) { yeah(__METHOD__);
 	if ( current_theme_supports( 'post-formats') && post_type_supports( $post->post_type, 'post-formats')) :
 	$post_formats = get_theme_support( 'post-formats');
 
@@ -450,7 +450,7 @@ function post_format_meta_box( $post, $box) {
  *     }
  * }
  */
-function post_tags_meta_box( $post, $box) {
+function post_tags_meta_box( $post, $box) { yeah(__METHOD__);
 	$defaults = array( 'taxonomy' => 'post_tag');
 	if ( !isset( $box['args']) || !is_array( $box['args'])) {
 		$args = array();
@@ -513,7 +513,7 @@ function post_tags_meta_box( $post, $box) {
  *     }
  * }
  */
-function post_categories_meta_box( $post, $box) {
+function post_categories_meta_box( $post, $box) { yeah(__METHOD__);
 	$defaults = array( 'taxonomy' => 'category');
 	if ( !isset( $box['args']) || !is_array( $box['args'])) {
 		$args = array();
@@ -614,7 +614,7 @@ function post_categories_meta_box( $post, $box) {
  *
  * @param object $post
  */
-function post_excerpt_meta_box($post) {
+function post_excerpt_meta_box($post) { yeah(__METHOD__);
 ?>
 <label class="screen-reader-text" for="excerpt"><?php _e('Excerpt') ?></label><textarea rows="1" cols="40" name="excerpt" id="excerpt"><?php echo $post->post_excerpt; // textarea_escaped ?></textarea>
 <p><?php
@@ -634,7 +634,7 @@ function post_excerpt_meta_box($post) {
  *
  * @param object $post
  */
-function post_trackback_meta_box($post) {
+function post_trackback_meta_box($post) { yeah(__METHOD__);
 	$form_trackback = '<input type="text" name="trackback_url" id="trackback_url" class="code" value="' .
 		esc_attr( str_replace( "\n", ' ', $post->to_ping)) . '" aria-describedby="trackback-url-desc" />';
 	if ('' != $post->pinged) {
@@ -671,7 +671,7 @@ if ( !empty($pings))
  *
  * @param object $post
  */
-function post_custom_meta_box($post) {
+function post_custom_meta_box($post) { yeah(__METHOD__);
 ?>
 <div id="postcustomstuff">
 <div id="ajax-response"></div>
@@ -701,7 +701,7 @@ meta_form( $post); ?>
  *
  * @param object $post
  */
-function post_comment_status_meta_box($post) {
+function post_comment_status_meta_box($post) { yeah(__METHOD__);
 ?>
 <input name="advanced_view" type="hidden" value="1" />
 <p class="meta-options">
@@ -734,7 +734,7 @@ function post_comment_status_meta_box($post) {
  * @param array $result table header rows
  * @return array
  */
-function post_comment_meta_box_thead($result) {
+function post_comment_meta_box_thead($result) { yeah(__METHOD__);
 	unset($result['cb'], $result['response']);
 	return $result;
 }
@@ -746,7 +746,7 @@ function post_comment_meta_box_thead($result) {
  *
  * @param object $post
  */
-function post_comment_meta_box( $post) {
+function post_comment_meta_box( $post) { yeah(__METHOD__);
 	wp_nonce_field( 'get-comments', 'add_comment_nonce', false);
 	?>
 	<p class="hide-if-no-js" id="add-new-comment"><a class="button" href="#commentstatusdiv" onclick="window.commentReply && commentReply.addcomment(<?php echo $post->ID; ?>);return false;"><?php _e('Add comment'); ?></a></p>
@@ -762,7 +762,7 @@ function post_comment_meta_box( $post) {
 		$hidden = get_hidden_meta_boxes( get_current_screen());
 		if ( !in_array('commentsdiv', $hidden)) {
 			?>
-			<script type="text/javascript">jQuery(document).ready(function(){commentsBox.get(<?php echo $total; ?>, 10);});</script>
+			<script type="text/javascript">jQuery(document).ready(function(){ yeah(__METHOD__);commentsBox.get(<?php echo $total; ?>, 10);});</script>
 			<?php
 		}
 
@@ -781,7 +781,7 @@ function post_comment_meta_box( $post) {
  *
  * @param object $post
  */
-function post_slug_meta_box($post) {
+function post_slug_meta_box($post) { yeah(__METHOD__);
 /** This filter is documented in wp-admin/edit-tag-form.php */
 $editable_slug = apply_filters( 'editable_slug', $post->post_name, $post);
 ?>
@@ -798,7 +798,7 @@ $editable_slug = apply_filters( 'editable_slug', $post->post_name, $post);
  *
  * @param object $post
  */
-function post_author_meta_box($post) {
+function post_author_meta_box($post) { yeah(__METHOD__);
 	global $user_ID;
 ?>
 <label class="screen-reader-text" for="post_author_override"><?php _e('Author'); ?></label>
@@ -819,7 +819,7 @@ function post_author_meta_box($post) {
  *
  * @param object $post
  */
-function post_revisions_meta_box( $post) {
+function post_revisions_meta_box( $post) { yeah(__METHOD__);
 	wp_list_post_revisions( $post);
 }
 
@@ -832,7 +832,7 @@ function post_revisions_meta_box( $post) {
  *
  * @param object $post
  */
-function page_attributes_meta_box($post) {
+function page_attributes_meta_box($post) { yeah(__METHOD__);
 	if ( is_post_type_hierarchical( $post->post_type)) :
 		$dropdown_args = array(
 			'post_type'        => $post->post_type,
@@ -924,7 +924,7 @@ do_action( 'page_attributes_misc_attributes', $post);
  *
  * @param object $link
  */
-function link_submit_meta_box($link) {
+function link_submit_meta_box($link) { yeah(__METHOD__);
 ?>
 <div class="submitbox" id="submitlink">
 
@@ -993,7 +993,7 @@ do_action( 'submitlink_box');
  *
  * @param object $link
  */
-function link_categories_meta_box($link) {
+function link_categories_meta_box($link) { yeah(__METHOD__);
 ?>
 <div id="taxonomy-linkcategory" class="categorydiv">
 	<ul id="category-tabs" class="category-tabs">
@@ -1039,7 +1039,7 @@ function link_categories_meta_box($link) {
  *
  * @param object $link
  */
-function link_target_meta_box($link) { ?>
+function link_target_meta_box($link) { yeah(__METHOD__); ?>
 <fieldset><legend class="screen-reader-text"><span><?php _e('Target') ?></span></legend>
 <p><label for="link_target_blank" class="selectit">
 <input id="link_target_blank" type="radio" name="link_target" value="_blank" <?php echo ( isset( $link->link_target) && ($link->link_target == '_blank') ? 'checked="checked"' : ''); ?> />
@@ -1066,7 +1066,7 @@ function link_target_meta_box($link) { ?>
  * @param string $value
  * @param mixed $deprecated Never used.
  */
-function xfn_check( $class, $value = '', $deprecated = '') {
+function xfn_check( $class, $value = '', $deprecated = '') { yeah(__METHOD__);
 	global $link;
 
 	if ( !empty( $deprecated)) {
@@ -1095,7 +1095,7 @@ function xfn_check( $class, $value = '', $deprecated = '') {
  *
  * @param object $link
  */
-function link_xfn_meta_box($link) {
+function link_xfn_meta_box($link) { yeah(__METHOD__);
 ?>
 <table class="links-table">
 	<tr>
@@ -1213,7 +1213,7 @@ function link_xfn_meta_box($link) {
  *
  * @param object $link
  */
-function link_advanced_meta_box($link) {
+function link_advanced_meta_box($link) { yeah(__METHOD__);
 ?>
 <table class="links-table" cellpadding="0">
 	<tr>
@@ -1252,7 +1252,7 @@ function link_advanced_meta_box($link) {
  *
  * @param WP_Post $post A post object.
  */
-function post_thumbnail_meta_box( $post) {
+function post_thumbnail_meta_box( $post) { yeah(__METHOD__);
 	$thumbnail_id = get_post_meta( $post->ID, '_thumbnail_id', true);
 	echo _wp_post_thumbnail_html( $thumbnail_id, $post->ID);
 }
@@ -1264,7 +1264,7 @@ function post_thumbnail_meta_box( $post) {
  *
  * @param WP_Post $post A post object.
  */
-function attachment_id3_data_meta_box( $post) {
+function attachment_id3_data_meta_box( $post) { yeah(__METHOD__);
 	$meta = array();
 	if ( !empty( $post->ID)) {
 		$meta = wp_get_attachment_metadata( $post->ID);

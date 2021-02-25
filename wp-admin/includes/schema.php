@@ -33,7 +33,7 @@ $charset_collate = $wpdb->get_charset_collate();
  * @param int $blog_id Optional. The site ID for which to retrieve SQL. Default is the current site ID.
  * @return string The SQL needed to create the requested tables.
  */
-function wp_get_db_schema( $scope = 'all', $blog_id = null) {
+function wp_get_db_schema( $scope = 'all', $blog_id = null) { yeah(__METHOD__);
 	global $wpdb;
 
 	$charset_collate = $wpdb->get_charset_collate();
@@ -347,7 +347,7 @@ $wp_queries = wp_get_db_schema( 'all');
  * @global int  $wp_db_version
  * @global int  $wp_current_db_version
  */
-function populate_options() {
+function populate_options() { yeah(__METHOD__);
 	global $wpdb, $wp_db_version, $wp_current_db_version;
 
 	$guessurl = wp_guess_url();
@@ -599,7 +599,7 @@ function populate_options() {
  *
  * @since 2.0.0
  */
-function populate_roles() {
+function populate_roles() { yeah(__METHOD__);
 	populate_roles_160();
 	populate_roles_210();
 	populate_roles_230();
@@ -615,7 +615,7 @@ function populate_roles() {
  *
  * @since 2.0.0
  */
-function populate_roles_160() {
+function populate_roles_160() { yeah(__METHOD__);
 	// Add roles
 
 	// Dummy gettext calls to get strings in the catalog.
@@ -720,7 +720,7 @@ function populate_roles_160() {
  *
  * @since 2.1.0
  */
-function populate_roles_210() {
+function populate_roles_210() { yeah(__METHOD__);
 	$roles = array('administrator', 'editor');
 	foreach ($roles as $role) {
 		$role = get_role($role);
@@ -767,7 +767,7 @@ function populate_roles_210() {
  *
  * @since 2.3.0
  */
-function populate_roles_230() {
+function populate_roles_230() { yeah(__METHOD__);
 	$role = get_role( 'administrator');
 
 	if ( !empty( $role)) {
@@ -780,7 +780,7 @@ function populate_roles_230() {
  *
  * @since 2.5.0
  */
-function populate_roles_250() {
+function populate_roles_250() { yeah(__METHOD__);
 	$role = get_role( 'administrator');
 
 	if ( !empty( $role)) {
@@ -793,7 +793,7 @@ function populate_roles_250() {
  *
  * @since 2.6.0
  */
-function populate_roles_260() {
+function populate_roles_260() { yeah(__METHOD__);
 	$role = get_role( 'administrator');
 
 	if ( !empty( $role)) {
@@ -807,7 +807,7 @@ function populate_roles_260() {
  *
  * @since 2.7.0
  */
-function populate_roles_270() {
+function populate_roles_270() { yeah(__METHOD__);
 	$role = get_role( 'administrator');
 
 	if ( !empty( $role)) {
@@ -821,7 +821,7 @@ function populate_roles_270() {
  *
  * @since 2.8.0
  */
-function populate_roles_280() {
+function populate_roles_280() { yeah(__METHOD__);
 	$role = get_role( 'administrator');
 
 	if ( !empty( $role)) {
@@ -834,7 +834,7 @@ function populate_roles_280() {
  *
  * @since 3.0.0
  */
-function populate_roles_300() {
+function populate_roles_300() { yeah(__METHOD__);
 	$role = get_role( 'administrator');
 
 	if ( !empty( $role)) {
@@ -854,7 +854,7 @@ if ( !function_exists( 'install_network')) :
  *
  * @since 3.0.0
  */
-function install_network() {
+function install_network() { yeah(__METHOD__);
 	if ( !defined( 'WP_INSTALLING_NETWORK'))
 		define( 'WP_INSTALLING_NETWORK', true);
 
@@ -882,7 +882,7 @@ endif;
  * @return bool|WP_Error True on success, or WP_Error on warning (with the installation otherwise successful,
  *                       so the error code must be checked) or failure.
  */
-function populate_network( $network_id = 1, $domain = '', $email = '', $site_name = '', $path = '/', $subdomain_install = false) {
+function populate_network( $network_id = 1, $domain = '', $email = '', $site_name = '', $path = '/', $subdomain_install = false) { yeah(__METHOD__);
 	global $wpdb, $current_site, $wp_db_version, $wp_rewrite;
 
 	$errors = new WP_Error();

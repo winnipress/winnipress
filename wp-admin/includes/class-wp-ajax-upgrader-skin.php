@@ -33,7 +33,7 @@ class WP_Ajax_Upgrader_Skin extends Automatic_Upgrader_Skin {
 	 *
 	 * @param array $args Options for the upgrader, see WP_Upgrader_Skin::__construct().
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( $args = array() ) { yeah(__METHOD__);
 		parent::__construct( $args );
 
 		$this->errors = new WP_Error();
@@ -46,7 +46,7 @@ class WP_Ajax_Upgrader_Skin extends Automatic_Upgrader_Skin {
 	 *
 	 * @return WP_Error Errors during an upgrade.
 	 */
-	public function get_errors() {
+	public function get_errors() { yeah(__METHOD__);
 		return $this->errors;
 	}
 
@@ -57,7 +57,7 @@ class WP_Ajax_Upgrader_Skin extends Automatic_Upgrader_Skin {
 	 *
 	 * @return string Error messages during an upgrade.
 	 */
-	public function get_error_messages() {
+	public function get_error_messages() { yeah(__METHOD__);
 		$messages = array();
 
 		foreach ( $this->errors->get_error_codes() as $error_code ) {
@@ -78,7 +78,7 @@ class WP_Ajax_Upgrader_Skin extends Automatic_Upgrader_Skin {
 	 *
 	 * @param string|WP_Error $errors Errors.
 	 */
-	public function error( $errors ) {
+	public function error( $errors ) { yeah(__METHOD__);
 		if ( is_string( $errors ) ) {
 			$string = $errors;
 			if ( !empty( $this->upgrader->strings[ $string ] ) ) {
@@ -113,7 +113,7 @@ class WP_Ajax_Upgrader_Skin extends Automatic_Upgrader_Skin {
 	 *
 	 * @param string|array|WP_Error $data Log entry data.
 	 */
-	public function feedback( $data ) {
+	public function feedback( $data ) { yeah(__METHOD__);
 		if ( is_wp_error( $data ) ) {
 			foreach ( $data->get_error_codes() as $error_code ) {
 				$this->errors->add( $error_code, $data->get_error_message( $error_code ), $data->get_error_data( $error_code ) );

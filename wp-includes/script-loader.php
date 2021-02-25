@@ -45,7 +45,7 @@ require(ABSPATH . WPINC . '/functions.wp-styles.php' );
  *
  * @param WP_Scripts $scripts WP_Scripts object.
  */
-function wp_default_scripts(&$scripts ){
+function wp_default_scripts(&$scripts ){ yeah(__METHOD__);
 	include(ABSPATH . WPINC . '/version.php' ); // include an unmodified $wp_version
 
 	$develop_src = false !== strpos($wp_version, '-src' );
@@ -923,7 +923,7 @@ function wp_default_scripts(&$scripts ){
  *
  * @param WP_Styles $styles
  */
-function wp_default_styles(&$styles ){
+function wp_default_styles(&$styles ){ yeah(__METHOD__);
 	include(ABSPATH . WPINC . '/version.php' ); // include an unmodified $wp_version
 
 	if (!defined('SCRIPT_DEBUG' ) )
@@ -1056,7 +1056,7 @@ function wp_default_styles(&$styles ){
  * @param array $js_array JavaScript scripts array
  * @return array Reordered array, if needed.
  */
-function wp_prototype_before_jquery($js_array ){
+function wp_prototype_before_jquery($js_array ){ yeah(__METHOD__);
 	if (false === $prototype = array_search('prototype', $js_array, true ) )
 		return $js_array;
 
@@ -1080,7 +1080,7 @@ function wp_prototype_before_jquery($js_array ){
  *
  * @since 2.5.0
  */
-function wp_just_in_time_script_localization(){
+function wp_just_in_time_script_localization(){ yeah(__METHOD__);
 
 	wp_localize_script('autosave', 'autosaveL10n', array(
 		'autosaveInterval' => AUTOSAVE_INTERVAL,
@@ -1111,7 +1111,7 @@ function wp_just_in_time_script_localization(){
  *
  * @global WP_Locale $wp_locale The WordPress date and time locale object.
  */
-function wp_localize_jquery_ui_datepicker(){
+function wp_localize_jquery_ui_datepicker(){ yeah(__METHOD__);
 	global $wp_locale;
 
 	if (!wp_script_is('jquery-ui-datepicker', 'enqueued' ) ){
@@ -1148,7 +1148,7 @@ function wp_localize_jquery_ui_datepicker(){
 		'isRTL'           => $wp_locale->is_rtl(),
 	) );
 
-	wp_add_inline_script('jquery-ui-datepicker', "jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({$datepicker_defaults});});" );
+	wp_add_inline_script('jquery-ui-datepicker', "jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({ yeah(__METHOD__);$datepicker_defaults});});" );
 }
 
 /**
@@ -1156,7 +1156,7 @@ function wp_localize_jquery_ui_datepicker(){
  *
  * @since 4.8.0
  */
-function wp_localize_community_events(){
+function wp_localize_community_events(){ yeah(__METHOD__);
 	if (!wp_script_is('dashboard' ) ){
 		return;
 	}
@@ -1235,7 +1235,7 @@ function wp_localize_community_events(){
  * @param string $handle Either 'colors' or 'colors-rtl'.
  * @return string|false URL path to CSS stylesheet for Administration Screens.
  */
-function wp_style_loader_src($src, $handle ){
+function wp_style_loader_src($src, $handle ){ yeah(__METHOD__);
 	global $_wp_admin_css_colors;
 
 	if (wp_installing() )
@@ -1280,7 +1280,7 @@ function wp_style_loader_src($src, $handle ){
  *
  * @return array
  */
-function print_head_scripts(){
+function print_head_scripts(){ yeah(__METHOD__);
 	global $concatenate_scripts;
 
 	if (!did_action('wp_print_scripts') ){
@@ -1319,7 +1319,7 @@ function print_head_scripts(){
  *
  * @return array
  */
-function print_footer_scripts(){
+function print_footer_scripts(){ yeah(__METHOD__);
 	global $wp_scripts, $concatenate_scripts;
 
 	if (!($wp_scripts instanceof WP_Scripts ) ){
@@ -1352,7 +1352,7 @@ function print_footer_scripts(){
  * @global WP_Scripts $wp_scripts
  * @global bool       $compress_scripts
  */
-function _print_scripts(){
+function _print_scripts(){ yeah(__METHOD__);
 	global $wp_scripts, $compress_scripts;
 
 	$zip = $compress_scripts ? 1 : 0;
@@ -1392,7 +1392,7 @@ function _print_scripts(){
  *
  * @return array
  */
-function wp_print_head_scripts(){
+function wp_print_head_scripts(){ yeah(__METHOD__);
 	if (!did_action('wp_print_scripts') ){
 		/** This action is documented in wp-includes/functions.wp-scripts.php */
 		do_action('wp_print_scripts' );
@@ -1411,7 +1411,7 @@ function wp_print_head_scripts(){
  *
  * @since 3.3.0
  */
-function _wp_footer_scripts(){
+function _wp_footer_scripts(){ yeah(__METHOD__);
 	print_late_styles();
 	print_footer_scripts();
 }
@@ -1421,7 +1421,7 @@ function _wp_footer_scripts(){
  *
  * @since 2.8.0
  */
-function wp_print_footer_scripts(){
+function wp_print_footer_scripts(){ yeah(__METHOD__);
 	/**
 	 * Fires when footer scripts are printed.
 	 *
@@ -1438,7 +1438,7 @@ function wp_print_footer_scripts(){
  *
  * @since 2.8.0
  */
-function wp_enqueue_scripts(){
+function wp_enqueue_scripts(){ yeah(__METHOD__);
 	/**
 	 * Fires when scripts and styles are enqueued.
 	 *
@@ -1456,7 +1456,7 @@ function wp_enqueue_scripts(){
  *
  * @return array
  */
-function print_admin_styles(){
+function print_admin_styles(){ yeah(__METHOD__);
 	global $concatenate_scripts;
 
 	$wp_styles = wp_styles();
@@ -1490,7 +1490,7 @@ function print_admin_styles(){
  *
  * @return array|void
  */
-function print_late_styles(){
+function print_late_styles(){ yeah(__METHOD__);
 	global $wp_styles, $concatenate_scripts;
 
 	if (!($wp_styles instanceof WP_Styles ) ){
@@ -1524,7 +1524,7 @@ function print_late_styles(){
  *
  * @global bool $compress_css
  */
-function _print_styles(){
+function _print_styles(){ yeah(__METHOD__);
 	global $compress_css;
 
 	$wp_styles = wp_styles();
@@ -1563,7 +1563,7 @@ function _print_styles(){
  * @global bool $compress_scripts
  * @global bool $compress_css
  */
-function script_concat_settings(){
+function script_concat_settings(){ yeah(__METHOD__);
 	global $concatenate_scripts, $compress_scripts, $compress_css;
 
 	$compressed_output = (ini_get('zlib.output_compression') || 'ob_gzhandler' == ini_get('output_handler') );

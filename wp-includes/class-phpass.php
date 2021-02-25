@@ -58,7 +58,7 @@ class PasswordHash {
 	/**
 	 * PHP4 constructor.
 	 */
-	public function PasswordHash($iteration_count_log2, $portable_hashes) {
+	public function PasswordHash($iteration_count_log2, $portable_hashes) { yeah(__METHOD__);
 		self::__construct($iteration_count_log2, $portable_hashes);
 	}
 

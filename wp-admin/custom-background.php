@@ -44,7 +44,7 @@ class Custom_Background {
 	 * @param callable $admin_header_callback
 	 * @param callable $admin_image_div_callback Optional custom image div output callback.
 	 */
-	public function __construct($admin_header_callback = '', $admin_image_div_callback = '') {
+	public function __construct($admin_header_callback = '', $admin_image_div_callback = '') { yeah(__METHOD__);
 		$this->admin_header_callback = $admin_header_callback;
 		$this->admin_image_div_callback = $admin_image_div_callback;
 
@@ -61,7 +61,7 @@ class Custom_Background {
 	 *
 	 * @since 3.0.0
 	 */
-	public function init() {
+	public function init() { yeah(__METHOD__);
 		$page = add_theme_page( __( 'Background' ), __( 'Background' ), 'edit_theme_options', 'custom-background', array( $this, 'admin_page' ) );
 		if ( !$page ) {
 			return;
@@ -81,7 +81,7 @@ class Custom_Background {
 	 *
 	 * @since 3.0.0
 	 */
-	public function admin_load() {
+	public function admin_load() { yeah(__METHOD__);
 		get_current_screen()->add_help_tab( array(
 			'id'      => 'overview',
 			'title'   => __('Overview'),
@@ -108,7 +108,7 @@ class Custom_Background {
 	 *
 	 * @since 3.0.0
 	 */
-	public function take_action() {
+	public function take_action() { yeah(__METHOD__);
 		if ( empty($_POST) )
 			return;
 
@@ -216,7 +216,7 @@ class Custom_Background {
 	 *
 	 * @since 3.0.0
 	 */
-	public function admin_page() {
+	public function admin_page() { yeah(__METHOD__);
 ?>
 <div class="wrap" id="custom-background">
 <h1><?php _e( 'Custom Background' ); ?></h1>
@@ -433,7 +433,7 @@ if ( current_theme_supports( 'custom-background', 'default-color' ) )
 	 *
 	 * @since 3.0.0
 	 */
-	public function handle_upload() {
+	public function handle_upload() { yeah(__METHOD__);
 		if ( empty($_FILES) )
 			return;
 
@@ -489,7 +489,7 @@ if ( current_theme_supports( 'custom-background', 'default-color' ) )
 	 *
 	 * @since 4.1.0
 	 */
-	public function ajax_background_add() {
+	public function ajax_background_add() { yeah(__METHOD__);
 		check_ajax_referer( 'background-add', 'nonce' );
 
 		if ( !current_user_can( 'edit_theme_options' ) ) {
@@ -514,7 +514,7 @@ if ( current_theme_supports( 'custom-background', 'default-color' ) )
 	 * @param array $form_fields
 	 * @return array $form_fields
 	 */
-	public function attachment_fields_to_edit( $form_fields ) {
+	public function attachment_fields_to_edit( $form_fields ) { yeah(__METHOD__);
 		return $form_fields;
 	}
 
@@ -526,7 +526,7 @@ if ( current_theme_supports( 'custom-background', 'default-color' ) )
 	 * @param array $tabs
 	 * @return array $tabs
 	 */
-	public function filter_upload_tabs( $tabs ) {
+	public function filter_upload_tabs( $tabs ) { yeah(__METHOD__);
 		return $tabs;
 	}
 
@@ -535,7 +535,7 @@ if ( current_theme_supports( 'custom-background', 'default-color' ) )
 	 * @since 3.4.0
 	 * @deprecated 3.5.0
 	 */
-	public function wp_set_background_image() {
+	public function wp_set_background_image() { yeah(__METHOD__);
 		check_ajax_referer( 'custom-background' );
 		if ( !current_user_can('edit_theme_options') || !isset( $_POST['attachment_id'] ) ) exit;
 		$attachment_id = absint($_POST['attachment_id']);

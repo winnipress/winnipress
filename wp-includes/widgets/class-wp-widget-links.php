@@ -21,7 +21,7 @@ class WP_Widget_Links extends WP_Widget {
 	 *
 	 * @since 2.8.0
 	 */
-	public function __construct() {
+	public function __construct() { yeah(__METHOD__);
 		$widget_ops = array(
 			'description' => __('Your blogroll' ),
 			'customize_selective_refresh' => true,
@@ -38,7 +38,7 @@ class WP_Widget_Links extends WP_Widget {
 	 *                        'before_widget', and 'after_widget'.
 	 * @param array $instance Settings for the current Links widget instance.
 	 */
-	public function widget($args, $instance ) {
+	public function widget($args, $instance ) { yeah(__METHOD__);
 		$show_description = isset($instance['description']) ? $instance['description'] : false;
 		$show_name = isset($instance['name']) ? $instance['name'] : false;
 		$show_rating = isset($instance['rating']) ? $instance['rating'] : false;
@@ -90,7 +90,7 @@ class WP_Widget_Links extends WP_Widget {
 	 * @param array $old_instance Old settings for this instance.
 	 * @return array Updated settings to save.
 	 */
-	public function update($new_instance, $old_instance ) {
+	public function update($new_instance, $old_instance ) { yeah(__METHOD__);
 		$new_instance = (array) $new_instance;
 		$instance = array('images' => 0, 'name' => 0, 'description' => 0, 'rating' => 0 );
 		foreach ($instance as $field => $val ) {
@@ -115,7 +115,7 @@ class WP_Widget_Links extends WP_Widget {
 	 *
 	 * @param array $instance Current settings.
 	 */
-	public function form($instance ) {
+	public function form($instance ) { yeah(__METHOD__);
 
 		//Defaults
 		$instance = wp_parse_args((array) $instance, array('images' => true, 'name' => true, 'description' => false, 'rating' => false, 'category' => false, 'orderby' => 'name', 'limit' => -1 ) );

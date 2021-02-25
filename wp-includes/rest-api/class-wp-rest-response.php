@@ -55,7 +55,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 	 * @param string $href       Target URI for the link.
 	 * @param array  $attributes Optional. Link parameters to send along with the URL. Default empty array.
 	 */
-	public function add_link($rel, $href, $attributes = array() ){
+	public function add_link($rel, $href, $attributes = array() ){ yeah(__METHOD__);
 		if (empty($this->links[ $rel ] ) ){
 			$this->links[ $rel ] = array();
 		}
@@ -80,7 +80,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 	 * @param  string $href Optional. Only remove links for the relation matching the given href.
 	 *                      Default null.
 	 */
-	public function remove_link($rel, $href = null ){
+	public function remove_link($rel, $href = null ){ yeah(__METHOD__);
 		if (!isset($this->links[ $rel ] ) ){
 			return;
 		}
@@ -108,7 +108,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 	 *
 	 * @param array $links Map of link relation to list of links.
 	 */
-	public function add_links($links ){
+	public function add_links($links ){ yeah(__METHOD__);
 		foreach ($links as $rel => $set ){
 			// If it's a single link, wrap with an array for consistent handling.
 			if (isset($set['href'] ) ){
@@ -128,7 +128,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 	 *
 	 * @return array List of links.
 	 */
-	public function get_links(){
+	public function get_links(){ yeah(__METHOD__);
 		return $this->links;
 	}
 
@@ -147,7 +147,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 	 * @param array  $other Optional. Other parameters to send, as an assocative array.
 	 *                      Default empty array.
 	 */
-	public function link_header($rel, $link, $other = array() ){
+	public function link_header($rel, $link, $other = array() ){ yeah(__METHOD__);
 		$header = '<' . $link . '>; rel="' . $rel . '"';
 
 		foreach ($other as $key => $value ){
@@ -166,7 +166,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 	 *
 	 * @return string The matched route.
 	 */
-	public function get_matched_route(){
+	public function get_matched_route(){ yeah(__METHOD__);
 		return $this->matched_route;
 	}
 
@@ -177,7 +177,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 	 *
 	 * @param string $route Route name.
 	 */
-	public function set_matched_route($route ){
+	public function set_matched_route($route ){ yeah(__METHOD__);
 		$this->matched_route = $route;
 	}
 
@@ -188,7 +188,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 	 *
 	 * @return null|array The handler that was used to create the response.
 	 */
-	public function get_matched_handler(){
+	public function get_matched_handler(){ yeah(__METHOD__);
 		return $this->matched_handler;
 	}
 
@@ -199,7 +199,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 	 *
 	 * @param array $handler The matched handler.
 	 */
-	public function set_matched_handler($handler ){
+	public function set_matched_handler($handler ){ yeah(__METHOD__);
 		$this->matched_handler = $handler;
 	}
 
@@ -210,7 +210,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 	 *
 	 * @return bool Whether the response is an error.
 	 */
-	public function is_error(){
+	public function is_error(){ yeah(__METHOD__);
 		return $this->get_status() >= 400;
 	}
 
@@ -221,7 +221,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 	 *
 	 * @return WP_Error|null WP_Error or null on not an errored response.
 	 */
-	public function as_error(){
+	public function as_error(){ yeah(__METHOD__);
 		if (!$this->is_error() ){
 			return null;
 		}
@@ -250,7 +250,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 	 *
 	 * @return array Compact URIs.
 	 */
-	public function get_curies(){
+	public function get_curies(){ yeah(__METHOD__);
 		$curies = array(
 			array(
 				'name' => 'wp',

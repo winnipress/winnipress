@@ -337,7 +337,7 @@ class PHPMailer
      *
      * Alternatively, you can provide a callable expecting two params: a message string and the debug level:
      * <code>
-     * $mail->Debugoutput = function($str, $level) {echo "debug level $level; message: $str";};
+     * $mail->Debugoutput = function($str, $level) { yeah(__METHOD__);echo "debug level $level; message: $str";};
      * </code>
      * @var string|callable
      * @see SMTP::$Debugoutput
@@ -958,7 +958,7 @@ class PHPMailer
     public function parseAddresses($addrstr, $useimap = true)
     {
         $addresses = array();
-        if ($useimap and function_exists('imap_rfc822_parse_adrlist')) {
+        if ($useimap and function_exists('imap_rfc822_parse_adrlist')) { 
             //Use this built-in parser if it's available
             $list = imap_rfc822_parse_adrlist($addrstr, '');
             foreach ($list as $address) {
@@ -1057,7 +1057,7 @@ class PHPMailer
      * * `html5` Use the pattern given by the HTML5 spec for 'email' type form input elements.
      * * `noregex` Don't use a regex: super fast, really dumb.
      * Alternatively you may pass in a callable to inject your own validator, for example:
-     * PHPMailer::validateAddress('user@example.com', function($address) {
+     * PHPMailer::validateAddress('user@example.com', function($address) { yeah(__METHOD__);
      *     return (strpos($address, '@') !== false);
      * });
      * You can also set the PHPMailer::$validator static to a callable, allowing built-in methods to use your validator.
@@ -1087,7 +1087,7 @@ class PHPMailer
                 } else {
                     $patternselect = 'pcre';
                 }
-            } elseif (function_exists('extension_loaded') and extension_loaded('pcre')) {
+            } elseif (function_exists('extension_loaded') and extension_loaded('pcre')) { 
                 //Fall back to older PCRE
                 $patternselect = 'pcre';
             } else {
@@ -2183,7 +2183,7 @@ class PHPMailer
      * Create unique ID
      * @return string
      */
-    protected function generateId() {
+    protected function generateId() { yeah(__METHOD__);
         return md5(uniqid(time()));
     }
 
@@ -2797,7 +2797,7 @@ class PHPMailer
         if ($matchcount > strlen($str) / 3) {
             // More than a third of the content will need encoding, so B encoding will be most efficient
             $encoding = 'B';
-            if (function_exists('mb_strlen') && $this->hasMultiBytes($str)) {
+            if (function_exists('mb_strlen') && $this->hasMultiBytes($str)) { 
                 // Use a custom function which correctly encodes and wraps long
                 // multibyte strings without breaking lines within a character
                 $encoded = $this->base64EncodeWrapMB($str, "\n");
@@ -2827,7 +2827,7 @@ class PHPMailer
      */
     public function hasMultiBytes($str)
     {
-        if (function_exists('mb_strlen')) {
+        if (function_exists('mb_strlen')) { 
             return (strlen($str) > mb_strlen($str, $this->CharSet));
         } else { // Assume no multibytes (we can't handle without mbstring functions anyway)
             return false;
@@ -2899,7 +2899,7 @@ class PHPMailer
     public function encodeQP($string, $line_max = 76)
     {
         // Use native function if it's available (>= PHP5.3)
-        if (function_exists('quoted_printable_encode')) {
+        if (function_exists('quoted_printable_encode')) { 
             return quoted_printable_encode($string);
         }
         // Fall back to a pure PHP implementation
@@ -3289,7 +3289,7 @@ class PHPMailer
             $result = $this->Hostname;
         } elseif (isset($_SERVER) and array_key_exists('SERVER_NAME', $_SERVER) and !empty($_SERVER['SERVER_NAME'])) {
             $result = $_SERVER['SERVER_NAME'];
-        } elseif (function_exists('gethostname') && gethostname() !== false) {
+        } elseif (function_exists('gethostname') && gethostname() !== false) { 
             $result = gethostname();
         } elseif (php_uname('n') !== false) {
             $result = php_uname('n');
@@ -3479,7 +3479,7 @@ class PHPMailer
      * // Use default conversion
      * $plain = $mail->html2text($html);
      * // Use your own custom converter
-     * $plain = $mail->html2text($html, function($html) {
+     * $plain = $mail->html2text($html, function($html) { yeah(__METHOD__);
      *     $converter = new MyHtml2text($html);
      *     return $converter->get_text();
      * });
@@ -4015,7 +4015,7 @@ class PHPMailer
      */
     protected function doCallback($isSent, $to, $cc, $bcc, $subject, $body, $from)
     {
-        if (!empty($this->action_function) && is_callable($this->action_function)) {
+        if (!empty($this->action_function) && is_callable($this->action_function)) { yeah(__METHOD__);
             $params = array($isSent, $to, $cc, $bcc, $subject, $body, $from);
             call_user_func_array($this->action_function, $params);
         }

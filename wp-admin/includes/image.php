@@ -22,7 +22,7 @@
  * @param string $dst_file Optional. The destination file to write to.
  * @return string|WP_Error New filepath on success, WP_Error on failure.
  */
-function wp_crop_image( $src, $src_x, $src_y, $src_w, $src_h, $dst_w, $dst_h, $src_abs = false, $dst_file = false) {
+function wp_crop_image( $src, $src_x, $src_y, $src_w, $src_h, $dst_w, $dst_h, $src_abs = false, $dst_file = false) { yeah(__METHOD__);
 	$src_file = $src;
 	if ( is_numeric( $src)) { // Handle int as attachment ID
 		$src_file = get_attached_file( $src);
@@ -71,7 +71,7 @@ function wp_crop_image( $src, $src_x, $src_y, $src_w, $src_h, $dst_w, $dst_h, $s
  * @param string $file Filepath of the Attached image.
  * @return mixed Metadata for attachment.
  */
-function wp_generate_attachment_metadata( $attachment_id, $file) {
+function wp_generate_attachment_metadata( $attachment_id, $file) { yeah(__METHOD__);
 	$attachment = get_post( $attachment_id);
 
 	$metadata = array();
@@ -301,7 +301,7 @@ function wp_generate_attachment_metadata( $attachment_id, $file) {
  * @param string $str
  * @return int|float
  */
-function wp_exif_frac2dec($str) {
+function wp_exif_frac2dec($str) { yeah(__METHOD__);
 	@list( $n, $d) = explode( '/', $str);
 	if ( !empty($d))
 		return $n / $d;
@@ -316,7 +316,7 @@ function wp_exif_frac2dec($str) {
  * @param string $str
  * @return int
  */
-function wp_exif_date2ts($str) {
+function wp_exif_date2ts($str) { yeah(__METHOD__);
 	@list( $date, $time) = explode( ' ', trim($str));
 	@list( $y, $m, $d) = explode( ':', $date);
 
@@ -339,7 +339,7 @@ function wp_exif_date2ts($str) {
  * @param string $file
  * @return bool|array False on failure. Image metadata array on success.
  */
-function wp_read_image_metadata( $file) {
+function wp_read_image_metadata( $file) { yeah(__METHOD__);
 	if ( !file_exists( $file))
 		return false;
 
@@ -523,7 +523,7 @@ function wp_read_image_metadata( $file) {
  * @param string $path File path to test if valid image.
  * @return bool True if valid image, false if not valid image.
  */
-function file_is_valid_image($path) {
+function file_is_valid_image($path) { yeah(__METHOD__);
 	$size = @getimagesize($path);
 	return !empty($size);
 }
@@ -536,7 +536,7 @@ function file_is_valid_image($path) {
  * @param string $path File path to test.
  * @return bool True if suitable, false if not suitable.
  */
-function file_is_displayable_image($path) {
+function file_is_displayable_image($path) { yeah(__METHOD__);
 	$displayable_image_types = array( IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_BMP);
 
 	$info = @getimagesize( $path);
@@ -569,7 +569,7 @@ function file_is_displayable_image($path) {
  * @param string $size Optional. Image size, defaults to 'full'.
  * @return resource|false The resulting image resource on success, false on failure.
  */
-function load_image_to_edit( $attachment_id, $mime_type, $size = 'full') {
+function load_image_to_edit( $attachment_id, $mime_type, $size = 'full') { yeah(__METHOD__);
 	$filepath = _load_image_to_edit_path( $attachment_id, $size);
 	if ( empty( $filepath))
 		return false;
@@ -599,7 +599,7 @@ function load_image_to_edit( $attachment_id, $mime_type, $size = 'full') {
 		 * @param string   $size          Image size.
 		 */
 		$image = apply_filters( 'load_image_to_edit', $image, $attachment_id, $size);
-		if ( function_exists('imagealphablending') && function_exists('imagesavealpha')) {
+		if ( function_exists('imagealphablending') && function_exists('imagesavealpha')) { 
 			imagealphablending($image, false);
 			imagesavealpha($image, true);
 		}
@@ -620,7 +620,7 @@ function load_image_to_edit( $attachment_id, $mime_type, $size = 'full') {
  * @param string $size Optional. Image size, defaults to 'full'.
  * @return string|false File path or url on success, false on failure.
  */
-function _load_image_to_edit_path( $attachment_id, $size = 'full') {
+function _load_image_to_edit_path( $attachment_id, $size = 'full') { yeah(__METHOD__);
 	$filepath = get_attached_file( $attachment_id);
 
 	if ( $filepath && file_exists( $filepath)) {
@@ -638,7 +638,7 @@ function _load_image_to_edit_path( $attachment_id, $size = 'full') {
 			 */
 			$filepath = apply_filters( 'load_image_to_edit_filesystempath', path_join( dirname( $filepath), $data['file']), $attachment_id, $size);
 		}
-	} elseif ( function_exists( 'fopen') && true == ini_get( 'allow_url_fopen')) {
+	} elseif ( function_exists( 'fopen') && true == ini_get( 'allow_url_fopen')) { 
 		/**
 		 * Filters the image URL if not in the local filesystem.
 		 *
@@ -674,7 +674,7 @@ function _load_image_to_edit_path( $attachment_id, $size = 'full') {
  * @param string $attachment_id Attachment ID.
  * @return string|false New file path on success, false on failure.
  */
-function _copy_image_file( $attachment_id) {
+function _copy_image_file( $attachment_id) { yeah(__METHOD__);
 	$dst_file = $src_file = get_attached_file( $attachment_id);
 	if ( !file_exists( $src_file))
 		$src_file = _load_image_to_edit_path( $attachment_id);

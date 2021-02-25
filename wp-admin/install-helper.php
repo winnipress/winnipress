@@ -49,7 +49,7 @@ if ( !function_exists('maybe_create_table')) :
  * @param string $create_ddl Create database table SQL.
  * @return bool False on error, true if already exists or success.
  */
-function maybe_create_table($table_name, $create_ddl) {
+function maybe_create_table($table_name, $create_ddl) { yeah(__METHOD__);
 	global $wpdb;
 	foreach ($wpdb->get_col("SHOW TABLES",0) as $table) {
 		if ($table == $table_name) {
@@ -82,7 +82,7 @@ if ( !function_exists('maybe_add_column')) :
  * @param string $create_ddl SQL to add column to table.
  * @return bool False on failure. True, if already exists or was successful.
  */
-function maybe_add_column($table_name, $column_name, $create_ddl) {
+function maybe_add_column($table_name, $column_name, $create_ddl) { yeah(__METHOD__);
 	global $wpdb;
 	foreach ($wpdb->get_col("DESC $table_name",0) as $column) {
 
@@ -116,7 +116,7 @@ endif;
  * @param string $drop_ddl SQL statement to drop column.
  * @return bool False on failure, true on success or doesn't exist.
  */
-function maybe_drop_column($table_name, $column_name, $drop_ddl) {
+function maybe_drop_column($table_name, $column_name, $drop_ddl) { yeah(__METHOD__);
 	global $wpdb;
 	foreach ($wpdb->get_col("DESC $table_name",0) as $column) {
 		if ($column == $column_name) {
@@ -165,7 +165,7 @@ function maybe_drop_column($table_name, $column_name, $drop_ddl) {
  * @param mixed  $extra      Optional. Extra value.
  * @return bool True, if matches. False, if not matching.
  */
-function check_column($table_name, $col_name, $col_type, $is_null = null, $key = null, $default = null, $extra = null) {
+function check_column($table_name, $col_name, $col_type, $is_null = null, $key = null, $default = null, $extra = null) { yeah(__METHOD__);
 	global $wpdb;
 	$diffs = 0;
 	$results = $wpdb->get_results("DESC $table_name");

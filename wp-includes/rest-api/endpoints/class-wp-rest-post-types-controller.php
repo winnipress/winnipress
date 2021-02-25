@@ -21,7 +21,7 @@ class WP_REST_Post_Types_Controller extends WP_REST_Controller {
 	 *
 	 * @since 4.7.0
 	 */
-	public function __construct(){
+	public function __construct(){ yeah(__METHOD__);
 		$this->namespace = 'wp/v2';
 		$this->rest_base = 'types';
 	}
@@ -33,7 +33,7 @@ class WP_REST_Post_Types_Controller extends WP_REST_Controller {
 	 *
 	 * @see register_rest_route()
 	 */
-	public function register_routes(){
+	public function register_routes(){ yeah(__METHOD__);
 
 		register_rest_route($this->namespace, '/' . $this->rest_base, array(
 			array(
@@ -71,7 +71,7 @@ class WP_REST_Post_Types_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|true True if the request has read access, WP_Error object otherwise.
 	 */
-	public function get_items_permissions_check($request ){
+	public function get_items_permissions_check($request ){ yeah(__METHOD__);
 		if ('edit' === $request['context'] ){
 			foreach (get_post_types(array(), 'object' ) as $post_type ){
 				if (!empty($post_type->show_in_rest ) && current_user_can($post_type->cap->edit_posts ) ){
@@ -93,7 +93,7 @@ class WP_REST_Post_Types_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
 	 */
-	public function get_items($request ){
+	public function get_items($request ){ yeah(__METHOD__);
 		$data = array();
 
 		foreach (get_post_types(array(), 'object' ) as $obj ){
@@ -116,7 +116,7 @@ class WP_REST_Post_Types_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
 	 */
-	public function get_item($request ){
+	public function get_item($request ){ yeah(__METHOD__);
 		$obj = get_post_type_object($request['type'] );
 
 		if (empty($obj ) ){
@@ -145,7 +145,7 @@ class WP_REST_Post_Types_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request   Full details about the request.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response($post_type, $request ){
+	public function prepare_item_for_response($post_type, $request ){ yeah(__METHOD__);
 		$taxonomies = wp_list_filter(get_object_taxonomies($post_type->name, 'objects' ), array('show_in_rest' => true ) );
 		$taxonomies = wp_list_pluck($taxonomies, 'name' );
 		$base = !empty($post_type->rest_base ) ? $post_type->rest_base : $post_type->name;
@@ -231,7 +231,7 @@ class WP_REST_Post_Types_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Item schema data.
 	 */
-	public function get_item_schema(){
+	public function get_item_schema(){ yeah(__METHOD__);
 		$schema = array(
 			'$schema'              => 'http://json-schema.org/draft-04/schema#',
 			'title'                => 'type',
@@ -312,7 +312,7 @@ class WP_REST_Post_Types_Controller extends WP_REST_Controller {
 	 *
 	 * @return array Collection parameters.
 	 */
-	public function get_collection_params(){
+	public function get_collection_params(){ yeah(__METHOD__);
 		return array(
 			'context' => $this->get_context_param(array('default' => 'view' ) ),
 		);

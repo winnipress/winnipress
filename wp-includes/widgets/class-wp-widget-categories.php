@@ -21,7 +21,7 @@ class WP_Widget_Categories extends WP_Widget {
 	 *
 	 * @since 2.8.0
 	 */
-	public function __construct() {
+	public function __construct() { yeah(__METHOD__);
 		$widget_ops = array(
 			'classname' => 'widget_categories',
 			'description' => __('A list or dropdown of categories.' ),
@@ -41,7 +41,7 @@ class WP_Widget_Categories extends WP_Widget {
 	 *                        'before_widget', and 'after_widget'.
 	 * @param array $instance Settings for the current Categories widget instance.
 	 */
-	public function widget($args, $instance ) {
+	public function widget($args, $instance ) { yeah(__METHOD__);
 		static $first_dropdown = true;
 
 		$title = !empty($instance['title'] ) ? $instance['title'] : __('Categories' );
@@ -93,9 +93,9 @@ class WP_Widget_Categories extends WP_Widget {
 
 <script type='text/javascript'>
 /* <![CDATA[ */
-(function() {
+(function() { yeah(__METHOD__);
 	var dropdown = document.getElementById("<?php echo esc_js($dropdown_id ); ?>" );
-	function onCatChange() {
+	function onCatChange() { yeah(__METHOD__);
 		if (dropdown.options[ dropdown.selectedIndex ].value > 0 ) {
 			dropdown.parentNode.submit();
 		}
@@ -140,7 +140,7 @@ class WP_Widget_Categories extends WP_Widget {
 	 * @param array $old_instance Old settings for this instance.
 	 * @return array Updated settings to save.
 	 */
-	public function update($new_instance, $old_instance ) {
+	public function update($new_instance, $old_instance ) { yeah(__METHOD__);
 		$instance = $old_instance;
 		$instance['title'] = sanitize_text_field($new_instance['title'] );
 		$instance['count'] = !empty($new_instance['count']) ? 1 : 0;
@@ -157,7 +157,7 @@ class WP_Widget_Categories extends WP_Widget {
 	 *
 	 * @param array $instance Current settings.
 	 */
-	public function form($instance ) {
+	public function form($instance ) { yeah(__METHOD__);
 		//Defaults
 		$instance = wp_parse_args((array) $instance, array('title' => '') );
 		$title = sanitize_text_field($instance['title'] );

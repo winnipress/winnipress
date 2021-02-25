@@ -18,7 +18,7 @@ class Walker_Nav_Menu_Checklist extends Walker_Nav_Menu {
 	 *
 	 * @param array $fields
 	 */
-	public function __construct( $fields = false ) {
+	public function __construct( $fields = false ) { yeah(__METHOD__);
 		if ( $fields ) {
 			$this->db_fields = $fields;
 		}
@@ -35,7 +35,7 @@ class Walker_Nav_Menu_Checklist extends Walker_Nav_Menu {
 	 * @param int    $depth  Depth of page. Used for padding.
 	 * @param array  $args   Not used.
 	 */
-	public function start_lvl( &$output, $depth = 0, $args = array() ) {
+	public function start_lvl( &$output, $depth = 0, $args = array() ) { yeah(__METHOD__);
 		$indent = str_repeat( "\t", $depth );
 		$output .= "\n$indent<ul class='children'>\n";
 	}
@@ -51,7 +51,7 @@ class Walker_Nav_Menu_Checklist extends Walker_Nav_Menu {
 	 * @param int    $depth  Depth of page. Used for padding.
 	 * @param array  $args   Not used.
 	 */
-	public function end_lvl( &$output, $depth = 0, $args = array() ) {
+	public function end_lvl( &$output, $depth = 0, $args = array() ) { yeah(__METHOD__);
 		$indent = str_repeat( "\t", $depth );
 		$output .= "\n$indent</ul>";
 	}
@@ -71,7 +71,7 @@ class Walker_Nav_Menu_Checklist extends Walker_Nav_Menu {
 	 * @param array  $args   Not used.
 	 * @param int    $id     Not used.
 	 */
-	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) { yeah(__METHOD__);
 		global $_nav_menu_placeholder;
 
 		$_nav_menu_placeholder = ( 0 > $_nav_menu_placeholder ) ? intval($_nav_menu_placeholder) - 1 : -1;

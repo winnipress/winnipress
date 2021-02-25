@@ -27,7 +27,7 @@
  * @param mixed  $default Optional. Default value to return if the option does not exist.
  * @return mixed Value set for the option.
  */
-function get_option($option, $default = false ){
+function get_option($option, $default = false ){ yeah(__METHOD__);
 	global $wpdb;
 
 	$option = trim($option );
@@ -158,7 +158,7 @@ function get_option($option, $default = false ){
  *
  * @param string $option Option name.
  */
-function wp_protect_special_option($option ){
+function wp_protect_special_option($option ){ yeah(__METHOD__);
 	if ('alloptions' === $option || 'notoptions' === $option )
 		wp_die(sprintf(__('%s is a protected WP option and may not be modified' ), esc_html($option ) ) );
 }
@@ -170,7 +170,7 @@ function wp_protect_special_option($option ){
  *
  * @param string $option Option name.
  */
-function form_option($option ){
+function form_option($option ){ yeah(__METHOD__);
 	echo esc_attr(get_option($option ) );
 }
 
@@ -183,7 +183,7 @@ function form_option($option ){
  *
  * @return array List of all options.
  */
-function wp_load_alloptions(){
+function wp_load_alloptions(){ yeah(__METHOD__);
 	global $wpdb;
 
 	if (!wp_installing() || !is_multisite() ){
@@ -236,7 +236,7 @@ function wp_load_alloptions(){
  *
  * @param int $network_id Optional site ID for which to query the options. Defaults to the current site.
  */
-function wp_load_core_site_options($network_id = null ){
+function wp_load_core_site_options($network_id = null ){ yeah(__METHOD__);
 	global $wpdb;
 
 	if (!is_multisite() || wp_using_ext_object_cache() || wp_installing() )
@@ -282,7 +282,7 @@ function wp_load_core_site_options($network_id = null ){
  *                              the default value is 'yes'. Default null.
  * @return bool False if value was not updated and true if value was updated.
  */
-function update_option($option, $value, $autoload = null ){
+function update_option($option, $value, $autoload = null ){ yeah(__METHOD__);
 	global $wpdb;
 
 	$option = trim($option);
@@ -436,7 +436,7 @@ function update_option($option, $value, $autoload = null ){
  *                                    Default is enabled. Accepts 'no' to disable for legacy reasons.
  * @return bool False if option was not added and true if option was added.
  */
-function add_option($option, $value = '', $deprecated = '', $autoload = 'yes' ){
+function add_option($option, $value = '', $deprecated = '', $autoload = 'yes' ){ yeah(__METHOD__);
 	global $wpdb;
 
 	if (!empty($deprecated ) )
@@ -529,7 +529,7 @@ function add_option($option, $value = '', $deprecated = '', $autoload = 'yes' ){
  * @param string $option Name of option to remove. Expected to not be SQL-escaped.
  * @return bool True, if option is successfully deleted. False on failure.
  */
-function delete_option($option ){
+function delete_option($option ){ yeah(__METHOD__);
 	global $wpdb;
 
 	$option = trim($option );
@@ -598,7 +598,7 @@ function delete_option($option ){
  * @param string $transient Transient name. Expected to not be SQL-escaped.
  * @return bool true if successful, false otherwise
  */
-function delete_transient($transient ){
+function delete_transient($transient ){ yeah(__METHOD__);
 
 	/**
 	 * Fires immediately before a specific transient is deleted.
@@ -647,7 +647,7 @@ function delete_transient($transient ){
  * @param string $transient Transient name. Expected to not be SQL-escaped.
  * @return mixed Value of transient.
  */
-function get_transient($transient ){
+function get_transient($transient ){ yeah(__METHOD__);
 
 	/**
 	 * Filters the value of an existing transient.
@@ -720,7 +720,7 @@ function get_transient($transient ){
  * @param int    $expiration Optional. Time until expiration in seconds. Default 0 (no expiration).
  * @return bool False if value was not set and true if value was set.
  */
-function set_transient($transient, $value, $expiration = 0 ){
+function set_transient($transient, $value, $expiration = 0 ){ yeah(__METHOD__);
 
 	$expiration = (int) $expiration;
 
@@ -826,7 +826,7 @@ function set_transient($transient, $value, $expiration = 0 ){
  *
  * @param bool $force_db Optional. Force cleanup to run against the database even when an external object cache is used.
  */
-function delete_expired_transients($force_db = false ){
+function delete_expired_transients($force_db = false ){ yeah(__METHOD__);
 	global $wpdb;
 
 	if (!$force_db && wp_using_ext_object_cache() ){
@@ -880,7 +880,7 @@ function delete_expired_transients($force_db = false ){
  *
  * @since 2.7.0
  */
-function wp_user_settings(){
+function wp_user_settings(){ yeah(__METHOD__);
 
 	if (!is_admin() || wp_doing_ajax() ){
 		return;
@@ -930,7 +930,7 @@ function wp_user_settings(){
  * @param string $default Optional default value to return when $name is not set.
  * @return mixed the last saved user setting or the default value/false if it doesn't exist.
  */
-function get_user_setting($name, $default = false ){
+function get_user_setting($name, $default = false ){ yeah(__METHOD__);
 	$all_user_settings = get_all_user_settings();
 
 	return isset($all_user_settings[$name] ) ? $all_user_settings[$name] : $default;
@@ -949,7 +949,7 @@ function get_user_setting($name, $default = false ){
  * @param string $value The value for the setting.
  * @return bool|null True if set successfully, false if not. Null if the current user can't be established.
  */
-function set_user_setting($name, $value ){
+function set_user_setting($name, $value ){ yeah(__METHOD__);
 	if (headers_sent() ){
 		return false;
 	}
@@ -972,7 +972,7 @@ function set_user_setting($name, $value ){
  * @param string $names The name or array of names of the setting to be deleted.
  * @return bool|null True if deleted successfully, false if not. Null if the current user can't be established.
  */
-function delete_user_setting($names ){
+function delete_user_setting($names ){ yeah(__METHOD__);
 	if (headers_sent() ){
 		return false;
 	}
@@ -1004,7 +1004,7 @@ function delete_user_setting($names ){
  *
  * @return array the last saved user settings or empty array.
  */
-function get_all_user_settings(){
+function get_all_user_settings(){ yeah(__METHOD__);
 	global $_updated_user_settings;
 
 	if (!$user_id = get_current_user_id() ){
@@ -1047,7 +1047,7 @@ function get_all_user_settings(){
  * @return bool|null False if the current user can't be found, null if the current
  *                   user is not a super admin or a member of the site, otherwise true.
  */
-function wp_set_all_user_settings($user_settings ){
+function wp_set_all_user_settings($user_settings ){ yeah(__METHOD__);
 	global $_updated_user_settings;
 
 	if (!$user_id = get_current_user_id() ){
@@ -1082,7 +1082,7 @@ function wp_set_all_user_settings($user_settings ){
  *
  * @since 2.7.0
  */
-function delete_all_user_settings(){
+function delete_all_user_settings(){ yeah(__METHOD__);
 	if (!$user_id = get_current_user_id() ){
 		return;
 	}
@@ -1105,7 +1105,7 @@ function delete_all_user_settings(){
  * @param bool   $deprecated Whether to use cache. Multisite only. Always set to true.
  * @return mixed Value set for the option.
  */
-function get_site_option($option, $default = false, $deprecated = true ){
+function get_site_option($option, $default = false, $deprecated = true ){ yeah(__METHOD__);
 	return get_network_option(null, $option, $default );
 }
 
@@ -1123,7 +1123,7 @@ function get_site_option($option, $default = false, $deprecated = true ){
  * @param mixed  $value  Option value, can be anything. Expected to not be SQL-escaped.
  * @return bool False if the option was not added. True if the option was added.
  */
-function add_site_option($option, $value ){
+function add_site_option($option, $value ){ yeah(__METHOD__);
 	return add_network_option(null, $option, $value );
 }
 
@@ -1138,7 +1138,7 @@ function add_site_option($option, $value ){
  * @param string $option Name of option to remove. Expected to not be SQL-escaped.
  * @return bool True, if succeed. False, if failure.
  */
-function delete_site_option($option ){
+function delete_site_option($option ){ yeah(__METHOD__);
 	return delete_network_option(null, $option );
 }
 
@@ -1154,7 +1154,7 @@ function delete_site_option($option ){
  * @param mixed  $value  Option value. Expected to not be SQL-escaped.
  * @return bool False if value was not updated. True if value was updated.
  */
-function update_site_option($option, $value ){
+function update_site_option($option, $value ){ yeah(__METHOD__);
 	return update_network_option(null, $option, $value );
 }
 
@@ -1172,7 +1172,7 @@ function update_site_option($option, $value ){
  * @param mixed    $default    Optional. Value to return if the option doesn't exist. Default false.
  * @return mixed Value set for the option.
  */
-function get_network_option($network_id, $option, $default = false ){
+function get_network_option($network_id, $option, $default = false ){ yeah(__METHOD__);
 	global $wpdb;
 
 	if ($network_id && !is_numeric($network_id ) ){
@@ -1300,7 +1300,7 @@ function get_network_option($network_id, $option, $default = false ){
  * @param mixed  $value      Option value, can be anything. Expected to not be SQL-escaped.
  * @return bool False if option was not added and true if option was added.
  */
-function add_network_option($network_id, $option, $value ){
+function add_network_option($network_id, $option, $value ){ yeah(__METHOD__);
 	global $wpdb;
 
 	if ($network_id && !is_numeric($network_id ) ){
@@ -1414,7 +1414,7 @@ function add_network_option($network_id, $option, $value ){
  * @param string $option     Name of option to remove. Expected to not be SQL-escaped.
  * @return bool True, if succeed. False, if failure.
  */
-function delete_network_option($network_id, $option ){
+function delete_network_option($network_id, $option ){ yeah(__METHOD__);
 	global $wpdb;
 
 	if ($network_id && !is_numeric($network_id ) ){
@@ -1502,7 +1502,7 @@ function delete_network_option($network_id, $option ){
  * @param mixed    $value      Option value. Expected to not be SQL-escaped.
  * @return bool False if value was not updated and true if value was updated.
  */
-function update_network_option($network_id, $option, $value ){
+function update_network_option($network_id, $option, $value ){ yeah(__METHOD__);
 	global $wpdb;
 
 	if ($network_id && !is_numeric($network_id ) ){
@@ -1611,7 +1611,7 @@ function update_network_option($network_id, $option, $value ){
  * @param string $transient Transient name. Expected to not be SQL-escaped.
  * @return bool True if successful, false otherwise
  */
-function delete_site_transient($transient ){
+function delete_site_transient($transient ){ yeah(__METHOD__);
 
 	/**
 	 * Fires immediately before a specific site transient is deleted.
@@ -1661,7 +1661,7 @@ function delete_site_transient($transient ){
  * @param string $transient Transient name. Expected to not be SQL-escaped.
  * @return mixed Value of transient.
  */
-function get_site_transient($transient ){
+function get_site_transient($transient ){ yeah(__METHOD__);
 
 	/**
 	 * Filters the value of an existing site transient.
@@ -1734,7 +1734,7 @@ function get_site_transient($transient ){
  * @param int    $expiration Optional. Time until expiration in seconds. Default 0 (no expiration).
  * @return bool False if value was not set and true if value was set.
  */
-function set_site_transient($transient, $value, $expiration = 0 ){
+function set_site_transient($transient, $value, $expiration = 0 ){ yeah(__METHOD__);
 
 	/**
 	 * Filters the value of a specific site transient before it is set.
@@ -1817,7 +1817,7 @@ function set_site_transient($transient, $value, $expiration = 0 ){
  *
  * @since 4.7.0
  */
-function register_initial_settings(){
+function register_initial_settings(){ yeah(__METHOD__);
 	register_setting('general', 'blogname', array(
 		'show_in_rest' => array(
 			'name' => 'title',
@@ -1966,7 +1966,7 @@ function register_initial_settings(){
  *     @type mixed    $default           Default value when calling `get_option()`.
  * }
  */
-function register_setting($option_group, $option_name, $args = array() ){
+function register_setting($option_group, $option_name, $args = array() ){ yeah(__METHOD__);
 	global $new_whitelist_options, $wp_registered_settings;
 
 	$defaults = array(
@@ -2044,7 +2044,7 @@ function register_setting($option_group, $option_name, $args = array() ){
  * @param string   $option_name       The name of the option to unregister.
  * @param callable $deprecated        Deprecated.
  */
-function unregister_setting($option_group, $option_name, $deprecated = '' ){
+function unregister_setting($option_group, $option_name, $deprecated = '' ){ yeah(__METHOD__);
 	global $new_whitelist_options, $wp_registered_settings;
 
 	if ('misc' == $option_group ){
@@ -2099,7 +2099,7 @@ function unregister_setting($option_group, $option_name, $deprecated = '' ){
  *
  * @return array List of registered settings, keyed by option name.
  */
-function get_registered_settings(){
+function get_registered_settings(){ yeah(__METHOD__);
 	global $wp_registered_settings;
 
 	if (!is_array($wp_registered_settings ) ){
@@ -2122,7 +2122,7 @@ function get_registered_settings(){
  * @param bool $passed_default Was `get_option()` passed a default value?
  * @return mixed Filtered default value.
  */
-function filter_default_option($default, $option, $passed_default ){
+function filter_default_option($default, $option, $passed_default ){ yeah(__METHOD__);
 	if ($passed_default ){
 		return $default;
 	}

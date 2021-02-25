@@ -151,7 +151,7 @@ class Services_JSON
 	/**
 	 * PHP4 constructor.
 	 */
-	public function Services_JSON($use = 0) {
+	public function Services_JSON($use = 0) { yeah(__METHOD__);
 		self::__construct($use);
 	}
     // private - cache the mbstring lookup results..

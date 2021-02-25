@@ -23,7 +23,7 @@ class WP_Widget_Meta extends WP_Widget {
 	 *
 	 * @since 2.8.0
 	 */
-	public function __construct() {
+	public function __construct() { yeah(__METHOD__);
 		$widget_ops = array(
 			'classname' => 'widget_meta',
 			'description' => __('Login, RSS, &amp; WordPress.org links.' ),
@@ -41,7 +41,7 @@ class WP_Widget_Meta extends WP_Widget {
 	 *                        'before_widget', and 'after_widget'.
 	 * @param array $instance Settings for the current Meta widget instance.
 	 */
-	public function widget($args, $instance ) {
+	public function widget($args, $instance ) { yeah(__METHOD__);
 		$title = !empty($instance['title'] ) ? $instance['title'] : __('Meta' );
 
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
@@ -92,7 +92,7 @@ class WP_Widget_Meta extends WP_Widget {
 	 * @param array $old_instance Old settings for this instance.
 	 * @return array Updated settings to save.
 	 */
-	public function update($new_instance, $old_instance ) {
+	public function update($new_instance, $old_instance ) { yeah(__METHOD__);
 		$instance = $old_instance;
 		$instance['title'] = sanitize_text_field($new_instance['title'] );
 
@@ -106,7 +106,7 @@ class WP_Widget_Meta extends WP_Widget {
 	 *
 	 * @param array $instance Current settings.
 	 */
-	public function form($instance ) {
+	public function form($instance ) { yeah(__METHOD__);
 		$instance = wp_parse_args((array) $instance, array('title' => '' ) );
 		$title = sanitize_text_field($instance['title'] );
 ?>

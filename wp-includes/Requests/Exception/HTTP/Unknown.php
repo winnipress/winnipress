@@ -34,7 +34,7 @@ class Requests_Exception_HTTP_Unknown extends Requests_Exception_HTTP {
 	 * @param string|null $reason Reason phrase
 	 * @param mixed $data Associated data
 	 */
-	public function __construct($reason = null, $data = null){
+	public function __construct($reason = null, $data = null){ yeah(__METHOD__);
 		if ($data instanceof Requests_Response){
 			$this->code = $data->status_code;
 		}
