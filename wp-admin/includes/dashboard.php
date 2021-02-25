@@ -41,10 +41,7 @@ function wp_dashboard_setup() { yeah(__METHOD__);
 	if ( is_network_admin())
 		wp_add_dashboard_widget( 'network_dashboard_right_now', __( 'Right Now'), 'wp_network_dashboard_right_now');
 
-	// Activity Widget
-	if ( is_blog_admin()) {
-		wp_add_dashboard_widget( 'dashboard_activity', __( 'Activity'), 'wp_dashboard_site_activity');
-	}
+
 
 	// QuickPress Widget
 	if ( is_blog_admin() && current_user_can( get_post_type_object( 'post')->cap->create_posts)) {
@@ -52,8 +49,7 @@ function wp_dashboard_setup() { yeah(__METHOD__);
 		wp_add_dashboard_widget( 'dashboard_quick_press', $quick_draft_title, 'wp_dashboard_quick_press');
 	}
 
-	// WordPress Events and News
-	wp_add_dashboard_widget( 'dashboard_primary', __( 'WordPress Events and News'), 'wp_dashboard_events_news');
+	
 
 	if ( is_network_admin()) {
 
@@ -718,41 +714,7 @@ function _wp_dashboard_recent_comments_row( &$comment, $show_date = true) { yeah
 	$GLOBALS['comment'] = null;
 }
 
-/**
- * Callback function for Activity widget.
- *
- * @since 3.8.0
- */
-function wp_dashboard_site_activity() { yeah(__METHOD__);
 
-	echo '<div id="activity-widget">';
-
-	$future_posts = wp_dashboard_recent_posts( array(
-		'max'     => 5,
-		'status'  => 'future',
-		'order'   => 'ASC',
-		'title'   => __( 'Publishing Soon'),
-		'id'      => 'future-posts',
-	));
-	$recent_posts = wp_dashboard_recent_posts( array(
-		'max'     => 5,
-		'status'  => 'publish',
-		'order'   => 'DESC',
-		'title'   => __( 'Recently Published'),
-		'id'      => 'published-posts',
-	));
-
-	$recent_comments = wp_dashboard_recent_comments();
-
-	if ( !$future_posts && !$recent_posts && !$recent_comments) {
-		echo '<div class="no-activity">';
-		echo '<p class="smiley" aria-hidden="true"></p>';
-		echo '<p>' . __( 'No activity yet!') . '</p>';
-		echo '</div>';
-	}
-
-	echo '</div>';
-}
 
 /**
  * Generates Publishing Soon and Recently Published sections.
@@ -1037,59 +999,7 @@ function wp_dashboard_rss_control( $widget_id, $form_inputs = array()) { yeah(__
 }
 
 
-/**
- * Renders the Events and News dashboard widget.
- *
- * @since 4.8.0
- */
-function wp_dashboard_events_news() { yeah(__METHOD__);
-	wp_print_community_events_markup();
 
-	?>
-
-	<div class="wordpress-news hide-if-no-js">
-		<?php wp_dashboard_primary(); ?>
-	</div>
-
-	<p class="community-events-footer">
-		<?php
-			printf(
-				'<a href="%1$s" target="_blank">%2$s <span class="screen-reader-text">%3$s</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>',
-				'https://make.wordpress.org/community/meetups-landing-page',
-				__( 'Meetups'),
-				/* translators: accessibility text */
-				__( '(opens in a new window)')
-			);
-		?>
-
-		|
-
-		<?php
-			printf(
-				'<a href="%1$s" target="_blank">%2$s <span class="screen-reader-text">%3$s</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>',
-				'https://central.wordcamp.org/schedule/',
-				__( 'WordCamps'),
-				/* translators: accessibility text */
-				__( '(opens in a new window)')
-			);
-		?>
-
-		|
-
-		<?php
-			printf(
-				'<a href="%1$s" target="_blank">%2$s <span class="screen-reader-text">%3$s</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>',
-				/* translators: If a Rosetta site exists (e.g. https://es.wordpress.org/news/), then use that. Otherwise, leave untranslated. */
-				esc_url( _x( 'https://wordpress.org/news/', 'Events and News dashboard widget')),
-				__( 'News'),
-				/* translators: accessibility text */
-				__( '(opens in a new window)')
-			);
-		?>
-	</p>
-
-	<?php
-}
 
 /**
  * Prints the markup for the Community Events section of the Events and News Dashboard widget.

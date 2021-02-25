@@ -93,7 +93,7 @@ class WP_Widget_Categories extends WP_Widget {
 
 <script type='text/javascript'>
 /* <![CDATA[ */
-(function() { yeah(__METHOD__);
+(function() { 
 	var dropdown = document.getElementById("<?php echo esc_js($dropdown_id ); ?>" );
 	function onCatChange() { yeah(__METHOD__);
 		if (dropdown.options[ dropdown.selectedIndex ].value > 0 ) {

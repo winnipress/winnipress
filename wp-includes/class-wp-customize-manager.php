@@ -1998,7 +1998,7 @@ final class WP_Customize_Manager {
 		}
 		?>
 		<script>
-		(function() { yeah(__METHOD__);
+		(function() { 
 			var urlParser, oldQueryParams, newQueryParams, i;
 			if (parent !== window ) {
 				return;

@@ -3019,11 +3019,11 @@ function wp_customize_support_script() { yeah(__METHOD__);
 	<![endif]-->
 	<!--[if gte IE 9]><!-->
 		<script type="text/javascript">
-			(function() { yeah(__METHOD__);
+			(function() { 
 				var request, b = document.body, c = 'className', cs = 'customize-support', rcs = new RegExp('(^|\\s+)(no-)?'+cs+'(\\s+|$)');
 
 		<?php	if ($cross_domain ) : ?>
-				request = (function(){ yeah(__METHOD__); var xhr = new XMLHttpRequest(); return ('withCredentials' in xhr); })();
+				request = (function(){  var xhr = new XMLHttpRequest(); return ('withCredentials' in xhr); })();
 		<?php	else : ?>
 				request = true;
 		<?php	endif; ?>

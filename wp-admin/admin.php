@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 function yeah($met){
     if(!isset($GLOBALS['metoditos'])){
         $GLOBALS['metoditos']=array();

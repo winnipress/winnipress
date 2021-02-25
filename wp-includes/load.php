@@ -1,4 +1,22 @@
 <?php
+
+
+if(!function_exists('yeah')){//remove!
+	session_start();
+
+	function yeah($met){
+		if(!isset($GLOBALS['metoditos'])){
+			$GLOBALS['metoditos']=array();
+		}
+
+		if (!in_array($met, $GLOBALS['metoditos'])){
+		$GLOBALS['metoditos'][] = $met;
+		}
+	}
+}
+
+
+
 /**
  * These functions are needed to load WordPress.
  *

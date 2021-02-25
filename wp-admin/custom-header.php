@@ -374,14 +374,14 @@ class Custom_Image_Header {
 	 */
 	public function js_2() { yeah(__METHOD__); ?>
 <script type="text/javascript">
-	function onEndCrop( coords ) { yeah(__METHOD__);
+	function onEndCrop( coords ) { 
 		jQuery( '#x1' ).val(coords.x);
 		jQuery( '#y1' ).val(coords.y);
 		jQuery( '#width' ).val(coords.w);
 		jQuery( '#height' ).val(coords.h);
 	}
 
-	jQuery(document).ready(function() { yeah(__METHOD__);
+	jQuery(document).ready(function() { 
 		var xinit = <?php echo absint( get_theme_support( 'custom-header', 'width' ) ); ?>;
 		var yinit = <?php echo absint( get_theme_support( 'custom-header', 'height' ) ); ?>;
 		var ratio = xinit / yinit;

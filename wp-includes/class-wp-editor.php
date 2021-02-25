@@ -1525,7 +1525,7 @@ final class _WP_Editors {
 
 		?>
 
-		(function() { yeah(__METHOD__);
+		(function() { 
 			var init, id, $wrap;
 
 			if (typeof tinymce !== 'undefined' ) {
