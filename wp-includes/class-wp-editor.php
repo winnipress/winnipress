@@ -863,7 +863,7 @@ final class _WP_Editors {
 		<script type="text/javascript">
 		window.wp = window.wp || {};
 		window.wp.editor = window.wp.editor || {};
-		window.wp.editor.getDefaultSettings = function() { yeah(__METHOD__);
+		window.wp.editor.getDefaultSettings = function() {
 			return {
 				tinymce: <?php echo $settings; ?>,
 				quicktags: {
@@ -884,7 +884,7 @@ final class _WP_Editors {
 				suffix: "<?php echo $suffix; ?>",
 				mceInit: {},
 				qtInit: {},
-				load_ext: function(url,lang){ yeah(__METHOD__);var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
+				load_ext: function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
 			};
 			<?php
 		}
@@ -1489,7 +1489,7 @@ final class _WP_Editors {
 			mceInit: <?php echo $mceInit; ?>,
 			qtInit: <?php echo $qtInit; ?>,
 			ref: <?php echo self::_parse_init($ref ); ?>,
-			load_ext: function(url,lang){ yeah(__METHOD__);var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
+			load_ext: function(url,lang){var sl=tinymce.ScriptLoader;sl.markDone(url+'/langs/'+lang+'.js');sl.markDone(url+'/langs/'+lang+'_dlg.js');}
 		};
 		</script>
 		<?php
