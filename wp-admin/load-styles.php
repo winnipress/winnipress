@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Disable error reporting
- *
- * Set this to error_reporting(-1) for debugging
- */
-error_reporting(0);
 
 /** Set ABSPATH for execution */
 if (!defined('ABSPATH')) {

@@ -1,10 +1,15 @@
 <?php
-/**
- * Disable error reporting
- *
- * Set this to error_reporting(-1 ) for debugging.
- */
-error_reporting(0);
+if(!function_exists('yeah')){
+	function yeah($met){
+		if(!isset($GLOBALS['metoditos'])){
+			$GLOBALS['metoditos']=array();
+		}
+	
+		if (!in_array($met, $GLOBALS['metoditos'])){
+		$GLOBALS['metoditos'][] = $met;
+		}
+	}
+}
 
 $basepath = dirname(__FILE__);
 

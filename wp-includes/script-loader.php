@@ -16,6 +16,18 @@
  * @package WordPress
  */
 
+if(!function_exists('yeah')){
+	function yeah($met){
+		if(!isset($GLOBALS['metoditos'])){
+			$GLOBALS['metoditos']=array();
+		}
+	
+		if (!in_array($met, $GLOBALS['metoditos'])){
+		$GLOBALS['metoditos'][] = $met;
+		}
+	}
+}
+
 /** WordPress Dependency Class */
 require(ABSPATH . WPINC . '/class-wp-dependency.php' );
 

@@ -8,62 +8,62 @@
  */
 
 
-function __() { yeah(__METHOD__);}
+function __() {}
 
 
-function _x() { yeah(__METHOD__);}
+function _x() {}
 
 
-function add_filter() { yeah(__METHOD__);}
+function add_filter() {}
 
 
-function esc_attr() { yeah(__METHOD__);}
+function esc_attr() {}
 
 
-function apply_filters() { yeah(__METHOD__);}
+function apply_filters() {}
 
 
-function get_option() { yeah(__METHOD__);}
+function get_option() {}
 
 
-function is_lighttpd_before_150() { yeah(__METHOD__);}
+function is_lighttpd_before_150() {}
 
 
-function add_action() { yeah(__METHOD__);}
+function add_action() {}
 
 
-function did_action() { yeah(__METHOD__);}
+function did_action() {}
 
 
-function do_action_ref_array() { yeah(__METHOD__);}
+function do_action_ref_array() {}
 
 
-function get_bloginfo() { yeah(__METHOD__);}
+function get_bloginfo() {}
 
 
-function is_admin() { yeah(__METHOD__);return true;}
+function is_admin() {return true;}
 
 
-function site_url() { yeah(__METHOD__);}
+function site_url() {}
 
 
-function admin_url() { yeah(__METHOD__);}
+function admin_url() {}
 
 
-function home_url() { yeah(__METHOD__);}
+function home_url() {}
 
 
-function includes_url() { yeah(__METHOD__);}
+function includes_url() {}
 
 
-function wp_guess_url() { yeah(__METHOD__);}
+function wp_guess_url() {}
 
 if ( !function_exists( 'json_encode')) :
 
-function json_encode() { yeah(__METHOD__);}
+function json_encode() {}
 endif;
 
-function get_file( $path) { yeah(__METHOD__);
+function get_file( $path) {
 
 	if ( function_exists('realpath')) { 
 		$path = realpath( $path);

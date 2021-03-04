@@ -10,8 +10,12 @@ function winni_log($thing){ yeah(__METHOD__);
     $backtrace = debug_backtrace();
     $caller = array_shift($backtrace);
 
-    // Use print_r if it's not a normal string log
-    if(!is_string($thing)){
+    // Use special printing depending on case
+    if(is_bool($thing)){
+        $thing = $thing ? '<i>{TRUE}</i>' : '<i>{FALSE}</i>';
+    }elseif($thing == ''){
+        $thing = '<i>{EMPTY STRING}</i>';
+    }elseif(!is_string($thing)){
         $thing = '<pre>'.print_r($thing,true).'</pre>';
     }
 
