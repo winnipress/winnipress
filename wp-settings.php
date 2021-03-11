@@ -178,12 +178,10 @@ require(ABSPATH . WPINC . '/class-walker-category-dropdown.php');
 require(ABSPATH . WPINC . '/category-template.php');
 require(ABSPATH . WPINC . '/rewrite.php');
 require(ABSPATH . WPINC . '/class-wp-rewrite.php');
-require(ABSPATH . WPINC . '/feed.php');
 require(ABSPATH . WPINC . '/bookmark.php');
 require(ABSPATH . WPINC . '/bookmark-template.php');
 require(ABSPATH . WPINC . '/kses.php');
 require(ABSPATH . WPINC . '/cron.php');
-require(ABSPATH . WPINC . '/deprecated.php');
 require(ABSPATH . WPINC . '/script-loader.php');
 require(ABSPATH . WPINC . '/taxonomy.php');
 require(ABSPATH . WPINC . '/class-wp-taxonomy.php');
@@ -192,10 +190,6 @@ require(ABSPATH . WPINC . '/class-wp-term-query.php');
 require(ABSPATH . WPINC . '/class-wp-tax-query.php');
 require(ABSPATH . WPINC . '/canonical.php');
 require(ABSPATH . WPINC . '/shortcodes.php');
-require(ABSPATH . WPINC . '/embed.php');
-require(ABSPATH . WPINC . '/class-wp-embed.php');
-require(ABSPATH . WPINC . '/class-oembed.php');
-require(ABSPATH . WPINC . '/class-wp-oembed-controller.php');
 require(ABSPATH . WPINC . '/media.php');
 require(ABSPATH . WPINC . '/http.php');
 require(ABSPATH . WPINC . '/class-http.php');
@@ -212,9 +206,6 @@ require(ABSPATH . WPINC . '/class-wp-widget.php');
 require(ABSPATH . WPINC . '/class-wp-widget-factory.php');
 require(ABSPATH . WPINC . '/nav-menu.php');
 require(ABSPATH . WPINC . '/nav-menu-template.php');
-
-$GLOBALS['wp_embed'] = new WP_Embed();
-
 
 // Define constants that rely on the API to obtain the default value.
 // Define must-use plugin directory constants, which may be overridden in the sunrise.php drop-in.
