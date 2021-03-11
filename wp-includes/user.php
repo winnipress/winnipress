@@ -626,10 +626,7 @@ function get_blogs_of_user($user_id, $all = false ) { yeah(__METHOD__);
 
 	$site_ids = array();
 
-	if (isset($keys[ $wpdb->base_prefix . 'capabilities' ] ) && defined('MULTISITE' ) ) {
-		$site_ids[] = 1;
-		unset($keys[ $wpdb->base_prefix . 'capabilities' ] );
-	}
+	
 
 	$keys = array_keys($keys );
 

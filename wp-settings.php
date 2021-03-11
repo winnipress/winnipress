@@ -1,18 +1,4 @@
 <?php
-/**
- * Used to set up and fix common variables and include
- * the WordPress procedural and class library.
- *
- * Allows for some configuration in wp-config.php (see default-constants.php)
- *
- * @package WordPress
- */
-
-/**
- * Stores the location of the WordPress directory of functions, classes, and core content.
- *
- * @since 1.0.0
- */
 define('WPINC', 'wp-includes');
 
 // Include files required for initialization.
@@ -55,9 +41,6 @@ wp_unregister_GLOBALS();
 
 // Standardize $_SERVER variables across setups.
 wp_fix_server_vars();
-
-// Check if we have received a request due to missing favicon.ico
-wp_favicon_request();
 
 // Check if we're in maintenance mode.
 wp_maintenance();
@@ -115,15 +98,7 @@ wp_start_object_cache();
 // Attach the default filters.
 require(ABSPATH . WPINC . '/default-filters.php');
 
-// Initialize multisite if enabled.
-if(is_multisite()){
-	require(ABSPATH . WPINC . '/class-wp-site-query.php');
-	require(ABSPATH . WPINC . '/class-wp-network-query.php');
-	require(ABSPATH . WPINC . '/ms-blogs.php');
-	require(ABSPATH . WPINC . '/ms-settings.php');
-} elseif(!defined('MULTISITE')){
-	define('MULTISITE', false);
-}
+
 
 register_shutdown_function('shutdown_action_hook');
 
@@ -178,8 +153,6 @@ require(ABSPATH . WPINC . '/class-walker-category-dropdown.php');
 require(ABSPATH . WPINC . '/category-template.php');
 require(ABSPATH . WPINC . '/rewrite.php');
 require(ABSPATH . WPINC . '/class-wp-rewrite.php');
-require(ABSPATH . WPINC . '/bookmark.php');
-require(ABSPATH . WPINC . '/bookmark-template.php');
 require(ABSPATH . WPINC . '/kses.php');
 require(ABSPATH . WPINC . '/cron.php');
 require(ABSPATH . WPINC . '/script-loader.php');
@@ -351,7 +324,7 @@ $GLOBALS['wp_locale_switcher'] = new WP_Locale_Switcher();
 $GLOBALS['wp_locale_switcher']->init();
 
 // Load the functions for the active theme, for both parent and child theme if applicable.
-if(!wp_installing() || 'wp-activate.php' === $pagenow){
+if(!wp_installing()){
 	if(TEMPLATEPATH !== STYLESHEETPATH && file_exists(STYLESHEETPATH . '/functions.php'))
 		include(STYLESHEETPATH . '/functions.php');
 	if(file_exists(TEMPLATEPATH . '/functions.php'))
@@ -381,23 +354,10 @@ $GLOBALS['wp']->init();
  */
 do_action('init');
 
-// Check site status
-if(is_multisite()){
-	if(true !== ($file = ms_site_check())){
-		require($file);
-		die();
-	}
-	unset($file);
-}
+
 
 /**
  * This hook is fired once WP, all plugins, and the theme are fully loaded and instantiated.
  *
- * Ajax requests should use wp-admin/admin-ajax.php. admin-ajax.php can handle requests for
- * users not logged in.
- *
- * @link https://codex.wordpress.org/AJAX_in_Plugins
- *
- * @since 3.0.0
  */
 do_action('wp_loaded');

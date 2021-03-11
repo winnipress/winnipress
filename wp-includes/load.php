@@ -160,19 +160,6 @@ function wp_check_php_mysql_versions(){ yeah(__METHOD__);
 	}
 }
 
-/**
- * Don't load all of WordPress when handling a favicon.ico request.
- *
- * Instead, send the headers for a zero-length favicon and bail.
- *
- * @since 3.0.0
- */
-function wp_favicon_request(){ yeah(__METHOD__);
-	if('/favicon.ico' == $_SERVER['REQUEST_URI'] ){
-		header('Content-Type: image/vnd.microsoft.icon');
-		exit;
-	}
-}
 
 /**
  * Die with a maintenance message when conditions are met.
@@ -812,8 +799,7 @@ function is_user_admin(){ yeah(__METHOD__);
  * @return bool True if Multisite is enabled, false otherwise.
  */
 function is_multisite(){ yeah(__METHOD__);
-	if(defined('MULTISITE' ) )
-		return MULTISITE;
+	
 
 	if(defined('SUBDOMAIN_INSTALL' ) || defined('VHOST' ) || defined('SUNRISE' ) )
 		return true;

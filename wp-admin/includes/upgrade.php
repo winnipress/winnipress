@@ -1344,8 +1344,7 @@ function upgrade_300(){ yeah(__METHOD__);
 	if($wp_current_db_version < 15093)
 		populate_roles_300();
 
-	if($wp_current_db_version < 14139 && is_multisite() && is_main_site() && !defined('MULTISITE') && get_site_option('siteurl') === false)
-		add_site_option('siteurl', '');
+
 
 	// 3.0 screen options key name changes.
 	if(wp_should_upgrade_global_tables()){
