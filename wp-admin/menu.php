@@ -24,13 +24,6 @@ $menu[2] = array(__('Dashboard'), 'read', 'index.php', '', 'menu-top menu-top-fi
 
 $submenu[ 'index.php' ][0] = array(__('Home'), 'read', 'index.php');
 
-if (is_multisite()) {
-	$submenu[ 'index.php' ][5] = array(__('My Sites'), 'read', 'my-sites.php');
-}
-
-
-
-
 
 $menu[4] = array('', 'read', 'separator1', '', 'wp-menu-separator');
 
@@ -49,31 +42,11 @@ $menu[10] = array(__('Media'), 'upload_files', 'upload.php', '', 'menu-top menu-
 	}
 	unset($tax, $i);
 
-$menu[15] = array(__('Links'), 'manage_links', 'link-manager.php', '', 'menu-top menu-icon-links', 'menu-links', 'dashicons-admin-links');
-	$submenu['link-manager.php'][5] = array(_x('All Links', 'admin menu'), 'manage_links', 'link-manager.php');
-	/* translators: add new links */
-	$submenu['link-manager.php'][10] = array(_x('Add New', 'link'), 'manage_links', 'link-add.php');
-	$submenu['link-manager.php'][15] = array(__('Link Categories'), 'manage_categories', 'edit-tags.php?taxonomy=link_category');
+
 
 // $menu[20] = Pages
 
-// Avoid the comment count query for users who cannot edit_posts.
-if (current_user_can('edit_posts')) {
-	$awaiting_mod = wp_count_comments();
-	$awaiting_mod = $awaiting_mod->moderated;
-	$menu[25] = array(
-		sprintf(__('Comments %s'), '<span class="awaiting-mod count-' . absint($awaiting_mod) . '"><span class="pending-count">' . number_format_i18n($awaiting_mod) . '</span></span>'),
-		'edit_posts',
-		'edit-comments.php',
-		'',
-		'menu-top menu-icon-comments',
-		'menu-comments',
-		'dashicons-admin-comments',
-	);
-	unset($awaiting_mod);
-}
 
-$submenu[ 'edit-comments.php' ][0] = array(__('All Comments'), 'edit_posts', 'edit-comments.php');
 
 $_wp_last_object_menu = 25; // The index of the last top-level menu in the object menu group
 
@@ -196,7 +169,6 @@ $menu[80]                               = array(sprintf(__('Settings %s'), $chan
 	$submenu['options-general.php'][10] = array(_x('General', 'settings screen'), 'manage_options', 'options-general.php');
 	$submenu['options-general.php'][15] = array(__('Writing'), 'manage_options', 'options-writing.php');
 	$submenu['options-general.php'][20] = array(__('Reading'), 'manage_options', 'options-reading.php');
-	$submenu['options-general.php'][25] = array(__('Discussion'), 'manage_options', 'options-discussion.php');
 	$submenu['options-general.php'][30] = array(__('Media'), 'manage_options', 'options-media.php');
 	$submenu['options-general.php'][40] = array(__('Permalinks'), 'manage_options', 'options-permalink.php');
 	// translators: %s is the update notification bubble, if updates are available.
