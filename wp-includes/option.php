@@ -186,11 +186,9 @@ function form_option($option ){ yeah(__METHOD__);
 function wp_load_alloptions(){ yeah(__METHOD__);
 	global $wpdb;
 
-	if (!wp_installing() || !is_multisite() ){
+
 		$alloptions = wp_cache_get('alloptions', 'options' );
-	} else {
-		$alloptions = false;
-	}
+	
 
 	if (!$alloptions ){
 		$suppress = $wpdb->suppress_errors();
@@ -204,17 +202,9 @@ function wp_load_alloptions(){ yeah(__METHOD__);
 			$alloptions[$o->option_name] = $o->option_value;
 		}
 
-		if (!wp_installing() || !is_multisite() ){
-			/**
-			 * Filters all options before caching them.
-			 *
-			 * @since 4.9.0
-			 *
-			 * @param array $alloptions Array with all options.
-			 */
 			$alloptions = apply_filters('pre_cache_alloptions', $alloptions );
 			wp_cache_add('alloptions', $alloptions, 'options' );
-		}
+		
 	}
 
 	/**
@@ -239,24 +229,10 @@ function wp_load_alloptions(){ yeah(__METHOD__);
 function wp_load_core_site_options($network_id = null ){ yeah(__METHOD__);
 	global $wpdb;
 
-	if (!is_multisite() || wp_using_ext_object_cache() || wp_installing() )
+	
 		return;
 
-	if (empty($network_id) )
-		$network_id = get_current_network_id();
-
-	$core_options = array('site_name', 'siteurl', 'active_sitewide_plugins', '_site_transient_timeout_theme_roots', '_site_transient_theme_roots', 'site_admins', 'can_compress_scripts', 'global_terms_enabled', 'ms_files_rewriting' );
-
-	$core_options_in = "'" . implode("', '", $core_options) . "'";
-	$options = $wpdb->get_results($wpdb->prepare("SELECT meta_key, meta_value FROM $wpdb->sitemeta WHERE meta_key IN ($core_options_in) AND site_id = %d", $network_id ) );
-
-	foreach ($options as $option ){
-		$key = $option->meta_key;
-		$cache_key = "{$network_id}:$key";
-		$option->meta_value = maybe_unserialize($option->meta_value );
-
-		wp_cache_set($cache_key, $option->meta_value, 'site-options' );
-	}
+	
 }
 
 /**
@@ -844,7 +820,7 @@ function delete_expired_transients($force_db = false ){ yeah(__METHOD__);
 		time()
 	) );
 
-	if (!is_multisite() ){
+	
 		// non-Multisite stores site transients in the options table.
 		$wpdb->query($wpdb->prepare(
 			"DELETE a, b FROM {$wpdb->options} a, {$wpdb->options} b
@@ -856,19 +832,7 @@ function delete_expired_transients($force_db = false ){ yeah(__METHOD__);
 			$wpdb->esc_like('_site_transient_timeout_' ) . '%',
 			time()
 		) );
-	} elseif (is_multisite() && is_main_site() && is_main_network() ){
-		// Multisite stores site transients in the sitemeta table.
-		$wpdb->query($wpdb->prepare(
-			"DELETE a, b FROM {$wpdb->sitemeta} a, {$wpdb->sitemeta} b
-				WHERE a.meta_key LIKE %s
-				AND a.meta_key NOT LIKE %s
-				AND b.meta_key = CONCAT('_site_transient_timeout_', SUBSTRING(a.meta_key, 17 ) )
-				AND b.meta_value < %d",
-			$wpdb->esc_like('_site_transient_' ) . '%',
-			$wpdb->esc_like('_site_transient_timeout_' ) . '%',
-			time()
-		) );
-	}
+	
 }
 
 /**
@@ -1238,34 +1202,11 @@ function get_network_option($network_id, $option, $default = false ){ yeah(__MET
 		return apply_filters("default_site_option_{$option}", $default, $option, $network_id );
 	}
 
-	if (!is_multisite() ){
+
 		/** This filter is documented in wp-includes/option.php */
 		$default = apply_filters('default_site_option_' . $option, $default, $option, $network_id );
 		$value = get_option($option, $default );
-	} else {
-		$cache_key = "$network_id:$option";
-		$value = wp_cache_get($cache_key, 'site-options' );
-
-		if (!isset($value ) || false === $value ){
-			$row = $wpdb->get_row($wpdb->prepare("SELECT meta_value FROM $wpdb->sitemeta WHERE meta_key = %s AND site_id = %d", $option, $network_id ) );
-
-			// Has to be get_row instead of get_var because of funkiness with 0, false, null values
-			if (is_object($row ) ){
-				$value = $row->meta_value;
-				$value = maybe_unserialize($value );
-				wp_cache_set($cache_key, $value, 'site-options' );
-			} else {
-				if (!is_array($notoptions ) ){
-					$notoptions = array();
-				}
-				$notoptions[ $option ] = true;
-				wp_cache_set($notoptions_key, $notoptions, 'site-options' );
-
-				/** This filter is documented in wp-includes/option.php */
-				$value = apply_filters('default_site_option_' . $option, $default, $option, $network_id );
-			}
-		}
-	}
+	
 
 	/**
 	 * Filters the value of an existing network option.
@@ -1334,37 +1275,9 @@ function add_network_option($network_id, $option, $value ){ yeah(__METHOD__);
 
 	$notoptions_key = "$network_id:notoptions";
 
-	if (!is_multisite() ){
+	
 		$result = add_option($option, $value, '', 'no' );
-	} else {
-		$cache_key = "$network_id:$option";
-
-		// Make sure the option doesn't already exist. We can check the 'notoptions' cache before we ask for a db query
-		$notoptions = wp_cache_get($notoptions_key, 'site-options' );
-		if (!is_array($notoptions ) || !isset($notoptions[ $option ] ) ){
-			if (false !== get_network_option($network_id, $option, false ) ){
-				return false;
-			}
-		}
-
-		$value = sanitize_option($option, $value );
-
-		$serialized_value = maybe_serialize($value );
-		$result = $wpdb->insert($wpdb->sitemeta, array('site_id'    => $network_id, 'meta_key'   => $option, 'meta_value' => $serialized_value ) );
-
-		if (!$result ){
-			return false;
-		}
-
-		wp_cache_set($cache_key, $value, 'site-options' );
-
-		// This option exists now
-		$notoptions = wp_cache_get($notoptions_key, 'site-options' ); // yes, again... we need it to be fresh
-		if (is_array($notoptions ) && isset($notoptions[ $option ] ) ){
-			unset($notoptions[ $option ] );
-			wp_cache_set($notoptions_key, $notoptions, 'site-options' );
-		}
-	}
+	
 
 	if ($result ){
 
@@ -1442,18 +1355,9 @@ function delete_network_option($network_id, $option ){ yeah(__METHOD__);
 	 */
 	do_action("pre_delete_site_option_{$option}", $option, $network_id );
 
-	if (!is_multisite() ){
+	
 		$result = delete_option($option );
-	} else {
-		$row = $wpdb->get_row($wpdb->prepare("SELECT meta_id FROM {$wpdb->sitemeta} WHERE meta_key = %s AND site_id = %d", $option, $network_id ) );
-		if (is_null($row ) || !$row->meta_id ){
-			return false;
-		}
-		$cache_key = "$network_id:$option";
-		wp_cache_delete($cache_key, 'site-options' );
-
-		$result = $wpdb->delete($wpdb->sitemeta, array('meta_key' => $option, 'site_id' => $network_id ) );
-	}
+	
 
 	if ($result ){
 
@@ -1552,19 +1456,9 @@ function update_network_option($network_id, $option, $value ){ yeah(__METHOD__);
 		wp_cache_set($notoptions_key, $notoptions, 'site-options' );
 	}
 
-	if (!is_multisite() ){
+
 		$result = update_option($option, $value, 'no' );
-	} else {
-		$value = sanitize_option($option, $value );
-
-		$serialized_value = maybe_serialize($value );
-		$result = $wpdb->update($wpdb->sitemeta, array('meta_value' => $serialized_value ), array('site_id' => $network_id, 'meta_key' => $option ) );
-
-		if ($result ){
-			$cache_key = "$network_id:$option";
-			wp_cache_set($cache_key, $value, 'site-options' );
-		}
-	}
+	
 
 	if ($result ){
 
@@ -1834,7 +1728,7 @@ function register_initial_settings(){ yeah(__METHOD__);
 		'description'  => __('Site tagline.' ),
 	) );
 
-	if (!is_multisite() ){
+	
 		register_setting('general', 'siteurl', array(
 			'show_in_rest' => array(
 				'name'    => 'url',
@@ -1845,9 +1739,9 @@ function register_initial_settings(){ yeah(__METHOD__);
 			'type'         => 'string',
 			'description'  => __('Site URL.' ),
 		) );
-	}
+	
 
-	if (!is_multisite() ){
+	
 		register_setting('general', 'admin_email', array(
 			'show_in_rest' => array(
 				'name'    => 'email',
@@ -1858,7 +1752,7 @@ function register_initial_settings(){ yeah(__METHOD__);
 			'type'         => 'string',
 			'description'  => __('This address is used for admin purposes, like new user notification.' ),
 		) );
-	}
+	
 
 	register_setting('general', 'timezone_string', array(
 		'show_in_rest' => array(

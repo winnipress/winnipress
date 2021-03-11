@@ -744,10 +744,7 @@ do_action( 'dbx_post_sidebar', $post );
 </form>
 </div>
 
-<?php
-if ( post_type_supports( $post_type, 'comments' ) )
-	wp_comment_reply();
-?>
+
 
 <?php if ( !wp_is_mobile() && post_type_supports( $post_type, 'title' ) && '' === $post->post_title ) : ?>
 <script type="text/javascript">

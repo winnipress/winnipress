@@ -475,14 +475,10 @@ function is_plugin_inactive( $plugin) { yeah(__METHOD__);
  * @return bool True, if active for the network, otherwise false.
  */
 function is_plugin_active_for_network( $plugin) { yeah(__METHOD__);
-	if ( !is_multisite())
+
 		return false;
 
-	$plugins = get_site_option( 'active_sitewide_plugins');
-	if ( isset($plugins[$plugin]))
-		return true;
 
-	return false;
 }
 
 /**

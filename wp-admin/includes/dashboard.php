@@ -808,63 +808,7 @@ function wp_dashboard_recent_posts( $args) { yeah(__METHOD__);
 	return true;
 }
 
-/**
- * Show Comments section.
- *
- * @since 3.8.0
- *
- * @param int $total_items Optional. Number of comments to query. Default 5.
- * @return bool False if no comments were found. True otherwise.
- */
-function wp_dashboard_recent_comments( $total_items = 5) { yeah(__METHOD__);
-	// Select all comment types and filter out spam later for better query performance.
-	$comments = array();
 
-	$comments_query = array(
-		'number' => $total_items * 5,
-		'offset' => 0
-	);
-	if ( !current_user_can( 'edit_posts'))
-		$comments_query['status'] = 'approve';
-
-	while ( count( $comments) < $total_items && $possible = get_comments( $comments_query)) {
-		if ( !is_array( $possible)) {
-			break;
-		}
-		foreach ( $possible as $comment) {
-			if ( !current_user_can( 'read_post', $comment->comment_post_ID))
-				continue;
-			$comments[] = $comment;
-			if ( count( $comments) == $total_items)
-				break 2;
-		}
-		$comments_query['offset'] += $comments_query['number'];
-		$comments_query['number'] = $total_items * 10;
-	}
-
-	if ( $comments) {
-		echo '<div id="latest-comments" class="activity-block">';
-		echo '<h3>' . __( 'Recent Comments') . '</h3>';
-
-		echo '<ul id="the-comment-list" data-wp-lists="list:comment">';
-		foreach ( $comments as $comment)
-			_wp_dashboard_recent_comments_row( $comment);
-		echo '</ul>';
-
-		if ( current_user_can( 'edit_posts')) {
-			echo '<h3 class="screen-reader-text">' . __( 'View more comments') . '</h3>';
-			_get_list_table( 'WP_Comments_List_Table')->views();
-		}
-
-		wp_comment_reply( -1, false, 'dashboard', false);
-		wp_comment_trashnotice();
-
-		echo '</div>';
-	} else {
-		return false;
-	}
-	return true;
-}
 
 /**
  * Display generic dashboard RSS widget feed.
@@ -1259,53 +1203,9 @@ function wp_dashboard_primary_output( $widget_id, $feeds) { yeah(__METHOD__);
  * @return bool|null True if not multisite, user can't upload files, or the space check option is disabled.
  */
 function wp_dashboard_quota() { yeah(__METHOD__);
-	if ( !is_multisite() || !current_user_can( 'upload_files') || get_site_option( 'upload_space_check_disabled'))
 		return true;
 
-	$quota = get_space_allowed();
-	$used = get_space_used();
-
-	if ( $used > $quota)
-		$percentused = '100';
-	else
-		$percentused = ( $used / $quota) * 100;
-	$used_class = ( $percentused >= 70) ? ' warning' : '';
-	$used = round( $used, 2);
-	$percentused = number_format( $percentused);
-
-	?>
-	<h3 class="mu-storage"><?php _e( 'Storage Space'); ?></h3>
-	<div class="mu-storage">
-	<ul>
-		<li class="storage-count">
-			<?php $text = sprintf(
-				/* translators: %s: number of megabytes */
-				__( '%s MB Space Allowed'),
-				number_format_i18n( $quota)
-			);
-			printf(
-				'<a href="%1$s">%2$s <span class="screen-reader-text">(%3$s)</span></a>',
-				esc_url( admin_url( 'upload.php')),
-				$text,
-				__( 'Manage Uploads')
-			); ?>
-		</li><li class="storage-count <?php echo $used_class; ?>">
-			<?php $text = sprintf(
-				/* translators: 1: number of megabytes, 2: percentage */
-				__( '%1$s MB (%2$s%%) Space Used'),
-				number_format_i18n( $used, 2),
-				$percentused
-			);
-			printf(
-				'<a href="%1$s" class="musublink">%2$s <span class="screen-reader-text">(%3$s)</span></a>',
-				esc_url( admin_url( 'upload.php')),
-				$text,
-				__( 'Manage Uploads')
-			); ?>
-		</li>
-	</ul>
-	</div>
-	<?php
+	
 }
 
 

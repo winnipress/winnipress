@@ -219,14 +219,6 @@ foreach (wp_get_mu_plugins() as $mu_plugin){
 }
 unset($mu_plugin);
 
-// Load network activated plugins.
-if(is_multisite()){
-	foreach (wp_get_active_network_plugins() as $network_plugin){
-		wp_register_plugin_realpath($network_plugin);
-		include_once($network_plugin);
-	}
-	unset($network_plugin);
-}
 
 /**
  * Fires once all must-use and network-activated plugins have loaded.
@@ -235,8 +227,6 @@ if(is_multisite()){
  */
 do_action('muplugins_loaded');
 
-if(is_multisite())
-	ms_cookie_constants();
 
 // Define constants after multisite is loaded.
 wp_cookie_constants();
@@ -266,7 +256,6 @@ unset($plugin);
 
 // Load pluggable functions.
 require(ABSPATH . WPINC . '/pluggable.php');
-require(ABSPATH . WPINC . '/pluggable-deprecated.php');
 
 // Set internal encoding.
 wp_set_internal_encoding();

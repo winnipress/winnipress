@@ -22,29 +22,6 @@ $timezone_format = _x('Y-m-d H:i:s', 'timezone date format');
 
 add_action('admin_head', 'options_general_add_js');
 
-$options_help = '<p>' . __('The fields on this screen determine some of the basics of your site setup.') . '</p>' .
-	'<p>' . __('Most themes display the site title at the top of every page, in the title bar of the browser, and as the identifying name for syndicated feeds. The tagline is also displayed by many themes.') . '</p>';
-
-if (!is_multisite() ) {
-	$options_help .= '<p>' . __('The WordPress URL and the Site URL can be the same (example.com) or different; for example, having the WordPress core files (example.com/wordpress) in a subdirectory instead of the root directory.') . '</p>' .
-		'<p>' . __('If you want site visitors to be able to register themselves, as opposed to by the site administrator, check the membership box. A default user role can be set for all new users, whether self-registered or registered by the site admin.') . '</p>';
-}
-
-$options_help .= '<p>' . __('You can set the language, and the translation files will be automatically downloaded and installed (available if your filesystem is writable).' ) . '</p>' .
-	'<p>' . __('UTC means Coordinated Universal Time.' ) . '</p>' .
-	'<p>' . __('You must click the Save Changes button at the bottom of the screen for new settings to take effect.' ) . '</p>';
-
-get_current_screen()->add_help_tab(array(
-	'id'      => 'overview',
-	'title'   => __('Overview'),
-	'content' => $options_help,
-) );
-
-get_current_screen()->set_help_sidebar(
-	'<p><strong>' . __('For more information:') . '</strong></p>' .
-	'<p>' . __('<a href="https://codex.wordpress.org/Settings_General_Screen">Documentation on General Settings</a>') . '</p>' .
-	'<p>' . __('<a href="https://wordpress.org/support/">Support Forums</a>') . '</p>'
-);
 
 include(ABSPATH . 'wp-admin/admin-header.php' );
 ?>
@@ -68,7 +45,6 @@ include(ABSPATH . 'wp-admin/admin-header.php' );
 <p class="description" id="tagline-description"><?php _e('In a few words, explain what this site is about.' ) ?></p></td>
 </tr>
 
-<?php if (!is_multisite() ) { ?>
 
 <tr>
 <th scope="row"><label for="siteurl"><?php _e('WordPress Address (URL)') ?></label></th>
@@ -90,7 +66,6 @@ include(ABSPATH . 'wp-admin/admin-header.php' );
 </td>
 </tr>
 
-<?php } ?>
 
 <tr>
 <th scope="row"><label for="new_admin_email"><?php _e('Email Address' ); ?></label></th>
@@ -117,7 +92,7 @@ if ($new_admin_email && $new_admin_email != get_option('admin_email' ) ) : ?>
 </td>
 </tr>
 
-<?php if (!is_multisite() ) { ?>
+
 
 <tr>
 <th scope="row"><?php _e('Membership') ?></th>
@@ -134,11 +109,11 @@ if ($new_admin_email && $new_admin_email != get_option('admin_email' ) ) : ?>
 </td>
 </tr>
 
-<?php }
+<?php 
 
 $languages = get_available_languages();
 $translations = wp_get_available_translations();
-if (!is_multisite() && defined('WPLANG' ) && '' !== WPLANG && 'en_US' !== WPLANG && !in_array(WPLANG, $languages ) ) {
+if (defined('WPLANG' ) && '' !== WPLANG && 'en_US' !== WPLANG && !in_array(WPLANG, $languages ) ) {
 	$languages[] = WPLANG;
 }
 if (!empty($languages ) || !empty($translations ) ) {
@@ -163,8 +138,7 @@ if (!empty($languages ) || !empty($translations ) ) {
 
 			// Add note about deprecated WPLANG constant.
 			if (defined('WPLANG' ) && ('' !== WPLANG ) && $locale !== WPLANG ) {
-				if (is_multisite() && current_user_can('manage_network_options' )
-					|| !is_multisite() && current_user_can('manage_options' ) ) {
+				if (current_user_can('manage_options' ) ) {
 					?>
 					<p class="description">
 						<strong><?php _e('Note:' ); ?></strong> <?php printf(__('The %s constant in your %s file is no longer needed.' ), '<code>WPLANG</code>', '<code>wp-config.php</code>' ); ?>

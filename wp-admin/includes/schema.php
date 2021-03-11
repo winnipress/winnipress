@@ -525,10 +525,9 @@ function populate_options() { yeah(__METHOD__);
 	);
 
 	// 3.3
-	if ( !is_multisite()) {
 		$options['initial_db_version'] = !empty( $wp_current_db_version) && $wp_current_db_version < $wp_db_version
 			? $wp_current_db_version : $wp_db_version;
-	}
+	
 
 	// 3.0 multisite
 	if ( is_multisite()) {
@@ -944,7 +943,7 @@ function populate_network( $network_id = 1, $domain = '', $email = '', $site_nam
 
 	wp_cache_delete( 'networks_have_paths', 'site-options');
 
-	if ( !is_multisite()) {
+	
 		$site_admins = array( $site_user->user_login);
 		$users = get_users( array(
 			'fields' => array( 'user_login'),
@@ -957,9 +956,7 @@ function populate_network( $network_id = 1, $domain = '', $email = '', $site_nam
 
 			$site_admins = array_unique( $site_admins);
 		}
-	} else {
-		$site_admins = get_site_option( 'site_admins');
-	}
+
 
 	/* translators: Do not translate USERNAME, SITE_NAME, BLOG_URL, PASSWORD: those are placeholders. */
 	$welcome_email = __( 'Howdy USERNAME,
@@ -1047,7 +1044,7 @@ We hope you enjoy your new site. Thanks!
 	 * these steps since the main site of the new network has not yet been
 	 * created.
 	 */
-	if ( !is_multisite()) {
+	
 		$current_site = new stdClass;
 		$current_site->domain = $domain;
 		$current_site->path = $path;
@@ -1100,7 +1097,7 @@ We hope you enjoy your new site. Thanks!
 
 			return new WP_Error( 'no_wildcard_dns', $msg);
 		}
-	}
+	
 
 	return true;
 }

@@ -158,7 +158,7 @@ if ( get_site_option( 'initial_db_version' ) < 32453 ) {
 	$whitelist_options['writing'][] = 'use_balanceTags';
 }
 
-if ( !is_multisite() ) {
+
 	if ( !defined( 'WP_SITEURL' ) )
 		$whitelist_options['general'][] = 'siteurl';
 	if ( !defined( 'WP_HOME' ) )
@@ -177,17 +177,7 @@ if ( !is_multisite() ) {
 		$whitelist_options['media'][] = 'upload_path';
 		$whitelist_options['media'][] = 'upload_url_path';
 	}
-} else {
-	/**
-	 * Filters whether the post-by-email functionality is enabled.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param bool $enabled Whether post-by-email configuration is enabled. Default true.
-	 */
-	if ( apply_filters( 'enable_post_by_email_configuration', true ) )
-		$whitelist_options['writing'] = array_merge($whitelist_options['writing'], $mail_options);
-}
+
 
 /**
  * Filters the options white list.

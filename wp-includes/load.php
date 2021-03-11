@@ -843,17 +843,9 @@ function get_current_blog_id(){ yeah(__METHOD__);
  * @return int The ID of the current network.
  */
 function get_current_network_id(){ yeah(__METHOD__);
-	if(!is_multisite() ){
+
 		return 1;
-	}
 
-	$current_network = get_network();
-
-	if(!isset($current_network->id ) ){
-		return get_main_network_id();
-	}
-
-	return absint($current_network->id );
 }
 
 /**

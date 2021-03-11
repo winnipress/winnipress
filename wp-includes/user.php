@@ -609,7 +609,7 @@ function get_blogs_of_user($user_id, $all = false ) { yeah(__METHOD__);
 	if (empty($keys ) )
 		return array();
 
-	if (!is_multisite() ) {
+	
 		$site_id = get_current_blog_id();
 		$sites = array($site_id => new stdClass );
 		$sites[ $site_id ]->userblog_id = $site_id;
@@ -622,7 +622,7 @@ function get_blogs_of_user($user_id, $all = false ) { yeah(__METHOD__);
 		$sites[ $site_id ]->spam = 0;
 		$sites[ $site_id ]->deleted = 0;
 		return $sites;
-	}
+	
 
 	$site_ids = array();
 
@@ -721,38 +721,12 @@ function is_user_member_of_blog($user_id = 0, $blog_id = 0 ) { yeah(__METHOD__);
 		}
 	}
 
-	if (!is_multisite() ) {
+
 		return true;
-	}
+	
 
-	if (empty($blog_id ) ) {
-		$blog_id = get_current_blog_id();
-	}
+	
 
-	$blog = get_site($blog_id );
-
-	if (!$blog || !isset($blog->domain ) || $blog->archived || $blog->spam || $blog->deleted ) {
-		return false;
-	}
-
-	$keys = get_user_meta($user_id );
-	if (empty($keys ) ) {
-		return false;
-	}
-
-	// no underscore before capabilities in $base_capabilities_key
-	$base_capabilities_key = $wpdb->base_prefix . 'capabilities';
-	$site_capabilities_key = $wpdb->base_prefix . $blog_id . '_capabilities';
-
-	if (isset($keys[ $base_capabilities_key ] ) && $blog_id == 1 ) {
-		return true;
-	}
-
-	if (isset($keys[ $site_capabilities_key ] ) ) {
-		return true;
-	}
-
-	return false;
 }
 
 /**

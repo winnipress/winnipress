@@ -4872,7 +4872,7 @@ final class WP_Customize_Manager {
 			'priority'    => 0,
 		) ) );
 
-		if (!is_multisite() ) {
+	
 			$this->add_section(new WP_Customize_Themes_Section($this, 'wporg_themes', array(
 				'title'       => __('WordPress.org themes' ),
 				'action'      => 'wporg',
@@ -4881,7 +4881,7 @@ final class WP_Customize_Manager {
 				'panel'       => 'themes',
 				'priority'    => 5,
 			) ) );
-		}
+		
 
 		// Themes Setting (unused - the theme is considerably more fundamental to the Customizer experience).
 		$this->add_setting(new WP_Customize_Filter_Setting($this, 'active_theme', array(

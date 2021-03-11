@@ -412,10 +412,9 @@ class WP_Users_List_Table extends WP_List_Table {
 				$edit = "<strong>{$user_object->user_login}{$super_admin}</strong><br />";
 			}
 
-			if ( !is_multisite() && get_current_user_id() != $user_object->ID && current_user_can( 'delete_user', $user_object->ID))
+			if (  get_current_user_id() != $user_object->ID && current_user_can( 'delete_user', $user_object->ID))
 				$actions['delete'] = "<a class='submitdelete' href='" . wp_nonce_url( "users.php?action=delete&amp;user=$user_object->ID", 'bulk-users') . "'>" . __( 'Delete') . "</a>";
-			if ( is_multisite() && get_current_user_id() != $user_object->ID && current_user_can( 'remove_user', $user_object->ID))
-				$actions['remove'] = "<a class='submitdelete' href='" . wp_nonce_url( $url."action=remove&amp;user=$user_object->ID", 'bulk-users') . "'>" . __( 'Remove') . "</a>";
+			
 
 			// Add a link to the user's author archive, if not empty.
 			$author_posts_url = get_author_posts_url( $user_object->ID);

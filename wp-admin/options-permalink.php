@@ -298,7 +298,6 @@ printf(__('If you like, you may enter custom structures for your category and ta
 
 <?php submit_button(); ?>
   </form>
-<?php if (!is_multisite() ) { ?>
 <?php if ($iis7_permalinks ) :
 	if (isset($_POST['submit']) && $permalink_structure && !$using_index_permalinks && !$writable ) :
 		if (file_exists($home_path . 'web.config') ) : ?>
@@ -365,7 +364,6 @@ printf(__('If you like, you may enter custom structures for your category and ta
 </form>
 	<?php endif; ?>
 <?php endif; ?>
-<?php } // multisite ?>
 
 </div>
 

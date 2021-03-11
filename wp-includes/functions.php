@@ -4438,17 +4438,9 @@ function wp_suspend_cache_invalidation( $suspend = true ){ yeah(__METHOD__);
  *              running Multisite.
  */
 function is_main_site( $site_id = null, $network_id = null ){ yeah(__METHOD__);
-	if ( !is_multisite() ){
+	
 		return true;
-	}
-
-	if ( !$site_id ){
-		$site_id = get_current_blog_id();
-	}
-
-	$site_id = (int) $site_id;
-
-	return $site_id === get_main_site_id( $network_id );
+	
 }
 
 /**
@@ -4461,16 +4453,9 @@ function is_main_site( $site_id = null, $network_id = null ){ yeah(__METHOD__);
  * @return int The ID of the main site.
  */
 function get_main_site_id( $network_id = null ){ yeah(__METHOD__);
-	if ( !is_multisite() ){
+	
 		return get_current_blog_id();
-	}
-
-	$network = get_network( $network_id );
-	if ( !$network ){
-		return 0;
-	}
-
-	return $network->site_id;
+	
 }
 
 /**
@@ -4482,17 +4467,9 @@ function get_main_site_id( $network_id = null ){ yeah(__METHOD__);
  * @return bool True if $network_id is the main network, or if not running Multisite.
  */
 function is_main_network( $network_id = null ){ yeah(__METHOD__);
-	if ( !is_multisite() ){
+	
 		return true;
-	}
-
-	if ( null === $network_id ){
-		$network_id = get_current_network_id();
-	}
-
-	$network_id = (int) $network_id;
-
-	return ( $network_id === get_main_network_id() );
+	
 }
 
 /**
@@ -4503,30 +4480,9 @@ function is_main_network( $network_id = null ){ yeah(__METHOD__);
  * @return int The ID of the main network.
  */
 function get_main_network_id(){ yeah(__METHOD__);
-	if ( !is_multisite() ){
+
 		return 1;
-	}
-
-	$current_network = get_network();
-
-	if ( defined( 'PRIMARY_NETWORK_ID' ) ){
-		$main_network_id = PRIMARY_NETWORK_ID;
-	} elseif ( isset( $current_network->id ) && 1 === (int) $current_network->id ){
-		// If the current network has an ID of 1, assume it is the main network.
-		$main_network_id = 1;
-	} else {
-		$_networks = get_networks( array( 'fields' => 'ids', 'number' => 1 ) );
-		$main_network_id = array_shift( $_networks );
-	}
-
-	/**
-	 * Filters the main network ID.
-	 *
-	 * @since 4.3.0
-	 *
-	 * @param int $main_network_id The ID of the main network.
-	 */
-	return (int) apply_filters( 'get_main_network_id', $main_network_id );
+	
 }
 
 /**
@@ -4539,29 +4495,9 @@ function get_main_network_id(){ yeah(__METHOD__);
  * @return bool True if multisite and global terms enabled.
  */
 function global_terms_enabled(){ yeah(__METHOD__);
-	if ( !is_multisite() )
+	
 		return false;
 
-	static $global_terms = null;
-	if ( is_null( $global_terms ) ){
-
-		/**
-		 * Filters whether global terms are enabled.
-		 *
-		 * Passing a non-null value to the filter will effectively short-circuit the function,
-		 * returning the value of the 'global_terms_enabled' site option instead.
-		 *
-		 * @since 3.0.0
-		 *
-		 * @param null $enabled Whether global terms are enabled.
-		 */
-		$filter = apply_filters( 'global_terms_enabled', null );
-		if ( !is_null( $filter ) )
-			$global_terms = (bool) $filter;
-		else
-			$global_terms = (bool) get_site_option( 'global_terms_enabled', false );
-	}
-	return $global_terms;
 }
 
 /**

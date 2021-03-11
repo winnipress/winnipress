@@ -651,10 +651,7 @@ class WP {
 					$p = clone $wp_query->post;
 				}
 
-				// Only set X-Pingback for single posts that allow pings.
-				if ( $p && pings_open( $p ) ) {
-					@header( 'X-Pingback: ' . get_bloginfo( 'pingback_url', 'display' ) );
-				}
+				
 
 				// check for paged content that exceeds the max number of pages
 				$next = '<!--nextpage-->';

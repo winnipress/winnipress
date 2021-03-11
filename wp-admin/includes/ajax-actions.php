@@ -236,65 +236,7 @@ function wp_ajax_oembed_cache() { yeah(__METHOD__);
 	wp_die( 0 );
 }
 
-/**
- * Ajax handler for user autocomplete.
- *
- * @since 3.4.0
- */
-function wp_ajax_autocomplete_user() { yeah(__METHOD__);
-	if ( !is_multisite() || !current_user_can( 'promote_users' ) || wp_is_large_network( 'users' ) )
-		wp_die( -1 );
 
-	/** This filter is documented in wp-admin/user-new.php */
-	if ( !current_user_can( 'manage_network_users' ) && !apply_filters( 'autocomplete_users_for_site_admins', false ) )
-		wp_die( -1 );
-
-	$return = array();
-
-	// Check the type of request
-	// Current allowed values are `add` and `search`
-	if ( isset( $_REQUEST['autocomplete_type'] ) && 'search' === $_REQUEST['autocomplete_type'] ) {
-		$type = $_REQUEST['autocomplete_type'];
-	} else {
-		$type = 'add';
-	}
-
-	// Check the desired field for value
-	// Current allowed values are `user_email` and `user_login`
-	if ( isset( $_REQUEST['autocomplete_field'] ) && 'user_email' === $_REQUEST['autocomplete_field'] ) {
-		$field = $_REQUEST['autocomplete_field'];
-	} else {
-		$field = 'user_login';
-	}
-
-	// Exclude current users of this blog
-	if ( isset( $_REQUEST['site_id'] ) ) {
-		$id = absint( $_REQUEST['site_id'] );
-	} else {
-		$id = get_current_blog_id();
-	}
-
-	$include_blog_users = ( $type == 'search' ? get_users( array( 'blog_id' => $id, 'fields' => 'ID' ) ) : array() );
-	$exclude_blog_users = ( $type == 'add' ? get_users( array( 'blog_id' => $id, 'fields' => 'ID' ) ) : array() );
-
-	$users = get_users( array(
-		'blog_id' => false,
-		'search'  => '*' . $_REQUEST['term'] . '*',
-		'include' => $include_blog_users,
-		'exclude' => $exclude_blog_users,
-		'search_columns' => array( 'user_login', 'user_nicename', 'user_email' ),
-	) );
-
-	foreach ( $users as $user ) {
-		$return[] = array(
-			/* translators: 1: user_login, 2: user_email */
-			'label' => sprintf( _x( '%1$s (%2$s)', 'user autocomplete result' ), $user->user_login, $user->user_email ),
-			'value' => $user->$field,
-		);
-	}
-
-	wp_die( wp_json_encode( $return ) );
-}
 
 /**
  * Handles AJAX requests for community events
@@ -2973,11 +2915,7 @@ function wp_ajax_query_themes() { yeah(__METHOD__);
 			}
 		}
 
-		if ( !is_multisite() && current_user_can( 'edit_theme_options' ) && current_user_can( 'customize' ) ) {
-			$theme->customize_url = add_query_arg( array(
-				'return' => urlencode( network_admin_url( 'theme-install.php', 'relative' ) ),
-			), wp_customize_url( $theme->slug ) );
-		}
+		
 
 		$theme->name        = wp_kses( $theme->name, $themes_allowedtags );
 		$theme->author      = wp_kses( $theme->author, $themes_allowedtags );
@@ -3460,11 +3398,6 @@ function wp_ajax_install_theme() { yeah(__METHOD__);
 		}
 	}
 
-	if ( !is_multisite() && current_user_can( 'edit_theme_options' ) && current_user_can( 'customize' ) ) {
-		$status['customizeUrl'] = add_query_arg( array(
-			'return' => urlencode( network_admin_url( 'theme-install.php', 'relative' ) ),
-		), wp_customize_url( $slug ) );
-	}
 
 	/*
 	 * See WP_Theme_Install_List_Table::_get_theme_status() if we wanted to check

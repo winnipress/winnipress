@@ -382,7 +382,7 @@ function map_meta_cap($cap, $user_id){ yeah(__METHOD__);
 		}
 		break;
 	case 'unfiltered_upload':
-		if (defined('ALLOW_UNFILTERED_UPLOADS') && ALLOW_UNFILTERED_UPLOADS && (!is_multisite() || is_super_admin($user_id)))
+		if (defined('ALLOW_UNFILTERED_UPLOADS') && ALLOW_UNFILTERED_UPLOADS && ( is_super_admin($user_id)))
 			$caps[] = $cap;
 		else
 			$caps[] = 'do_not_allow';
@@ -464,12 +464,7 @@ function map_meta_cap($cap, $user_id){ yeah(__METHOD__);
 			$caps[] = 'delete_users'; // delete_user maps to delete_users.
 		break;
 	case 'create_users':
-		if (!is_multisite())
 			$caps[] = $cap;
-		elseif (is_super_admin($user_id) || get_site_option('add_new_users'))
-			$caps[] = $cap;
-		else
-			$caps[] = 'do_not_allow';
 		break;
 	case 'manage_links' :
 		if (get_option('link_manager_enabled'))
@@ -802,39 +797,8 @@ function is_super_admin($user_id = false){ yeah(__METHOD__);
  *              already a super admin or when the `$super_admins` global is defined.
  */
 function grant_super_admin($user_id){ yeah(__METHOD__);
-	// If global super_admins override is defined, there is nothing to do here.
-	if (isset($GLOBALS['super_admins']) || !is_multisite()){
 		return false;
-	}
-
-	/**
-	 * Fires before the user is granted Super Admin privileges.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param int $user_id ID of the user that is about to be granted Super Admin privileges.
-	 */
-	do_action('grant_super_admin', $user_id);
-
-	// Directly fetch site_admins instead of using get_super_admins()
-	$super_admins = get_site_option('site_admins', array('admin'));
-
-	$user = get_userdata($user_id);
-	if ($user && !in_array($user->user_login, $super_admins)){
-		$super_admins[] = $user->user_login;
-		update_site_option('site_admins' , $super_admins);
-
-		/**
-		 * Fires after the user is granted Super Admin privileges.
-		 *
-		 * @since 3.0.0
-		 *
-		 * @param int $user_id ID of the user that was granted Super Admin privileges.
-		 */
-		do_action('granted_super_admin', $user_id);
-		return true;
-	}
-	return false;
+	
 }
 
 /**
@@ -849,41 +813,8 @@ function grant_super_admin($user_id){ yeah(__METHOD__);
  *              is the network admin email or when the `$super_admins` global is defined.
  */
 function revoke_super_admin($user_id){ yeah(__METHOD__);
-	// If global super_admins override is defined, there is nothing to do here.
-	if (isset($GLOBALS['super_admins']) || !is_multisite()){
 		return false;
-	}
 
-	/**
-	 * Fires before the user's Super Admin privileges are revoked.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param int $user_id ID of the user Super Admin privileges are being revoked from.
-	 */
-	do_action('revoke_super_admin', $user_id);
-
-	// Directly fetch site_admins instead of using get_super_admins()
-	$super_admins = get_site_option('site_admins', array('admin'));
-
-	$user = get_userdata($user_id);
-	if ($user && 0 !== strcasecmp($user->user_email, get_site_option('admin_email'))){
-		if (false !== ($key = array_search($user->user_login, $super_admins))){
-			unset($super_admins[$key]);
-			update_site_option('site_admins', $super_admins);
-
-			/**
-			 * Fires after the user's Super Admin privileges are revoked.
-			 *
-			 * @since 3.0.0
-			 *
-			 * @param int $user_id ID of the user Super Admin privileges were revoked from.
-			 */
-			do_action('revoked_super_admin', $user_id);
-			return true;
-		}
-	}
-	return false;
 }
 
 /**
