@@ -201,9 +201,6 @@ require(ABSPATH . WPINC . '/class-wp-http-encoding.php');
 require(ABSPATH . WPINC . '/class-wp-http-response.php');
 require(ABSPATH . WPINC . '/class-wp-http-requests-response.php');
 require(ABSPATH . WPINC . '/class-wp-http-requests-hooks.php');
-require(ABSPATH . WPINC . '/widgets.php');
-require(ABSPATH . WPINC . '/class-wp-widget.php');
-require(ABSPATH . WPINC . '/class-wp-widget-factory.php');
 require(ABSPATH . WPINC . '/nav-menu.php');
 require(ABSPATH . WPINC . '/nav-menu-template.php');
 
@@ -309,12 +306,6 @@ $GLOBALS['wp_rewrite'] = new WP_Rewrite();
  */
 $GLOBALS['wp'] = new WP();
 
-/**
- * WordPress Widget Factory Object
- * @global WP_Widget_Factory $wp_widget_factory
- * @since 2.8.0
- */
-$GLOBALS['wp_widget_factory'] = new WP_Widget_Factory();
 
 /**
  * WordPress User Roles

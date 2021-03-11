@@ -273,7 +273,6 @@ add_action('admin_print_footer_scripts', '_wp_footer_scripts'                   
 add_action('admin_print_styles',         'print_emoji_styles'                             );
 add_action('admin_print_styles',         'print_admin_styles',                      20    );
 add_action('init',                       'smilies_init',                             5    );
-add_action('plugins_loaded',             'wp_maybe_load_widgets',                    0    );
 // Create a revision whenever a post is updated.
 add_action('publish_post',               '_publish_post_hook',                       5, 1 );
 add_action('transition_post_status',     '_transition_post_status',                  5, 3 );
@@ -432,8 +431,7 @@ add_action('customize_controls_enqueue_scripts', 'wp_plupload_default_settings' 
 // Nav menu
 add_filter('nav_menu_item_id', '_nav_menu_item_id_use_once', 10, 2 );
 
-// Widgets
-add_action('init', 'wp_widgets_init', 1 );
+
 
 
 

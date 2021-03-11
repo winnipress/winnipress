@@ -3695,51 +3695,8 @@ function wp_list_sort( $list, $orderby = array(), $order = 'ASC', $preserve_keys
 	return $util->sort( $orderby, $order, $preserve_keys );
 }
 
-/**
- * Determines if Widgets library should be loaded.
- *
- * Checks to make sure that the widgets library hasn't already been loaded.
- * If it hasn't, then it will load the widgets library and run an action hook.
- *
- * @since 2.2.0
- */
-function wp_maybe_load_widgets(){ yeah(__METHOD__);
-	/**
-	 * Filters whether to load the Widgets library.
-	 *
-	 * Passing a falsey value to the filter will effectively short-circuit
-	 * the Widgets library from loading.
-	 *
-	 * @since 2.8.0
-	 *
-	 * @param bool $wp_maybe_load_widgets Whether to load the Widgets library.
-	 *                                    Default true.
-	 */
-	if ( !apply_filters( 'load_default_widgets', true ) ){
-		return;
-	}
 
-	require_once( ABSPATH . WPINC . '/default-widgets.php' );
 
-	add_action( '_admin_menu', 'wp_widgets_add_menu' );
-}
-
-/**
- * Append the Widgets menu to the themes main menu.
- *
- * @since 2.2.0
- *
- * @global array $submenu
- */
-function wp_widgets_add_menu(){ yeah(__METHOD__);
-	global $submenu;
-
-	if ( !current_theme_supports( 'widgets' ) )
-		return;
-
-	$submenu['themes.php'][7] = array( __( 'Widgets' ), 'edit_theme_options', 'widgets.php' );
-	ksort( $submenu['themes.php'], SORT_NUMERIC );
-}
 
 /**
  * Flush all output buffers for PHP 5.2.
