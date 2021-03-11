@@ -641,8 +641,6 @@ function get_default_post_to_edit( $post_type = 'post', $create_in_db = false) {
 		$post->post_status = 'draft';
 		$post->to_ping = '';
 		$post->pinged = '';
-		$post->comment_status = get_default_comment_status( $post_type);
-		$post->ping_status = get_default_comment_status( $post_type, 'pingback');
 		$post->post_pingback = get_option( 'default_pingback_flag');
 		$post->post_category = get_option( 'default_category');
 		$post->page_template = 'default';

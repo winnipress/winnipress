@@ -176,11 +176,6 @@ require(ABSPATH . WPINC . '/category.php');
 require(ABSPATH . WPINC . '/class-walker-category.php');
 require(ABSPATH . WPINC . '/class-walker-category-dropdown.php');
 require(ABSPATH . WPINC . '/category-template.php');
-require(ABSPATH . WPINC . '/comment.php');
-require(ABSPATH . WPINC . '/class-wp-comment.php');
-require(ABSPATH . WPINC . '/class-wp-comment-query.php');
-require(ABSPATH . WPINC . '/class-walker-comment.php');
-require(ABSPATH . WPINC . '/comment-template.php');
 require(ABSPATH . WPINC . '/rewrite.php');
 require(ABSPATH . WPINC . '/class-wp-rewrite.php');
 require(ABSPATH . WPINC . '/feed.php');
@@ -217,35 +212,9 @@ require(ABSPATH . WPINC . '/class-wp-widget.php');
 require(ABSPATH . WPINC . '/class-wp-widget-factory.php');
 require(ABSPATH . WPINC . '/nav-menu.php');
 require(ABSPATH . WPINC . '/nav-menu-template.php');
-require(ABSPATH . WPINC . '/rest-api.php');
-require(ABSPATH . WPINC . '/rest-api/class-wp-rest-server.php');
-require(ABSPATH . WPINC . '/rest-api/class-wp-rest-response.php');
-require(ABSPATH . WPINC . '/rest-api/class-wp-rest-request.php');
-require(ABSPATH . WPINC . '/rest-api/endpoints/class-wp-rest-controller.php');
-require(ABSPATH . WPINC . '/rest-api/endpoints/class-wp-rest-posts-controller.php');
-require(ABSPATH . WPINC . '/rest-api/endpoints/class-wp-rest-attachments-controller.php');
-require(ABSPATH . WPINC . '/rest-api/endpoints/class-wp-rest-post-types-controller.php');
-require(ABSPATH . WPINC . '/rest-api/endpoints/class-wp-rest-post-statuses-controller.php');
-require(ABSPATH . WPINC . '/rest-api/endpoints/class-wp-rest-revisions-controller.php');
-require(ABSPATH . WPINC . '/rest-api/endpoints/class-wp-rest-taxonomies-controller.php');
-require(ABSPATH . WPINC . '/rest-api/endpoints/class-wp-rest-terms-controller.php');
-require(ABSPATH . WPINC . '/rest-api/endpoints/class-wp-rest-users-controller.php');
-require(ABSPATH . WPINC . '/rest-api/endpoints/class-wp-rest-comments-controller.php');
-require(ABSPATH . WPINC . '/rest-api/endpoints/class-wp-rest-settings-controller.php');
-require(ABSPATH . WPINC . '/rest-api/fields/class-wp-rest-meta-fields.php');
-require(ABSPATH . WPINC . '/rest-api/fields/class-wp-rest-comment-meta-fields.php');
-require(ABSPATH . WPINC . '/rest-api/fields/class-wp-rest-post-meta-fields.php');
-require(ABSPATH . WPINC . '/rest-api/fields/class-wp-rest-term-meta-fields.php');
-require(ABSPATH . WPINC . '/rest-api/fields/class-wp-rest-user-meta-fields.php');
 
 $GLOBALS['wp_embed'] = new WP_Embed();
 
-// Load multisite-specific files.
-if(is_multisite()){
-	require(ABSPATH . WPINC . '/ms-functions.php');
-	require(ABSPATH . WPINC . '/ms-default-filters.php');
-	require(ABSPATH . WPINC . '/ms-deprecated.php');
-}
 
 // Define constants that rely on the API to obtain the default value.
 // Define must-use plugin directory constants, which may be overridden in the sunrise.php drop-in.
@@ -330,12 +299,6 @@ wp_functionality_constants();
 // Add magic quotes and set up $_REQUEST ($_GET + $_POST)
 wp_magic_quotes();
 
-/**
- * Fires when comment cookies are sanitized.
- *
- * @since 2.0.11
- */
-do_action('sanitize_comment_cookies');
 
 /**
  * WordPress Query object
