@@ -9,8 +9,6 @@
 /** WordPress Administration Bootstrap */
 require_once(dirname(__FILE__ ) . '/admin.php' );
 
-/** WordPress Translation Installation API */
-require_once(ABSPATH . 'wp-admin/includes/translation-install.php' );
 
 if (!current_user_can('manage_options' ) )
 	wp_die(__('Sorry, you are not allowed to manage options for this site.' ) );
@@ -109,50 +107,6 @@ if ($new_admin_email && $new_admin_email != get_option('admin_email' ) ) : ?>
 </td>
 </tr>
 
-<?php 
-
-$languages = get_available_languages();
-$translations = wp_get_available_translations();
-if (defined('WPLANG' ) && '' !== WPLANG && 'en_US' !== WPLANG && !in_array(WPLANG, $languages ) ) {
-	$languages[] = WPLANG;
-}
-if (!empty($languages ) || !empty($translations ) ) {
-	?>
-	<tr>
-		<th scope="row"><label for="WPLANG"><?php _e('Site Language' ); ?></label></th>
-		<td>
-			<?php
-			$locale = get_locale();
-			if (!in_array($locale, $languages ) ) {
-				$locale = '';
-			}
-
-			wp_dropdown_languages(array(
-				'name'         => 'WPLANG',
-				'id'           => 'WPLANG',
-				'selected'     => $locale,
-				'languages'    => $languages,
-				'translations' => $translations,
-				'show_available_translations' => current_user_can('install_languages' ) && wp_can_install_language_pack(),
-			) );
-
-			// Add note about deprecated WPLANG constant.
-			if (defined('WPLANG' ) && ('' !== WPLANG ) && $locale !== WPLANG ) {
-				if (current_user_can('manage_options' ) ) {
-					?>
-					<p class="description">
-						<strong><?php _e('Note:' ); ?></strong> <?php printf(__('The %s constant in your %s file is no longer needed.' ), '<code>WPLANG</code>', '<code>wp-config.php</code>' ); ?>
-					</p>
-					<?php
-				}
-				_deprecated_argument('define()', '4.0.0', sprintf(__('The %s constant in your %s file is no longer needed.' ), 'WPLANG', 'wp-config.php' ) );
-			}
-			?>
-		</td>
-	</tr>
-	<?php
-}
-?>
 <tr>
 <?php
 $current_offset = get_option('gmt_offset');

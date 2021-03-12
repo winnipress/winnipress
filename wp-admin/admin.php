@@ -2,6 +2,7 @@
 
 session_start();
 
+if(!function_exists('yeah')){
 function yeah($met){
     if(!isset($GLOBALS['metoditos'])){
         $GLOBALS['metoditos']=array();
@@ -10,6 +11,7 @@ function yeah($met){
     if (!in_array($met, $GLOBALS['metoditos'])){
     $GLOBALS['metoditos'][] = $met;
     }
+}
 }
 
 

@@ -1155,10 +1155,7 @@ function wp_dropdown_languages($args = array() ){ yeah(__METHOD__);
 	}
 
 	$translations = $parsed_args['translations'];
-	if(empty($translations ) ){
-		require_once(ABSPATH . 'wp-admin/includes/translation-install.php' );
-		$translations = wp_get_available_translations();
-	}
+	
 
 	/*
 	 * $parsed_args['languages'] should only contain the locales. Find the locale in
