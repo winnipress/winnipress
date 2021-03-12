@@ -170,11 +170,6 @@ case 'edit':
 	$title = $post_type_object->labels->edit_item;
 	$post = get_post($post_id, OBJECT, 'edit');
 
-	if ( post_type_supports($post_type, 'comments') ) {
-		wp_enqueue_script('admin-comments');
-		enqueue_comment_hotkeys_js();
-	}
-
 	include( ABSPATH . 'wp-admin/edit-form-advanced.php' );
 
 	break;
