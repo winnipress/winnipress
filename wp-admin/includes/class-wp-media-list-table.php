@@ -16,13 +16,7 @@
  * @see WP_List_Table
  */
 class WP_Media_List_Table extends WP_List_Table {
-	/**
-	 * Holds the number of pending comments for each post.
-	 *
-	 * @since 4.4.0
-	 * @var array
-	 */
-	protected $comment_pending_count = array();
+
 
 	private $detached;
 
@@ -311,8 +305,7 @@ class WP_Media_List_Table extends WP_List_Table {
 		/* translators: column name */
 		if ( !$this->detached ) {
 			$posts_columns['parent'] = _x( 'Uploaded to', 'column name' );
-			if ( post_type_supports( 'attachment', 'comments' ) )
-				$posts_columns['comments'] = '<span class="vers comment-grey-bubble" title="' . esc_attr__( 'Comments' ) . '"><span class="screen-reader-text">' . __( 'Comments' ) . '</span></span>';
+			
 		}
 		/* translators: column name */
 		$posts_columns['date'] = _x( 'Date', 'column name' );
@@ -337,7 +330,6 @@ class WP_Media_List_Table extends WP_List_Table {
 			'title'    => 'title',
 			'author'   => 'author',
 			'parent'   => 'parent',
-			'comments' => 'comment_count',
 			'date'     => array( 'date', true ),
 		);
 	}
@@ -516,26 +508,7 @@ class WP_Media_List_Table extends WP_List_Table {
 		}
 	}
 
-	/**
-	 * Handles the comments column output.
-	 *
-	 * @since 4.3.0
-	 *
-	 * @param WP_Post $post The current WP_Post object.
-	 */
-	public function column_comments( $post ) { yeah(__METHOD__);
-		echo '<div class="post-com-count-wrapper">';
 
-		if ( isset( $this->comment_pending_count[ $post->ID ] ) ) {
-			$pending_comments = $this->comment_pending_count[ $post->ID ];
-		} else {
-			$pending_comments = get_pending_comments_num( $post->ID );
-		}
-
-		$this->comments_bubble( $post->ID, $pending_comments );
-
-		echo '</div>';
-	}
 
 	/**
 	 * Handles output for the default column.
@@ -602,7 +575,6 @@ class WP_Media_List_Table extends WP_List_Table {
 		$post_ids = wp_list_pluck( $wp_query->posts, 'ID' );
 		reset( $wp_query->posts );
 
-		$this->comment_pending_count = get_pending_comments_num( $post_ids );
 
 		add_filter( 'the_title','esc_html' );
 

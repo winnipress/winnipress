@@ -12,67 +12,6 @@ require_once( dirname( __FILE__ ) . '/admin.php' );
 if ( !current_user_can('upload_files') )
 	wp_die( __( 'Sorry, you are not allowed to upload files.' ) );
 
-$mode = get_user_option( 'media_library_mode', get_current_user_id() ) ? get_user_option( 'media_library_mode', get_current_user_id() ) : 'grid';
-$modes = array( 'grid', 'list' );
-
-if ( isset( $_GET['mode'] ) && in_array( $_GET['mode'], $modes ) ) {
-	$mode = $_GET['mode'];
-	update_user_option( get_current_user_id(), 'media_library_mode', $mode );
-}
-
-if ( 'grid' === $mode ) {
-	wp_enqueue_media();
-	wp_enqueue_script( 'media-grid' );
-	wp_enqueue_script( 'media' );
-
-	remove_action( 'admin_head', 'wp_admin_canonical_url' );
-
-	$q = $_GET;
-	// let JS handle this
-	unset( $q['s'] );
-	$vars = wp_edit_attachments_query_vars( $q );
-	$ignore = array( 'mode', 'post_type', 'post_status', 'posts_per_page' );
-	foreach ( $vars as $key => $value ) {
-		if ( !$value || in_array( $key, $ignore ) ) {
-			unset( $vars[ $key ] );
-		}
-	}
-
-	wp_localize_script( 'media-grid', '_wpMediaGridSettings', array(
-		'adminUrl' => parse_url( self_admin_url(), PHP_URL_PATH ),
-		'queryVars' => (object) $vars
-	) );
-
-	
-	$title = __('Media Library');
-	$parent_file = 'upload.php';
-
-	require_once( ABSPATH . 'wp-admin/admin-header.php' );
-	?>
-	<div class="wrap" id="wp-media-grid" data-search="<?php _admin_search_query() ?>">
-		<h1 class="wp-heading-inline"><?php echo esc_html( $title ); ?></h1>
-
-		<?php
-		if ( current_user_can( 'upload_files' ) ) { ?>
-			<a href="<?php echo admin_url( 'media-new.php' ); ?>" class="page-title-action aria-button-if-js"><?php echo esc_html_x( 'Add New', 'file' ); ?></a><?php
-		}
-		?>
-
-		<hr class="wp-header-end">
-
-		<div class="error hide-if-js">
-			<p><?php printf(
-				/* translators: %s: list view URL */
-				__( 'The grid view for the Media Library requires JavaScript. <a href="%s">Switch to the list view</a>.' ),
-				'upload.php?mode=list'
-			); ?></p>
-		</div>
-	</div>
-	<?php
-	include( ABSPATH . 'wp-admin/admin-footer.php' );
-	exit;
-}
-
 $wp_list_table = _get_list_table('WP_Media_List_Table');
 $pagenum = $wp_list_table->get_pagenum();
 
