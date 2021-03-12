@@ -34,7 +34,7 @@ class Requests_IPv6 {
 	 * @param string $ip An IPv6 address
 	 * @return string The uncompressed IPv6 address
 	 */
-	public static function uncompress($ip){ yeah(__METHOD__);
+	public static function uncompress($ip){
 		if (substr_count($ip, '::') !== 1){
 			return $ip;
 		}
@@ -82,7 +82,7 @@ class Requests_IPv6 {
 	 * @param string $ip An IPv6 address
 	 * @return string The compressed IPv6 address
 	 */
-	public static function compress($ip){ yeah(__METHOD__);
+	public static function compress($ip){
 		// Prepare the IP to be compressed
 		$ip = self::uncompress($ip);
 		$ip_parts = self::split_v6_v4($ip);
@@ -124,7 +124,7 @@ class Requests_IPv6 {
 	 * @param string $ip An IPv6 address
 	 * @return string[] [0] contains the IPv6 represented part, and [1] the IPv4 represented part
 	 */
-	protected static function split_v6_v4($ip){ yeah(__METHOD__);
+	protected static function split_v6_v4($ip){
 		if (strpos($ip, '.') !== false){
 			$pos = strrpos($ip, ':');
 			$ipv6_part = substr($ip, 0, $pos);
@@ -144,7 +144,7 @@ class Requests_IPv6 {
 	 * @param string $ip An IPv6 address
 	 * @return bool true if $ip is a valid IPv6 address
 	 */
-	public static function check_ipv6($ip){ yeah(__METHOD__);
+	public static function check_ipv6($ip){
 		$ip = self::uncompress($ip);
 		list($ipv6, $ipv4) = self::split_v6_v4($ip);
 		$ipv6 = explode(':', $ipv6);

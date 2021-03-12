@@ -17,7 +17,7 @@
  *
  * @since 2.9.0
  */
-function create_initial_post_types(){ yeah(__METHOD__);
+function create_initial_post_types(){
 	register_post_type('post', array(
 		'public'  => true,
 		'_builtin' => true, /* internal use only. don't use this when registering your own post type. */
@@ -320,7 +320,7 @@ function create_initial_post_types(){ yeah(__METHOD__);
  * @param bool $unfiltered    Optional. Whether to apply filters. Default false.
  * @return string|false The file path to where the attached file should be, false otherwise.
  */
-function get_attached_file($attachment_id, $unfiltered = false ){ yeah(__METHOD__);
+function get_attached_file($attachment_id, $unfiltered = false ){
 	$file = get_post_meta($attachment_id, '_wp_attached_file', true );
 
 	// If the file is relative, prepend upload dir.
@@ -355,7 +355,7 @@ function get_attached_file($attachment_id, $unfiltered = false ){ yeah(__METHOD_
  * @param string $file          File path for the attachment.
  * @return bool True on success, false on failure.
  */
-function update_attached_file($attachment_id, $file ){ yeah(__METHOD__);
+function update_attached_file($attachment_id, $file ){
 	if (!get_post($attachment_id ) )
 		return false;
 
@@ -385,7 +385,7 @@ function update_attached_file($attachment_id, $file ){ yeah(__METHOD__);
  * @param string $path Full path to the file.
  * @return string Relative path on success, unchanged path on failure.
  */
-function _wp_relative_upload_path($path ){ yeah(__METHOD__);
+function _wp_relative_upload_path($path ){
 	$new_path = $path;
 
 	$uploads = wp_get_upload_dir();
@@ -456,7 +456,7 @@ function _wp_relative_upload_path($path ){ yeah(__METHOD__);
  * @return array Array of children, where the type of each element is determined by $output parameter.
  *               Empty array on failure.
  */
-function get_children($args = '', $output = OBJECT ){ yeah(__METHOD__);
+function get_children($args = '', $output = OBJECT ){
 	$kids = array();
 	if (empty($args ) ){
 		if (isset($GLOBALS['post'] ) ){
@@ -525,7 +525,7 @@ function get_children($args = '', $output = OBJECT ){ yeah(__METHOD__);
  * @param string $post Post content.
  * @return array Post before ('main'), after ('extended'), and custom read more ('more_text').
  */
-function get_extended($post ){ yeah(__METHOD__);
+function get_extended($post ){
 	//Match the new style more links.
 	if (preg_match('/<!--more(.*?)?-->/', $post, $matches) ){
 		list($main, $extended) = explode($matches[0], $post, 2);
@@ -562,7 +562,7 @@ function get_extended($post ){ yeah(__METHOD__);
  * @return WP_Post|array|null Type corresponding to $output on success or null on failure.
  *                            When $output is OBJECT, a `WP_Post` instance is returned.
  */
-function get_post($post = null, $output = OBJECT, $filter = 'raw' ){ yeah(__METHOD__);
+function get_post($post = null, $output = OBJECT, $filter = 'raw' ){
 	if (empty($post ) && isset($GLOBALS['post'] ) )
 		$post = $GLOBALS['post'];
 
@@ -602,7 +602,7 @@ function get_post($post = null, $output = OBJECT, $filter = 'raw' ){ yeah(__METH
  * @param int|WP_Post $post Post ID or post object.
  * @return array Ancestor IDs or empty array if none are found.
  */
-function get_post_ancestors($post ){ yeah(__METHOD__);
+function get_post_ancestors($post ){
 	$post = get_post($post );
 
 	if (!$post || empty($post->post_parent ) || $post->post_parent == $post->ID )
@@ -643,7 +643,7 @@ function get_post_ancestors($post ){ yeah(__METHOD__);
  *                             or 'display'. Default 'display'.
  * @return string The value of the post field on success, empty string on failure.
  */
-function get_post_field($field, $post = null, $context = 'display' ){ yeah(__METHOD__);
+function get_post_field($field, $post = null, $context = 'display' ){
 	$post = get_post($post );
 
 	if (!$post )
@@ -666,7 +666,7 @@ function get_post_field($field, $post = null, $context = 'display' ){ yeah(__MET
  * @param int|WP_Post $ID Optional. Post ID or post object. Default empty.
  * @return string|false The mime type on success, false on failure.
  */
-function get_post_mime_type($ID = '' ){ yeah(__METHOD__);
+function get_post_mime_type($ID = '' ){
 	$post = get_post($ID);
 
 	if (is_object($post) )
@@ -686,7 +686,7 @@ function get_post_mime_type($ID = '' ){ yeah(__METHOD__);
  * @param int|WP_Post $ID Optional. Post ID or post object. Default empty.
  * @return string|false Post status on success, false on failure.
  */
-function get_post_status($ID = '' ){ yeah(__METHOD__);
+function get_post_status($ID = '' ){
 	$post = get_post($ID);
 
 	if (!is_object($post) )
@@ -733,7 +733,7 @@ function get_post_status($ID = '' ){ yeah(__METHOD__);
  *
  * @return array List of post statuses.
  */
-function get_post_statuses(){ yeah(__METHOD__);
+function get_post_statuses(){
 	$status = array(
 		'draft'   => __('Draft' ),
 		'pending' => __('Pending Review' ),
@@ -754,7 +754,7 @@ function get_post_statuses(){ yeah(__METHOD__);
  *
  * @return array List of page statuses.
  */
-function get_page_statuses(){ yeah(__METHOD__);
+function get_page_statuses(){
 	$status = array(
 		'draft'   => __('Draft' ),
 		'private' => __('Private' ),
@@ -771,7 +771,7 @@ function get_page_statuses(){ yeah(__METHOD__);
  *
  * @return array
  */
-function _wp_privacy_statuses(){ yeah(__METHOD__);
+function _wp_privacy_statuses(){
 	return array(
 		'request-pending'   => __('Pending' ),      // Pending confirmation from user.
 		'request-confirmed' => __('Confirmed' ),    // User has confirmed the action.
@@ -823,7 +823,7 @@ function _wp_privacy_statuses(){ yeah(__METHOD__);
  * }
  * @return object
  */
-function register_post_status($post_status, $args = array() ){ yeah(__METHOD__);
+function register_post_status($post_status, $args = array() ){
 	global $wp_post_statuses;
 
 	if (!is_array($wp_post_statuses))
@@ -900,7 +900,7 @@ function register_post_status($post_status, $args = array() ){ yeah(__METHOD__);
  * @param string $post_status The name of a registered post status.
  * @return object|null A post status object.
  */
-function get_post_status_object($post_status ){ yeah(__METHOD__);
+function get_post_status_object($post_status ){
 	global $wp_post_statuses;
 
 	if (empty($wp_post_statuses[$post_status]) )
@@ -926,7 +926,7 @@ function get_post_status_object($post_status ){ yeah(__METHOD__);
  *                               Default 'and'.
  * @return array A list of post status names or objects.
  */
-function get_post_stati($args = array(), $output = 'names', $operator = 'and' ){ yeah(__METHOD__);
+function get_post_stati($args = array(), $output = 'names', $operator = 'and' ){
 	global $wp_post_statuses;
 
 	$field = ('names' == $output) ? 'name' : false;
@@ -946,7 +946,7 @@ function get_post_stati($args = array(), $output = 'names', $operator = 'and' ){
  * @param string $post_type Post type name
  * @return bool Whether post type is hierarchical.
  */
-function is_post_type_hierarchical($post_type ){ yeah(__METHOD__);
+function is_post_type_hierarchical($post_type ){
 	if (!post_type_exists($post_type ) )
 		return false;
 
@@ -964,7 +964,7 @@ function is_post_type_hierarchical($post_type ){ yeah(__METHOD__);
  * @param string $post_type Post type name.
  * @return bool Whether post type is registered.
  */
-function post_type_exists($post_type ){ yeah(__METHOD__);
+function post_type_exists($post_type ){
 	return (bool) get_post_type_object($post_type );
 }
 
@@ -976,7 +976,7 @@ function post_type_exists($post_type ){ yeah(__METHOD__);
  * @param int|WP_Post|null $post Optional. Post ID or post object. Default is global $post.
  * @return string|false          Post type on success, false on failure.
  */
-function get_post_type($post = null ){ yeah(__METHOD__);
+function get_post_type($post = null ){
 	if ($post = get_post($post ) )
 		return $post->post_type;
 
@@ -996,7 +996,7 @@ function get_post_type($post = null ){ yeah(__METHOD__);
  * @param string $post_type The name of a registered post type.
  * @return WP_Post_Type|null WP_Post_Type object if it exists, null otherwise.
  */
-function get_post_type_object($post_type ){ yeah(__METHOD__);
+function get_post_type_object($post_type ){
 	global $wp_post_types;
 
 	if (!is_scalar($post_type ) || empty($wp_post_types[ $post_type ] ) ){
@@ -1024,7 +1024,7 @@ function get_post_type_object($post_type ){ yeah(__METHOD__);
  *                               must match; 'not' means no elements may match. Default 'and'.
  * @return array A list of post type names or objects.
  */
-function get_post_types($args = array(), $output = 'names', $operator = 'and' ){ yeah(__METHOD__);
+function get_post_types($args = array(), $output = 'names', $operator = 'and' ){
 	global $wp_post_types;
 
 	$field = ('names' == $output) ? 'name' : false;
@@ -1166,7 +1166,7 @@ function get_post_types($args = array(), $output = 'names', $operator = 'and' ){
  * }
  * @return WP_Post_Type|WP_Error The registered post type object, or an error object.
  */
-function register_post_type($post_type, $args = array() ){ yeah(__METHOD__);
+function register_post_type($post_type, $args = array() ){
 	global $wp_post_types;
 
 	if (!is_array($wp_post_types ) ){
@@ -1217,7 +1217,7 @@ function register_post_type($post_type, $args = array() ){ yeah(__METHOD__);
  * @param string $post_type Post type to unregister.
  * @return bool|WP_Error True on success, WP_Error on failure or if the post type doesn't exist.
  */
-function unregister_post_type($post_type ){ yeah(__METHOD__);
+function unregister_post_type($post_type ){
 	global $wp_post_types;
 
 	if (!post_type_exists($post_type ) ){
@@ -1306,7 +1306,7 @@ function unregister_post_type($post_type ){ yeah(__METHOD__);
  * @param object $args Post type registration arguments.
  * @return object Object with all the capabilities as member variables.
  */
-function get_post_type_capabilities($args ){ yeah(__METHOD__);
+function get_post_type_capabilities($args ){
 	if (!is_array($args->capability_type ) )
 		$args->capability_type = array($args->capability_type, $args->capability_type . 's' );
 
@@ -1362,7 +1362,7 @@ function get_post_type_capabilities($args ){ yeah(__METHOD__);
  *
  * @param array $capabilities Post type meta capabilities.
  */
-function _post_type_meta_capabilities($capabilities = null ){ yeah(__METHOD__);
+function _post_type_meta_capabilities($capabilities = null ){
 	global $post_type_meta_caps;
 
 	foreach ($capabilities as $core => $custom ){
@@ -1429,7 +1429,7 @@ function _post_type_meta_capabilities($capabilities = null ){ yeah(__METHOD__);
  * @param object|WP_Post_Type $post_type_object Post type object.
  * @return object Object with all the labels as member variables.
  */
-function get_post_type_labels($post_type_object ){ yeah(__METHOD__);
+function get_post_type_labels($post_type_object ){
 	$nohier_vs_hier_defaults = array(
 		'name' => array(_x('Posts', 'post type general name'), _x('Pages', 'post type general name') ),
 		'singular_name' => array(_x('Post', 'post type singular name'), _x('Page', 'post type singular name') ),
@@ -1495,7 +1495,7 @@ function get_post_type_labels($post_type_object ){ yeah(__METHOD__);
  * @param array  $nohier_vs_hier_defaults Hierarchical vs non-hierarchical default labels.
  * @return object Object containing labels for the given custom-something object.
  */
-function _get_custom_object_labels($object, $nohier_vs_hier_defaults ){ yeah(__METHOD__);
+function _get_custom_object_labels($object, $nohier_vs_hier_defaults ){
 	$object->labels = (array) $object->labels;
 
 	if (isset($object->label ) && empty($object->labels['name'] ) )
@@ -1530,7 +1530,7 @@ function _get_custom_object_labels($object, $nohier_vs_hier_defaults ){ yeah(__M
  * @access private
  * @since 3.1.0
  */
-function _add_post_type_submenus(){ yeah(__METHOD__);
+function _add_post_type_submenus(){
 	foreach (get_post_types(array('show_ui' => true ) ) as $ptype ){
 		$ptype_obj = get_post_type_object($ptype );
 		// Sub-menus only.
@@ -1560,7 +1560,7 @@ function _add_post_type_submenus(){ yeah(__METHOD__);
  * @param string|array $feature   The feature being added, accepts an array of
  *                                feature strings or a single string.
  */
-function add_post_type_support($post_type, $feature ){ yeah(__METHOD__);
+function add_post_type_support($post_type, $feature ){
 	global $_wp_post_type_features;
 
 	$features = (array) $feature;
@@ -1582,7 +1582,7 @@ function add_post_type_support($post_type, $feature ){ yeah(__METHOD__);
  * @param string $post_type The post type for which to remove the feature.
  * @param string $feature   The feature being removed.
  */
-function remove_post_type_support($post_type, $feature ){ yeah(__METHOD__);
+function remove_post_type_support($post_type, $feature ){
 	global $_wp_post_type_features;
 
 	unset($_wp_post_type_features[ $post_type ][ $feature ] );
@@ -1598,7 +1598,7 @@ function remove_post_type_support($post_type, $feature ){ yeah(__METHOD__);
  * @param string $post_type The post type.
  * @return array Post type supports list.
  */
-function get_all_post_type_supports($post_type ){ yeah(__METHOD__);
+function get_all_post_type_supports($post_type ){
 	global $_wp_post_type_features;
 
 	if (isset($_wp_post_type_features[$post_type] ) )
@@ -1618,7 +1618,7 @@ function get_all_post_type_supports($post_type ){ yeah(__METHOD__);
  * @param string $feature   The feature being checked.
  * @return bool Whether the post type supports the given feature.
  */
-function post_type_supports($post_type, $feature ){ yeah(__METHOD__);
+function post_type_supports($post_type, $feature ){
 	global $_wp_post_type_features;
 
 	return (isset($_wp_post_type_features[$post_type][$feature] ) );
@@ -1638,7 +1638,7 @@ function post_type_supports($post_type, $feature ){ yeah(__METHOD__);
  *                               match. Default 'and'.
  * @return array A list of post type names.
  */
-function get_post_types_by_support($feature, $operator = 'and' ){ yeah(__METHOD__);
+function get_post_types_by_support($feature, $operator = 'and' ){
 	global $_wp_post_type_features;
 
 	$features = array_fill_keys((array) $feature, true );
@@ -1660,7 +1660,7 @@ function get_post_types_by_support($feature, $operator = 'and' ){ yeah(__METHOD_
  *                          name a few. Default 'post'.
  * @return int|false Amount of rows changed. Should be 1 for success and 0 for failure.
  */
-function set_post_type($post_id = 0, $post_type = 'post' ){ yeah(__METHOD__);
+function set_post_type($post_id = 0, $post_type = 'post' ){
 	global $wpdb;
 
 	$post_type = sanitize_post_field('post_type', $post_type, $post_id, 'db');
@@ -1684,7 +1684,7 @@ function set_post_type($post_id = 0, $post_type = 'post' ){ yeah(__METHOD__);
  * @param string|WP_Post_Type $post_type Post type name or object.
  * @return bool Whether the post type should be considered viewable.
  */
-function is_post_type_viewable($post_type ){ yeah(__METHOD__);
+function is_post_type_viewable($post_type ){
 	if (is_scalar($post_type ) ){
 		$post_type = get_post_type_object($post_type );
 		if (!$post_type ){
@@ -1719,7 +1719,7 @@ function is_post_type_viewable($post_type ){ yeah(__METHOD__);
  * }
  * @return array List of posts.
  */
-function get_posts($args = null ){ yeah(__METHOD__);
+function get_posts($args = null ){
 	$defaults = array(
 		'numberposts' => 5,
 		'category' => 0, 'orderby' => 'date',
@@ -1769,7 +1769,7 @@ function get_posts($args = null ){ yeah(__METHOD__);
  *                           Default false.
  * @return int|false Meta ID on success, false on failure.
  */
-function add_post_meta($post_id, $meta_key, $meta_value, $unique = false ){ yeah(__METHOD__);
+function add_post_meta($post_id, $meta_key, $meta_value, $unique = false ){
 	// Make sure meta is added to the post, not a revision.
 	if ($the_post = wp_is_post_revision($post_id) )
 		$post_id = $the_post;
@@ -1796,7 +1796,7 @@ function add_post_meta($post_id, $meta_key, $meta_value, $unique = false ){ yeah
  *                           non-scalar. Default empty.
  * @return bool True on success, false on failure.
  */
-function delete_post_meta($post_id, $meta_key, $meta_value = '' ){ yeah(__METHOD__);
+function delete_post_meta($post_id, $meta_key, $meta_value = '' ){
 	// Make sure meta is added to the post, not a revision.
 	if ($the_post = wp_is_post_revision($post_id) )
 		$post_id = $the_post;
@@ -1820,7 +1820,7 @@ function delete_post_meta($post_id, $meta_key, $meta_value = '' ){ yeah(__METHOD
  * @return mixed Will be an array if $single is false. Will be value of meta data
  *               field if $single is true.
  */
-function get_post_meta($post_id, $key = '', $single = false ){ yeah(__METHOD__);
+function get_post_meta($post_id, $key = '', $single = false ){
 	return get_metadata('post', $post_id, $key, $single);
 }
 
@@ -1842,7 +1842,7 @@ function get_post_meta($post_id, $key = '', $single = false ){ yeah(__METHOD__);
  * @return int|bool Meta ID if the key didn't exist, true on successful update,
  *                  false on failure.
  */
-function update_post_meta($post_id, $meta_key, $meta_value, $prev_value = '' ){ yeah(__METHOD__);
+function update_post_meta($post_id, $meta_key, $meta_value, $prev_value = '' ){
 	// Make sure meta is added to the post, not a revision.
 	if ($the_post = wp_is_post_revision($post_id) )
 		$post_id = $the_post;
@@ -1862,7 +1862,7 @@ function update_post_meta($post_id, $meta_key, $meta_value, $prev_value = '' ){ 
  * @param string $post_meta_key Key to search for when deleting.
  * @return bool Whether the post meta key was deleted from the database.
  */
-function delete_post_meta_by_key($post_meta_key ){ yeah(__METHOD__);
+function delete_post_meta_by_key($post_meta_key ){
 	$deleted = delete_metadata('post', null, $post_meta_key, '', true );
 	if ($deleted ){
 		wp_cache_set('last_changed', microtime(), 'posts' );
@@ -1882,7 +1882,7 @@ function delete_post_meta_by_key($post_meta_key ){ yeah(__METHOD__);
  *                          {@see register_meta()} for a list of supported arguments.
  * @return bool True if the meta key was successfully registered, false if not.
  */
-function register_post_meta($post_type, $meta_key, array $args ){ yeah(__METHOD__);
+function register_post_meta($post_type, $meta_key, array $args ){
 	$args['object_subtype'] = $post_type;
 
 	return register_meta('post', $meta_key, $args );
@@ -1899,7 +1899,7 @@ function register_post_meta($post_type, $meta_key, array $args ){ yeah(__METHOD_
  * @param string $meta_key  The meta key to unregister.
  * @return bool True on success, false if the meta key was not previously registered.
  */
-function unregister_post_meta($post_type, $meta_key ){ yeah(__METHOD__);
+function unregister_post_meta($post_type, $meta_key ){
 	return unregister_meta_key('post', $meta_key, $post_type );
 }
 
@@ -1914,7 +1914,7 @@ function unregister_post_meta($post_type, $meta_key ){ yeah(__METHOD__);
  * @param int $post_id Optional. Post ID. Default is ID of the global $post.
  * @return array Post meta for the given post.
  */
-function get_post_custom($post_id = 0 ){ yeah(__METHOD__);
+function get_post_custom($post_id = 0 ){
 	$post_id = absint($post_id );
 	if (!$post_id )
 		$post_id = get_the_ID();
@@ -1932,7 +1932,7 @@ function get_post_custom($post_id = 0 ){ yeah(__METHOD__);
  * @param int $post_id Optional. Post ID. Default is ID of the global $post.
  * @return array|void Array of the keys, if retrieved.
  */
-function get_post_custom_keys($post_id = 0 ){ yeah(__METHOD__);
+function get_post_custom_keys($post_id = 0 ){
 	$custom = get_post_custom($post_id );
 
 	if (!is_array($custom) )
@@ -1954,7 +1954,7 @@ function get_post_custom_keys($post_id = 0 ){ yeah(__METHOD__);
  * @param int    $post_id Optional. Post ID. Default is ID of the global $post.
  * @return array|null Meta field values.
  */
-function get_post_custom_values($key = '', $post_id = 0 ){ yeah(__METHOD__);
+function get_post_custom_values($key = '', $post_id = 0 ){
 	if (!$key )
 		return null;
 
@@ -1974,7 +1974,7 @@ function get_post_custom_values($key = '', $post_id = 0 ){ yeah(__METHOD__);
  * @param int $post_id Optional. Post ID. Default is ID of the global $post.
  * @return bool Whether post is sticky.
  */
-function is_sticky($post_id = 0 ){ yeah(__METHOD__);
+function is_sticky($post_id = 0 ){
 	$post_id = absint($post_id );
 
 	if (!$post_id )
@@ -2008,7 +2008,7 @@ function is_sticky($post_id = 0 ){ yeah(__METHOD__);
  * @return object|WP_Post|array The now sanitized Post Object or Array (will be the
  *                              same type as $post).
  */
-function sanitize_post($post, $context = 'display' ){ yeah(__METHOD__);
+function sanitize_post($post, $context = 'display' ){
 	if (is_object($post) ){
 		// Check if post already filtered for this context.
 		if (isset($post->filter) && $context == $post->filter )
@@ -2048,7 +2048,7 @@ function sanitize_post($post, $context = 'display' ){ yeah(__METHOD__);
  *                        'db', 'display', 'attribute' and 'js'. Default 'display'.
  * @return mixed Sanitized value.
  */
-function sanitize_post_field($field, $value, $post_id, $context = 'display' ){ yeah(__METHOD__);
+function sanitize_post_field($field, $value, $post_id, $context = 'display' ){
 	$int_fields = array('ID', 'post_parent', 'menu_order');
 	if (in_array($field, $int_fields) )
 		$value = (int) $value;
@@ -2195,7 +2195,7 @@ function sanitize_post_field($field, $value, $post_id, $context = 'display' ){ y
  *
  * @param int $post_id Post ID.
  */
-function stick_post($post_id ){ yeah(__METHOD__);
+function stick_post($post_id ){
 	$stickies = get_option('sticky_posts');
 
 	if (!is_array($stickies) )
@@ -2227,7 +2227,7 @@ function stick_post($post_id ){ yeah(__METHOD__);
  *
  * @param int $post_id Post ID.
  */
-function unstick_post($post_id ){ yeah(__METHOD__);
+function unstick_post($post_id ){
 	$stickies = get_option('sticky_posts');
 
 	if (!is_array($stickies) )
@@ -2265,7 +2265,7 @@ function unstick_post($post_id ){ yeah(__METHOD__);
  * @param string $perm Optional. 'readable' or empty. Default empty.
  * @return string The cache key.
  */
-function _count_posts_cache_key($type = 'post', $perm = '' ){ yeah(__METHOD__);
+function _count_posts_cache_key($type = 'post', $perm = '' ){
 	$cache_key = 'posts-' . $type;
 	if ('readable' == $perm && is_user_logged_in() ){
 		$post_type_object = get_post_type_object($type );
@@ -2295,7 +2295,7 @@ function _count_posts_cache_key($type = 'post', $perm = '' ){ yeah(__METHOD__);
  * @param string $perm Optional. 'readable' or empty. Default empty.
  * @return object Number of posts for each status.
  */
-function wp_count_posts($type = 'post', $perm = '' ){ yeah(__METHOD__);
+function wp_count_posts($type = 'post', $perm = '' ){
 	global $wpdb;
 
 	if (!post_type_exists($type ) )
@@ -2360,7 +2360,7 @@ function wp_count_posts($type = 'post', $perm = '' ){ yeah(__METHOD__);
  *                                MIME patterns. Default empty.
  * @return object An object containing the attachment counts by mime type.
  */
-function wp_count_attachments($mime_type = '' ){ yeah(__METHOD__);
+function wp_count_attachments($mime_type = '' ){
 	global $wpdb;
 
 	$and = wp_post_mime_type_where($mime_type );
@@ -2392,7 +2392,7 @@ function wp_count_attachments($mime_type = '' ){ yeah(__METHOD__);
  *
  * @return array List of post mime types.
  */
-function get_post_mime_types(){ yeah(__METHOD__);
+function get_post_mime_types(){
 	$post_mime_types = array(	//	array(adj, noun )
 		'image' => array(__('Images'), __('Manage Images'), _n_noop('Image <span class="count">(%s)</span>', 'Images <span class="count">(%s)</span>')),
 		'audio' => array(__('Audio'), __('Manage Audio'), _n_noop('Audio <span class="count">(%s)</span>', 'Audio <span class="count">(%s)</span>')),
@@ -2423,7 +2423,7 @@ function get_post_mime_types(){ yeah(__METHOD__);
  * @param string|array $real_mime_types     Real post mime type values.
  * @return array array(wildcard=>array(real types)).
  */
-function wp_match_mime_types($wildcard_mime_types, $real_mime_types ){ yeah(__METHOD__);
+function wp_match_mime_types($wildcard_mime_types, $real_mime_types ){
 	$matches = array();
 	if (is_string($wildcard_mime_types ) ){
 		$wildcard_mime_types = array_map('trim', explode(',', $wildcard_mime_types ) );
@@ -2471,7 +2471,7 @@ function wp_match_mime_types($wildcard_mime_types, $real_mime_types ){ yeah(__ME
  *                                      Default empty.
  * @return string The SQL AND clause for mime searching.
  */
-function wp_post_mime_type_where($post_mime_types, $table_alias = '' ){ yeah(__METHOD__);
+function wp_post_mime_type_where($post_mime_types, $table_alias = '' ){
 	$where = '';
 	$wildcards = array('', '%', '%/%');
 	if (is_string($post_mime_types) )
@@ -2532,7 +2532,7 @@ function wp_post_mime_type_where($post_mime_types, $table_alias = '' ){ yeah(__M
  *                           Default false.
  * @return WP_Post|false|null Post data on success, false or null on failure.
  */
-function wp_delete_post($postid = 0, $force_delete = false ){ yeah(__METHOD__);
+function wp_delete_post($postid = 0, $force_delete = false ){
 	global $wpdb;
 
 	$post = $wpdb->get_row($wpdb->prepare("SELECT * FROM $wpdb->posts WHERE ID = %d", $postid ) );
@@ -2664,7 +2664,7 @@ function wp_delete_post($postid = 0, $force_delete = false ){ yeah(__METHOD__);
  *
  * @param int $post_id Post ID.
  */
-function _reset_front_page_settings_for_post($post_id ){ yeah(__METHOD__);
+function _reset_front_page_settings_for_post($post_id ){
 	$post = get_post($post_id );
 	if ('page' == $post->post_type ){
 	 	/*
@@ -2695,7 +2695,7 @@ function _reset_front_page_settings_for_post($post_id ){ yeah(__METHOD__);
  *                     if EMPTY_TRASH_DAYS equals true.
  * @return WP_Post|false|null Post data on success, false or null on failure.
  */
-function wp_trash_post($post_id = 0 ){ yeah(__METHOD__);
+function wp_trash_post($post_id = 0 ){
 	if (!EMPTY_TRASH_DAYS ){
 		return wp_delete_post($post_id, true );
 	}
@@ -2759,7 +2759,7 @@ function wp_trash_post($post_id = 0 ){ yeah(__METHOD__);
  * @param int $post_id Optional. Post ID. Default is ID of the global $post.
  * @return WP_Post|false|null Post data on success, false or null on failure.
  */
-function wp_untrash_post($post_id = 0 ){ yeah(__METHOD__);
+function wp_untrash_post($post_id = 0 ){
 	$post = get_post($post_id );
 
 	if (!$post ){
@@ -2823,7 +2823,7 @@ function wp_untrash_post($post_id = 0 ){ yeah(__METHOD__);
  * @param int|WP_Post|null $post Optional. Post ID or post object. Defaults to global $post.
  * @return mixed|void False on failure.
  */
-function wp_trash_post_comments($post = null ){ yeah(__METHOD__);
+function wp_trash_post_comments($post = null ){
 	global $wpdb;
 
 	$post = get_post($post);
@@ -2879,7 +2879,7 @@ function wp_trash_post_comments($post = null ){ yeah(__METHOD__);
  * @param int|WP_Post|null $post Optional. Post ID or post object. Defaults to global $post.
  * @return true|void
  */
-function wp_untrash_post_comments($post = null ){ yeah(__METHOD__);
+function wp_untrash_post_comments($post = null ){
 	global $wpdb;
 
 	$post = get_post($post);
@@ -2949,7 +2949,7 @@ function wp_untrash_post_comments($post = null ){ yeah(__METHOD__);
  *                        is 'ids', an array of category ids. If `$fields` is 'names', an array of category names.
  *                        WP_Error object if 'category' taxonomy doesn't exist.
  */
-function wp_get_post_categories($post_id = 0, $args = array() ){ yeah(__METHOD__);
+function wp_get_post_categories($post_id = 0, $args = array() ){
 	$post_id = (int) $post_id;
 
 	$defaults = array('fields' => 'ids');
@@ -2975,7 +2975,7 @@ function wp_get_post_categories($post_id = 0, $args = array() ){ yeah(__METHOD__
  * @return array|WP_Error Array of WP_Term objects on success or empty array if no tags were found.
  *                        WP_Error object if 'post_tag' taxonomy doesn't exist.
  */
-function wp_get_post_tags($post_id = 0, $args = array() ){ yeah(__METHOD__);
+function wp_get_post_tags($post_id = 0, $args = array() ){
 	return wp_get_post_terms($post_id, 'post_tag', $args);
 }
 
@@ -2996,7 +2996,7 @@ function wp_get_post_tags($post_id = 0, $args = array() ){ yeah(__METHOD__);
  * @return array|WP_Error Array of WP_Term objects on success or empty array if no terms were found.
  *                        WP_Error object if `$taxonomy` doesn't exist.
  */
-function wp_get_post_terms($post_id = 0, $taxonomy = 'post_tag', $args = array() ){ yeah(__METHOD__);
+function wp_get_post_terms($post_id = 0, $taxonomy = 'post_tag', $args = array() ){
 	$post_id = (int) $post_id;
 
 	$defaults = array('fields' => 'all');
@@ -3020,7 +3020,7 @@ function wp_get_post_terms($post_id = 0, $taxonomy = 'post_tag', $args = array()
  * @return array|false Array of recent posts, where the type of each element is determined by $output parameter.
  *                     Empty array on failure.
  */
-function wp_get_recent_posts($args = array(), $output = ARRAY_A ){ yeah(__METHOD__);
+function wp_get_recent_posts($args = array(), $output = ARRAY_A ){
 
 	if (is_numeric($args ) ){
 		_deprecated_argument(__FUNCTION__, '3.1.0', __('Passing an integer number of posts is deprecated. Pass an array of arguments instead.' ) );
@@ -3113,7 +3113,7 @@ function wp_get_recent_posts($args = array(), $output = ARRAY_A ){ yeah(__METHOD
  * @param bool  $wp_error Optional. Whether to return a WP_Error on failure. Default false.
  * @return int|WP_Error The post ID on success. The value 0 or WP_Error on failure.
  */
-function wp_insert_post($postarr, $wp_error = false ){ yeah(__METHOD__);
+function wp_insert_post($postarr, $wp_error = false ){
 	global $wpdb;
 
 	// Capture original pre-sanitized array for passing into filters.
@@ -3676,7 +3676,7 @@ function wp_insert_post($postarr, $wp_error = false ){ yeah(__METHOD__);
  * @param bool         $wp_error Optional. Allow return of WP_Error on failure. Default false.
  * @return int|WP_Error The value 0 or WP_Error on failure. The post ID on success.
  */
-function wp_update_post($postarr = array(), $wp_error = false ){ yeah(__METHOD__);
+function wp_update_post($postarr = array(), $wp_error = false ){
 	if (is_object($postarr) ){
 		// Non-escaped post was passed.
 		$postarr = get_object_vars($postarr);
@@ -3732,7 +3732,7 @@ function wp_update_post($postarr = array(), $wp_error = false ){ yeah(__METHOD__
  *
  * @param int|WP_Post $post Post ID or post object.
  */
-function wp_publish_post($post ){ yeah(__METHOD__);
+function wp_publish_post($post ){
 	global $wpdb;
 
 	if (!$post = get_post($post ) )
@@ -3772,7 +3772,7 @@ function wp_publish_post($post ){ yeah(__METHOD__);
  *
  * @param int|WP_Post $post_id Post ID or post object.
  */
-function check_and_publish_future_post($post_id ){ yeah(__METHOD__);
+function check_and_publish_future_post($post_id ){
 	$post = get_post($post_id);
 
 	if (empty($post) )
@@ -3809,7 +3809,7 @@ function check_and_publish_future_post($post_id ){ yeah(__METHOD__);
  * @param int    $post_parent Post parent ID.
  * @return string Unique slug for the post, based on $post_name (with a -1, -2, etc. suffix)
  */
-function wp_unique_post_slug($slug, $post_ID, $post_status, $post_type, $post_parent ){ yeah(__METHOD__);
+function wp_unique_post_slug($slug, $post_ID, $post_status, $post_type, $post_parent ){
 	if (in_array($post_status, array('draft', 'pending', 'auto-draft' ) ) || ('inherit' == $post_status && 'revision' == $post_type ) || 'user_request' === $post_type )
 		return $slug;
 
@@ -3947,7 +3947,7 @@ function wp_unique_post_slug($slug, $post_ID, $post_status, $post_type, $post_pa
  * @param int    $length Optional. Max length of the slug. Default 200 (characters).
  * @return string The truncated slug.
  */
-function _truncate_post_slug($slug, $length = 200 ){ yeah(__METHOD__);
+function _truncate_post_slug($slug, $length = 200 ){
 	if (strlen($slug ) > $length ){
 		$decoded_slug = urldecode($slug );
 		if ($decoded_slug === $slug )
@@ -3971,7 +3971,7 @@ function _truncate_post_slug($slug, $length = 200 ){ yeah(__METHOD__);
  *                              separated by commas. Default empty.
  * @return array|false|WP_Error Array of affected term IDs. WP_Error or false on failure.
  */
-function wp_add_post_tags($post_id = 0, $tags = '' ){ yeah(__METHOD__);
+function wp_add_post_tags($post_id = 0, $tags = '' ){
 	return wp_set_post_tags($post_id, $tags, true);
 }
 
@@ -3989,7 +3989,7 @@ function wp_add_post_tags($post_id = 0, $tags = '' ){ yeah(__METHOD__);
  *                              replace the tags with the new tags. Default false.
  * @return array|false|WP_Error Array of term taxonomy IDs of affected terms. WP_Error or false on failure.
  */
-function wp_set_post_tags($post_id = 0, $tags = '', $append = false ){ yeah(__METHOD__);
+function wp_set_post_tags($post_id = 0, $tags = '', $append = false ){
 	return wp_set_post_terms($post_id, $tags, 'post_tag', $append);
 }
 
@@ -4008,7 +4008,7 @@ function wp_set_post_tags($post_id = 0, $tags = '', $append = false ){ yeah(__ME
  *                               replace the terms with the new terms. Default false.
  * @return array|false|WP_Error Array of term taxonomy IDs of affected terms. WP_Error or false on failure.
  */
-function wp_set_post_terms($post_id = 0, $tags = '', $taxonomy = 'post_tag', $append = false ){ yeah(__METHOD__);
+function wp_set_post_terms($post_id = 0, $tags = '', $taxonomy = 'post_tag', $append = false ){
 	$post_id = (int) $post_id;
 
 	if (!$post_id )
@@ -4051,7 +4051,7 @@ function wp_set_post_terms($post_id = 0, $tags = '', $taxonomy = 'post_tag', $ap
  *                                  If false, replace the categories with the new categories.
  * @return array|false|WP_Error Array of term taxonomy IDs of affected categories. WP_Error or false on failure.
  */
-function wp_set_post_categories($post_ID = 0, $post_categories = array(), $append = false ){ yeah(__METHOD__);
+function wp_set_post_categories($post_ID = 0, $post_categories = array(), $append = false ){
 	$post_ID = (int) $post_ID;
 	$post_type = get_post_type($post_ID );
 	$post_status = get_post_status($post_ID );
@@ -4092,7 +4092,7 @@ function wp_set_post_categories($post_ID = 0, $post_categories = array(), $appen
  * @param string  $old_status Previous post status.
  * @param WP_Post $post Post data.
  */
-function wp_transition_post_status($new_status, $old_status, $post ){ yeah(__METHOD__);
+function wp_transition_post_status($new_status, $old_status, $post ){
 	/**
 	 * Fires when a post is transitioned from one status to another.
 	 *
@@ -4155,7 +4155,7 @@ function wp_transition_post_status($new_status, $old_status, $post ){ yeah(__MET
  * @param string|array $uri     Ping URI or array of URIs.
  * @return int|false How many rows were updated.
  */
-function add_ping($post_id, $uri ){ yeah(__METHOD__);
+function add_ping($post_id, $uri ){
 	global $wpdb;
 
 	$post = get_post($post_id );
@@ -4196,7 +4196,7 @@ function add_ping($post_id, $uri ){ yeah(__METHOD__);
  * @param int $post_id Post ID.
  * @return array List of enclosures.
  */
-function get_enclosed($post_id ){ yeah(__METHOD__);
+function get_enclosed($post_id ){
 	$custom_fields = get_post_custom($post_id );
 	$pung = array();
 	if (!is_array($custom_fields ) )
@@ -4232,7 +4232,7 @@ function get_enclosed($post_id ){ yeah(__METHOD__);
  * @param int|WP_Post $post_id Post ID or object.
  * @return array
  */
-function get_pung($post_id ){ yeah(__METHOD__);
+function get_pung($post_id ){
 	$post = get_post($post_id );
 	if (!$post ){
 		return false;
@@ -4260,7 +4260,7 @@ function get_pung($post_id ){ yeah(__METHOD__);
  * @param int|WP_Post $post_id Post Object or ID
  * @return array
  */
-function get_to_ping($post_id ){ yeah(__METHOD__);
+function get_to_ping($post_id ){
 	$post = get_post($post_id );
 
 	if (!$post ){
@@ -4288,7 +4288,7 @@ function get_to_ping($post_id ){ yeah(__METHOD__);
  * @param string $tb_list Comma separated list of URLs.
  * @param int    $post_id Post ID.
  */
-function trackback_url_list($tb_list, $post_id ){ yeah(__METHOD__);
+function trackback_url_list($tb_list, $post_id ){
 	if (!empty($tb_list ) ){
 		// Get post data.
 		$postdata = get_post($post_id, ARRAY_A );
@@ -4321,7 +4321,7 @@ function trackback_url_list($tb_list, $post_id ){ yeah(__METHOD__);
  *
  * @return array List of page IDs.
  */
-function get_all_page_ids(){ yeah(__METHOD__);
+function get_all_page_ids(){
 	global $wpdb;
 
 	$page_ids = wp_cache_get('all_page_ids', 'posts');
@@ -4348,7 +4348,7 @@ function get_all_page_ids(){ yeah(__METHOD__);
  *                       'edit', 'db', 'display'. Default 'raw'.
  * @return WP_Post|array|null WP_Post (or array) on success, or null on failure.
  */
-function get_page($page, $output = OBJECT, $filter = 'raw'){ yeah(__METHOD__);
+function get_page($page, $output = OBJECT, $filter = 'raw'){
 	return get_post($page, $output, $filter );
 }
 
@@ -4365,7 +4365,7 @@ function get_page($page, $output = OBJECT, $filter = 'raw'){ yeah(__METHOD__);
  * @param string|array $post_type Optional. Post type or array of post types. Default 'page'.
  * @return WP_Post|array|null WP_Post (or array) on success, or null on failure.
  */
-function get_page_by_path($page_path, $output = OBJECT, $post_type = 'page' ){ yeah(__METHOD__);
+function get_page_by_path($page_path, $output = OBJECT, $post_type = 'page' ){
 	global $wpdb;
 
 	$last_changed = wp_cache_get_last_changed('posts' );
@@ -4457,7 +4457,7 @@ function get_page_by_path($page_path, $output = OBJECT, $post_type = 'page' ){ y
  * @param string|array $post_type  Optional. Post type or array of post types. Default 'page'.
  * @return WP_Post|array|null WP_Post (or array) on success, or null on failure.
  */
-function get_page_by_title($page_title, $output = OBJECT, $post_type = 'page' ){ yeah(__METHOD__);
+function get_page_by_title($page_title, $output = OBJECT, $post_type = 'page' ){
 	global $wpdb;
 
 	if (is_array($post_type ) ){
@@ -4496,7 +4496,7 @@ function get_page_by_title($page_title, $output = OBJECT, $post_type = 'page' ){
  * @param array $pages   List of page objects from which descendants should be identified.
  * @return array List of page children.
  */
-function get_page_children($page_id, $pages ){ yeah(__METHOD__);
+function get_page_children($page_id, $pages ){
 	// Build a hash of ID -> children.
 	$children = array();
 	foreach ((array) $pages as $page ){
@@ -4537,7 +4537,7 @@ function get_page_children($page_id, $pages ){ yeah(__METHOD__);
  * @param int   $page_id Optional. Parent page ID. Default 0.
  * @return array A list arranged by hierarchy. Children immediately follow their parents.
  */
-function get_page_hierarchy(&$pages, $page_id = 0 ){ yeah(__METHOD__);
+function get_page_hierarchy(&$pages, $page_id = 0 ){
 	if (empty($pages ) ){
 		return array();
 	}
@@ -4567,7 +4567,7 @@ function get_page_hierarchy(&$pages, $page_id = 0 ){ yeah(__METHOD__);
  * @param array $children  Parent-children relations (passed by reference).
  * @param array $result    Result (passed by reference).
  */
-function _page_traverse_name($page_id, &$children, &$result ){ yeah(__METHOD__);
+function _page_traverse_name($page_id, &$children, &$result ){
 	if (isset($children[ $page_id ] ) ){
 		foreach ((array)$children[ $page_id ] as $child ){
 			$result[ $child->ID ] = $child->post_name;
@@ -4587,7 +4587,7 @@ function _page_traverse_name($page_id, &$children, &$result ){ yeah(__METHOD__);
  * @param WP_Post|object|int $page Optional. Page ID or WP_Post object. Default is global $post.
  * @return string|false Page URI, false on error.
  */
-function get_page_uri($page = 0 ){ yeah(__METHOD__);
+function get_page_uri($page = 0 ){
 	if (!$page instanceof WP_Post ){
 		$page = get_post($page );
 	}
@@ -4657,7 +4657,7 @@ function get_page_uri($page = 0 ){ yeah(__METHOD__);
  * }
  * @return array|false List of pages matching defaults or `$args`.
  */
-function get_pages($args = array() ){ yeah(__METHOD__);
+function get_pages($args = array() ){
 	global $wpdb;
 
 	$defaults = array(
@@ -4926,7 +4926,7 @@ function get_pages($args = array() ){ yeah(__METHOD__);
  * @param string $url URL to check
  * @return bool True on success, false on failure.
  */
-function is_local_attachment($url){ yeah(__METHOD__);
+function is_local_attachment($url){
 	if (strpos($url, home_url()) === false)
 		return false;
 	if (strpos($url, home_url('/?attachment_id=')) !== false)
@@ -4964,7 +4964,7 @@ function is_local_attachment($url){ yeah(__METHOD__);
  * @param bool         $wp_error Optional. Whether to return a WP_Error on failure. Default false.
  * @return int|WP_Error The attachment ID on success. The value 0 or WP_Error on failure.
  */
-function wp_insert_attachment($args, $file = false, $parent = 0, $wp_error = false ){ yeah(__METHOD__);
+function wp_insert_attachment($args, $file = false, $parent = 0, $wp_error = false ){
 	$defaults = array(
 		'file'        => $file,
 		'post_parent' => 0
@@ -5000,7 +5000,7 @@ function wp_insert_attachment($args, $file = false, $parent = 0, $wp_error = fal
  *                           Default false.
  * @return WP_Post|false|null Post data on success, false or null on failure.
  */
-function wp_delete_attachment($post_id, $force_delete = false ){ yeah(__METHOD__);
+function wp_delete_attachment($post_id, $force_delete = false ){
 	global $wpdb;
 
 	$post = $wpdb->get_row($wpdb->prepare("SELECT * FROM $wpdb->posts WHERE ID = %d", $post_id ) );
@@ -5077,7 +5077,7 @@ function wp_delete_attachment($post_id, $force_delete = false ){ yeah(__METHOD__
  * @param string $file         Absolute path to the attachment's file.
  * @return bool True on success, false on failure.
  */
-function wp_delete_attachment_files($post_id, $meta, $backup_sizes, $file ){ yeah(__METHOD__);
+function wp_delete_attachment_files($post_id, $meta, $backup_sizes, $file ){
 	global $wpdb;
 
 	$uploadpath = wp_get_upload_dir();
@@ -5143,7 +5143,7 @@ function wp_delete_attachment_files($post_id, $meta, $backup_sizes, $file ){ yea
  * @param bool $unfiltered    Optional. If true, filters are not run. Default false.
  * @return mixed Attachment meta field. False on failure.
  */
-function wp_get_attachment_metadata($attachment_id = 0, $unfiltered = false ){ yeah(__METHOD__);
+function wp_get_attachment_metadata($attachment_id = 0, $unfiltered = false ){
 	$attachment_id = (int) $attachment_id;
 	if (!$post = get_post($attachment_id ) ){
 		return false;
@@ -5175,7 +5175,7 @@ function wp_get_attachment_metadata($attachment_id = 0, $unfiltered = false ){ y
  * @param array $data          Attachment meta data.
  * @return int|bool False if $post is invalid.
  */
-function wp_update_attachment_metadata($attachment_id, $data ){ yeah(__METHOD__);
+function wp_update_attachment_metadata($attachment_id, $data ){
 	$attachment_id = (int) $attachment_id;
 	if (!$post = get_post($attachment_id ) ){
 		return false;
@@ -5205,7 +5205,7 @@ function wp_update_attachment_metadata($attachment_id, $data ){ yeah(__METHOD__)
  * @param int $attachment_id Optional. Attachment post ID. Defaults to global $post.
  * @return string|false Attachment URL, otherwise false.
  */
-function wp_get_attachment_url($attachment_id = 0 ){ yeah(__METHOD__);
+function wp_get_attachment_url($attachment_id = 0 ){
 	$attachment_id = (int) $attachment_id;
 	if (!$post = get_post($attachment_id ) ){
 		return false;
@@ -5270,7 +5270,7 @@ function wp_get_attachment_url($attachment_id = 0 ){ yeah(__METHOD__);
  * @param int $post_id Optional. Attachment ID. Default is the ID of the global `$post`.
  * @return string|false False on failure. Attachment caption on success.
  */
-function wp_get_attachment_caption($post_id = 0 ){ yeah(__METHOD__);
+function wp_get_attachment_caption($post_id = 0 ){
 	$post_id = (int) $post_id;
 	if (!$post = get_post($post_id ) ){
 		return false;
@@ -5301,7 +5301,7 @@ function wp_get_attachment_caption($post_id = 0 ){ yeah(__METHOD__);
  * @param int $post_id Optional. Attachment ID. Default 0.
  * @return string|false False on failure. Thumbnail file path on success.
  */
-function wp_get_attachment_thumb_file($post_id = 0 ){ yeah(__METHOD__);
+function wp_get_attachment_thumb_file($post_id = 0 ){
 	$post_id = (int) $post_id;
 	if (!$post = get_post($post_id ) )
 		return false;
@@ -5332,7 +5332,7 @@ function wp_get_attachment_thumb_file($post_id = 0 ){ yeah(__METHOD__);
  * @param int $post_id Optional. Attachment ID. Default 0.
  * @return string|false False on failure. Thumbnail URL on success.
  */
-function wp_get_attachment_thumb_url($post_id = 0 ){ yeah(__METHOD__);
+function wp_get_attachment_thumb_url($post_id = 0 ){
 	$post_id = (int) $post_id;
 	if (!$post = get_post($post_id ) )
 		return false;
@@ -5368,7 +5368,7 @@ function wp_get_attachment_thumb_url($post_id = 0 ){ yeah(__METHOD__);
  * @param int|WP_Post $post Optional. Attachment ID or object. Default is global $post.
  * @return bool True if one of the accepted types, false otherwise.
  */
-function wp_attachment_is($type, $post = null ){ yeah(__METHOD__);
+function wp_attachment_is($type, $post = null ){
 	if (!$post = get_post($post ) ){
 		return false;
 	}
@@ -5418,7 +5418,7 @@ function wp_attachment_is($type, $post = null ){ yeah(__METHOD__);
  * @param int|WP_Post $post Optional. Attachment ID or object. Default is global $post.
  * @return bool Whether the attachment is an image.
  */
-function wp_attachment_is_image($post = null ){ yeah(__METHOD__);
+function wp_attachment_is_image($post = null ){
 	return wp_attachment_is('image', $post );
 }
 
@@ -5430,7 +5430,7 @@ function wp_attachment_is_image($post = null ){ yeah(__METHOD__);
  * @param string|int $mime MIME type or attachment ID.
  * @return string|false Icon, false otherwise.
  */
-function wp_mime_type_icon($mime = 0 ){ yeah(__METHOD__);
+function wp_mime_type_icon($mime = 0 ){
 	if (!is_numeric($mime) )
 		$icon = wp_cache_get("mime_type_icon_$mime");
 
@@ -5569,7 +5569,7 @@ function wp_mime_type_icon($mime = 0 ){ yeah(__METHOD__);
  * @param WP_Post $post        The Post Object
  * @param WP_Post $post_before The Previous Post Object
  */
-function wp_check_for_changed_slugs($post_id, $post, $post_before ){ yeah(__METHOD__);
+function wp_check_for_changed_slugs($post_id, $post, $post_before ){
 	// Don't bother if it hasn't changed.
 	if ($post->post_name == $post_before->post_name ){
 		return;
@@ -5612,7 +5612,7 @@ function wp_check_for_changed_slugs($post_id, $post, $post_before ){ yeah(__METH
  * @param WP_Post $post        The Post Object
  * @param WP_Post $post_before The Previous Post Object
  */
-function wp_check_for_changed_dates($post_id, $post, $post_before ){ yeah(__METHOD__);
+function wp_check_for_changed_dates($post_id, $post, $post_before ){
 	$previous_date = date('Y-m-d', strtotime($post_before->post_date ) );
 	$new_date = date('Y-m-d', strtotime($post->post_date ) );
 	// Don't bother if it hasn't changed.
@@ -5648,7 +5648,7 @@ function wp_check_for_changed_dates($post_id, $post, $post_before ){ yeah(__METH
  * @param string|array $post_type Single post type or an array of post types. Currently only supports 'post' or 'page'.
  * @return string SQL code that can be added to a where clause.
  */
-function get_private_posts_cap_sql($post_type ){ yeah(__METHOD__);
+function get_private_posts_cap_sql($post_type ){
 	return get_posts_by_author_sql($post_type, false );
 }
 
@@ -5669,7 +5669,7 @@ function get_private_posts_cap_sql($post_type ){ yeah(__METHOD__);
  *                                    $current_user.  Default false.
  * @return string SQL WHERE code that can be added to a query.
  */
-function get_posts_by_author_sql($post_type, $full = true, $post_author = null, $public_only = false ){ yeah(__METHOD__);
+function get_posts_by_author_sql($post_type, $full = true, $post_author = null, $public_only = false ){
 	global $wpdb;
 
 	if (is_array($post_type ) ){
@@ -5753,7 +5753,7 @@ function get_posts_by_author_sql($post_type, $full = true, $post_author = null, 
  * @param string $post_type Optional. The post type to check. Default 'any'.
  * @return string The date of the last post.
  */
-function get_lastpostdate($timezone = 'server', $post_type = 'any' ){ yeah(__METHOD__);
+function get_lastpostdate($timezone = 'server', $post_type = 'any' ){
 	/**
 	 * Filters the date the last post was published.
 	 *
@@ -5782,7 +5782,7 @@ function get_lastpostdate($timezone = 'server', $post_type = 'any' ){ yeah(__MET
  * @param string $post_type Optional. The post type to check. Default 'any'.
  * @return string The timestamp.
  */
-function get_lastpostmodified($timezone = 'server', $post_type = 'any' ){ yeah(__METHOD__);
+function get_lastpostmodified($timezone = 'server', $post_type = 'any' ){
 	/**
 	 * Pre-filter the return value of get_lastpostmodified() before the query is run.
 	 *
@@ -5833,7 +5833,7 @@ function get_lastpostmodified($timezone = 'server', $post_type = 'any' ){ yeah(_
  * @param string $post_type Optional. The post type to check. Default 'any'.
  * @return string|false The timestamp.
  */
-function _get_last_post_time($timezone, $field, $post_type = 'any' ){ yeah(__METHOD__);
+function _get_last_post_time($timezone, $field, $post_type = 'any' ){
 	global $wpdb;
 
 	if (!in_array($field, array('date', 'modified' ) ) ){
@@ -5889,7 +5889,7 @@ function _get_last_post_time($timezone, $field, $post_type = 'any' ){ yeah(__MET
  *
  * @param array $posts Array of post objects (passed by reference).
  */
-function update_post_cache(&$posts ){ yeah(__METHOD__);
+function update_post_cache(&$posts ){
 	if (!$posts )
 		return;
 
@@ -5912,7 +5912,7 @@ function update_post_cache(&$posts ){ yeah(__METHOD__);
  *
  * @param int|WP_Post $post Post ID or post object to remove from the cache.
  */
-function clean_post_cache($post ){ yeah(__METHOD__);
+function clean_post_cache($post ){
 	global $_wp_suspend_cache_invalidation;
 
 	if (!empty($_wp_suspend_cache_invalidation ) )
@@ -5965,7 +5965,7 @@ function clean_post_cache($post ){ yeah(__METHOD__);
  * @param bool   $update_term_cache Optional. Whether to update the term cache. Default true.
  * @param bool   $update_meta_cache Optional. Whether to update the meta cache. Default true.
  */
-function update_post_caches(&$posts, $post_type = 'post', $update_term_cache = true, $update_meta_cache = true ){ yeah(__METHOD__);
+function update_post_caches(&$posts, $post_type = 'post', $update_term_cache = true, $update_meta_cache = true ){
 	// No point in doing all this work if we didn't match any posts.
 	if (!$posts )
 		return;
@@ -6014,7 +6014,7 @@ function update_post_caches(&$posts, $post_type = 'post', $update_term_cache = t
  * @return array|false Returns false if there is nothing to update or an array
  *                     of metadata.
  */
-function update_postmeta_cache($post_ids ){ yeah(__METHOD__);
+function update_postmeta_cache($post_ids ){
 	return update_meta_cache('post', $post_ids);
 }
 
@@ -6033,7 +6033,7 @@ function update_postmeta_cache($post_ids ){ yeah(__METHOD__);
  * @param int  $id          The attachment ID in the cache to clean.
  * @param bool $clean_terms Optional. Whether to clean terms cache. Default false.
  */
-function clean_attachment_cache($id, $clean_terms = false ){ yeah(__METHOD__);
+function clean_attachment_cache($id, $clean_terms = false ){
 	global $_wp_suspend_cache_invalidation;
 
 	if (!empty($_wp_suspend_cache_invalidation) )
@@ -6074,7 +6074,7 @@ function clean_attachment_cache($id, $clean_terms = false ){ yeah(__METHOD__);
  * @param string  $old_status Previous post status.
  * @param WP_Post $post       Post object.
  */
-function _transition_post_status($new_status, $old_status, $post ){ yeah(__METHOD__);
+function _transition_post_status($new_status, $old_status, $post ){
 	global $wpdb;
 
 	if ($old_status != 'publish' && $new_status == 'publish' ){
@@ -6124,7 +6124,7 @@ function _transition_post_status($new_status, $old_status, $post ){ yeah(__METHO
  *                            wp_transition_post_status() and the default filter for _future_post_hook().
  * @param WP_Post $post       Post object.
  */
-function _future_post_hook($deprecated, $post ){ yeah(__METHOD__);
+function _future_post_hook($deprecated, $post ){
 	wp_clear_scheduled_hook('publish_future_post', array($post->ID ) );
 	wp_schedule_single_event(strtotime(get_gmt_from_date($post->post_date ) . ' GMT') , 'publish_future_post', array($post->ID ) );
 }
@@ -6139,7 +6139,7 @@ function _future_post_hook($deprecated, $post ){ yeah(__METHOD__);
  *
  * @param int $post_id The ID in the database table of the post being published.
  */
-function _publish_post_hook($post_id ){ yeah(__METHOD__);
+function _publish_post_hook($post_id ){
 	if (defined('XMLRPC_REQUEST' ) ){
 		/**
 		 * Fires when _publish_post_hook() is called during an XML-RPC request.
@@ -6172,7 +6172,7 @@ function _publish_post_hook($post_id ){ yeah(__METHOD__);
  *
  * @return int|false Post parent ID, otherwise false.
  */
-function wp_get_post_parent_id($post_ID ){ yeah(__METHOD__);
+function wp_get_post_parent_id($post_ID ){
 	$post = get_post($post_ID );
 	if (!$post || is_wp_error($post ) )
 		return false;
@@ -6193,7 +6193,7 @@ function wp_get_post_parent_id($post_ID ){ yeah(__METHOD__);
  * @param int $post_ID     ID of the post we're checking.
  * @return int The new post_parent for the post, 0 otherwise.
  */
-function wp_check_post_hierarchy_for_loops($post_parent, $post_ID ){ yeah(__METHOD__);
+function wp_check_post_hierarchy_for_loops($post_parent, $post_ID ){
 	// Nothing fancy here - bail.
 	if (!$post_parent )
 		return 0;
@@ -6230,7 +6230,7 @@ function wp_check_post_hierarchy_for_loops($post_parent, $post_ID ){ yeah(__METH
  * @param int         $thumbnail_id Thumbnail to attach.
  * @return int|bool True on success, false on failure.
  */
-function set_post_thumbnail($post, $thumbnail_id ){ yeah(__METHOD__);
+function set_post_thumbnail($post, $thumbnail_id ){
 	$post = get_post($post );
 	$thumbnail_id = absint($thumbnail_id );
 	if ($post && $thumbnail_id && get_post($thumbnail_id ) ){
@@ -6250,7 +6250,7 @@ function set_post_thumbnail($post, $thumbnail_id ){ yeah(__METHOD__);
  * @param int|WP_Post $post Post ID or post object where thumbnail should be removed from.
  * @return bool True on success, false on failure.
  */
-function delete_post_thumbnail($post ){ yeah(__METHOD__);
+function delete_post_thumbnail($post ){
 	$post = get_post($post );
 	if ($post )
 		return delete_post_meta($post->ID, '_thumbnail_id' );
@@ -6264,7 +6264,7 @@ function delete_post_thumbnail($post ){ yeah(__METHOD__);
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function wp_delete_auto_drafts(){ yeah(__METHOD__);
+function wp_delete_auto_drafts(){
 	global $wpdb;
 
 	// Cleanup old auto-drafts more than 7 days old.
@@ -6282,7 +6282,7 @@ function wp_delete_auto_drafts(){ yeah(__METHOD__);
  *
  * @param array $posts Array of WP_Post objects.
  */
-function wp_queue_posts_for_term_meta_lazyload($posts ){ yeah(__METHOD__);
+function wp_queue_posts_for_term_meta_lazyload($posts ){
 	$post_type_taxonomies = $term_ids = array();
 	foreach ($posts as $post ){
 		if (!($post instanceof WP_Post ) ){
@@ -6325,7 +6325,7 @@ function wp_queue_posts_for_term_meta_lazyload($posts ){ yeah(__METHOD__);
  * @param string  $old_status Old post status.
  * @param WP_Post $post       Post object.
  */
-function _update_term_count_on_transition_post_status($new_status, $old_status, $post ){ yeah(__METHOD__);
+function _update_term_count_on_transition_post_status($new_status, $old_status, $post ){
 	// Update counts for the post's terms.
 	foreach ((array) get_object_taxonomies($post->post_type ) as $taxonomy ){
 		$tt_ids = wp_get_object_terms($post->ID, $taxonomy, array('fields' => 'tt_ids' ) );
@@ -6347,7 +6347,7 @@ function _update_term_count_on_transition_post_status($new_status, $old_status, 
  * @param bool  $update_term_cache Optional. Whether to update the term cache. Default true.
  * @param bool  $update_meta_cache Optional. Whether to update the meta cache. Default true.
  */
-function _prime_post_caches($ids, $update_term_cache = true, $update_meta_cache = true ){ yeah(__METHOD__);
+function _prime_post_caches($ids, $update_term_cache = true, $update_meta_cache = true ){
 	global $wpdb;
 
 	$non_cached_ids = _get_non_cached_ids($ids, 'posts' );
@@ -6372,7 +6372,7 @@ function _prime_post_caches($ids, $update_term_cache = true, $update_meta_cache 
  * @param string $post_name Slug.
  * @param string $post_ID   Optional. Post ID that should be ignored. Default 0.
  */
-function wp_add_trashed_suffix_to_post_name_for_trashed_posts($post_name, $post_ID = 0 ){ yeah(__METHOD__);
+function wp_add_trashed_suffix_to_post_name_for_trashed_posts($post_name, $post_ID = 0 ){
 	$trashed_posts_with_desired_slug = get_posts(array(
 		'name' => $post_name,
 		'post_status' => 'trash',
@@ -6402,7 +6402,7 @@ function wp_add_trashed_suffix_to_post_name_for_trashed_posts($post_name, $post_
  * @param WP_Post $post The post.
  * @return string New slug for the post.
  */
-function wp_add_trashed_suffix_to_post_name_for_post($post ){ yeah(__METHOD__);
+function wp_add_trashed_suffix_to_post_name_for_post($post ){
 	global $wpdb;
 
 	$post = get_post($post );
@@ -6429,7 +6429,7 @@ function wp_add_trashed_suffix_to_post_name_for_post($post ){ yeah(__METHOD__);
  *                       DISTINCT, fields (SELECT), and LIMITS clauses.
  * @return array The modified clauses.
  */
-function _filter_query_attachment_filenames($clauses ){ yeah(__METHOD__);
+function _filter_query_attachment_filenames($clauses ){
 	global $wpdb;
 	remove_filter('posts_clauses', __FUNCTION__ );
 

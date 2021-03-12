@@ -14,7 +14,7 @@
  * @global array $wp_importers
  * @return array
  */
-function get_importers() { yeah(__METHOD__);
+function get_importers() {
 	global $wp_importers;
 	if ( is_array( $wp_importers)) {
 		uasort( $wp_importers, '_usort_by_first_member');
@@ -34,7 +34,7 @@ function get_importers() { yeah(__METHOD__);
  * @param array $b
  * @return int
  */
-function _usort_by_first_member( $a, $b) { yeah(__METHOD__);
+function _usort_by_first_member( $a, $b) {
 	return strnatcasecmp( $a[0], $b[0]);
 }
 
@@ -51,7 +51,7 @@ function _usort_by_first_member( $a, $b) { yeah(__METHOD__);
  * @param callable $callback    Callback to run.
  * @return WP_Error Returns WP_Error when $callback is WP_Error.
  */
-function register_importer( $id, $name, $description, $callback) { yeah(__METHOD__);
+function register_importer( $id, $name, $description, $callback) {
 	global $wp_importers;
 	if ( is_wp_error( $callback))
 		return $callback;
@@ -67,7 +67,7 @@ function register_importer( $id, $name, $description, $callback) { yeah(__METHOD
  *
  * @param string $id Importer ID.
  */
-function wp_import_cleanup( $id) { yeah(__METHOD__);
+function wp_import_cleanup( $id) {
 	wp_delete_attachment( $id);
 }
 
@@ -78,7 +78,7 @@ function wp_import_cleanup( $id) { yeah(__METHOD__);
  *
  * @return array Uploaded file's details on success, error message on failure
  */
-function wp_import_handle_upload() { yeah(__METHOD__);
+function wp_import_handle_upload() {
 	if ( !isset( $_FILES['import'])) {
 		return array(
 			'error' => __( 'File is empty. Please upload something more substantial. This error could also be caused by uploads being disabled in your php.ini or by post_max_size being defined as smaller than upload_max_filesize in php.ini.')
@@ -122,7 +122,7 @@ function wp_import_handle_upload() { yeah(__METHOD__);
  *
  * @return array Importers with metadata for each.
  */
-function wp_get_popular_importers() { yeah(__METHOD__);
+function wp_get_popular_importers() {
 	include( ABSPATH . WPINC . '/version.php'); // include an unmodified $wp_version
 
 	$locale = get_user_locale();

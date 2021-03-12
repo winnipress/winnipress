@@ -19,7 +19,7 @@ class WP_HTTP_IXR_Client extends IXR_Client {
 	 * @param int|bool $port
 	 * @param int $timeout
 	 */
-	public function __construct($server, $path = false, $port = false, $timeout = 15) { yeah(__METHOD__);
+	public function __construct($server, $path = false, $port = false, $timeout = 15) {
 		if (!$path ) {
 			// Assume we have been given a URL instead
 			$bits = parse_url($server);
@@ -49,7 +49,7 @@ class WP_HTTP_IXR_Client extends IXR_Client {
 	/**
 	 * @return bool
 	 */
-	public function query() { yeah(__METHOD__);
+	public function query() {
 		$args = func_get_args();
 		$method = array_shift($args);
 		$request = new IXR_Request($method, $args);

@@ -67,7 +67,7 @@ class WP_Http_Curl {
 	 * @param string|array $args Optional. Override the defaults.
 	 * @return array|WP_Error Array containing 'headers', 'body', 'response', 'cookies', 'filename'. A WP_Error instance upon error
 	 */
-	public function request($url, $args = array()) { yeah(__METHOD__);
+	public function request($url, $args = array()) {
 		$defaults = array(
 			'method' => 'GET', 'timeout' => 5,
 			'redirection' => 5, 'httpversion' => '1.0',
@@ -309,7 +309,7 @@ class WP_Http_Curl {
 	 * @param string   $headers cURL request headers.
 	 * @return int Length of the request headers.
 	 */
-	private function stream_headers($handle, $headers ) { yeah(__METHOD__);
+	private function stream_headers($handle, $headers ) {
 		$this->headers .= $headers;
 		return strlen($headers );
 	}
@@ -327,7 +327,7 @@ class WP_Http_Curl {
 	 * @param string   $data    cURL request body.
 	 * @return int Total bytes of data written.
 	 */
-	private function stream_body($handle, $data ) { yeah(__METHOD__);
+	private function stream_body($handle, $data ) {
 		$data_length = strlen($data );
 
 		if ($this->max_body_length && ($this->bytes_written_total + $data_length ) > $this->max_body_length ) {
@@ -357,7 +357,7 @@ class WP_Http_Curl {
 	 * @param array $args Optional. Array of request arguments. Default empty array.
 	 * @return bool False means this class can not be used, true means it can.
 	 */
-	public static function test($args = array() ) { yeah(__METHOD__);
+	public static function test($args = array() ) {
 		if (!function_exists('curl_init' ) || !function_exists('curl_exec' ) )
 			return false;
 

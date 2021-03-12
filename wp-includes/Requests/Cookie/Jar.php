@@ -25,7 +25,7 @@ class Requests_Cookie_Jar implements ArrayAccess, IteratorAggregate {
 	 *
 	 * @param array $cookies Existing cookie values
 	 */
-	public function __construct($cookies = array()){ yeah(__METHOD__);
+	public function __construct($cookies = array()){
 		$this->cookies = $cookies;
 	}
 
@@ -35,7 +35,7 @@ class Requests_Cookie_Jar implements ArrayAccess, IteratorAggregate {
 	 * @param string|Requests_Cookie $cookie
 	 * @return Requests_Cookie
 	 */
-	public function normalize_cookie($cookie, $key = null){ yeah(__METHOD__);
+	public function normalize_cookie($cookie, $key = null){
 		if ($cookie instanceof Requests_Cookie){
 			return $cookie;
 		}
@@ -50,7 +50,7 @@ class Requests_Cookie_Jar implements ArrayAccess, IteratorAggregate {
 	 * @deprecated Use {@see Requests_Cookie_Jar::normalize_cookie}
 	 * @return Requests_Cookie
 	 */
-	public function normalizeCookie($cookie, $key = null){ yeah(__METHOD__);
+	public function normalizeCookie($cookie, $key = null){
 		return $this->normalize_cookie($cookie, $key);
 	}
 
@@ -60,7 +60,7 @@ class Requests_Cookie_Jar implements ArrayAccess, IteratorAggregate {
 	 * @param string $key Item key
 	 * @return boolean Does the item exist?
 	 */
-	public function offsetExists($key){ yeah(__METHOD__);
+	public function offsetExists($key){
 		return isset($this->cookies[$key]);
 	}
 
@@ -70,7 +70,7 @@ class Requests_Cookie_Jar implements ArrayAccess, IteratorAggregate {
 	 * @param string $key Item key
 	 * @return string Item value
 	 */
-	public function offsetGet($key){ yeah(__METHOD__);
+	public function offsetGet($key){
 		if (!isset($this->cookies[$key])){
 			return null;
 		}
@@ -86,7 +86,7 @@ class Requests_Cookie_Jar implements ArrayAccess, IteratorAggregate {
 	 * @param string $key Item name
 	 * @param string $value Item value
 	 */
-	public function offsetSet($key, $value){ yeah(__METHOD__);
+	public function offsetSet($key, $value){
 		if ($key === null){
 			throw new Requests_Exception('Object is a dictionary, not a list', 'invalidset');
 		}
@@ -99,7 +99,7 @@ class Requests_Cookie_Jar implements ArrayAccess, IteratorAggregate {
 	 *
 	 * @param string $key
 	 */
-	public function offsetUnset($key){ yeah(__METHOD__);
+	public function offsetUnset($key){
 		unset($this->cookies[$key]);
 	}
 
@@ -108,7 +108,7 @@ class Requests_Cookie_Jar implements ArrayAccess, IteratorAggregate {
 	 *
 	 * @return ArrayIterator
 	 */
-	public function getIterator(){ yeah(__METHOD__);
+	public function getIterator(){
 		return new ArrayIterator($this->cookies);
 	}
 
@@ -117,7 +117,7 @@ class Requests_Cookie_Jar implements ArrayAccess, IteratorAggregate {
 	 *
 	 * @param Requests_Hooker $hooks Hooking system
 	 */
-	public function register(Requests_Hooker $hooks){ yeah(__METHOD__);
+	public function register(Requests_Hooker $hooks){
 		$hooks->register('requests.before_request', array($this, 'before_request'));
 		$hooks->register('requests.before_redirect_check', array($this, 'before_redirect_check'));
 	}
@@ -133,7 +133,7 @@ class Requests_Cookie_Jar implements ArrayAccess, IteratorAggregate {
 	 * @param string $type
 	 * @param array $options
 	 */
-	public function before_request($url, &$headers, &$data, &$type, &$options){ yeah(__METHOD__);
+	public function before_request($url, &$headers, &$data, &$type, &$options){
 		if (!$url instanceof Requests_IRI){
 			$url = new Requests_IRI($url);
 		}
@@ -162,7 +162,7 @@ class Requests_Cookie_Jar implements ArrayAccess, IteratorAggregate {
 	 *
 	 * @var Requests_Response $response
 	 */
-	public function before_redirect_check(Requests_Response &$return){ yeah(__METHOD__);
+	public function before_redirect_check(Requests_Response &$return){
 		$url = $return->url;
 		if (!$url instanceof Requests_IRI){
 			$url = new Requests_IRI($url);

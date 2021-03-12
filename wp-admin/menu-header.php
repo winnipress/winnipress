@@ -65,7 +65,7 @@ get_admin_page_parent();
  * @param array $submenu
  * @param bool  $submenu_as_parent
  */
-function _wp_menu_output($menu, $submenu, $submenu_as_parent = true) { yeah(__METHOD__);
+function _wp_menu_output($menu, $submenu, $submenu_as_parent = true) {
 	global $self, $parent_file, $submenu_file, $plugin_page, $typenow;
 
 	$first = true;

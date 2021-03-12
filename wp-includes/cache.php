@@ -24,7 +24,7 @@
  *                           Default 0 (no expiration).
  * @return bool False if cache key and group already exist, true on success.
  */
-function wp_cache_add($key, $data, $group = '', $expire = 0){ yeah(__METHOD__);
+function wp_cache_add($key, $data, $group = '', $expire = 0){
 	global $wp_object_cache;
 
 	return $wp_object_cache->add($key, $data, $group, (int) $expire);
@@ -43,7 +43,7 @@ function wp_cache_add($key, $data, $group = '', $expire = 0){ yeah(__METHOD__);
  *
  * @return true Always returns true.
  */
-function wp_cache_close(){ yeah(__METHOD__);
+function wp_cache_close(){
 	return true;
 }
 
@@ -60,7 +60,7 @@ function wp_cache_close(){ yeah(__METHOD__);
  * @param string     $group  Optional. The group the key is in. Default empty.
  * @return false|int False on failure, the item's new value on success.
  */
-function wp_cache_decr($key, $offset = 1, $group = ''){ yeah(__METHOD__);
+function wp_cache_decr($key, $offset = 1, $group = ''){
 	global $wp_object_cache;
 
 	return $wp_object_cache->decr($key, $offset, $group);
@@ -78,7 +78,7 @@ function wp_cache_decr($key, $offset = 1, $group = ''){ yeah(__METHOD__);
  * @param string     $group Optional. Where the cache contents are grouped. Default empty.
  * @return bool True on successful removal, false on failure.
  */
-function wp_cache_delete($key, $group = ''){ yeah(__METHOD__);
+function wp_cache_delete($key, $group = ''){
 	global $wp_object_cache;
 
 	return $wp_object_cache->delete($key, $group);
@@ -94,7 +94,7 @@ function wp_cache_delete($key, $group = ''){ yeah(__METHOD__);
  *
  * @return bool False on failure, true on success
  */
-function wp_cache_flush(){ yeah(__METHOD__);
+function wp_cache_flush(){
 	global $wp_object_cache;
 
 	return $wp_object_cache->flush();
@@ -117,7 +117,7 @@ function wp_cache_flush(){ yeah(__METHOD__);
  * @return bool|mixed False on failure to retrieve contents or the cache
  *		              contents on success
  */
-function wp_cache_get($key, $group = '', $force = false, &$found = null){ yeah(__METHOD__);
+function wp_cache_get($key, $group = '', $force = false, &$found = null){
 	global $wp_object_cache;
 
 	return $wp_object_cache->get($key, $group, $force, $found);
@@ -136,7 +136,7 @@ function wp_cache_get($key, $group = '', $force = false, &$found = null){ yeah(_
  * @param string     $group  Optional. The group the key is in. Default empty.
  * @return false|int False on failure, the item's new value on success.
  */
-function wp_cache_incr($key, $offset = 1, $group = ''){ yeah(__METHOD__);
+function wp_cache_incr($key, $offset = 1, $group = ''){
 	global $wp_object_cache;
 
 	return $wp_object_cache->incr($key, $offset, $group);
@@ -149,7 +149,7 @@ function wp_cache_incr($key, $offset = 1, $group = ''){ yeah(__METHOD__);
  *
  * @global WP_Object_Cache $wp_object_cache
  */
-function wp_cache_init(){ yeah(__METHOD__);
+function wp_cache_init(){
 	$GLOBALS['wp_object_cache'] = new WP_Object_Cache();
 }
 
@@ -169,7 +169,7 @@ function wp_cache_init(){ yeah(__METHOD__);
  *                           Default 0 (no expiration).
  * @return bool False if original value does not exist, true if contents were replaced
  */
-function wp_cache_replace($key, $data, $group = '', $expire = 0){ yeah(__METHOD__);
+function wp_cache_replace($key, $data, $group = '', $expire = 0){
 	global $wp_object_cache;
 
 	return $wp_object_cache->replace($key, $data, $group, (int) $expire);
@@ -193,7 +193,7 @@ function wp_cache_replace($key, $data, $group = '', $expire = 0){ yeah(__METHOD_
  *                           Default 0 (no expiration).
  * @return bool False on failure, true on success
  */
-function wp_cache_set($key, $data, $group = '', $expire = 0){ yeah(__METHOD__);
+function wp_cache_set($key, $data, $group = '', $expire = 0){
 	global $wp_object_cache;
 
 	return $wp_object_cache->set($key, $data, $group, (int) $expire);
@@ -211,7 +211,7 @@ function wp_cache_set($key, $data, $group = '', $expire = 0){ yeah(__METHOD__);
  *
  * @param int $blog_id Site ID.
  */
-function wp_cache_switch_to_blog($blog_id){ yeah(__METHOD__);
+function wp_cache_switch_to_blog($blog_id){
 	global $wp_object_cache;
 
 	$wp_object_cache->switch_to_blog($blog_id);
@@ -227,7 +227,7 @@ function wp_cache_switch_to_blog($blog_id){ yeah(__METHOD__);
  *
  * @param string|array $groups A group or an array of groups to add.
  */
-function wp_cache_add_global_groups($groups){ yeah(__METHOD__);
+function wp_cache_add_global_groups($groups){
 	global $wp_object_cache;
 
 	$wp_object_cache->add_global_groups($groups);
@@ -240,7 +240,7 @@ function wp_cache_add_global_groups($groups){ yeah(__METHOD__);
  *
  * @param string|array $groups A group or an array of groups to add.
  */
-function wp_cache_add_non_persistent_groups($groups){ yeah(__METHOD__);
+function wp_cache_add_non_persistent_groups($groups){
 	// Default cache doesn't persist so nothing to do here.
 }
 
@@ -263,7 +263,7 @@ function wp_cache_add_non_persistent_groups($groups){ yeah(__METHOD__);
  *
  * @global WP_Object_Cache $wp_object_cache Object cache global instance.
  */
-function wp_cache_reset(){ yeah(__METHOD__);
+function wp_cache_reset(){
 	_deprecated_function(__FUNCTION__, '3.5.0', 'WP_Object_Cache::reset()');
 
 	global $wp_object_cache;
@@ -343,7 +343,7 @@ class WP_Object_Cache {
 	 * @param string $name Property to get.
 	 * @return mixed Property.
 	 */
-	public function __get($name){ yeah(__METHOD__);
+	public function __get($name){
 		return $this->$name;
 	}
 
@@ -356,7 +356,7 @@ class WP_Object_Cache {
 	 * @param mixed  $value Property value.
 	 * @return mixed Newly-set property.
 	 */
-	public function __set($name, $value){ yeah(__METHOD__);
+	public function __set($name, $value){
 		return $this->$name = $value;
 	}
 
@@ -368,7 +368,7 @@ class WP_Object_Cache {
 	 * @param string $name Property to check if set.
 	 * @return bool Whether the property is set.
 	 */
-	public function __isset($name){ yeah(__METHOD__);
+	public function __isset($name){
 		return isset($this->$name);
 	}
 
@@ -379,7 +379,7 @@ class WP_Object_Cache {
 	 *
 	 * @param string $name Property to unset.
 	 */
-	public function __unset($name){ yeah(__METHOD__);
+	public function __unset($name){
 		unset($this->$name);
 	}
 
@@ -398,7 +398,7 @@ class WP_Object_Cache {
 	 * @param int        $expire Optional. When to expire the cache contents. Default 0 (no expiration).
 	 * @return bool False if cache key and group already exist, true on success
 	 */
-	public function add($key, $data, $group = 'default', $expire = 0){ yeah(__METHOD__);
+	public function add($key, $data, $group = 'default', $expire = 0){
 		if (wp_suspend_cache_addition())
 			return false;
 
@@ -422,7 +422,7 @@ class WP_Object_Cache {
 	 *
 	 * @param array $groups List of groups that are global.
 	 */
-	public function add_global_groups($groups){ yeah(__METHOD__);
+	public function add_global_groups($groups){
 		$groups = (array) $groups;
 
 		$groups = array_fill_keys($groups, true);
@@ -439,7 +439,7 @@ class WP_Object_Cache {
 	 * @param string     $group  Optional. The group the key is in. Default 'default'.
 	 * @return false|int False on failure, the item's new value on success.
 	 */
-	public function decr($key, $offset = 1, $group = 'default'){ yeah(__METHOD__);
+	public function decr($key, $offset = 1, $group = 'default'){
 		if (empty($group))
 			$group = 'default';
 
@@ -474,7 +474,7 @@ class WP_Object_Cache {
 	 * @param bool       $deprecated Optional. Unused. Default false.
 	 * @return bool False if the contents weren't deleted and true on success.
 	 */
-	public function delete($key, $group = 'default', $deprecated = false){ yeah(__METHOD__);
+	public function delete($key, $group = 'default', $deprecated = false){
 		if (empty($group))
 			$group = 'default';
 
@@ -495,7 +495,7 @@ class WP_Object_Cache {
 	 *
 	 * @return true Always returns true.
 	 */
-	public function flush(){ yeah(__METHOD__);
+	public function flush(){
 		$this->cache = array();
 
 		return true;
@@ -520,7 +520,7 @@ class WP_Object_Cache {
 	 *                            Disambiguates a return of false, a storable value. Default null.
 	 * @return false|mixed False on failure to retrieve contents or the cache contents on success.
 	 */
-	public function get($key, $group = 'default', $force = false, &$found = null){ yeah(__METHOD__);
+	public function get($key, $group = 'default', $force = false, &$found = null){
 		if (empty($group))
 			$group = 'default';
 
@@ -551,7 +551,7 @@ class WP_Object_Cache {
 	 * @param string     $group  Optional. The group the key is in. Default 'default'.
 	 * @return false|int False on failure, the item's new value on success.
 	 */
-	public function incr($key, $offset = 1, $group = 'default'){ yeah(__METHOD__);
+	public function incr($key, $offset = 1, $group = 'default'){
 		if (empty($group))
 			$group = 'default';
 
@@ -587,7 +587,7 @@ class WP_Object_Cache {
 	 * @param int        $expire Optional. When to expire the cache contents. Default 0 (no expiration).
 	 * @return bool False if not exists, true if contents were replaced.
 	 */
-	public function replace($key, $data, $group = 'default', $expire = 0){ yeah(__METHOD__);
+	public function replace($key, $data, $group = 'default', $expire = 0){
 		if (empty($group))
 			$group = 'default';
 
@@ -609,7 +609,7 @@ class WP_Object_Cache {
 	 * @deprecated 3.5.0 Use switch_to_blog()
 	 * @see switch_to_blog()
 	 */
-	public function reset(){ yeah(__METHOD__);
+	public function reset(){
 		_deprecated_function(__FUNCTION__, '3.5.0', 'switch_to_blog()');
 
 		// Clear out non-global caches since the blog ID has changed.
@@ -639,7 +639,7 @@ class WP_Object_Cache {
 	 * @param int        $expire Not Used.
 	 * @return true Always returns true.
 	 */
-	public function set($key, $data, $group = 'default', $expire = 0){ yeah(__METHOD__);
+	public function set($key, $data, $group = 'default', $expire = 0){
 		if (empty($group))
 			$group = 'default';
 
@@ -661,7 +661,7 @@ class WP_Object_Cache {
 	 *
 	 * @since 2.0.0
 	 */
-	public function stats(){ yeah(__METHOD__);
+	public function stats(){
 		echo "<p>";
 		echo "<strong>Cache Hits:</strong> {$this->cache_hits}<br />";
 		echo "<strong>Cache Misses:</strong> {$this->cache_misses}<br />";
@@ -682,7 +682,7 @@ class WP_Object_Cache {
 	 *
 	 * @param int $blog_id Blog ID.
 	 */
-	public function switch_to_blog($blog_id){ yeah(__METHOD__);
+	public function switch_to_blog($blog_id){
 		$blog_id = (int) $blog_id;
 		$this->blog_prefix = $this->multisite ? $blog_id . ':' : '';
 	}
@@ -696,7 +696,7 @@ class WP_Object_Cache {
 	 * @param string     $group Cache group for the key existence check.
 	 * @return bool Whether the key exists in the cache for the given group.
 	 */
-	protected function _exists($key, $group){ yeah(__METHOD__);
+	protected function _exists($key, $group){
 		return isset($this->cache[ $group ]) && (isset($this->cache[ $group ][ $key ]) || array_key_exists($key, $this->cache[ $group ]));
 	}
 
@@ -705,7 +705,7 @@ class WP_Object_Cache {
 	 *
 	 * @since 2.0.8
 	 */
-	public function __construct(){ yeah(__METHOD__);
+	public function __construct(){
 		$this->multisite = is_multisite();
 		$this->blog_prefix =  $this->multisite ? get_current_blog_id() . ':' : '';
 
@@ -726,7 +726,7 @@ class WP_Object_Cache {
 	 *
 	 * @return true Always returns true.
 	 */
-	public function __destruct(){ yeah(__METHOD__);
+	public function __destruct(){
 		return true;
 	}
 }

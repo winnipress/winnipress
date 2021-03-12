@@ -34,7 +34,7 @@ class Requests_Exception_HTTP extends Requests_Exception {
 	 * @param string|null $reason Reason phrase
 	 * @param mixed $data Associated data
 	 */
-	public function __construct($reason = null, $data = null){ yeah(__METHOD__);
+	public function __construct($reason = null, $data = null){
 		if ($reason !== null){
 			$this->reason = $reason;
 		}
@@ -46,7 +46,7 @@ class Requests_Exception_HTTP extends Requests_Exception {
 	/**
 	 * Get the status message
 	 */
-	public function getReason(){ yeah(__METHOD__);
+	public function getReason(){
 		return $this->reason;
 	}
 
@@ -56,7 +56,7 @@ class Requests_Exception_HTTP extends Requests_Exception {
 	 * @param int|bool $code HTTP status code, or false if unavailable
 	 * @return string Exception class name to use
 	 */
-	public static function get_class($code){ yeah(__METHOD__);
+	public static function get_class($code){
 		if (!$code){
 			return 'Requests_Exception_HTTP_Unknown';
 		}

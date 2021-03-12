@@ -36,7 +36,7 @@ require_once( ABSPATH . 'wp-admin/includes/class-walker-category-checklist.php')
  * @param bool   $checked_ontop        Optional. Whether to move checked items out of the hierarchy and to
  *                                     the top of the list. Default true.
  */
-function wp_category_checklist( $post_id = 0, $descendants_and_self = 0, $selected_cats = false, $popular_cats = false, $walker = null, $checked_ontop = true) { yeah(__METHOD__);
+function wp_category_checklist( $post_id = 0, $descendants_and_self = 0, $selected_cats = false, $popular_cats = false, $walker = null, $checked_ontop = true) {
 	wp_terms_checklist( $post_id, array(
 		'taxonomy' => 'category',
 		'descendants_and_self' => $descendants_and_self,
@@ -73,7 +73,7 @@ function wp_category_checklist( $post_id = 0, $descendants_and_self = 0, $select
  *                                        of echoing it. Default true.
  * }
  */
-function wp_terms_checklist( $post_id = 0, $args = array()) { yeah(__METHOD__);
+function wp_terms_checklist( $post_id = 0, $args = array()) {
  	$defaults = array(
 		'descendants_and_self' => 0,
 		'selected_cats' => false,
@@ -187,7 +187,7 @@ function wp_terms_checklist( $post_id = 0, $args = array()) { yeah(__METHOD__);
  * @param bool $echo Optionally output the list as well. Defaults to true.
  * @return array List of popular term IDs.
  */
-function wp_popular_terms_checklist( $taxonomy, $default = 0, $number = 10, $echo = true) { yeah(__METHOD__);
+function wp_popular_terms_checklist( $taxonomy, $default = 0, $number = 10, $echo = true) {
 	$post = get_post();
 
 	if ( $post && $post->ID)
@@ -230,7 +230,7 @@ function wp_popular_terms_checklist( $taxonomy, $default = 0, $number = 10, $ech
  *
  * @param int $link_id
  */
-function wp_link_category_checklist( $link_id = 0) { yeah(__METHOD__);
+function wp_link_category_checklist( $link_id = 0) {
 	$default = 1;
 
 	$checked_categories = array();
@@ -267,7 +267,7 @@ function wp_link_category_checklist( $link_id = 0) { yeah(__METHOD__);
  *
  * @param WP_Post $post Post object.
  */
-function get_inline_data($post) { yeah(__METHOD__);
+function get_inline_data($post) {
 	$post_type_object = get_post_type_object($post->post_type);
 	if ( !current_user_can( 'edit_post', $post->ID))
 		return;
@@ -358,7 +358,7 @@ function get_inline_data($post) { yeah(__METHOD__);
  *
  * @param array $meta
  */
-function list_meta( $meta) { yeah(__METHOD__);
+function list_meta( $meta) {
 	// Exit if no meta
 	if ( !$meta) {
 		echo '
@@ -405,7 +405,7 @@ function list_meta( $meta) { yeah(__METHOD__);
  * @param int   $count
  * @return string
  */
-function _list_meta_row( $entry, &$count) { yeah(__METHOD__);
+function _list_meta_row( $entry, &$count) {
 	static $update_nonce = '';
 
 	if ( is_protected_meta( $entry['meta_key'], 'post'))
@@ -458,7 +458,7 @@ function _list_meta_row( $entry, &$count) { yeah(__METHOD__);
  *
  * @param WP_Post $post Optional. The post being edited.
  */
-function meta_form( $post = null) { yeah(__METHOD__);
+function meta_form( $post = null) {
 	global $wpdb;
 	$post = get_post( $post);
 
@@ -562,7 +562,7 @@ function meta_form( $post = null) { yeah(__METHOD__);
  * @param int|bool $multi     Optional. Whether the additional fields and buttons should be added.
  *                            Default 0|false.
  */
-function touch_time( $edit = 1, $for_post = 1, $tab_index = 0, $multi = 0) { yeah(__METHOD__);
+function touch_time( $edit = 1, $for_post = 1, $tab_index = 0, $multi = 0) {
 	global $wp_locale;
 	$post = get_post();
 
@@ -647,7 +647,7 @@ function touch_time( $edit = 1, $for_post = 1, $tab_index = 0, $multi = 0) { yea
  * @param string $default   Optional. The template file name. Default empty.
  * @param string $post_type Optional. Post type to get templates for. Default 'post'.
  */
-function page_template_dropdown( $default = '', $post_type = 'page') { yeah(__METHOD__);
+function page_template_dropdown( $default = '', $post_type = 'page') {
 	$templates = get_page_templates( null, $post_type);
 	ksort( $templates);
 	foreach ( array_keys( $templates) as $template) {
@@ -671,7 +671,7 @@ function page_template_dropdown( $default = '', $post_type = 'page') { yeah(__ME
  *
  * @return null|false Boolean False if page has no children, otherwise print out html elements
  */
-function parent_dropdown( $default = 0, $parent = 0, $level = 0, $post = null) { yeah(__METHOD__);
+function parent_dropdown( $default = 0, $parent = 0, $level = 0, $post = null) {
 	global $wpdb;
 	$post = get_post( $post);
 	$items = $wpdb->get_results( $wpdb->prepare("SELECT ID, post_parent, post_title FROM $wpdb->posts WHERE post_parent = %d AND post_type = 'page' ORDER BY menu_order", $parent));
@@ -700,7 +700,7 @@ function parent_dropdown( $default = 0, $parent = 0, $level = 0, $post = null) {
  *
  * @param string $selected Slug for the role that should be already selected.
  */
-function wp_dropdown_roles( $selected = '') { yeah(__METHOD__);
+function wp_dropdown_roles( $selected = '') {
 	$r = '';
 
 	$editable_roles = array_reverse( get_editable_roles());
@@ -725,7 +725,7 @@ function wp_dropdown_roles( $selected = '') { yeah(__METHOD__);
  *
  * @param string $action The action attribute for the form.
  */
-function wp_import_upload_form( $action) { yeah(__METHOD__);
+function wp_import_upload_form( $action) {
 
 	/**
 	 * Filters the maximum allowed upload size for import files.
@@ -788,7 +788,7 @@ function wp_import_upload_form( $action) { yeah(__METHOD__);
  *                                              of the box array (which is the second parameter passed
  *                                              to your callback). Default null.
  */
-function add_meta_box( $id, $title, $callback, $screen = null, $context = 'advanced', $priority = 'default', $callback_args = null) { yeah(__METHOD__);
+function add_meta_box( $id, $title, $callback, $screen = null, $context = 'advanced', $priority = 'default', $callback_args = null) {
 	global $wp_meta_boxes;
 
 	if ( empty( $screen)) {
@@ -879,7 +879,7 @@ function add_meta_box( $id, $title, $callback, $screen = null, $context = 'advan
  * @param mixed            $object  gets passed to the box callback function as first parameter
  * @return int number of meta_boxes
  */
-function do_meta_boxes( $screen, $context, $object) { yeah(__METHOD__);
+function do_meta_boxes( $screen, $context, $object) {
 	global $wp_meta_boxes;
 	static $already_sorted = false;
 
@@ -966,7 +966,7 @@ function do_meta_boxes( $screen, $context, $object) { yeah(__METHOD__);
  *                                        include 'normal' and 'side'. Menus meta boxes (accordion sections)
  *                                        all use the 'side' context.
  */
-function remove_meta_box( $id, $screen, $context) { yeah(__METHOD__);
+function remove_meta_box( $id, $screen, $context) {
 	global $wp_meta_boxes;
 
 	if ( empty( $screen)) {
@@ -1012,7 +1012,7 @@ function remove_meta_box( $id, $screen, $context) { yeah(__METHOD__);
  * @param mixed         $object  gets passed to the section callback function as first parameter.
  * @return int number of meta boxes as accordion sections.
  */
-function do_accordion_sections( $screen, $context, $object) { yeah(__METHOD__);
+function do_accordion_sections( $screen, $context, $object) {
 	global $wp_meta_boxes;
 
 	wp_enqueue_script( 'accordion');
@@ -1092,7 +1092,7 @@ function do_accordion_sections( $screen, $context, $object) { yeah(__METHOD__);
  *                           'general', 'reading', 'writing', 'discussion', 'media', etc. Create your own using
  *                           add_options_page();
  */
-function add_settings_section($id, $title, $callback, $page) { yeah(__METHOD__);
+function add_settings_section($id, $title, $callback, $page) {
 	global $wp_settings_sections;
 
 	if ( 'misc' == $page) {
@@ -1153,7 +1153,7 @@ function add_settings_section($id, $title, $callback, $page) { yeah(__METHOD__);
  *                             field is output.
  * }
  */
-function add_settings_field($id, $title, $callback, $page, $section = 'default', $args = array()) { yeah(__METHOD__);
+function add_settings_field($id, $title, $callback, $page, $section = 'default', $args = array()) {
 	global $wp_settings_fields;
 
 	if ( 'misc' == $page) {
@@ -1192,7 +1192,7 @@ function add_settings_field($id, $title, $callback, $page, $section = 'default',
  *
  * @param string $page The slug name of the page whose settings sections you want to output
  */
-function do_settings_sections( $page) { yeah(__METHOD__);
+function do_settings_sections( $page) {
 	global $wp_settings_sections, $wp_settings_fields;
 
 	if ( !isset( $wp_settings_sections[$page]))
@@ -1227,7 +1227,7 @@ function do_settings_sections( $page) { yeah(__METHOD__);
  * @param string $page Slug title of the admin page who's settings fields you want to show.
  * @param string $section Slug title of the settings section who's fields you want to show.
  */
-function do_settings_fields($page, $section) { yeah(__METHOD__);
+function do_settings_fields($page, $section) {
 	global $wp_settings_fields;
 
 	if ( !isset( $wp_settings_fields[$page][$section]))
@@ -1279,7 +1279,7 @@ function do_settings_fields($page, $section) { yeah(__METHOD__);
  * @param string $type    Optional. Message type, controls HTML class. Accepts 'error' or 'updated'.
  *                        Default 'error'.
  */
-function add_settings_error( $setting, $code, $message, $type = 'error') { yeah(__METHOD__);
+function add_settings_error( $setting, $code, $message, $type = 'error') {
 	global $wp_settings_errors;
 
 	$wp_settings_errors[] = array(
@@ -1313,7 +1313,7 @@ function add_settings_error( $setting, $code, $message, $type = 'error') { yeah(
  * @param boolean $sanitize Whether to re-sanitize the setting value before returning errors.
  * @return array Array of settings errors
  */
-function get_settings_errors( $setting = '', $sanitize = false) { yeah(__METHOD__);
+function get_settings_errors( $setting = '', $sanitize = false) {
 	global $wp_settings_errors;
 
 	/*
@@ -1375,7 +1375,7 @@ function get_settings_errors( $setting = '', $sanitize = false) { yeah(__METHOD_
  * @param bool   $hide_on_update If set to true errors will not be shown if the settings page has
  *                               already been submitted.
  */
-function settings_errors( $setting = '', $sanitize = false, $hide_on_update = false) { yeah(__METHOD__);
+function settings_errors( $setting = '', $sanitize = false, $hide_on_update = false) {
 
 	if ( $hide_on_update && !empty( $_GET['settings-updated']))
 		return;
@@ -1403,7 +1403,7 @@ function settings_errors( $setting = '', $sanitize = false, $hide_on_update = fa
  *
  * @param string $found_action
  */
-function find_posts_div($found_action = '') { yeah(__METHOD__);
+function find_posts_div($found_action = '') {
 ?>
 	<div id="find-posts" class="find-box" style="display: none;">
 		<div id="find-posts-head" class="find-box-head">
@@ -1440,7 +1440,7 @@ function find_posts_div($found_action = '') { yeah(__METHOD__);
  *
  * @since 2.7.0
  */
-function the_post_password() { yeah(__METHOD__);
+function the_post_password() {
 	$post = get_post();
 	if ( isset( $post->post_password))
 		echo esc_attr( $post->post_password);
@@ -1457,7 +1457,7 @@ function the_post_password() { yeah(__METHOD__);
  * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global $post.
  * @return string The post title if set.
  */
-function _draft_or_post_title( $post = 0) { yeah(__METHOD__);
+function _draft_or_post_title( $post = 0) {
 	$title = get_the_title( $post);
 	if ( empty( $title))
 		$title = __( '(no title)');
@@ -1472,7 +1472,7 @@ function _draft_or_post_title( $post = 0) { yeah(__METHOD__);
  *
  * @since 2.7.0
  */
-function _admin_search_query() { yeah(__METHOD__);
+function _admin_search_query() {
 	echo isset($_REQUEST['s']) ? esc_attr( wp_unslash( $_REQUEST['s'])) : '';
 }
 
@@ -1488,7 +1488,7 @@ function _admin_search_query() { yeah(__METHOD__);
  * @param string $title      Optional. Title of the Iframe page. Default empty.
  * @param bool   $deprecated Not used.
  */
-function iframe_header( $title = '', $deprecated = false) { yeah(__METHOD__);
+function iframe_header( $title = '', $deprecated = false) {
 	global $hook_suffix, $admin_body_class, $wp_locale;
 	$admin_body_class = preg_replace('/[^a-z0-9_-]+/i', '-', $hook_suffix);
 
@@ -1502,8 +1502,8 @@ function iframe_header( $title = '', $deprecated = false) { yeah(__METHOD__);
 wp_enqueue_style( 'colors');
 ?>
 <script type="text/javascript">
-addLoadEvent = function(func){if(typeof jQuery!="undefined")jQuery(document).ready(func);else if(typeof wpOnload!='function'){wpOnload=func;}else{var oldonload=wpOnload;wpOnload=function(){ yeah(__METHOD__);oldonload();func();}}};
-function tb_close(){ yeah(__METHOD__);var win=window.dialogArguments||opener||parent||top;win.tb_remove();}
+addLoadEvent = function(func){if(typeof jQuery!="undefined")jQuery(document).ready(func);else if(typeof wpOnload!='function'){wpOnload=func;}else{var oldonload=wpOnload;wpOnload=function(){oldonload();func();}}};
+function tb_close(){var win=window.dialogArguments||opener||parent||top;win.tb_remove();}
 var ajaxurl = '<?php echo esc_js( admin_url( 'admin-ajax.php', 'relative')); ?>',
 	pagenow = '<?php echo esc_js( $current_screen->id); ?>',
 	typenow = '<?php echo esc_js( $current_screen->post_type); ?>',
@@ -1551,7 +1551,7 @@ $admin_body_classes = apply_filters( 'admin_body_class', '');
  */
 if ( isset($GLOBALS['body_id'])) echo ' id="' . $GLOBALS['body_id'] . '"'; ?> class="wp-admin wp-core-ui no-js iframe <?php echo $admin_body_classes . ' ' . $admin_body_class; ?>">
 <script type="text/javascript">
-(function(){ yeah(__METHOD__);
+(function(){
 var c = document.body.className;
 c = c.replace(/no-js/, 'js');
 document.body.className = c;
@@ -1565,7 +1565,7 @@ document.body.className = c;
  *
  * @since 2.7.0
  */
-function iframe_footer() { yeah(__METHOD__);
+function iframe_footer() {
 	/*
 	 * We're going to hide any footer output on iFrame pages,
 	 * but run the hooks anyway since they output JavaScript
@@ -1599,7 +1599,7 @@ function iframe_footer() { yeah(__METHOD__);
  *
  * @param WP_Post $post
  */
-function _post_states($post) { yeah(__METHOD__);
+function _post_states($post) {
 	$post_states = array();
 	if ( isset( $_REQUEST['post_status']))
 		$post_status = $_REQUEST['post_status'];
@@ -1670,7 +1670,7 @@ function _post_states($post) { yeah(__METHOD__);
  *
  * @param WP_Post $post
  */
-function _media_states( $post) { yeah(__METHOD__);
+function _media_states( $post) {
 	$media_states = array();
 	$stylesheet = get_option('stylesheet');
 
@@ -1753,12 +1753,12 @@ function _media_states( $post) { yeah(__METHOD__);
  *
  * @since 2.8.0
  */
-function compression_test() { yeah(__METHOD__);
+function compression_test() {
 ?>
 	<script type="text/javascript">
 	var compressionNonce = <?php echo wp_json_encode( wp_create_nonce( 'update_can_compress_scripts')); ?>;
 	var testCompression = {
-		get : function(test) { yeah(__METHOD__);
+		get : function(test) {
 			var x;
 			if ( window.XMLHttpRequest) {
 				x = new XMLHttpRequest();
@@ -1767,7 +1767,7 @@ function compression_test() { yeah(__METHOD__);
 			}
 
 			if (x) {
-				x.onreadystatechange = function() { yeah(__METHOD__);
+				x.onreadystatechange = function() {
 					var r, h;
 					if ( x.readyState == 4) {
 						r = x.responseText.substr(0, 18);
@@ -1781,7 +1781,7 @@ function compression_test() { yeah(__METHOD__);
 			}
 		},
 
-		check : function(r, h, test) { yeah(__METHOD__);
+		check : function(r, h, test) {
 			if ( !r && !test)
 				this.get(1);
 
@@ -1829,7 +1829,7 @@ function compression_test() { yeah(__METHOD__);
  *                                       as a string such as 'tabindex="1"', though the array format is
  *                                       preferred. Default null.
  */
-function submit_button( $text = null, $type = 'primary', $name = 'submit', $wrap = true, $other_attributes = null) { yeah(__METHOD__);
+function submit_button( $text = null, $type = 'primary', $name = 'submit', $wrap = true, $other_attributes = null) {
 	echo get_submit_button( $text, $type, $name, $wrap, $other_attributes);
 }
 
@@ -1854,7 +1854,7 @@ function submit_button( $text = null, $type = 'primary', $name = 'submit', $wrap
  *                                       Default empty.
  * @return string Submit button HTML.
  */
-function get_submit_button( $text = '', $type = 'primary large', $name = 'submit', $wrap = true, $other_attributes = '') { yeah(__METHOD__);
+function get_submit_button( $text = '', $type = 'primary large', $name = 'submit', $wrap = true, $other_attributes = '') {
 	if ( !is_array( $type))
 		$type = explode( ' ', $type);
 
@@ -1904,7 +1904,7 @@ function get_submit_button( $text = '', $type = 'primary large', $name = 'submit
  *
  * @global bool $is_IE
  */
-function _wp_admin_html_begin() { yeah(__METHOD__);
+function _wp_admin_html_begin() {
 	global $is_IE;
 
 	$admin_html_class = '';
@@ -1943,7 +1943,7 @@ function _wp_admin_html_begin() { yeah(__METHOD__);
  * @param string $hook_name The hook name (also known as the hook suffix) used to determine the screen.
  * @return WP_Screen Screen object.
  */
-function convert_to_screen( $hook_name) { yeah(__METHOD__);
+function convert_to_screen( $hook_name) {
 	if ( !class_exists( 'WP_Screen')) {
 		_doing_it_wrong(
 			'convert_to_screen(), add_meta_box()',
@@ -1968,7 +1968,7 @@ function convert_to_screen( $hook_name) { yeah(__METHOD__);
  * @since 3.6.0
  * @access private
  */
-function _local_storage_notice() { yeah(__METHOD__);
+function _local_storage_notice() {
 	?>
 	<div id="local-storage-notice" class="hidden notice is-dismissible">
 	<p class="local-restore">
@@ -2005,7 +2005,7 @@ function _local_storage_notice() { yeah(__METHOD__);
  * }
  * @return string Star rating HTML.
  */
-function wp_star_rating( $args = array()) { yeah(__METHOD__);
+function wp_star_rating( $args = array()) {
 	$defaults = array(
 		'rating' => 0,
 		'type'   => 'rating',
@@ -2056,6 +2056,6 @@ function wp_star_rating( $args = array()) { yeah(__METHOD__);
  * @ignore
  * @since 4.2.0
  */
-function _wp_posts_page_notice() { yeah(__METHOD__);
+function _wp_posts_page_notice() {
 	echo '<div class="notice notice-warning inline"><p>' . __( 'You are currently editing the page that shows your latest posts.') . '</p></div>';
 }

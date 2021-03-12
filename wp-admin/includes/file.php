@@ -75,7 +75,7 @@ $wp_file_descriptions = array(
  * @return string Description of file from $wp_file_descriptions or basename of $file if description doesn't exist.
  *                Appends 'Page Template' to basename of $file if the file is a page template
  */
-function get_file_description( $file) { yeah(__METHOD__);
+function get_file_description( $file) {
 	global $wp_file_descriptions, $allowed_files;
 
 	$dirname = pathinfo( $file, PATHINFO_DIRNAME);
@@ -100,7 +100,7 @@ function get_file_description( $file) { yeah(__METHOD__);
  *
  * @return string Full filesystem path to the root of the WordPress installation
  */
-function get_home_path() { yeah(__METHOD__);
+function get_home_path() {
 	$home    = set_url_scheme( get_option( 'home'), 'http');
 	$siteurl = set_url_scheme( get_option( 'siteurl'), 'http');
 	if ( !empty( $home) && 0 !== strcasecmp( $home, $siteurl)) {
@@ -127,7 +127,7 @@ function get_home_path() { yeah(__METHOD__);
  * @param array  $exclusions Optional. List of folders and files to skip.
  * @return bool|array False on failure, Else array of files
  */
-function list_files( $folder = '', $levels = 100, $exclusions = array()) { yeah(__METHOD__);
+function list_files( $folder = '', $levels = 100, $exclusions = array()) {
 	if ( empty( $folder)) {
 		return false;
 	}
@@ -178,7 +178,7 @@ function list_files( $folder = '', $levels = 100, $exclusions = array()) { yeah(
  * @param string $plugin Plugin.
  * @return array File extensions.
  */
-function wp_get_plugin_file_editable_extensions( $plugin) { yeah(__METHOD__);
+function wp_get_plugin_file_editable_extensions( $plugin) {
 
 	$editable_extensions = array(
 		'bash',
@@ -235,7 +235,7 @@ function wp_get_plugin_file_editable_extensions( $plugin) { yeah(__METHOD__);
  * @param WP_Theme $theme Theme.
  * @return array File extensions.
  */
-function wp_get_theme_file_editable_extensions( $theme) { yeah(__METHOD__);
+function wp_get_theme_file_editable_extensions( $theme) {
 
 	$default_types = array(
 		'bash',
@@ -291,7 +291,7 @@ function wp_get_theme_file_editable_extensions( $theme) { yeah(__METHOD__);
  *
  * @since 4.9.0
  */
-function wp_print_file_editor_templates() { yeah(__METHOD__);
+function wp_print_file_editor_templates() {
 	?>
 	<script type="text/html" id="tmpl-wp-file-editor-notice">
 		<div class="notice inline notice-{{ data.type || 'info' }} {{ data.alt ? 'notice-alt' : '' }} {{ data.dismissible ? 'is-dismissible' : '' }} {{ data.classes || '' }}">
@@ -349,7 +349,7 @@ function wp_print_file_editor_templates() { yeah(__METHOD__);
  * }
  * @return true|WP_Error True on success or `WP_Error` on failure.
  */
-function wp_edit_theme_plugin_file( $args) { yeah(__METHOD__);
+function wp_edit_theme_plugin_file( $args) {
 	if ( empty( $args['file'])) {
 		return new WP_Error( 'missing_file');
 	}
@@ -619,7 +619,7 @@ function wp_edit_theme_plugin_file( $args) { yeah(__METHOD__);
  * @param string $dir      Optional. Directory to store the file in. Default empty.
  * @return string a writable filename
  */
-function wp_tempnam( $filename = '', $dir = '') { yeah(__METHOD__);
+function wp_tempnam( $filename = '', $dir = '') {
 	if ( empty( $dir)) {
 		$dir = get_temp_dir();
 	}
@@ -664,7 +664,7 @@ function wp_tempnam( $filename = '', $dir = '') { yeah(__METHOD__);
  * @param array  $allowed_files Optional. Array of allowed files to edit, $file must match an entry exactly.
  * @return string|null
  */
-function validate_file_to_edit( $file, $allowed_files = array()) { yeah(__METHOD__);
+function validate_file_to_edit( $file, $allowed_files = array()) {
 	$code = validate_file( $file, $allowed_files);
 
 	if (!$code)
@@ -698,10 +698,10 @@ function validate_file_to_edit( $file, $allowed_files = array()) { yeah(__METHOD
  * @return array On success, returns an associative array of file attributes. On failure, returns
  *               $overrides['upload_error_handler'](&$file, $message) or array( 'error'=>$message).
  */
-function _wp_handle_upload( &$file, $overrides, $time, $action) { yeah(__METHOD__);
+function _wp_handle_upload( &$file, $overrides, $time, $action) {
 	// The default error handler.
 	if ( !function_exists( 'wp_handle_upload_error')) { 
-		function wp_handle_upload_error( &$file, $message) { yeah(__METHOD__);
+		function wp_handle_upload_error( &$file, $message) {
 			return array( 'error' => $message);
 		}
 	}
@@ -910,7 +910,7 @@ function _wp_handle_upload( &$file, $overrides, $time, $action) { yeah(__METHOD_
  * @return array On success, returns an associative array of file attributes. On failure, returns
  *               $overrides['upload_error_handler'](&$file, $message) or array( 'error'=>$message).
  */
-function wp_handle_upload( &$file, $overrides = false, $time = null) { yeah(__METHOD__);
+function wp_handle_upload( &$file, $overrides = false, $time = null) {
 	/*
 	 *  $_POST['action'] must be set and its value must equal $overrides['action']
 	 *  or this:
@@ -939,7 +939,7 @@ function wp_handle_upload( &$file, $overrides = false, $time = null) { yeah(__ME
  * @return array On success, returns an associative array of file attributes. On failure, returns
  *               $overrides['upload_error_handler'](&$file, $message) or array( 'error'=>$message).
  */
-function wp_handle_sideload( &$file, $overrides = false, $time = null) { yeah(__METHOD__);
+function wp_handle_sideload( &$file, $overrides = false, $time = null) {
 	/*
 	 *  $_POST['action'] must be set and its value must equal $overrides['action']
 	 *  or this:
@@ -962,7 +962,7 @@ function wp_handle_sideload( &$file, $overrides = false, $time = null) { yeah(__
  * @param int $timeout The timeout for the request to download the file default 300 seconds
  * @return mixed WP_Error on failure, string Filename on success.
  */
-function download_url( $url, $timeout = 300) { yeah(__METHOD__);
+function download_url( $url, $timeout = 300) {
 	//WARNING: The file is not automatically deleted, The script must unlink() the file.
 	if ( !$url)
 		return new WP_Error('http_no_url', __('Invalid URL Provided.'));
@@ -1006,7 +1006,7 @@ function download_url( $url, $timeout = 300) { yeah(__METHOD__);
  * @param string $expected_md5 The expected MD5 of the file, either a base64 encoded raw md5, or a hex-encoded md5
  * @return bool|object WP_Error on failure, true on success, false when the MD5 format is unknown/unexpected
  */
-function verify_file_md5( $filename, $expected_md5) { yeah(__METHOD__);
+function verify_file_md5( $filename, $expected_md5) {
 	if ( 32 == strlen( $expected_md5))
 		$expected_raw_md5 = pack( 'H*', $expected_md5);
 	elseif ( 24 == strlen( $expected_md5))
@@ -1037,7 +1037,7 @@ function verify_file_md5( $filename, $expected_md5) { yeah(__METHOD__);
  * @param string $to Full path on the filesystem to extract archive to
  * @return mixed WP_Error on failure, True on success
  */
-function unzip_file($file, $to) { yeah(__METHOD__);
+function unzip_file($file, $to) {
 	global $wp_filesystem;
 
 	if ( !$wp_filesystem || !is_object($wp_filesystem))
@@ -1102,7 +1102,7 @@ function unzip_file($file, $to) { yeah(__METHOD__);
  * @param array $needed_dirs A partial list of required folders needed to be created.
  * @return mixed WP_Error on failure, True on success
  */
-function _unzip_file_ziparchive($file, $to, $needed_dirs = array()) { yeah(__METHOD__);
+function _unzip_file_ziparchive($file, $to, $needed_dirs = array()) {
 	global $wp_filesystem;
 
 	$z = new ZipArchive();
@@ -1215,7 +1215,7 @@ function _unzip_file_ziparchive($file, $to, $needed_dirs = array()) { yeah(__MET
  * @param array $needed_dirs A partial list of required folders needed to be created.
  * @return mixed WP_Error on failure, True on success
  */
-function _unzip_file_pclzip($file, $to, $needed_dirs = array()) { yeah(__METHOD__);
+function _unzip_file_pclzip($file, $to, $needed_dirs = array()) {
 	global $wp_filesystem;
 
 	mbstring_binary_safe_encoding();
@@ -1314,7 +1314,7 @@ function _unzip_file_pclzip($file, $to, $needed_dirs = array()) { yeah(__METHOD_
  * @param array $skip_list a list of files/folders to skip copying
  * @return mixed WP_Error on failure, True on success.
  */
-function copy_dir($from, $to, $skip_list = array()) { yeah(__METHOD__);
+function copy_dir($from, $to, $skip_list = array()) {
 	global $wp_filesystem;
 
 	$dirlist = $wp_filesystem->dirlist($from);
@@ -1371,7 +1371,7 @@ function copy_dir($from, $to, $skip_list = array()) { yeah(__METHOD__);
  * @param bool         $allow_relaxed_file_ownership Optional. Whether to allow Group/World writable. Default false.
  * @return null|bool false on failure, true on success.
  */
-function WP_Filesystem( $args = false, $context = false, $allow_relaxed_file_ownership = false) { yeah(__METHOD__);
+function WP_Filesystem( $args = false, $context = false, $allow_relaxed_file_ownership = false) {
 	global $wp_filesystem;
 
 	require_once(ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php');
@@ -1451,7 +1451,7 @@ function WP_Filesystem( $args = false, $context = false, $allow_relaxed_file_own
  *                                             Default false.
  * @return string The transport to use, see description for valid return values.
  */
-function get_filesystem_method( $args = array(), $context = '', $allow_relaxed_file_ownership = false) { yeah(__METHOD__);
+function get_filesystem_method( $args = array(), $context = '', $allow_relaxed_file_ownership = false) {
 	$method = defined('FS_METHOD') ? FS_METHOD : false; // Please ensure that this is either 'direct', 'ssh2', 'ftpext' or 'ftpsockets'
 
 	if ( !$context) {
@@ -1540,7 +1540,7 @@ function get_filesystem_method( $args = array(), $context = '', $allow_relaxed_f
  *
  * @return bool False on failure, true on success.
  */
-function request_filesystem_credentials( $form_post, $type = '', $error = false, $context = '', $extra_fields = null, $allow_relaxed_file_ownership = false) { yeah(__METHOD__);
+function request_filesystem_credentials( $form_post, $type = '', $error = false, $context = '', $extra_fields = null, $allow_relaxed_file_ownership = false) {
 	global $pagenow;
 
 	/**
@@ -1777,7 +1777,7 @@ foreach ( (array) $extra_fields as $field) {
  *
  * @since 4.2.0
  */
-function wp_print_request_filesystem_credentials_modal() { yeah(__METHOD__);
+function wp_print_request_filesystem_credentials_modal() {
 	$filesystem_method = get_filesystem_method();
 	ob_start();
 	$filesystem_credentials_are_stored = request_filesystem_credentials( self_admin_url());
@@ -1820,7 +1820,7 @@ function wp_print_request_filesystem_credentials_modal() { yeah(__METHOD__);
  * }
  * @return string The HTML for this group and its items.
  */
-function wp_privacy_generate_personal_data_export_group_html( $group_data) { yeah(__METHOD__);
+function wp_privacy_generate_personal_data_export_group_html( $group_data) {
 	$allowed_tags      = array(
 		'a' => array(
 			'href'   => array(),
@@ -1867,7 +1867,7 @@ function wp_privacy_generate_personal_data_export_group_html( $group_data) { yea
  *
  * @param int $request_id The export request ID.
  */
-function wp_privacy_generate_personal_data_export_file( $request_id) { yeah(__METHOD__);
+function wp_privacy_generate_personal_data_export_file( $request_id) {
 	if ( !class_exists( 'ZipArchive')) {
 		wp_send_json_error( __( 'Unable to generate export file. ZipArchive not available.'));
 	}
@@ -2054,7 +2054,7 @@ function wp_privacy_generate_personal_data_export_file( $request_id) { yeah(__ME
  * @param int $request_id The request ID for this personal data export.
  * @return true|WP_Error True on success or `WP_Error` on failure.
  */
-function wp_privacy_send_personal_data_export_email( $request_id) { yeah(__METHOD__);
+function wp_privacy_send_personal_data_export_email( $request_id) {
 	// Get the request data.
 	$request = wp_get_user_request_data( $request_id);
 
@@ -2139,7 +2139,7 @@ All at ###SITENAME###
  * @param string $exporter_key    The slug (key) of the exporter.
  * @return array The filtered response.
  */
-function wp_privacy_process_personal_data_export_page( $response, $exporter_index, $email_address, $page, $request_id, $send_as_email, $exporter_key) { yeah(__METHOD__);
+function wp_privacy_process_personal_data_export_page( $response, $exporter_index, $email_address, $page, $request_id, $send_as_email, $exporter_key) {
 	/* Do some simple checks on the shape of the response from the exporter.
 	 * If the exporter response is malformed, don't attempt to consume it - let it
 	 * pass through to generate a warning to the user by default ajax processing.

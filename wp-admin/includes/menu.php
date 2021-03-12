@@ -184,7 +184,7 @@ unset($id, $data, $subs, $first_sub);
  * @param string $class
  * @return string
  */
-function add_cssclass($add, $class) { yeah(__METHOD__);
+function add_cssclass($add, $class) {
 	$class = empty($class) ? $add : $class .= ' ' . $add;
 	return $class;
 }
@@ -194,7 +194,7 @@ function add_cssclass($add, $class) { yeah(__METHOD__);
  * @param array $menu
  * @return array
  */
-function add_menu_classes($menu) { yeah(__METHOD__);
+function add_menu_classes($menu) {
 	$first = $lastorder = false;
 	$i = 0;
 	$mc = count($menu);
@@ -282,7 +282,7 @@ if ( apply_filters( 'custom_menu_order', false)) {
 	 * @param array $b
 	 * @return int
 	 */
-	function sort_menu($a, $b) { yeah(__METHOD__);
+	function sort_menu($a, $b) {
 		global $menu_order, $default_menu_order;
 		$a = $a[2];
 		$b = $b[2];

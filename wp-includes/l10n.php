@@ -27,7 +27,7 @@
  *
  * @return string The locale of the blog or from the {@see 'locale'} hook.
  */
-function get_locale(){ yeah(__METHOD__);
+function get_locale(){
 	global $locale, $wp_local_package;
 
 	if(isset($locale ) ){
@@ -86,7 +86,7 @@ function get_locale(){ yeah(__METHOD__);
  * @param int|WP_User $user_id User's ID or a WP_User object. Defaults to current user.
  * @return string The locale of the user.
  */
-function get_user_locale($user_id = 0 ){ yeah(__METHOD__);
+function get_user_locale($user_id = 0 ){
 	$user = false;
 	if(0 === $user_id && function_exists('wp_get_current_user' ) ){ 
 		$user = wp_get_current_user();
@@ -118,7 +118,7 @@ function get_user_locale($user_id = 0 ){ yeah(__METHOD__);
  *                       Default 'default'.
  * @return string Translated text
  */
-function translate($text, $domain = 'default' ){ yeah(__METHOD__);
+function translate($text, $domain = 'default' ){
 	$translations = get_translations_for_domain($domain );
 	$translation  = $translations->translate($text );
 
@@ -145,7 +145,7 @@ function translate($text, $domain = 'default' ){ yeah(__METHOD__);
  * @param string $string A pipe-delimited string.
  * @return string Either $string or everything before the last pipe.
  */
-function before_last_bar($string ){ yeah(__METHOD__);
+function before_last_bar($string ){
 	$last_bar = strrpos($string, '|' );
 	if(false === $last_bar ){
 		return $string;
@@ -170,7 +170,7 @@ function before_last_bar($string ){ yeah(__METHOD__);
  *                        Default 'default'.
  * @return string Translated text on success, original text on failure.
  */
-function translate_with_gettext_context($text, $context, $domain = 'default' ){ yeah(__METHOD__);
+function translate_with_gettext_context($text, $context, $domain = 'default' ){
 	$translations = get_translations_for_domain($domain );
 	$translation  = $translations->translate($text, $context );
 	/**
@@ -198,7 +198,7 @@ function translate_with_gettext_context($text, $context, $domain = 'default' ){ 
  *                       Default 'default'.
  * @return string Translated text.
  */
-function __($text, $domain = 'default' ){ yeah(__METHOD__);
+function __($text, $domain = 'default' ){
 	return translate($text, $domain );
 }
 
@@ -214,7 +214,7 @@ function __($text, $domain = 'default' ){ yeah(__METHOD__);
  *                       Default 'default'.
  * @return string Translated text on success, original text on failure.
  */
-function esc_attr__($text, $domain = 'default' ){ yeah(__METHOD__);
+function esc_attr__($text, $domain = 'default' ){
 	return esc_attr(translate($text, $domain ) );
 }
 
@@ -231,7 +231,7 @@ function esc_attr__($text, $domain = 'default' ){ yeah(__METHOD__);
  *                       Default 'default'.
  * @return string Translated text
  */
-function esc_html__($text, $domain = 'default' ){ yeah(__METHOD__);
+function esc_html__($text, $domain = 'default' ){
 	return esc_html(translate($text, $domain ) );
 }
 
@@ -244,7 +244,7 @@ function esc_html__($text, $domain = 'default' ){ yeah(__METHOD__);
  * @param string $domain Optional. Text domain. Unique identifier for retrieving translated strings.
  *                       Default 'default'.
  */
-function _e($text, $domain = 'default' ){ yeah(__METHOD__);
+function _e($text, $domain = 'default' ){
 	echo translate($text, $domain );
 }
 
@@ -257,7 +257,7 @@ function _e($text, $domain = 'default' ){ yeah(__METHOD__);
  * @param string $domain Optional. Text domain. Unique identifier for retrieving translated strings.
  *                       Default 'default'.
  */
-function esc_attr_e($text, $domain = 'default' ){ yeah(__METHOD__);
+function esc_attr_e($text, $domain = 'default' ){
 	echo esc_attr(translate($text, $domain ) );
 }
 
@@ -270,7 +270,7 @@ function esc_attr_e($text, $domain = 'default' ){ yeah(__METHOD__);
  * @param string $domain Optional. Text domain. Unique identifier for retrieving translated strings.
  *                       Default 'default'.
  */
-function esc_html_e($text, $domain = 'default' ){ yeah(__METHOD__);
+function esc_html_e($text, $domain = 'default' ){
 	echo esc_html(translate($text, $domain ) );
 }
 
@@ -291,7 +291,7 @@ function esc_html_e($text, $domain = 'default' ){ yeah(__METHOD__);
  *                        Default 'default'.
  * @return string Translated context string without pipe.
  */
-function _x($text, $context, $domain = 'default' ){ yeah(__METHOD__);
+function _x($text, $context, $domain = 'default' ){
 	return translate_with_gettext_context($text, $context, $domain );
 }
 
@@ -306,7 +306,7 @@ function _x($text, $context, $domain = 'default' ){ yeah(__METHOD__);
  *                        Default 'default'.
  * @return string Translated context string without pipe.
  */
-function _ex($text, $context, $domain = 'default' ){ yeah(__METHOD__);
+function _ex($text, $context, $domain = 'default' ){
 	echo _x($text, $context, $domain );
 }
 
@@ -321,7 +321,7 @@ function _ex($text, $context, $domain = 'default' ){ yeah(__METHOD__);
  *                        Default 'default'.
  * @return string Translated text
  */
-function esc_attr_x($text, $context, $domain = 'default' ){ yeah(__METHOD__);
+function esc_attr_x($text, $context, $domain = 'default' ){
 	return esc_attr(translate_with_gettext_context($text, $context, $domain ) );
 }
 
@@ -336,7 +336,7 @@ function esc_attr_x($text, $context, $domain = 'default' ){ yeah(__METHOD__);
  *                        Default 'default'.
  * @return string Translated text.
  */
-function esc_html_x($text, $context, $domain = 'default' ){ yeah(__METHOD__);
+function esc_html_x($text, $context, $domain = 'default' ){
 	return esc_html(translate_with_gettext_context($text, $context, $domain ) );
 }
 
@@ -359,7 +359,7 @@ function esc_html_x($text, $context, $domain = 'default' ){ yeah(__METHOD__);
  *                       Default 'default'.
  * @return string The translated singular or plural form.
  */
-function _n($single, $plural, $number, $domain = 'default' ){ yeah(__METHOD__);
+function _n($single, $plural, $number, $domain = 'default' ){
 	$translations = get_translations_for_domain($domain );
 	$translation  = $translations->translate_plural($single, $plural, $number );
 
@@ -400,7 +400,7 @@ function _n($single, $plural, $number, $domain = 'default' ){ yeah(__METHOD__);
  *                        Default 'default'.
  * @return string The translated singular or plural form.
  */
-function _nx($single, $plural, $number, $context, $domain = 'default'){ yeah(__METHOD__);
+function _nx($single, $plural, $number, $context, $domain = 'default'){
 	$translations = get_translations_for_domain($domain );
 	$translation  = $translations->translate_plural($single, $plural, $number, $context );
 
@@ -448,7 +448,7 @@ function _nx($single, $plural, $number, $context, $domain = 'default'){ yeah(__M
  *     @type string $domain   Text domain.
  * }
  */
-function _n_noop($singular, $plural, $domain = null ){ yeah(__METHOD__);
+function _n_noop($singular, $plural, $domain = null ){
 	return array(0 => $singular, 1 => $plural, 'singular' => $singular, 'plural' => $plural, 'context' => null, 'domain' => $domain );
 }
 
@@ -487,7 +487,7 @@ function _n_noop($singular, $plural, $domain = null ){ yeah(__METHOD__);
  *     @type string $domain   Text domain.
  * }
  */
-function _nx_noop($singular, $plural, $context, $domain = null ){ yeah(__METHOD__);
+function _nx_noop($singular, $plural, $context, $domain = null ){
 	return array(0 => $singular, 1 => $plural, 2 => $context, 'singular' => $singular, 'plural' => $plural, 'context' => $context, 'domain' => $domain );
 }
 
@@ -511,7 +511,7 @@ function _nx_noop($singular, $plural, $context, $domain = null ){ yeah(__METHOD_
  *                              a text domain passed to _n_noop() or _nx_noop(), it will override this value. Default 'default'.
  * @return string Either $single or $plural translated text.
  */
-function translate_nooped_plural($nooped_plural, $count, $domain = 'default' ){ yeah(__METHOD__);
+function translate_nooped_plural($nooped_plural, $count, $domain = 'default' ){
 	if($nooped_plural['domain'] )
 		$domain = $nooped_plural['domain'];
 
@@ -539,7 +539,7 @@ function translate_nooped_plural($nooped_plural, $count, $domain = 'default' ){ 
  * @param string $mofile Path to the .mo file.
  * @return bool True on success, false on failure.
  */
-function load_textdomain($domain, $mofile ){ yeah(__METHOD__);
+function load_textdomain($domain, $mofile ){
 	global $l10n, $l10n_unloaded;
 
 	$l10n_unloaded = (array) $l10n_unloaded;
@@ -607,7 +607,7 @@ function load_textdomain($domain, $mofile ){ yeah(__METHOD__);
  * @param string $domain Text domain. Unique identifier for retrieving translated strings.
  * @return bool Whether textdomain was unloaded.
  */
-function unload_textdomain($domain ){ yeah(__METHOD__);
+function unload_textdomain($domain ){
 	global $l10n, $l10n_unloaded;
 
 	$l10n_unloaded = (array) $l10n_unloaded;
@@ -661,7 +661,7 @@ function unload_textdomain($domain ){ yeah(__METHOD__);
  * @param string $locale Optional. Locale to load. Default is the value of get_locale().
  * @return bool Whether the textdomain was loaded.
  */
-function load_default_textdomain($locale = null ){ yeah(__METHOD__);
+function load_default_textdomain($locale = null ){
 	if(null === $locale ){
 		$locale = is_admin() ? get_user_locale() : get_locale();
 	}
@@ -702,7 +702,7 @@ function load_default_textdomain($locale = null ){ yeah(__METHOD__);
  *                                Default false.
  * @return bool True when textdomain is successfully loaded, false otherwise.
  */
-function load_plugin_textdomain($domain, $deprecated = false, $plugin_rel_path = false ){ yeah(__METHOD__);
+function load_plugin_textdomain($domain, $deprecated = false, $plugin_rel_path = false ){
 	/**
 	 * Filters a plugin's locale.
 	 *
@@ -743,7 +743,7 @@ function load_plugin_textdomain($domain, $deprecated = false, $plugin_rel_path =
  *                                   file resides. Default empty string.
  * @return bool True when textdomain is successfully loaded, false otherwise.
  */
-function load_muplugin_textdomain($domain, $mu_plugin_rel_path = '' ){ yeah(__METHOD__);
+function load_muplugin_textdomain($domain, $mu_plugin_rel_path = '' ){
 	/** This filter is documented in wp-includes/l10n.php */
 	$locale = apply_filters('plugin_locale', is_admin() ? get_user_locale() : get_locale(), $domain );
 
@@ -775,7 +775,7 @@ function load_muplugin_textdomain($domain, $mu_plugin_rel_path = '' ){ yeah(__ME
  *                       Default false.
  * @return bool True when textdomain is successfully loaded, false otherwise.
  */
-function load_theme_textdomain($domain, $path = false ){ yeah(__METHOD__);
+function load_theme_textdomain($domain, $path = false ){
 	/**
 	 * Filters a theme's locale.
 	 *
@@ -815,7 +815,7 @@ function load_theme_textdomain($domain, $path = false ){ yeah(__METHOD__);
  *                       Default false.
  * @return bool True when the theme textdomain is successfully loaded, false otherwise.
  */
-function load_child_theme_textdomain($domain, $path = false ){ yeah(__METHOD__);
+function load_child_theme_textdomain($domain, $path = false ){
 	if(!$path )
 		$path = get_stylesheet_directory();
 	return load_theme_textdomain($domain, $path );
@@ -837,7 +837,7 @@ function load_child_theme_textdomain($domain, $path = false ){ yeah(__METHOD__);
  * @param string $domain Text domain. Unique identifier for retrieving translated strings.
  * @return bool True when the textdomain is successfully loaded, false otherwise.
  */
-function _load_textdomain_just_in_time($domain ){ yeah(__METHOD__);
+function _load_textdomain_just_in_time($domain ){
 	global $l10n_unloaded;
 
 	$l10n_unloaded = (array) $l10n_unloaded;
@@ -869,7 +869,7 @@ function _load_textdomain_just_in_time($domain ){ yeah(__METHOD__);
  * @param bool   $reset  Whether to reset the internal cache. Used by the switch to locale functionality.
  * @return string|false The path to the translation file or false if no translation file was found.
  */
-function _get_path_to_translation($domain, $reset = false ){ yeah(__METHOD__);
+function _get_path_to_translation($domain, $reset = false ){
 	static $available_translations = array();
 
 	if(true === $reset ){
@@ -896,7 +896,7 @@ function _get_path_to_translation($domain, $reset = false ){ yeah(__METHOD__);
  * @param string $domain Text domain. Unique identifier for retrieving translated strings.
  * @return string|false The path to the translation file or false if no translation file was found.
  */
-function _get_path_to_translation_from_lang_dir($domain ){ yeah(__METHOD__);
+function _get_path_to_translation_from_lang_dir($domain ){
 	static $cached_mofiles = null;
 
 	if(null === $cached_mofiles ){
@@ -943,7 +943,7 @@ function _get_path_to_translation_from_lang_dir($domain ){ yeah(__METHOD__);
  * @param string $domain Text domain. Unique identifier for retrieving translated strings.
  * @return Translations|NOOP_Translations A Translations instance.
  */
-function get_translations_for_domain($domain ){ yeah(__METHOD__);
+function get_translations_for_domain($domain ){
 	global $l10n;
 	if(isset($l10n[ $domain ] ) || (_load_textdomain_just_in_time($domain ) && isset($l10n[ $domain ] ) ) ){
 		return $l10n[ $domain ];
@@ -967,7 +967,7 @@ function get_translations_for_domain($domain ){ yeah(__METHOD__);
  * @param string $domain Text domain. Unique identifier for retrieving translated strings.
  * @return bool Whether there are translations.
  */
-function is_textdomain_loaded($domain ){ yeah(__METHOD__);
+function is_textdomain_loaded($domain ){
 	global $l10n;
 	return isset($l10n[ $domain ] );
 }
@@ -989,7 +989,7 @@ function is_textdomain_loaded($domain ){ yeah(__METHOD__);
  * @param string $name The role name.
  * @return string Translated role name on success, original name on failure.
  */
-function translate_user_role($name ){ yeah(__METHOD__);
+function translate_user_role($name ){
 	return translate_with_gettext_context(before_last_bar($name), 'User role' );
 }
 
@@ -1005,7 +1005,7 @@ function translate_user_role($name ){ yeah(__METHOD__);
  *                    Default WP_LANG_DIR.
  * @return array An array of language codes or an empty array if no languages are present. Language codes are formed by stripping the .mo extension from the language file names.
  */
-function get_available_languages($dir = null ){ yeah(__METHOD__);
+function get_available_languages($dir = null ){
 	$languages = array();
 
 	$lang_files = glob((is_null($dir ) ? WP_LANG_DIR : $dir ) . '/*.mo' );
@@ -1041,7 +1041,7 @@ function get_available_languages($dir = null ){ yeah(__METHOD__);
  * @param string $type What to search for. Accepts 'plugins', 'themes', 'core'.
  * @return array Array of language data.
  */
-function wp_get_installed_translations($type ){ yeah(__METHOD__);
+function wp_get_installed_translations($type ){
 	if($type !== 'themes' && $type !== 'plugins' && $type !== 'core' )
 		return array();
 
@@ -1090,7 +1090,7 @@ function wp_get_installed_translations($type ){ yeah(__METHOD__);
  * @param string $po_file Path to PO file.
  * @return array PO file headers.
  */
-function wp_get_pomo_file_data($po_file ){ yeah(__METHOD__);
+function wp_get_pomo_file_data($po_file ){
 	$headers = get_file_data($po_file, array(
 		'POT-Creation-Date'  => '"POT-Creation-Date',
 		'PO-Revision-Date'   => '"PO-Revision-Date',
@@ -1131,7 +1131,7 @@ function wp_get_pomo_file_data($po_file ){ yeah(__METHOD__);
  * }
  * @return string HTML content
  */
-function wp_dropdown_languages($args = array() ){ yeah(__METHOD__);
+function wp_dropdown_languages($args = array() ){
 
 	$parsed_args = wp_parse_args($args, array(
 		'id'           => 'locale',
@@ -1257,7 +1257,7 @@ function wp_dropdown_languages($args = array() ){ yeah(__METHOD__);
  *
  * @return bool Whether locale is RTL.
  */
-function is_rtl(){ yeah(__METHOD__);
+function is_rtl(){
 	global $wp_locale;
 	if(!($wp_locale instanceof WP_Locale ) ){
 		return false;
@@ -1275,7 +1275,7 @@ function is_rtl(){ yeah(__METHOD__);
  * @param string $locale The locale.
  * @return bool True on success, false on failure.
  */
-function switch_to_locale($locale ){ yeah(__METHOD__);
+function switch_to_locale($locale ){
 	/* @var WP_Locale_Switcher $wp_locale_switcher */
 	global $wp_locale_switcher;
 
@@ -1291,7 +1291,7 @@ function switch_to_locale($locale ){ yeah(__METHOD__);
  *
  * @return string|false Locale on success, false on error.
  */
-function restore_previous_locale(){ yeah(__METHOD__);
+function restore_previous_locale(){
 	/* @var WP_Locale_Switcher $wp_locale_switcher */
 	global $wp_locale_switcher;
 
@@ -1307,7 +1307,7 @@ function restore_previous_locale(){ yeah(__METHOD__);
  *
  * @return string|false Locale on success, false on error.
  */
-function restore_current_locale(){ yeah(__METHOD__);
+function restore_current_locale(){
 	/* @var WP_Locale_Switcher $wp_locale_switcher */
 	global $wp_locale_switcher;
 
@@ -1323,7 +1323,7 @@ function restore_current_locale(){ yeah(__METHOD__);
  *
  * @return bool True if the locale has been switched, false otherwise.
  */
-function is_locale_switched(){ yeah(__METHOD__);
+function is_locale_switched(){
 	/* @var WP_Locale_Switcher $wp_locale_switcher */
 	global $wp_locale_switcher;
 

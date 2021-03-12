@@ -21,7 +21,7 @@
  * @param bool          $deprecated Not used.
  * @return array Array of fields that can be versioned.
  */
-function _wp_post_revision_fields($post = array(), $deprecated = false ){ yeah(__METHOD__);
+function _wp_post_revision_fields($post = array(), $deprecated = false ){
 	static $fields = null;
 
 	if (!is_array($post ) ){
@@ -75,7 +75,7 @@ function _wp_post_revision_fields($post = array(), $deprecated = false ){ yeah(_
  * @param bool          $autosave Optional. Is the revision an autosave? Default false.
  * @return array Post array ready to be inserted as a post revision.
  */
-function _wp_post_revision_data($post = array(), $autosave = false ){ yeah(__METHOD__);
+function _wp_post_revision_data($post = array(), $autosave = false ){
 	if (!is_array($post ) ){
 		$post = get_post($post, ARRAY_A );
 	}
@@ -109,7 +109,7 @@ function _wp_post_revision_data($post = array(), $autosave = false ){ yeah(__MET
  * @param int $post_id The ID of the post to save as a revision.
  * @return int|WP_Error|void Void or 0 if error, new revision ID, if success.
  */
-function wp_save_post_revision($post_id ){ yeah(__METHOD__);
+function wp_save_post_revision($post_id ){
 	if (defined('DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 		return;
 
@@ -224,7 +224,7 @@ function wp_save_post_revision($post_id ){ yeah(__METHOD__);
  * @param int $user_id Optional The post author ID.
  * @return WP_Post|false The autosaved data or false on failure or when no autosave exists.
  */
-function wp_get_post_autosave($post_id, $user_id = 0 ){ yeah(__METHOD__);
+function wp_get_post_autosave($post_id, $user_id = 0 ){
 	$revisions = wp_get_post_revisions($post_id, array('check_enabled' => false ) );
 
 	foreach ($revisions as $revision ){
@@ -247,7 +247,7 @@ function wp_get_post_autosave($post_id, $user_id = 0 ){ yeah(__METHOD__);
  * @param int|WP_Post $post Post ID or post object.
  * @return false|int False if not a revision, ID of revision's parent otherwise.
  */
-function wp_is_post_revision($post ){ yeah(__METHOD__);
+function wp_is_post_revision($post ){
 	if (!$post = wp_get_post_revision($post ) )
 		return false;
 
@@ -262,7 +262,7 @@ function wp_is_post_revision($post ){ yeah(__METHOD__);
  * @param int|WP_Post $post Post ID or post object.
  * @return false|int False if not a revision, ID of autosave's parent otherwise
  */
-function wp_is_post_autosave($post ){ yeah(__METHOD__);
+function wp_is_post_autosave($post ){
 	if (!$post = wp_get_post_revision($post ) )
 		return false;
 
@@ -282,7 +282,7 @@ function wp_is_post_autosave($post ){ yeah(__METHOD__);
  * @param bool                   $autosave Optional. Is the revision an autosave?
  * @return int|WP_Error WP_Error or 0 if error, new revision ID if success.
  */
-function _wp_put_post_revision($post = null, $autosave = false ){ yeah(__METHOD__);
+function _wp_put_post_revision($post = null, $autosave = false ){
 	if (is_object($post) )
 		$post = get_object_vars($post );
 	elseif (!is_array($post) )
@@ -326,7 +326,7 @@ function _wp_put_post_revision($post = null, $autosave = false ){ yeah(__METHOD_
  * @param string      $filter Optional sanitation filter. See sanitize_post().
  * @return WP_Post|array|null WP_Post (or array) on success, or null on failure.
  */
-function wp_get_post_revision(&$post, $output = OBJECT, $filter = 'raw'){ yeah(__METHOD__);
+function wp_get_post_revision(&$post, $output = OBJECT, $filter = 'raw'){
 	if (!$revision = get_post($post, OBJECT, $filter ) )
 		return $revision;
 	if ('revision' !== $revision->post_type )
@@ -356,7 +356,7 @@ function wp_get_post_revision(&$post, $output = OBJECT, $filter = 'raw'){ yeah(_
  * @param array       $fields      Optional. What fields to restore from. Defaults to all.
  * @return int|false|null Null if error, false if no fields to restore, (int) post ID if success.
  */
-function wp_restore_post_revision($revision_id, $fields = null ){ yeah(__METHOD__);
+function wp_restore_post_revision($revision_id, $fields = null ){
 	if (!$revision = wp_get_post_revision($revision_id, ARRAY_A ) )
 		return $revision;
 
@@ -405,7 +405,7 @@ function wp_restore_post_revision($revision_id, $fields = null ){ yeah(__METHOD_
  * @param int|WP_Post $revision_id Revision ID or revision object.
  * @return array|false|WP_Post|WP_Error|null Null or WP_Error if error, deleted post if success.
  */
-function wp_delete_post_revision($revision_id ){ yeah(__METHOD__);
+function wp_delete_post_revision($revision_id ){
 	if (!$revision = wp_get_post_revision($revision_id ) ){
 		return $revision;
 	}
@@ -437,7 +437,7 @@ function wp_delete_post_revision($revision_id ){ yeah(__METHOD__);
  * @param array|null  $args    Optional. Arguments for retrieving post revisions. Default null.
  * @return array An array of revisions, or an empty array if none.
  */
-function wp_get_post_revisions($post_id = 0, $args = null ){ yeah(__METHOD__);
+function wp_get_post_revisions($post_id = 0, $args = null ){
 	$post = get_post($post_id );
 	if (!$post || empty($post->ID ) )
 		return array();
@@ -464,7 +464,7 @@ function wp_get_post_revisions($post_id = 0, $args = null ){ yeah(__METHOD__);
  * @param WP_Post $post The post object.
  * @return bool True if number of revisions to keep isn't zero, false otherwise.
  */
-function wp_revisions_enabled($post ){ yeah(__METHOD__);
+function wp_revisions_enabled($post ){
 	return wp_revisions_to_keep($post ) !== 0;
 }
 
@@ -481,7 +481,7 @@ function wp_revisions_enabled($post ){ yeah(__METHOD__);
  * @param WP_Post $post The post object.
  * @return int The number of revisions to keep.
  */
-function wp_revisions_to_keep($post ){ yeah(__METHOD__);
+function wp_revisions_to_keep($post ){
 	$num = WP_POST_REVISIONS;
 
 	if (true === $num )
@@ -514,7 +514,7 @@ function wp_revisions_to_keep($post ){ yeah(__METHOD__);
  * @param WP_Post $post
  * @return WP_Post|false
  */
-function _set_preview($post ){ yeah(__METHOD__);
+function _set_preview($post ){
 	if (!is_object($post ) ){
 		return $post;
 	}
@@ -542,7 +542,7 @@ function _set_preview($post ){ yeah(__METHOD__);
  * @since 2.7.0
  * @access private
  */
-function _show_post_preview(){ yeah(__METHOD__);
+function _show_post_preview(){
 	if (isset($_GET['preview_id']) && isset($_GET['preview_nonce']) ){
 		$id = (int) $_GET['preview_id'];
 
@@ -564,7 +564,7 @@ function _show_post_preview(){ yeah(__METHOD__);
  * @param string $taxonomy
  * @return array
  */
-function _wp_preview_terms_filter($terms, $post_id, $taxonomy ){ yeah(__METHOD__);
+function _wp_preview_terms_filter($terms, $post_id, $taxonomy ){
 	if (!$post = get_post() )
 		return $terms;
 
@@ -590,7 +590,7 @@ function _wp_preview_terms_filter($terms, $post_id, $taxonomy ){ yeah(__METHOD__
  * @param string            $meta_key Meta key.
  * @return null|array The default return value or the post thumbnail meta array.
  */
-function _wp_preview_post_thumbnail_filter($value, $post_id, $meta_key ){ yeah(__METHOD__);
+function _wp_preview_post_thumbnail_filter($value, $post_id, $meta_key ){
 	if (!$post = get_post() ){
 		return $value;
 	}
@@ -622,7 +622,7 @@ function _wp_preview_post_thumbnail_filter($value, $post_id, $meta_key ){ yeah(_
  * @param WP_Post $revision
  * @return int|false
  */
-function _wp_get_post_revision_version($revision ){ yeah(__METHOD__);
+function _wp_get_post_revision_version($revision ){
 	if (is_object($revision ) )
 		$revision = get_object_vars($revision );
 	elseif (!is_array($revision ) )
@@ -646,7 +646,7 @@ function _wp_get_post_revision_version($revision ){ yeah(__METHOD__);
  * @param array   $revisions Current revisions of the post
  * @return bool true if the revisions were upgraded, false if problems
  */
-function _wp_upgrade_revisions_of_post($post, $revisions ){ yeah(__METHOD__);
+function _wp_upgrade_revisions_of_post($post, $revisions ){
 	global $wpdb;
 
 	// Add post option exclusively

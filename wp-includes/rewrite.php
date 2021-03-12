@@ -134,7 +134,7 @@ define('EP_ALL', EP_PERMALINK | EP_ATTACHMENT | EP_ROOT | EP_COMMENTS | EP_SEARC
  * @param string       $after Optional. Priority of the new rule. Accepts 'top'
  *                            or 'bottom'. Default 'bottom'.
  */
-function add_rewrite_rule($regex, $query, $after = 'bottom' ){ yeah(__METHOD__);
+function add_rewrite_rule($regex, $query, $after = 'bottom' ){
 	global $wp_rewrite;
 
 	$wp_rewrite->add_rule($regex, $query, $after );
@@ -156,7 +156,7 @@ function add_rewrite_rule($regex, $query, $after = 'bottom' ){ yeah(__METHOD__);
  * @param string $regex Regular expression to substitute the tag for in rewrite rules.
  * @param string $query Optional. String to append to the rewritten query. Must end in '='. Default empty.
  */
-function add_rewrite_tag($tag, $regex, $query = '' ){ yeah(__METHOD__);
+function add_rewrite_tag($tag, $regex, $query = '' ){
 	// validate the tag's name
 	if (strlen($tag ) < 3 || $tag[0] != '%' || $tag[ strlen($tag) - 1 ] != '%' )
 		return;
@@ -181,7 +181,7 @@ function add_rewrite_tag($tag, $regex, $query = '' ){ yeah(__METHOD__);
  *
  * @param string $tag Name of the rewrite tag.
  */
-function remove_rewrite_tag($tag ){ yeah(__METHOD__);
+function remove_rewrite_tag($tag ){
 	global $wp_rewrite;
 	$wp_rewrite->remove_rewrite_tag($tag );
 }
@@ -199,7 +199,7 @@ function remove_rewrite_tag($tag ){ yeah(__METHOD__);
  * @param array  $args   Optional. Arguments for building the rules from the permalink structure,
  *                       see WP_Rewrite::add_permastruct() for full details. Default empty array.
  */
-function add_permastruct($name, $struct, $args = array() ){ yeah(__METHOD__);
+function add_permastruct($name, $struct, $args = array() ){
 	global $wp_rewrite;
 
 	// Back-compat for the old parameters: $with_front and $ep_mask.
@@ -224,7 +224,7 @@ function add_permastruct($name, $struct, $args = array() ){ yeah(__METHOD__);
  *
  * @param string $name Name for permalink structure.
  */
-function remove_permastruct($name ){ yeah(__METHOD__);
+function remove_permastruct($name ){
 	global $wp_rewrite;
 
 	$wp_rewrite->remove_permastruct($name );
@@ -241,7 +241,7 @@ function remove_permastruct($name ){ yeah(__METHOD__);
  * @param callable $function Callback to run on feed display.
  * @return string Feed action name.
  */
-function add_feed($feedname, $function ){ yeah(__METHOD__);
+function add_feed($feedname, $function ){
 	global $wp_rewrite;
 
 	if (!in_array($feedname, $wp_rewrite->feeds ) ){
@@ -268,7 +268,7 @@ function add_feed($feedname, $function ){ yeah(__METHOD__);
  * @param bool $hard Whether to update .htaccess (hard flush) or just update
  * 	                 rewrite_rules transient (soft flush). Default is true (hard).
  */
-function flush_rewrite_rules($hard = true ){ yeah(__METHOD__);
+function flush_rewrite_rules($hard = true ){
 	global $wp_rewrite;
 	$wp_rewrite->flush_rules($hard );
 }
@@ -305,7 +305,7 @@ function flush_rewrite_rules($hard = true ){ yeah(__METHOD__);
  * @param string|bool $query_var Name of the corresponding query variable. Pass `false` to skip registering a query_var
  *                               for this endpoint. Defaults to the value of `$name`.
  */
-function add_rewrite_endpoint($name, $places, $query_var = true ){ yeah(__METHOD__);
+function add_rewrite_endpoint($name, $places, $query_var = true ){
 	global $wp_rewrite;
 	$wp_rewrite->add_endpoint($name, $places, $query_var );
 }
@@ -321,7 +321,7 @@ function add_rewrite_endpoint($name, $places, $query_var = true ){ yeah(__METHOD
  * @param string $base The taxonomy base that we're going to filter
  * @return string
  */
-function _wp_filter_taxonomy_base($base ){ yeah(__METHOD__);
+function _wp_filter_taxonomy_base($base ){
 	if (!empty($base ) ){
 		$base = preg_replace('|^/index\.php/|', '', $base );
 		$base = trim($base, '/' );
@@ -351,7 +351,7 @@ function _wp_filter_taxonomy_base($base ){ yeah(__METHOD__);
  *                          WP::parse_request(). Default empty array.
  * @return array Returns the original array of query vars, with date/post conflicts resolved.
  */
-function wp_resolve_numeric_slug_conflicts($query_vars = array() ){ yeah(__METHOD__);
+function wp_resolve_numeric_slug_conflicts($query_vars = array() ){
 	if (!isset($query_vars['year'] ) && !isset($query_vars['monthnum'] ) && !isset($query_vars['day'] ) ){
 		return $query_vars;
 	}
@@ -459,7 +459,7 @@ function wp_resolve_numeric_slug_conflicts($query_vars = array() ){ yeah(__METHO
  * @param string $url Permalink to check.
  * @return int Post ID, or 0 on failure.
  */
-function url_to_postid($url ){ yeah(__METHOD__);
+function url_to_postid($url ){
 	global $wp_rewrite;
 
 	/**

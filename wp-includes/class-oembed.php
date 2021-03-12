@@ -48,7 +48,7 @@ class WP_oEmbed {
 	 *
 	 * @since 2.9.0
 	 */
-	public function __construct() { yeah(__METHOD__);
+	public function __construct() {
 		$host = urlencode(home_url());
 		$providers = array(
 			'#https?://((m|www)\.)?youtube\.com/watch.*#i'                        => array('https://www.youtube.com/oembed',                        true),
@@ -233,7 +233,7 @@ class WP_oEmbed {
 	 * @param array    $arguments Arguments to pass when calling.
 	 * @return mixed|bool Return value of the callback, false otherwise.
 	 */
-	public function __call($name, $arguments) { yeah(__METHOD__);
+	public function __call($name, $arguments) {
 		if (in_array($name, $this->compat_methods)) {
 			return call_user_func_array(array($this, $name), $arguments);
 		}
@@ -251,7 +251,7 @@ class WP_oEmbed {
 	 * @param string|array  $args Optional provider arguments.
 	 * @return false|string False on failure, otherwise the oEmbed provider URL.
 	 */
-	public function get_provider($url, $args = '') { yeah(__METHOD__);
+	public function get_provider($url, $args = '') {
 		$args = wp_parse_args($args);
 
 		$provider = false;
@@ -299,7 +299,7 @@ class WP_oEmbed {
 	 * @param bool   $regex    Optional. Whether the $format parameter is in a regex format.
 	 *                         Default false.
 	 */
-	public static function _add_provider_early($format, $provider, $regex = false) { yeah(__METHOD__);
+	public static function _add_provider_early($format, $provider, $regex = false) {
 		if (empty(self::$early_providers['add'])) {
 			self::$early_providers['add'] = array();
 		}
@@ -323,7 +323,7 @@ class WP_oEmbed {
 	 * @param string $format The format of URL that this provider can handle. You can use
 	 *                       asterisks as wildcards.
 	 */
-	public static function _remove_provider_early($format) { yeah(__METHOD__);
+	public static function _remove_provider_early($format) {
 		if (empty(self::$early_providers['remove'])) {
 			self::$early_providers['remove'] = array();
 		}
@@ -342,7 +342,7 @@ class WP_oEmbed {
 	 * @param array|string $args Optional. Arguments, usually passed from a shortcode. Default empty.
 	 * @return false|object False on failure, otherwise the result in the form of an object.
 	 */
-	public function get_data($url, $args = '') { yeah(__METHOD__);
+	public function get_data($url, $args = '') {
 		$args = wp_parse_args($args);
 
 		$provider = $this->get_provider($url, $args);
@@ -372,7 +372,7 @@ class WP_oEmbed {
 	 * @param array|string $args Optional. Arguments, usually passed from a shortcode. Default empty.
 	 * @return false|string False on failure, otherwise the UNSANITIZED (and potentially unsafe) HTML that should be used to embed.
 	 */
-	public function get_html($url, $args = '') { yeah(__METHOD__);
+	public function get_html($url, $args = '') {
 		/**
 		 * Filters the oEmbed result before any HTTP requests are made.
 		 *
@@ -420,7 +420,7 @@ class WP_oEmbed {
 	 * @param string $url The URL that should be inspected for discovery `<link>` tags.
 	 * @return false|string False on failure, otherwise the oEmbed provider URL.
 	 */
-	public function discover($url) { yeah(__METHOD__);
+	public function discover($url) {
 		$providers = array();
 		$args = array(
 			'limit_response_size' => 153600, // 150 KB
@@ -505,7 +505,7 @@ class WP_oEmbed {
 	 * @param array|string $args     Optional. Arguments, usually passed from a shortcode. Default empty.
 	 * @return false|object False on failure, otherwise the result in the form of an object.
 	 */
-	public function fetch($provider, $url, $args = '') { yeah(__METHOD__);
+	public function fetch($provider, $url, $args = '') {
 		$args = wp_parse_args($args, wp_embed_defaults($url));
 
 		$provider = add_query_arg('maxwidth', (int) $args['width'], $provider);
@@ -543,7 +543,7 @@ class WP_oEmbed {
 	 * @param string $format Format to use
 	 * @return false|object|WP_Error False on failure, otherwise the result in the form of an object.
 	 */
-	private function _fetch_with_format($provider_url_with_args, $format) { yeah(__METHOD__);
+	private function _fetch_with_format($provider_url_with_args, $format) {
 		$provider_url_with_args = add_query_arg('format', $format, $provider_url_with_args);
 
 		/** This filter is documented in wp-includes/class-oembed.php */
@@ -566,7 +566,7 @@ class WP_oEmbed {
 	 * @param string $response_body
 	 * @return object|false
 	 */
-	private function _parse_json($response_body) { yeah(__METHOD__);
+	private function _parse_json($response_body) {
 		$data = json_decode(trim($response_body));
 		return ($data && is_object($data)) ? $data : false;
 	}
@@ -579,7 +579,7 @@ class WP_oEmbed {
 	 * @param string $response_body
 	 * @return object|false
 	 */
-	private function _parse_xml($response_body) { yeah(__METHOD__);
+	private function _parse_xml($response_body) {
 		if (!function_exists('libxml_disable_entity_loader'))
 			return false;
 
@@ -602,7 +602,7 @@ class WP_oEmbed {
 	 * @param string $response_body
 	 * @return stdClass|false
 	 */
-	private function _parse_xml_body($response_body) { yeah(__METHOD__);
+	private function _parse_xml_body($response_body) {
 		if (!function_exists('simplexml_import_dom') || !class_exists('DOMDocument', false))
 			return false;
 
@@ -640,7 +640,7 @@ class WP_oEmbed {
 	 * @param string $url The URL to the content that is desired to be embedded.
 	 * @return false|string False on error, otherwise the HTML needed to embed.
 	 */
-	public function data2html($data, $url) { yeah(__METHOD__);
+	public function data2html($data, $url) {
 		if (!is_object($data) || empty($data->type))
 			return false;
 
@@ -697,7 +697,7 @@ class WP_oEmbed {
 	 * @param string $url The original URL passed to oEmbed.
 	 * @return string Possibly modified $html
 	 */
-	public function _strip_newlines($html, $data, $url) { yeah(__METHOD__);
+	public function _strip_newlines($html, $data, $url) {
 		if (false === strpos($html, "\n")) {
 			return $html;
 		}

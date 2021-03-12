@@ -121,7 +121,7 @@ $menu[59] = array('', 'read', 'separator2', '', 'wp-menu-separator');
  * @access private
  * @since 3.0.0
  */
-function _add_themes_utility_last() { yeah(__METHOD__);
+function _add_themes_utility_last() {
 	// Must use API on the admin_menu hook, direct modification is only possible on/before the _admin_menu hook
 	add_submenu_page('themes.php', _x('Editor', 'theme editor'), _x('Editor', 'theme editor'), 'edit_themes', 'theme-editor.php');
 }

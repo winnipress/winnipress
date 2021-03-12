@@ -29,7 +29,7 @@ class Requests_SSL {
 	 * @param array $cert Certificate data from openssl_x509_parse()
 	 * @return bool
 	 */
-	public static function verify_certificate($host, $cert){ yeah(__METHOD__);
+	public static function verify_certificate($host, $cert){
 		// Calculate the valid wildcard match if the host is not an IP address
 		$parts = explode('.', $host);
 		if (ip2long($host) === false){
@@ -88,7 +88,7 @@ class Requests_SSL {
 	 * @param string $reference Reference dNSName
 	 * @return boolean Is the name valid?
 	 */
-	public static function verify_reference_name($reference){ yeah(__METHOD__);
+	public static function verify_reference_name($reference){
 		$parts = explode('.', $reference);
 
 		// Check the first part of the name
@@ -124,7 +124,7 @@ class Requests_SSL {
 	 * @param string $reference dNSName to match against
 	 * @return boolean Does the domain match?
 	 */
-	public static function match_domain($host, $reference){ yeah(__METHOD__);
+	public static function match_domain($host, $reference){
 		// Check if the reference is blacklisted first
 		if (self::verify_reference_name($reference) !== true){
 			return false;

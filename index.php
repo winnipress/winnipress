@@ -3,16 +3,6 @@
 
 session_start();
 
-function yeah($met){
-    if(!isset($GLOBALS['metoditos'])){
-        $GLOBALS['metoditos']=array();
-    }
-
-    if (!in_array($met, $GLOBALS['metoditos'])){
-    $GLOBALS['metoditos'][] = $met;
-    }
-}
-
 // Require debug tools
 require_once(dirname(__FILE__) . '/wp-includes/winni-debug-tools.php');
 
@@ -21,38 +11,3 @@ require_once(dirname(__FILE__) . '/wp-load.php');
 
 // Load the corresponding template
 require(dirname(__FILE__) . '/wp-load-template.php');
-
-
-
-
-if(!isset($_SESSION['metoditos_yavisto'])){
-    $_SESSION['metoditos_yavisto'] = array();
-	$_SESSION['filennenemae_yavisto'] = array();
-}
-
-
-	echo '<!--';
-	print_r($_SESSION['metoditos_yavisto']);
-	print_r($_SESSION['filennenemae_yavisto']);
-	echo '-->';
-
-
-// Register all called functions to see what we use and what not
-global $wpdb;
-foreach ($GLOBALS['metoditos'] as $the_calleddstuff) {
-    if(!in_array($the_calleddstuff, $_SESSION['metoditos_yavisto'])){
-        $_SESSION['metoditos_yavisto'][]=$the_calleddstuff;
-	    $wpdb->get_results("INSERT IGNORE INTO calledfunc (funciii) VALUES ('".$the_calleddstuff."') ON DUPLICATE KEY UPDATE calls=calls+1");
-    }
-}
-
-
-// Register all called files to see what we use and what not
-$all_included_files_so_far = get_included_files();
-foreach ($all_included_files_so_far as $the_included_file) {
-    $filennenemae = '.'.str_replace('\\','/',str_replace('C:\laragon\www\winnipress','',$the_included_file))."\n";
-	if(!in_array($filennenemae, $_SESSION['filennenemae_yavisto'])){
-		$_SESSION['filennenemae_yavisto'][] = $filennenemae;
-		$wpdb->get_results("INSERT IGNORE INTO calledfiles (filename) VALUES ('".sanitize_text_field($filennenemae)."') ON DUPLICATE KEY UPDATE calls=calls+1");
-	}
-}

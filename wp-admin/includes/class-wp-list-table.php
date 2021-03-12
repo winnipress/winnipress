@@ -121,7 +121,7 @@ class WP_List_Table {
 	 *                            Default null.
 	 * }
 	 */
-	public function __construct( $args = array() ) { yeah(__METHOD__);
+	public function __construct( $args = array() ) {
 		$args = wp_parse_args( $args, array(
 			'plural' => '',
 			'singular' => '',
@@ -162,7 +162,7 @@ class WP_List_Table {
 	 * @param string $name Property to get.
 	 * @return mixed Property.
 	 */
-	public function __get( $name ) { yeah(__METHOD__);
+	public function __get( $name ) {
 		if ( in_array( $name, $this->compat_fields ) ) {
 			return $this->$name;
 		}
@@ -177,7 +177,7 @@ class WP_List_Table {
 	 * @param mixed  $value Property value.
 	 * @return mixed Newly-set property.
 	 */
-	public function __set( $name, $value ) { yeah(__METHOD__);
+	public function __set( $name, $value ) {
 		if ( in_array( $name, $this->compat_fields ) ) {
 			return $this->$name = $value;
 		}
@@ -191,7 +191,7 @@ class WP_List_Table {
 	 * @param string $name Property to check if set.
 	 * @return bool Whether the property is set.
 	 */
-	public function __isset( $name ) { yeah(__METHOD__);
+	public function __isset( $name ) {
 		if ( in_array( $name, $this->compat_fields ) ) {
 			return isset( $this->$name );
 		}
@@ -204,7 +204,7 @@ class WP_List_Table {
 	 *
 	 * @param string $name Property to unset.
 	 */
-	public function __unset( $name ) { yeah(__METHOD__);
+	public function __unset( $name ) {
 		if ( in_array( $name, $this->compat_fields ) ) {
 			unset( $this->$name );
 		}
@@ -219,7 +219,7 @@ class WP_List_Table {
 	 * @param array    $arguments Arguments to pass when calling.
 	 * @return mixed|bool Return value of the callback, false otherwise.
 	 */
-	public function __call( $name, $arguments ) { yeah(__METHOD__);
+	public function __call( $name, $arguments ) {
 		if ( in_array( $name, $this->compat_methods ) ) {
 			return call_user_func_array( array( $this, $name ), $arguments );
 		}
@@ -232,7 +232,7 @@ class WP_List_Table {
 	 * @since 3.1.0
 	 * @abstract
 	 */
-	public function ajax_user_can() { yeah(__METHOD__);
+	public function ajax_user_can() {
 		die( 'function WP_List_Table::ajax_user_can() must be over-ridden in a sub-class.' );
 	}
 
@@ -243,7 +243,7 @@ class WP_List_Table {
 	 * @since 3.1.0
 	 * @abstract
 	 */
-	public function prepare_items() { yeah(__METHOD__);
+	public function prepare_items() {
 		die( 'function WP_List_Table::prepare_items() must be over-ridden in a sub-class.' );
 	}
 
@@ -254,7 +254,7 @@ class WP_List_Table {
 	 *
 	 * @param array|string $args Array or string of arguments with information about the pagination.
 	 */
-	protected function set_pagination_args( $args ) { yeah(__METHOD__);
+	protected function set_pagination_args( $args ) {
 		$args = wp_parse_args( $args, array(
 			'total_items' => 0,
 			'total_pages' => 0,
@@ -282,7 +282,7 @@ class WP_List_Table {
 	 *                    'total_pages', 'per_page', or 'infinite_scroll'.
 	 * @return int Number of items that correspond to the given pagination argument.
 	 */
-	public function get_pagination_arg( $key ) { yeah(__METHOD__);
+	public function get_pagination_arg( $key ) {
 		if ( 'page' === $key ) {
 			return $this->get_pagenum();
 		}
@@ -299,7 +299,7 @@ class WP_List_Table {
 	 *
 	 * @return bool
 	 */
-	public function has_items() { yeah(__METHOD__);
+	public function has_items() {
 		return !empty( $this->items );
 	}
 
@@ -308,7 +308,7 @@ class WP_List_Table {
 	 *
 	 * @since 3.1.0
 	 */
-	public function no_items() { yeah(__METHOD__);
+	public function no_items() {
 		_e( 'No items found.' );
 	}
 
@@ -320,7 +320,7 @@ class WP_List_Table {
 	 * @param string $text     The 'submit' button label.
 	 * @param string $input_id ID attribute value for the search input field.
 	 */
-	public function search_box( $text, $input_id ) { yeah(__METHOD__);
+	public function search_box( $text, $input_id ) {
 		if ( empty( $_REQUEST['s'] ) && !$this->has_items() )
 			return;
 
@@ -351,7 +351,7 @@ class WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_views() { yeah(__METHOD__);
+	protected function get_views() {
 		return array();
 	}
 
@@ -360,7 +360,7 @@ class WP_List_Table {
 	 *
 	 * @since 3.1.0
 	 */
-	public function views() { yeah(__METHOD__);
+	public function views() {
 		$views = $this->get_views();
 		/**
 		 * Filters the list of available list table views.
@@ -395,7 +395,7 @@ class WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_bulk_actions() { yeah(__METHOD__);
+	protected function get_bulk_actions() {
 		return array();
 	}
 
@@ -407,7 +407,7 @@ class WP_List_Table {
 	 * @param string $which The location of the bulk actions: 'top' or 'bottom'.
 	 *                      This is designated as optional for backward compatibility.
 	 */
-	protected function bulk_actions( $which = '' ) { yeah(__METHOD__);
+	protected function bulk_actions( $which = '' ) {
 		if ( is_null( $this->_actions ) ) {
 			$this->_actions = $this->get_bulk_actions();
 			/**
@@ -454,7 +454,7 @@ class WP_List_Table {
 	 *
 	 * @return string|false The action name or False if no action was selected
 	 */
-	public function current_action() { yeah(__METHOD__);
+	public function current_action() {
 		if ( isset( $_REQUEST['filter_action'] ) && !empty( $_REQUEST['filter_action'] ) )
 			return false;
 
@@ -476,7 +476,7 @@ class WP_List_Table {
 	 * @param bool $always_visible Whether the actions should be always visible
 	 * @return string
 	 */
-	protected function row_actions( $actions, $always_visible = false ) { yeah(__METHOD__);
+	protected function row_actions( $actions, $always_visible = false ) {
 		$action_count = count( $actions );
 		$i = 0;
 
@@ -506,7 +506,7 @@ class WP_List_Table {
 	 *
 	 * @param string $post_type
 	 */
-	protected function months_dropdown( $post_type ) { yeah(__METHOD__);
+	protected function months_dropdown( $post_type ) {
 		global $wpdb, $wp_locale;
 
 		/**
@@ -583,7 +583,7 @@ class WP_List_Table {
 	 *
 	 * @param string $current_mode
 	 */
-	protected function view_switcher( $current_mode ) { yeah(__METHOD__);
+	protected function view_switcher( $current_mode ) {
 ?>
 		<input type="hidden" name="mode" value="<?php echo esc_attr( $current_mode ); ?>" />
 		<div class="view-switch">
@@ -612,7 +612,7 @@ class WP_List_Table {
 	 * @param int $post_id          The post ID.
 	 * @param int $pending_comments Number of pending comments.
 	 */
-	protected function comments_bubble( $post_id, $pending_comments ) { yeah(__METHOD__);
+	protected function comments_bubble( $post_id, $pending_comments ) {
 		$approved_comments = get_comments_number();
 
 		$approved_comments_number = number_format_i18n( $approved_comments );
@@ -662,7 +662,7 @@ class WP_List_Table {
 	 *
 	 * @return int
 	 */
-	public function get_pagenum() { yeah(__METHOD__);
+	public function get_pagenum() {
 		$pagenum = isset( $_REQUEST['paged'] ) ? absint( $_REQUEST['paged'] ) : 0;
 
 		if ( isset( $this->_pagination_args['total_pages'] ) && $pagenum > $this->_pagination_args['total_pages'] )
@@ -680,7 +680,7 @@ class WP_List_Table {
 	 * @param int    $default
 	 * @return int
 	 */
-	protected function get_items_per_page( $option, $default = 20 ) { yeah(__METHOD__);
+	protected function get_items_per_page( $option, $default = 20 ) {
 		$per_page = (int) get_user_option( $option );
 		if ( empty( $per_page ) || $per_page < 1 )
 			$per_page = $default;
@@ -708,7 +708,7 @@ class WP_List_Table {
 	 *
 	 * @param string $which
 	 */
-	protected function pagination( $which ) { yeah(__METHOD__);
+	protected function pagination( $which ) {
 		if ( empty( $this->_pagination_args ) ) {
 			return;
 		}
@@ -833,7 +833,7 @@ class WP_List_Table {
 	 *
 	 * @return array
 	 */
-	public function get_columns() { yeah(__METHOD__);
+	public function get_columns() {
 		die( 'function WP_List_Table::get_columns() must be over-ridden in a sub-class.' );
 	}
 
@@ -849,7 +849,7 @@ class WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_sortable_columns() { yeah(__METHOD__);
+	protected function get_sortable_columns() {
 		return array();
 	}
 
@@ -860,7 +860,7 @@ class WP_List_Table {
 	 *
 	 * @return string Name of the default primary column, in this case, an empty string.
 	 */
-	protected function get_default_primary_column_name() { yeah(__METHOD__);
+	protected function get_default_primary_column_name() {
 		$columns = $this->get_columns();
 		$column = '';
 
@@ -889,7 +889,7 @@ class WP_List_Table {
 	 *
 	 * @return string Name of the default primary column.
 	 */
-	public function get_primary_column() { yeah(__METHOD__);
+	public function get_primary_column() {
 		return $this->get_primary_column_name();
 	}
 
@@ -900,7 +900,7 @@ class WP_List_Table {
 	 *
 	 * @return string The name of the primary column.
 	 */
-	protected function get_primary_column_name() { yeah(__METHOD__);
+	protected function get_primary_column_name() {
 		$columns = get_column_headers( $this->screen );
 		$default = $this->get_default_primary_column_name();
 
@@ -934,7 +934,7 @@ class WP_List_Table {
 	 *
 	 * @return array
 	 */
-	protected function get_column_info() { yeah(__METHOD__);
+	protected function get_column_info() {
 		// $_column_headers is already set / cached
 		if ( isset( $this->_column_headers ) && is_array( $this->_column_headers ) ) {
 			// Back-compat for list tables that have been manually setting $_column_headers for horse reasons.
@@ -988,7 +988,7 @@ class WP_List_Table {
 	 *
 	 * @return int
 	 */
-	public function get_column_count() { yeah(__METHOD__);
+	public function get_column_count() {
 		list ( $columns, $hidden ) = $this->get_column_info();
 		$hidden = array_intersect( array_keys( $columns ), array_filter( $hidden ) );
 		return count( $columns ) - count( $hidden );
@@ -1003,7 +1003,7 @@ class WP_List_Table {
 	 *
 	 * @param bool $with_id Whether to set the id attribute or not
 	 */
-	public function print_column_headers( $with_id = true ) { yeah(__METHOD__);
+	public function print_column_headers( $with_id = true ) {
 		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
 
 		$current_url = set_url_scheme( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
@@ -1076,7 +1076,7 @@ class WP_List_Table {
 	 *
 	 * @since 3.1.0
 	 */
-	public function display() { yeah(__METHOD__);
+	public function display() {
 		$singular = $this->_args['singular'];
 
 		$this->display_tablenav( 'top' );
@@ -1115,7 +1115,7 @@ class WP_List_Table {
 	 *
 	 * @return array List of CSS classes for the table tag.
 	 */
-	protected function get_table_classes() { yeah(__METHOD__);
+	protected function get_table_classes() {
 		return array( 'widefat', 'fixed', 'striped', $this->_args['plural'] );
 	}
 
@@ -1125,7 +1125,7 @@ class WP_List_Table {
 	 * @since 3.1.0
 	 * @param string $which
 	 */
-	protected function display_tablenav( $which ) { yeah(__METHOD__);
+	protected function display_tablenav( $which ) {
 		if ( 'top' === $which ) {
 			wp_nonce_field( 'bulk-' . $this->_args['plural'] );
 		}
@@ -1153,14 +1153,14 @@ class WP_List_Table {
 	 *
 	 * @param string $which
 	 */
-	protected function extra_tablenav( $which ) { yeah(__METHOD__);}
+	protected function extra_tablenav( $which ) {}
 
 	/**
 	 * Generate the tbody element for the list table.
 	 *
 	 * @since 3.1.0
 	 */
-	public function display_rows_or_placeholder() { yeah(__METHOD__);
+	public function display_rows_or_placeholder() {
 		if ( $this->has_items() ) {
 			$this->display_rows();
 		} else {
@@ -1175,7 +1175,7 @@ class WP_List_Table {
 	 *
 	 * @since 3.1.0
 	 */
-	public function display_rows() { yeah(__METHOD__);
+	public function display_rows() {
 		foreach ( $this->items as $item )
 			$this->single_row( $item );
 	}
@@ -1187,7 +1187,7 @@ class WP_List_Table {
 	 *
 	 * @param object $item The current item
 	 */
-	public function single_row( $item ) { yeah(__METHOD__);
+	public function single_row( $item ) {
 		echo '<tr>';
 		$this->single_row_columns( $item );
 		echo '</tr>';
@@ -1198,13 +1198,13 @@ class WP_List_Table {
 	 * @param object $item
 	 * @param string $column_name
 	 */
-	protected function column_default( $item, $column_name ) { yeah(__METHOD__);}
+	protected function column_default( $item, $column_name ) {}
 
 	/**
 	 *
 	 * @param object $item
 	 */
-	protected function column_cb( $item ) { yeah(__METHOD__);}
+	protected function column_cb( $item ) {}
 
 	/**
 	 * Generates the columns for a single row of the table
@@ -1213,7 +1213,7 @@ class WP_List_Table {
 	 *
 	 * @param object $item The current item
 	 */
-	protected function single_row_columns( $item ) { yeah(__METHOD__);
+	protected function single_row_columns( $item ) {
 		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
 
 		foreach ( $columns as $column_name => $column_display_name ) {
@@ -1268,7 +1268,7 @@ class WP_List_Table {
 	 * @param string $primary     Primary column name.
 	 * @return string The row actions HTML, or an empty string if the current column is the primary column.
 	 */
-	protected function handle_row_actions( $item, $column_name, $primary ) { yeah(__METHOD__);
+	protected function handle_row_actions( $item, $column_name, $primary ) {
 		return $column_name === $primary ? '<button type="button" class="toggle-row"><span class="screen-reader-text">' . __( 'Show more details' ) . '</span></button>' : '';
  	}
 
@@ -1277,7 +1277,7 @@ class WP_List_Table {
 	 *
 	 * @since 3.1.0
 	 */
-	public function ajax_response() { yeah(__METHOD__);
+	public function ajax_response() {
 		$this->prepare_items();
 
 		ob_start();
@@ -1309,7 +1309,7 @@ class WP_List_Table {
 	 * Send required variables to JavaScript land
 	 *
 	 */
-	public function _js_vars() { yeah(__METHOD__);
+	public function _js_vars() {
 		$args = array(
 			'class'  => get_class( $this ),
 			'screen' => array(

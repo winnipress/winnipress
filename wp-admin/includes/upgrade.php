@@ -36,7 +36,7 @@ if(!function_exists('wp_install')) :
  * @param string $language      Optional. Language chosen. Default empty.
  * @return array Array keys 'url', 'user_id', 'password', and 'password_message'.
  */
-function wp_install($blog_title, $user_name, $user_email, $public, $deprecated = '', $user_password = '', $language = ''){ yeah(__METHOD__);
+function wp_install($blog_title, $user_name, $user_email, $public, $deprecated = '', $user_password = '', $language = ''){
 	if(!empty($deprecated))
 		_deprecated_argument(__FUNCTION__, '2.6.0');
 
@@ -127,7 +127,7 @@ if(!function_exists('wp_install_defaults')) :
  *
  * @param int $user_id User ID.
  */
-function wp_install_defaults($user_id){ yeah(__METHOD__);
+function wp_install_defaults($user_id){
 	global $wpdb, $wp_rewrite, $table_prefix;
 
 	// Default category
@@ -312,7 +312,7 @@ endif;
  *
  * @return bool Whether pretty permalinks are enabled. False otherwise.
  */
-function wp_install_maybe_enable_pretty_permalinks(){ yeah(__METHOD__);
+function wp_install_maybe_enable_pretty_permalinks(){
 	global $wp_rewrite;
 
 	// Bail if a permalink structure is already enabled.
@@ -390,7 +390,7 @@ if(!function_exists('wp_new_blog_notification')) :
  * @param int    $user_id    User ID.
  * @param string $password   User's Password.
  */
-function wp_new_blog_notification($blog_title, $blog_url, $user_id, $password){ yeah(__METHOD__);
+function wp_new_blog_notification($blog_title, $blog_url, $user_id, $password){
 	$user = new WP_User($user_id);
 	$email = $user->user_email;
 	$name = $user->user_login;
@@ -428,7 +428,7 @@ if(!function_exists('wp_upgrade')) :
  * @global int  $wp_db_version
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function wp_upgrade(){ yeah(__METHOD__);
+function wp_upgrade(){
 	global $wp_current_db_version, $wp_db_version, $wpdb;
 
 	$wp_current_db_version = __get_option('db_version');
@@ -481,7 +481,7 @@ endif;
  * @global int $wp_current_db_version
  * @global int $wp_db_version
  */
-function upgrade_all(){ yeah(__METHOD__);
+function upgrade_all(){
 	global $wp_current_db_version, $wp_db_version;
 	$wp_current_db_version = __get_option('db_version');
 
@@ -510,7 +510,7 @@ function upgrade_all(){ yeah(__METHOD__);
  * @param string $create_ddl SQL statement to create table.
  * @return bool If table already exists or was created by function.
  */
-function maybe_create_table($table_name, $create_ddl){ yeah(__METHOD__);
+function maybe_create_table($table_name, $create_ddl){
 	global $wpdb;
 
 	$query = $wpdb->prepare("SHOW TABLES LIKE %s", $wpdb->esc_like($table_name));
@@ -540,7 +540,7 @@ function maybe_create_table($table_name, $create_ddl){ yeah(__METHOD__);
  * @param string $index Index name to drop.
  * @return true True, when finished.
  */
-function drop_index($table, $index){ yeah(__METHOD__);
+function drop_index($table, $index){
 	global $wpdb;
 	$wpdb->hide_errors();
 	$wpdb->query("ALTER TABLE `$table` DROP INDEX `$index`");
@@ -563,7 +563,7 @@ function drop_index($table, $index){ yeah(__METHOD__);
  * @param string $index Database table index column.
  * @return true True, when done with execution.
  */
-function add_clean_index($table, $index){ yeah(__METHOD__);
+function add_clean_index($table, $index){
 	global $wpdb;
 	drop_index($table, $index);
 	$wpdb->query("ALTER TABLE `$table` ADD INDEX (`$index`)");
@@ -582,7 +582,7 @@ function add_clean_index($table, $index){ yeah(__METHOD__);
  * @param string $create_ddl  The SQL statement used to add the column.
  * @return bool True if already exists or on successful completion, false on error.
  */
-function maybe_add_column($table_name, $column_name, $create_ddl){ yeah(__METHOD__);
+function maybe_add_column($table_name, $column_name, $create_ddl){
 	global $wpdb;
 	foreach ($wpdb->get_col("DESC $table_name", 0) as $column){
 		if($column == $column_name){
@@ -612,7 +612,7 @@ function maybe_add_column($table_name, $column_name, $create_ddl){ yeah(__METHOD
  * @param string $table The table to convert.
  * @return bool true if the table was converted, false if it wasn't.
  */
-function maybe_convert_table_to_utf8mb4($table){ yeah(__METHOD__);
+function maybe_convert_table_to_utf8mb4($table){
 	global $wpdb;
 
 	$results = $wpdb->get_results("SHOW FULL COLUMNS FROM `$table`");
@@ -654,7 +654,7 @@ function maybe_convert_table_to_utf8mb4($table){ yeah(__METHOD__);
  *
  * @return stdClass List of options.
  */
-function get_alloptions_110(){ yeah(__METHOD__);
+function get_alloptions_110(){
 	global $wpdb;
 	$all_options = new stdClass;
 	if($options = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb->options")){
@@ -679,7 +679,7 @@ function get_alloptions_110(){ yeah(__METHOD__);
  * @param string $setting Option name.
  * @return mixed
  */
-function __get_option($setting){ yeah(__METHOD__);
+function __get_option($setting){
 	global $wpdb;
 
 	if($setting == 'home' && defined('WP_HOME'))
@@ -707,7 +707,7 @@ function __get_option($setting){ yeah(__METHOD__);
  * @param string $content The content to modify.
  * @return string The de-slashed content.
  */
-function deslash($content){ yeah(__METHOD__);
+function deslash($content){
 	// Note: \\\ inside a regex denotes a single backslash.
 
 	/*
@@ -744,7 +744,7 @@ function deslash($content){ yeah(__METHOD__);
  *                              Default true.
  * @return array Strings containing the results of the various update queries.
  */
-function dbDelta($queries = '', $execute = true){ yeah(__METHOD__);
+function dbDelta($queries = '', $execute = true){
 	global $wpdb;
 
 	if(in_array($queries, array('', 'all', 'blog', 'global', 'ms_global'), true))
@@ -1108,7 +1108,7 @@ function dbDelta($queries = '', $execute = true){ yeah(__METHOD__);
  *
  * @param string $tables Optional. Which set of tables to update. Default is 'all'.
  */
-function make_db_current($tables = 'all'){ yeah(__METHOD__);
+function make_db_current($tables = 'all'){
 	$alterations = dbDelta($tables);
 	echo "<ol>\n";
 	foreach ($alterations as $alteration) echo "<li>$alteration</li>\n";
@@ -1127,7 +1127,7 @@ function make_db_current($tables = 'all'){ yeah(__METHOD__);
  *
  * @param string $tables Optional. Which set of tables to update. Default is 'all'.
  */
-function make_db_current_silent($tables = 'all'){ yeah(__METHOD__);
+function make_db_current_silent($tables = 'all'){
 	dbDelta($tables);
 }
 
@@ -1144,7 +1144,7 @@ function make_db_current_silent($tables = 'all'){ yeah(__METHOD__);
  * @param string $template   The directory name of the theme.
  * @return false|void
  */
-function make_site_theme_from_default($theme_name, $template){ yeah(__METHOD__);
+function make_site_theme_from_default($theme_name, $template){
 	$site_dir = WP_CONTENT_DIR . "/themes/$template";
 	$default_dir = WP_CONTENT_DIR . '/themes/' . WP_DEFAULT_THEME;
 
@@ -1207,7 +1207,7 @@ function make_site_theme_from_default($theme_name, $template){ yeah(__METHOD__);
  *
  * @return false|string
  */
-function make_site_theme(){ yeah(__METHOD__);
+function make_site_theme(){
 	// Name the theme after the blog.
 	$theme_name = __get_option('blogname');
 	$template = sanitize_title($theme_name);
@@ -1256,7 +1256,7 @@ function make_site_theme(){ yeah(__METHOD__);
  * @param int $level User level.
  * @return string User role name.
  */
-function translate_level_to_role($level){ yeah(__METHOD__);
+function translate_level_to_role($level){
 	switch ($level){
 	case 10:
 	case 9:
@@ -1284,7 +1284,7 @@ function translate_level_to_role($level){ yeah(__METHOD__);
  *
  * @global wpdb  $wpdb
  */
-function wp_check_mysql_version(){ yeah(__METHOD__);
+function wp_check_mysql_version(){
 	global $wpdb;
 	$result = $wpdb->check_database_version();
 	if(is_wp_error($result))
@@ -1296,7 +1296,7 @@ function wp_check_mysql_version(){ yeah(__METHOD__);
  *
  * @since 2.2.0
  */
-function maybe_disable_automattic_widgets(){ yeah(__METHOD__);
+function maybe_disable_automattic_widgets(){
 	$plugins = __get_option('active_plugins');
 
 	foreach ((array) $plugins as $plugin){
@@ -1316,7 +1316,7 @@ function maybe_disable_automattic_widgets(){ yeah(__METHOD__);
  * @global int  $wp_current_db_version
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function maybe_disable_link_manager(){ yeah(__METHOD__);
+function maybe_disable_link_manager(){
 	global $wp_current_db_version, $wpdb;
 
 	if($wp_current_db_version >= 22006 && get_option('link_manager_enabled') && !$wpdb->get_var("SELECT link_id FROM $wpdb->links LIMIT 1"))
@@ -1331,7 +1331,7 @@ function maybe_disable_link_manager(){ yeah(__METHOD__);
  * @global int  $wp_current_db_version
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function pre_schema_upgrade(){ yeah(__METHOD__);
+function pre_schema_upgrade(){
 	global $wp_current_db_version, $wpdb;
 
 	// Upgrade versions prior to 2.9
@@ -1393,7 +1393,7 @@ if(!function_exists('install_global_terms')) :
  * @global wpdb   $wpdb
  * @global string $charset_collate
  */
-function install_global_terms(){ yeah(__METHOD__);
+function install_global_terms(){
 	global $wpdb, $charset_collate;
 	$ms_queries = "
 CREATE TABLE $wpdb->sitecategories (
@@ -1429,7 +1429,7 @@ endif;
  *
  * @return bool Whether to run the upgrade routines on global tables.
  */
-function wp_should_upgrade_global_tables(){ yeah(__METHOD__);
+function wp_should_upgrade_global_tables(){
 
 	// Return false early if explicitly not upgrading
 	if(defined('DO_NOT_UPGRADE_GLOBAL_TABLES')){

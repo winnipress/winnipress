@@ -81,7 +81,7 @@ class WP_Http_Cookie {
 	 * @param string       $requested_url The URL which the cookie was set on, used for default $domain
 	 *                                    and $port values.
 	 */
-	public function __construct($data, $requested_url = '' ) { yeah(__METHOD__);
+	public function __construct($data, $requested_url = '' ) {
 		if ($requested_url )
 			$arrURL = @parse_url($requested_url );
 		if (isset($arrURL['host'] ) )
@@ -144,7 +144,7 @@ class WP_Http_Cookie {
 	 * @param string $url URL you intend to send this cookie to
 	 * @return bool true if allowed, false otherwise.
 	 */
-	public function test($url ) { yeah(__METHOD__);
+	public function test($url ) {
 		if (is_null($this->name ) )
 			return false;
 
@@ -187,7 +187,7 @@ class WP_Http_Cookie {
 	 *
 	 * @return string Header encoded cookie name and value.
 	 */
-	public function getHeaderValue() { yeah(__METHOD__);
+	public function getHeaderValue() {
 		if (!isset($this->name ) || !isset($this->value ) )
 			return '';
 
@@ -209,7 +209,7 @@ class WP_Http_Cookie {
 	 *
 	 * @return string
 	 */
-	public function getFullHeader() { yeah(__METHOD__);
+	public function getFullHeader() {
 		return 'Cookie: ' . $this->getHeaderValue();
 	}
 
@@ -226,7 +226,7 @@ class WP_Http_Cookie {
 	 *    @type string $domain  Cookie domain.
 	 * }
 	 */
-	public function get_attributes() { yeah(__METHOD__);
+	public function get_attributes() {
 		return array(
 			'expires' => $this->expires,
 			'path'    => $this->path,

@@ -36,7 +36,7 @@ class Requests_Auth_Basic implements Requests_Auth {
 	 * @throws Requests_Exception On incorrect number of arguments (`authbasicbadargs`)
 	 * @param array|null $args Array of user and password. Must have exactly two elements
 	 */
-	public function __construct($args = null){ yeah(__METHOD__);
+	public function __construct($args = null){
 		if (is_array($args)){
 			if (count($args) !== 2){
 				throw new Requests_Exception('Invalid number of arguments', 'authbasicbadargs');
@@ -53,7 +53,7 @@ class Requests_Auth_Basic implements Requests_Auth {
 	 * @see fsockopen_header
 	 * @param Requests_Hooks $hooks Hook system
 	 */
-	public function register(Requests_Hooks &$hooks){ yeah(__METHOD__);
+	public function register(Requests_Hooks &$hooks){
 		$hooks->register('curl.before_send', array(&$this, 'curl_before_send'));
 		$hooks->register('fsockopen.after_headers', array(&$this, 'fsockopen_header'));
 	}
@@ -63,7 +63,7 @@ class Requests_Auth_Basic implements Requests_Auth {
 	 *
 	 * @param resource $handle cURL resource
 	 */
-	public function curl_before_send(&$handle){ yeah(__METHOD__);
+	public function curl_before_send(&$handle){
 		curl_setopt($handle, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 		curl_setopt($handle, CURLOPT_USERPWD, $this->getAuthString());
 	}
@@ -73,7 +73,7 @@ class Requests_Auth_Basic implements Requests_Auth {
 	 *
 	 * @param string $out HTTP header string
 	 */
-	public function fsockopen_header(&$out){ yeah(__METHOD__);
+	public function fsockopen_header(&$out){
 		$out .= sprintf("Authorization: Basic %s\r\n", base64_encode($this->getAuthString()));
 	}
 
@@ -82,7 +82,7 @@ class Requests_Auth_Basic implements Requests_Auth {
 	 *
 	 * @return string
 	 */
-	public function getAuthString(){ yeah(__METHOD__);
+	public function getAuthString(){
 		return $this->user . ':' . $this->pass;
 	}
 }

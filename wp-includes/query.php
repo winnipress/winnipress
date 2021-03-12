@@ -23,7 +23,7 @@
  * @param mixed  $default   Optional. Value to return if the query variable is not set. Default empty.
  * @return mixed Contents of the query variable.
  */
-function get_query_var($var, $default = '' ){ yeah(__METHOD__);
+function get_query_var($var, $default = '' ){
 	global $wp_query;
 	return $wp_query->get($var, $default );
 }
@@ -39,7 +39,7 @@ function get_query_var($var, $default = '' ){ yeah(__METHOD__);
  *
  * @return object Queried object.
  */
-function get_queried_object(){ yeah(__METHOD__);
+function get_queried_object(){
 	global $wp_query;
 	return $wp_query->get_queried_object();
 }
@@ -55,7 +55,7 @@ function get_queried_object(){ yeah(__METHOD__);
  *
  * @return int ID of the queried object.
  */
-function get_queried_object_id(){ yeah(__METHOD__);
+function get_queried_object_id(){
 	global $wp_query;
 	return $wp_query->get_queried_object_id();
 }
@@ -70,7 +70,7 @@ function get_queried_object_id(){ yeah(__METHOD__);
  * @param string $var   Query variable key.
  * @param mixed  $value Query variable value.
  */
-function set_query_var($var, $value ){ yeah(__METHOD__);
+function set_query_var($var, $value ){
 	global $wp_query;
 	$wp_query->set($var, $value );
 }
@@ -93,7 +93,7 @@ function set_query_var($var, $value ){ yeah(__METHOD__);
  * @param array|string $query Array or string of WP_Query arguments.
  * @return array List of post objects.
  */
-function query_posts($query){ yeah(__METHOD__);
+function query_posts($query){
 	$GLOBALS['wp_query'] = new WP_Query();
 	return $GLOBALS['wp_query']->query($query);
 }
@@ -110,7 +110,7 @@ function query_posts($query){ yeah(__METHOD__);
  * @global WP_Query $wp_query     Global WP_Query instance.
  * @global WP_Query $wp_the_query Copy of the global WP_Query instance created during wp_reset_query().
  */
-function wp_reset_query(){ yeah(__METHOD__);
+function wp_reset_query(){
 	$GLOBALS['wp_query'] = $GLOBALS['wp_the_query'];
 	wp_reset_postdata();
 }
@@ -123,7 +123,7 @@ function wp_reset_query(){ yeah(__METHOD__);
  *
  * @global WP_Query $wp_query Global WP_Query instance.
  */
-function wp_reset_postdata(){ yeah(__METHOD__);
+function wp_reset_postdata(){
 	global $wp_query;
 
 	if (isset($wp_query ) ){
@@ -146,7 +146,7 @@ function wp_reset_postdata(){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_archive(){ yeah(__METHOD__);
+function is_archive(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -167,7 +167,7 @@ function is_archive(){ yeah(__METHOD__);
  * @param string|array $post_types Optional. Post type or array of posts types to check against.
  * @return bool
  */
-function is_post_type_archive($post_types = '' ){ yeah(__METHOD__);
+function is_post_type_archive($post_types = '' ){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -188,7 +188,7 @@ function is_post_type_archive($post_types = '' ){ yeah(__METHOD__);
  * @param int|string|array|object $attachment Attachment ID, title, slug, or array of such.
  * @return bool
  */
-function is_attachment($attachment = '' ){ yeah(__METHOD__);
+function is_attachment($attachment = '' ){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -212,7 +212,7 @@ function is_attachment($attachment = '' ){ yeah(__METHOD__);
  * @param mixed $author Optional. User ID, nickname, nicename, or array of User IDs, nicknames, and nicenames
  * @return bool
  */
-function is_author($author = '' ){ yeah(__METHOD__);
+function is_author($author = '' ){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -236,7 +236,7 @@ function is_author($author = '' ){ yeah(__METHOD__);
  * @param mixed $category Optional. Category ID, name, slug, or array of Category IDs, names, and slugs.
  * @return bool
  */
-function is_category($category = '' ){ yeah(__METHOD__);
+function is_category($category = '' ){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -260,7 +260,7 @@ function is_category($category = '' ){ yeah(__METHOD__);
  * @param mixed $tag Optional. Tag ID, name, slug, or array of Tag IDs, names, and slugs.
  * @return bool
  */
-function is_tag($tag = '' ){ yeah(__METHOD__);
+function is_tag($tag = '' ){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -289,7 +289,7 @@ function is_tag($tag = '' ){ yeah(__METHOD__);
  * @param int|string|array $term     Optional. Term ID, name, slug or array of Term IDs, names, and slugs.
  * @return bool True for custom taxonomy archive pages, false for built-in taxonomies (category and tag archives).
  */
-function is_tax($taxonomy = '', $term = '' ){ yeah(__METHOD__);
+function is_tax($taxonomy = '', $term = '' ){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -309,7 +309,7 @@ function is_tax($taxonomy = '', $term = '' ){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_date(){ yeah(__METHOD__);
+function is_date(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -329,7 +329,7 @@ function is_date(){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_day(){ yeah(__METHOD__);
+function is_day(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -350,7 +350,7 @@ function is_day(){ yeah(__METHOD__);
  * @param string|array $feeds Optional feed types to check.
  * @return bool
  */
-function is_feed($feeds = '' ){ yeah(__METHOD__);
+function is_feed($feeds = '' ){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -370,7 +370,7 @@ function is_feed($feeds = '' ){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_comment_feed(){ yeah(__METHOD__);
+function is_comment_feed(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -399,7 +399,7 @@ function is_comment_feed(){ yeah(__METHOD__);
  *
  * @return bool True, if front of site.
  */
-function is_front_page(){ yeah(__METHOD__);
+function is_front_page(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -428,7 +428,7 @@ function is_front_page(){ yeah(__METHOD__);
  *
  * @return bool True if blog view homepage, otherwise false.
  */
-function is_home(){ yeah(__METHOD__);
+function is_home(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -448,7 +448,7 @@ function is_home(){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_month(){ yeah(__METHOD__);
+function is_month(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -475,7 +475,7 @@ function is_month(){ yeah(__METHOD__);
  * @param int|string|array $page Optional. Page ID, title, slug, or array of such. Default empty.
  * @return bool Whether the query is for an existing single page.
  */
-function is_page($page = '' ){ yeah(__METHOD__);
+function is_page($page = '' ){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -495,7 +495,7 @@ function is_page($page = '' ){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_paged(){ yeah(__METHOD__);
+function is_paged(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -515,7 +515,7 @@ function is_paged(){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_preview(){ yeah(__METHOD__);
+function is_preview(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -535,7 +535,7 @@ function is_preview(){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_robots(){ yeah(__METHOD__);
+function is_robots(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -555,7 +555,7 @@ function is_robots(){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_search(){ yeah(__METHOD__);
+function is_search(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -584,7 +584,7 @@ function is_search(){ yeah(__METHOD__);
  * @param int|string|array $post Optional. Post ID, title, slug, or array of such. Default empty.
  * @return bool Whether the query is for an existing single post.
  */
-function is_single($post = '' ){ yeah(__METHOD__);
+function is_single($post = '' ){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -612,7 +612,7 @@ function is_single($post = '' ){ yeah(__METHOD__);
  * @param string|array $post_types Optional. Post type or array of post types. Default empty.
  * @return bool Whether the query is for an existing single post of any of the given post types.
  */
-function is_singular($post_types = '' ){ yeah(__METHOD__);
+function is_singular($post_types = '' ){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -632,7 +632,7 @@ function is_singular($post_types = '' ){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_time(){ yeah(__METHOD__);
+function is_time(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -652,7 +652,7 @@ function is_time(){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_trackback(){ yeah(__METHOD__);
+function is_trackback(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -672,7 +672,7 @@ function is_trackback(){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_year(){ yeah(__METHOD__);
+function is_year(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -692,7 +692,7 @@ function is_year(){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_404(){ yeah(__METHOD__);
+function is_404(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -712,7 +712,7 @@ function is_404(){ yeah(__METHOD__);
  *
  * @return bool Whether we're in an embedded post or not.
  */
-function is_embed(){ yeah(__METHOD__);
+function is_embed(){
 	global $wp_query;
 
 	if (!isset($wp_query ) ){
@@ -732,7 +732,7 @@ function is_embed(){ yeah(__METHOD__);
  *
  * @return bool
  */
-function is_main_query(){ yeah(__METHOD__);
+function is_main_query(){
 	if ('pre_get_posts' === current_filter() ){
 		$message = sprintf(
 			/* translators: 1: pre_get_posts 2: WP_Query->is_main_query() 3: is_main_query() 4: link to codex is_main_query() page. */
@@ -762,7 +762,7 @@ function is_main_query(){ yeah(__METHOD__);
  *
  * @return bool
  */
-function have_posts(){ yeah(__METHOD__);
+function have_posts(){
 	global $wp_query;
 	return $wp_query->have_posts();
 }
@@ -776,7 +776,7 @@ function have_posts(){ yeah(__METHOD__);
  *
  * @return bool True if caller is within loop, false if loop hasn't started or ended.
  */
-function in_the_loop(){ yeah(__METHOD__);
+function in_the_loop(){
 	global $wp_query;
 	return $wp_query->in_the_loop;
 }
@@ -788,7 +788,7 @@ function in_the_loop(){ yeah(__METHOD__);
  *
  * @global WP_Query $wp_query Global WP_Query instance.
  */
-function rewind_posts(){ yeah(__METHOD__);
+function rewind_posts(){
 	global $wp_query;
 	$wp_query->rewind_posts();
 }
@@ -800,7 +800,7 @@ function rewind_posts(){ yeah(__METHOD__);
  *
  * @global WP_Query $wp_query Global WP_Query instance.
  */
-function the_post(){ yeah(__METHOD__);
+function the_post(){
 	global $wp_query;
 	$wp_query->the_post();
 }
@@ -818,7 +818,7 @@ function the_post(){ yeah(__METHOD__);
  *
  * @return bool
  */
-function have_comments(){ yeah(__METHOD__);
+function have_comments(){
 	global $wp_query;
 	return $wp_query->have_comments();
 }
@@ -832,7 +832,7 @@ function have_comments(){ yeah(__METHOD__);
  *
  * @return object
  */
-function the_comment(){ yeah(__METHOD__);
+function the_comment(){
 	global $wp_query;
 	return $wp_query->the_comment();
 }
@@ -844,7 +844,7 @@ function the_comment(){ yeah(__METHOD__);
  *
  * @since 2.1.0
  */
-function wp_old_slug_redirect(){ yeah(__METHOD__);
+function wp_old_slug_redirect(){
 	if (is_404() && '' !== get_query_var('name' ) ){
 		// Guess the current post_type based on the query vars.
 		if (get_query_var('post_type' ) ){
@@ -927,7 +927,7 @@ function wp_old_slug_redirect(){ yeah(__METHOD__);
  * @param string $post_type The current post type based on the query vars.
  * @return int $id The Post ID.
  */
-function _find_post_by_old_slug($post_type ){ yeah(__METHOD__);
+function _find_post_by_old_slug($post_type ){
 	global $wpdb;
 
 	$query = $wpdb->prepare("SELECT post_id FROM $wpdb->postmeta, $wpdb->posts WHERE ID = post_id AND post_type = %s AND meta_key = '_wp_old_slug' AND meta_value = %s", $post_type, get_query_var('name' ) );
@@ -962,7 +962,7 @@ function _find_post_by_old_slug($post_type ){ yeah(__METHOD__);
  * @param string $post_type The current post type based on the query vars.
  * @return int $id The Post ID.
  */
-function _find_post_by_old_date($post_type ){ yeah(__METHOD__);
+function _find_post_by_old_date($post_type ){
 	global $wpdb;
 
 	$date_query = '';
@@ -1000,7 +1000,7 @@ function _find_post_by_old_date($post_type ){ yeah(__METHOD__);
  * @param WP_Post|object|int $post WP_Post instance or Post ID/object.
  * @return bool True when finished.
  */
-function setup_postdata($post ){ yeah(__METHOD__);
+function setup_postdata($post ){
 	global $wp_query;
 
 	if (!empty($wp_query ) && $wp_query instanceof WP_Query ){

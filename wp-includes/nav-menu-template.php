@@ -45,7 +45,7 @@ require_once ABSPATH . WPINC . '/class-walker-nav-menu.php';
  * }
  * @return string|false|void Menu output if $echo is false, false if there are no items or no menu was found.
  */
-function wp_nav_menu($args = array() ){ yeah(__METHOD__);
+function wp_nav_menu($args = array() ){
 	static $menu_id_slugs = array();
 
 	$defaults = array('menu' => '', 'container' => 'div', 'container_class' => '', 'container_id' => '', 'menu_class' => 'menu', 'menu_id' => '',
@@ -269,7 +269,7 @@ function wp_nav_menu($args = array() ){ yeah(__METHOD__);
  *
  * @param array $menu_items The current menu item objects to which to add the class property information.
  */
-function _wp_menu_item_classes_by_context(&$menu_items ){ yeah(__METHOD__);
+function _wp_menu_item_classes_by_context(&$menu_items ){
 	global $wp_query, $wp_rewrite;
 
 	$queried_object = $wp_query->get_queried_object();
@@ -524,7 +524,7 @@ function _wp_menu_item_classes_by_context(&$menu_items ){ yeah(__METHOD__);
  * @param stdClass $r     An object containing wp_nav_menu() arguments.
  * @return string The HTML list content for the menu items.
  */
-function walk_nav_menu_tree($items, $depth, $r ){ yeah(__METHOD__);
+function walk_nav_menu_tree($items, $depth, $r ){
 	$walker = (empty($r->walker) ) ? new Walker_Nav_Menu : $r->walker;
 	$args = array($items, $depth, $r );
 
@@ -542,7 +542,7 @@ function walk_nav_menu_tree($items, $depth, $r ){ yeah(__METHOD__);
  * @param object $item
  * @return string
  */
-function _nav_menu_item_id_use_once($id, $item ){ yeah(__METHOD__);
+function _nav_menu_item_id_use_once($id, $item ){
 	static $_used_ids = array();
 	if (in_array($item->ID, $_used_ids ) ){
 		return '';

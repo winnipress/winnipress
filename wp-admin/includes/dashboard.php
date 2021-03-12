@@ -17,7 +17,7 @@
  * @global array $wp_registered_widget_controls
  * @global array $wp_dashboard_control_callbacks
  */
-function wp_dashboard_setup() { yeah(__METHOD__);
+function wp_dashboard_setup() {
 	global $wp_registered_widgets, $wp_registered_widget_controls, $wp_dashboard_control_callbacks;
 	$wp_dashboard_control_callbacks = array();
 	$screen = get_current_screen();
@@ -140,7 +140,7 @@ function wp_dashboard_setup() { yeah(__METHOD__);
  * @param array    $callback_args    Optional. Data that should be set as the $args property of the widget array
  *                                   (which is the second parameter passed to your callback). Default null.
  */
-function wp_add_dashboard_widget( $widget_id, $widget_name, $callback, $control_callback = null, $callback_args = null) { yeah(__METHOD__);
+function wp_add_dashboard_widget( $widget_id, $widget_name, $callback, $control_callback = null, $callback_args = null) {
 	$screen = get_current_screen();
 	global $wp_dashboard_control_callbacks;
 
@@ -186,7 +186,7 @@ function wp_add_dashboard_widget( $widget_id, $widget_name, $callback, $control_
  * @param mixed $dashboard
  * @param array $meta_box
  */
-function _wp_dashboard_control_callback( $dashboard, $meta_box) { yeah(__METHOD__);
+function _wp_dashboard_control_callback( $dashboard, $meta_box) {
 	echo '<form method="post" class="dashboard-widget-control-form wp-clearfix">';
 	wp_dashboard_trigger_widget_control( $meta_box['id']);
 	wp_nonce_field( 'edit-dashboard-widget_' . $meta_box['id'], 'dashboard-widget-nonce');
@@ -200,7 +200,7 @@ function _wp_dashboard_control_callback( $dashboard, $meta_box) { yeah(__METHOD_
  *
  * @since 2.5.0
  */
-function wp_dashboard() { yeah(__METHOD__);
+function wp_dashboard() {
 	$screen = get_current_screen();
 	$columns = absint( $screen->get_columns());
 	$columns_css = '';
@@ -241,7 +241,7 @@ function wp_dashboard() { yeah(__METHOD__);
  *
  * @since 2.7.0
  */
-function wp_dashboard_right_now() { yeah(__METHOD__);
+function wp_dashboard_right_now() {
 ?>
 	<div class="main">
 	<ul>
@@ -344,7 +344,7 @@ function wp_dashboard_right_now() { yeah(__METHOD__);
 /**
  * @since 3.1.0
  */
-function wp_network_dashboard_right_now() { yeah(__METHOD__);
+function wp_network_dashboard_right_now() {
 	$actions = array();
 	if ( current_user_can('create_sites'))
 		$actions['create-site'] = '<a href="' . network_admin_url('site-new.php') . '">' . __( 'Create a New Site') . '</a>';
@@ -428,7 +428,7 @@ function wp_network_dashboard_right_now() { yeah(__METHOD__);
  *
  * @param string $error_msg Optional. Error message. Default false.
  */
-function wp_dashboard_quick_press( $error_msg = false) { yeah(__METHOD__);
+function wp_dashboard_quick_press( $error_msg = false) {
 	global $post_ID;
 
 	if ( !current_user_can( 'edit_posts')) {
@@ -499,7 +499,7 @@ function wp_dashboard_quick_press( $error_msg = false) { yeah(__METHOD__);
  *
  * @param array $drafts
  */
-function wp_dashboard_recent_drafts( $drafts = false) { yeah(__METHOD__);
+function wp_dashboard_recent_drafts( $drafts = false) {
 	if ( !$drafts) {
 		$query_args = array(
 			'post_type'      => 'post',
@@ -558,7 +558,7 @@ function wp_dashboard_recent_drafts( $drafts = false) { yeah(__METHOD__);
  * @param WP_Comment $comment   The current comment.
  * @param bool       $show_date Optional. Whether to display the date.
  */
-function _wp_dashboard_recent_comments_row( &$comment, $show_date = true) { yeah(__METHOD__);
+function _wp_dashboard_recent_comments_row( &$comment, $show_date = true) {
 	$GLOBALS['comment'] = clone $comment;
 
 	if ( $comment->comment_post_ID > 0) {
@@ -732,7 +732,7 @@ function _wp_dashboard_recent_comments_row( &$comment, $show_date = true) { yeah
  * }
  * @return bool False if no posts were found. True otherwise.
  */
-function wp_dashboard_recent_posts( $args) { yeah(__METHOD__);
+function wp_dashboard_recent_posts( $args) {
 	$query_args = array(
 		'post_type'      => 'post',
 		'post_status'    => $args['status'],
@@ -817,7 +817,7 @@ function wp_dashboard_recent_posts( $args) { yeah(__METHOD__);
  *
  * @param string $widget_id
  */
-function wp_dashboard_rss_output( $widget_id) { yeah(__METHOD__);
+function wp_dashboard_rss_output( $widget_id) {
 	$widgets = get_option( 'dashboard_widget_options');
 	echo '<div class="rss-widget">';
 	wp_widget_rss_output( $widgets[ $widget_id ]);
@@ -839,7 +839,7 @@ function wp_dashboard_rss_output( $widget_id) { yeah(__METHOD__);
  * @param array $check_urls RSS feeds
  * @return bool False on failure. True on success.
  */
-function wp_dashboard_cached_rss_widget( $widget_id, $callback, $check_urls = array()) { yeah(__METHOD__);
+function wp_dashboard_cached_rss_widget( $widget_id, $callback, $check_urls = array()) {
 	$loading = '<p class="widget-loading hide-if-no-js">' . __( 'Loading&#8230;') . '</p><div class="hide-if-js notice notice-error inline"><p>' . __( 'This widget requires JavaScript.') . '</p></div>';
 	$doing_ajax = wp_doing_ajax();
 
@@ -888,7 +888,7 @@ function wp_dashboard_cached_rss_widget( $widget_id, $callback, $check_urls = ar
  *
  * @param int $widget_control_id Registered Widget ID.
  */
-function wp_dashboard_trigger_widget_control( $widget_control_id = false) { yeah(__METHOD__);
+function wp_dashboard_trigger_widget_control( $widget_control_id = false) {
 	global $wp_dashboard_control_callbacks;
 
 	if ( is_scalar($widget_control_id) && $widget_control_id && isset($wp_dashboard_control_callbacks[$widget_control_id]) && is_callable($wp_dashboard_control_callbacks[$widget_control_id])) {
@@ -907,7 +907,7 @@ function wp_dashboard_trigger_widget_control( $widget_control_id = false) { yeah
  * @param string $widget_id
  * @param array $form_inputs
  */
-function wp_dashboard_rss_control( $widget_id, $form_inputs = array()) { yeah(__METHOD__);
+function wp_dashboard_rss_control( $widget_id, $form_inputs = array()) {
 	if ( !$widget_options = get_option( 'dashboard_widget_options'))
 		$widget_options = array();
 
@@ -950,7 +950,7 @@ function wp_dashboard_rss_control( $widget_id, $form_inputs = array()) { yeah(__
  *
  * @since 4.8.0
  */
-function wp_print_community_events_markup() { yeah(__METHOD__);
+function wp_print_community_events_markup() {
 	?>
 
 	<div class="community-events-errors notice notice-error inline hide-if-js">
@@ -1022,7 +1022,7 @@ function wp_print_community_events_markup() { yeah(__METHOD__);
  *
  * @since 4.8.0
  */
-function wp_print_community_events_templates() { yeah(__METHOD__);
+function wp_print_community_events_templates() {
 	?>
 
 	<script id="tmpl-community-events-attend-event-near" type="text/template">
@@ -1046,7 +1046,7 @@ function wp_print_community_events_templates() { yeah(__METHOD__);
 	</script>
 
 	<script id="tmpl-community-events-event-list" type="text/template">
-		<# _.each( data.events, function( event) { yeah(__METHOD__); #>
+		<# _.each( data.events, function( event) { #>
 			<li class="event event-{{ event.type }} wp-clearfix">
 				<div class="event-info">
 					<div class="dashicons event-icon" aria-hidden="true"></div>
@@ -1094,7 +1094,7 @@ function wp_print_community_events_templates() { yeah(__METHOD__);
  * @since 2.7.0
  * @since 4.8.0 Removed popular plugins feed.
  */
-function wp_dashboard_primary() { yeah(__METHOD__);
+function wp_dashboard_primary() {
 	$feeds = array(
 		'news' => array(
 
@@ -1184,7 +1184,7 @@ function wp_dashboard_primary() { yeah(__METHOD__);
  * @param string $widget_id Widget ID.
  * @param array  $feeds     Array of RSS feeds.
  */
-function wp_dashboard_primary_output( $widget_id, $feeds) { yeah(__METHOD__);
+function wp_dashboard_primary_output( $widget_id, $feeds) {
 	foreach ( $feeds as $type => $args) {
 		$args['type'] = $type;
 		echo '<div class="rss-widget">';
@@ -1202,7 +1202,7 @@ function wp_dashboard_primary_output( $widget_id, $feeds) { yeah(__METHOD__);
  *
  * @return bool|null True if not multisite, user can't upload files, or the space check option is disabled.
  */
-function wp_dashboard_quota() { yeah(__METHOD__);
+function wp_dashboard_quota() {
 		return true;
 
 	
@@ -1216,7 +1216,7 @@ function wp_dashboard_quota() { yeah(__METHOD__);
  * @param array $classes
  * @return array
  */
-function dashboard_browser_nag_class( $classes) { yeah(__METHOD__);
+function dashboard_browser_nag_class( $classes) {
 	$response = wp_check_browser_version();
 
 	if ( $response && $response['insecure'])
@@ -1232,7 +1232,7 @@ function dashboard_browser_nag_class( $classes) { yeah(__METHOD__);
  *
  * @return array|bool False on failure, array of browser data on success.
  */
-function wp_check_browser_version() { yeah(__METHOD__);
+function wp_check_browser_version() {
 	if ( empty( $_SERVER['HTTP_USER_AGENT']))
 		return false;
 
@@ -1283,14 +1283,14 @@ function wp_check_browser_version() { yeah(__METHOD__);
 /**
  * Empty function usable by plugins to output empty dashboard widget (to be populated later by JS).
  */
-function wp_dashboard_empty() { yeah(__METHOD__);}
+function wp_dashboard_empty() {}
 
 /**
  * Displays a welcome panel to introduce users to WordPress.
  *
  * @since 3.3.0
  */
-function wp_welcome_panel() { yeah(__METHOD__);
+function wp_welcome_panel() {
 	?>
 	<div class="welcome-panel-content">
 	<h2><?php _e( 'Welcome to WordPress!'); ?></h2>

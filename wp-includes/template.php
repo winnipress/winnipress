@@ -20,7 +20,7 @@
  * @param array  $templates An optional list of template candidates
  * @return string Full path to template file.
  */
-function get_query_template($type, $templates = array() ) { yeah(__METHOD__);
+function get_query_template($type, $templates = array() ) {
 	$type = preg_replace('|[^a-z0-9-]+|', '', $type );
 
 	if (empty($templates ) )
@@ -74,7 +74,7 @@ function get_query_template($type, $templates = array() ) { yeah(__METHOD__);
  *
  * @return string Full path to index template file.
  */
-function get_index_template() { yeah(__METHOD__);
+function get_index_template() {
 	return get_query_template('index');
 }
 
@@ -90,7 +90,7 @@ function get_index_template() { yeah(__METHOD__);
  *
  * @return string Full path to 404 template file.
  */
-function get_404_template() { yeah(__METHOD__);
+function get_404_template() {
 	return get_query_template('404');
 }
 
@@ -106,7 +106,7 @@ function get_404_template() { yeah(__METHOD__);
  *
  * @return string Full path to archive template file.
  */
-function get_archive_template() { yeah(__METHOD__);
+function get_archive_template() {
 	$post_types = array_filter((array) get_query_var('post_type' ) );
 
 	$templates = array();
@@ -132,7 +132,7 @@ function get_archive_template() { yeah(__METHOD__);
  *
  * @return string Full path to archive template file.
  */
-function get_post_type_archive_template() { yeah(__METHOD__);
+function get_post_type_archive_template() {
 	$post_type = get_query_var('post_type' );
 	if (is_array($post_type ) )
 		$post_type = reset($post_type );
@@ -169,7 +169,7 @@ function get_post_type_archive_template() { yeah(__METHOD__);
  *
  * @return string Full path to author template file.
  */
-function get_author_template() { yeah(__METHOD__);
+function get_author_template() {
 	$author = get_queried_object();
 
 	$templates = array();
@@ -209,7 +209,7 @@ function get_author_template() { yeah(__METHOD__);
  *
  * @return string Full path to category template file.
  */
-function get_category_template() { yeah(__METHOD__);
+function get_category_template() {
 	$category = get_queried_object();
 
 	$templates = array();
@@ -255,7 +255,7 @@ function get_category_template() { yeah(__METHOD__);
  *
  * @return string Full path to tag template file.
  */
-function get_tag_template() { yeah(__METHOD__);
+function get_tag_template() {
 	$tag = get_queried_object();
 
 	$templates = array();
@@ -301,7 +301,7 @@ function get_tag_template() { yeah(__METHOD__);
  *
  * @return string Full path to custom taxonomy term template file.
  */
-function get_taxonomy_template() { yeah(__METHOD__);
+function get_taxonomy_template() {
 	$term = get_queried_object();
 
 	$templates = array();
@@ -334,7 +334,7 @@ function get_taxonomy_template() { yeah(__METHOD__);
  *
  * @return string Full path to date template file.
  */
-function get_date_template() { yeah(__METHOD__);
+function get_date_template() {
 	return get_query_template('date');
 }
 
@@ -350,7 +350,7 @@ function get_date_template() { yeah(__METHOD__);
  *
  * @return string Full path to home template file.
  */
-function get_home_template() { yeah(__METHOD__);
+function get_home_template() {
 	$templates = array('home.php', 'index.php' );
 
 	return get_query_template('home', $templates );
@@ -368,7 +368,7 @@ function get_home_template() { yeah(__METHOD__);
  *
  * @return string Full path to front page template file.
  */
-function get_front_page_template() { yeah(__METHOD__);
+function get_front_page_template() {
 	$templates = array('front-page.php');
 
 	return get_query_template('front_page', $templates );
@@ -402,7 +402,7 @@ function get_front_page_template() { yeah(__METHOD__);
  *
  * @return string Full path to page template file.
  */
-function get_page_template() { yeah(__METHOD__);
+function get_page_template() {
 	$id = get_queried_object_id();
 	$template = get_page_template_slug();
 	$pagename = get_query_var('pagename');
@@ -443,7 +443,7 @@ function get_page_template() { yeah(__METHOD__);
  *
  * @return string Full path to search template file.
  */
-function get_search_template() { yeah(__METHOD__);
+function get_search_template() {
 	return get_query_template('search');
 }
 
@@ -478,7 +478,7 @@ function get_search_template() { yeah(__METHOD__);
  *
  * @return string Full path to single template file.
  */
-function get_single_template() { yeah(__METHOD__);
+function get_single_template() {
 	$object = get_queried_object();
 
 	$templates = array();
@@ -527,7 +527,7 @@ function get_single_template() { yeah(__METHOD__);
  *
  * @return string Full path to embed template file.
  */
-function get_embed_template() { yeah(__METHOD__);
+function get_embed_template() {
 	$object = get_queried_object();
 
 	$templates = array();
@@ -557,7 +557,7 @@ function get_embed_template() { yeah(__METHOD__);
  *
  * @return string Full path to singular template file
  */
-function get_singular_template() { yeah(__METHOD__);
+function get_singular_template() {
 	return get_query_template('singular' );
 }
 
@@ -590,7 +590,7 @@ function get_singular_template() { yeah(__METHOD__);
  *
  * @return string Full path to attachment template file.
  */
-function get_attachment_template() { yeah(__METHOD__);
+function get_attachment_template() {
 	$attachment = get_queried_object();
 
 	$templates = array();
@@ -626,7 +626,7 @@ function get_attachment_template() { yeah(__METHOD__);
  * @param bool         $require_once   Whether to require_once or require. Default true. Has no effect if $load is false.
  * @return string The template filename if one is located.
  */
-function locate_template($template_names, $load = false, $require_once = true ) { yeah(__METHOD__);
+function locate_template($template_names, $load = false, $require_once = true ) {
 	$located = '';
 	foreach ((array) $template_names as $template_name ) {
 		if (!$template_name )
@@ -673,7 +673,7 @@ function locate_template($template_names, $load = false, $require_once = true ) 
  * @param string $_template_file Path to template file.
  * @param bool   $require_once   Whether to require_once or require. Default true.
  */
-function load_template($_template_file, $require_once = true ) { yeah(__METHOD__);
+function load_template($_template_file, $require_once = true ) {
 	global $posts, $post, $wp_loaded_template, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
 
 	if (is_array($wp_query->query_vars ) ) {

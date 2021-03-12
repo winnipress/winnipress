@@ -30,7 +30,7 @@ final class _WP_Editors {
 	private static $tinymce_scripts_printed = false;
 	private static $link_dialog_printed = false;
 
-	private function __construct() { yeah(__METHOD__);}
+	private function __construct() {}
 
 	/**
 	 * Parse default arguments for the editor instance.
@@ -66,7 +66,7 @@ final class _WP_Editors {
 	 * }
 	 * @return array Parsed arguments array.
 	 */
-	public static function parse_settings($editor_id, $settings ) { yeah(__METHOD__);
+	public static function parse_settings($editor_id, $settings ) {
 
 		/**
 		 * Filters the wp_editor() settings.
@@ -146,7 +146,7 @@ final class _WP_Editors {
 	 * @param string $editor_id ID for the textarea and TinyMCE and Quicktags instances (can contain only ASCII letters and numbers).
 	 * @param array $settings See _WP_Editors()::parse_settings() for description.
 	 */
-	public static function editor($content, $editor_id, $settings = array() ) { yeah(__METHOD__);
+	public static function editor($content, $editor_id, $settings = array() ) {
 		$set = self::parse_settings($editor_id, $settings );
 		$editor_class = ' class="' . trim(esc_attr($set['editor_class'] ) . ' wp-editor-area' ) . '"';
 		$tabindex = $set['tabindex'] ? ' tabindex="' . (int) $set['tabindex'] . '"' : '';
@@ -303,7 +303,7 @@ final class _WP_Editors {
 	 * @param string $editor_id
 	 * @param array  $set
 	 */
-	public static function editor_settings($editor_id, $set) { yeah(__METHOD__);
+	public static function editor_settings($editor_id, $set) {
 		global $tinymce_version;
 
 		if (empty(self::$first_init) ) {
@@ -718,7 +718,7 @@ final class _WP_Editors {
 	 * @param array $init
 	 * @return string
 	 */
-	private static function _parse_init($init ) { yeah(__METHOD__);
+	private static function _parse_init($init ) {
 		$options = '';
 
 		foreach ($init as $key => $value ) {
@@ -729,7 +729,7 @@ final class _WP_Editors {
 			} elseif (!empty($value ) && is_string($value ) && (
 				('{' == $value{0} && '}' == $value{strlen($value ) - 1} ) ||
 				('[' == $value{0} && ']' == $value{strlen($value ) - 1} ) ||
-				preg_match('/^\(?function ?\(/', $value ) ) ) { yeah(__METHOD__);
+				preg_match('/^\(?function ?\(/', $value ) ) ) {
 
 				$options .= $key . ':' . $value . ',';
 				continue;
@@ -746,7 +746,7 @@ final class _WP_Editors {
 	 * 
 	 * @param bool $default_scripts Optional. Whether default scripts should be enqueued. Default false.
 	 */
-	public static function enqueue_scripts($default_scripts = false ) { yeah(__METHOD__);
+	public static function enqueue_scripts($default_scripts = false ) {
 		if ($default_scripts || self::$has_tinymce ) {
 			wp_enqueue_script('editor' );
 		}
@@ -793,7 +793,7 @@ final class _WP_Editors {
 	 *
 	 * @since 4.8.0
 	 */
-	public static function enqueue_default_editor() { yeah(__METHOD__);
+	public static function enqueue_default_editor() {
 		// We are past the point where scripts can be enqueued properly.
 		if (did_action('wp_enqueue_editor' ) ) {
 			return;
@@ -818,7 +818,7 @@ final class _WP_Editors {
 	 * @since 4.8.0
 	 *
 	 */
-	public static function print_default_editor_scripts() { yeah(__METHOD__);
+	public static function print_default_editor_scripts() {
 		$user_can_richedit = user_can_richedit();
 
 		if ($user_can_richedit ) {
@@ -907,7 +907,7 @@ final class _WP_Editors {
 		self::wp_link_dialog();
 	}
 
-	public static function get_mce_locale() { yeah(__METHOD__);
+	public static function get_mce_locale() {
 		if (empty(self::$mce_locale ) ) {
 			$mce_locale = get_user_locale();
 			self::$mce_locale = empty($mce_locale ) ? 'en' : strtolower(substr($mce_locale, 0, 2 ) ); // ISO 639-1
@@ -916,7 +916,7 @@ final class _WP_Editors {
 		return self::$mce_locale;
 	}
 
-	public static function get_baseurl() { yeah(__METHOD__);
+	public static function get_baseurl() {
 		if (empty(self::$baseurl ) ) {
 			self::$baseurl = includes_url('js/tinymce' );
 		}
@@ -932,7 +932,7 @@ final class _WP_Editors {
 	 *
 	 * @return array
 	 */
-	private static function default_settings() { yeah(__METHOD__);
+	private static function default_settings() {
 		global $tinymce_version;
 
 		$shortcut_labels = array();
@@ -995,7 +995,7 @@ final class _WP_Editors {
 		return $settings;
 	}
 
-	private static function get_translation() { yeah(__METHOD__);
+	private static function get_translation() {
 		if (empty(self::$translation ) ) {
 			self::$translation = array(
 			// Default TinyMCE strings
@@ -1322,7 +1322,7 @@ final class _WP_Editors {
 	 * @param bool $json_only optional Whether to include the JavaScript calls to tinymce.addI18n() and tinymce.ScriptLoader.markDone().
 	 * @return string Translation object, JSON encoded.
 	 */
-	public static function wp_mce_translation($mce_locale = '', $json_only = false ) { yeah(__METHOD__);
+	public static function wp_mce_translation($mce_locale = '', $json_only = false ) {
 		if (!$mce_locale ) {
 			$mce_locale = self::get_mce_locale();
 		}
@@ -1382,7 +1382,7 @@ final class _WP_Editors {
 	 * @global bool   $concatenate_scripts
 	 * @global bool   $compress_scripts
 	 */
-	public static function print_tinymce_scripts() { yeah(__METHOD__);
+	public static function print_tinymce_scripts() {
 		global $tinymce_version, $concatenate_scripts, $compress_scripts;
 
 		if (self::$tinymce_scripts_printed ) {
@@ -1429,7 +1429,7 @@ final class _WP_Editors {
 	 * @static
 	 * @global string $tinymce_version
 	 */
-	public static function editor_js() { yeah(__METHOD__);
+	public static function editor_js() {
 		global $tinymce_version;
 
 		$tmce_on = !empty(self::$mce_settings );
@@ -1583,7 +1583,7 @@ final class _WP_Editors {
 	 *
 	 * @static
 	 */
-	public static function wp_fullscreen_html() { yeah(__METHOD__);
+	public static function wp_fullscreen_html() {
 		_deprecated_function(__FUNCTION__, '4.3.0' );
 	}
 
@@ -1596,7 +1596,7 @@ final class _WP_Editors {
 	 * @param array $args Optional. Accepts 'pagenum' and 's' (search) arguments.
 	 * @return false|array Results.
 	 */
-	public static function wp_link_query($args = array() ) { yeah(__METHOD__);
+	public static function wp_link_query($args = array() ) {
 		$pts = get_post_types(array('public' => true ), 'objects' );
 		$pt_names = array_keys($pts );
 
@@ -1683,7 +1683,7 @@ final class _WP_Editors {
 	 *
 	 * @static
 	 */
-	public static function wp_link_dialog() { yeah(__METHOD__);
+	public static function wp_link_dialog() {
 		// Run once
 		if (self::$link_dialog_printed ) {
 			return;

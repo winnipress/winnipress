@@ -16,7 +16,7 @@
  * @param string|WP_Screen $screen The screen you want the headers for
  * @return array Containing the headers in the format id => UI String
  */
-function get_column_headers( $screen) { yeah(__METHOD__);
+function get_column_headers( $screen) {
 	if ( is_string( $screen))
 		$screen = convert_to_screen( $screen);
 
@@ -50,7 +50,7 @@ function get_column_headers( $screen) { yeah(__METHOD__);
  * @param string|WP_Screen $screen The screen you want the hidden columns for
  * @return array
  */
-function get_hidden_columns( $screen) { yeah(__METHOD__);
+function get_hidden_columns( $screen) {
 	if ( is_string( $screen)) {
 		$screen = convert_to_screen( $screen);
 	}
@@ -95,7 +95,7 @@ function get_hidden_columns( $screen) { yeah(__METHOD__);
  *
  * @param WP_Screen $screen
  */
-function meta_box_prefs( $screen) { yeah(__METHOD__);
+function meta_box_prefs( $screen) {
 	global $wp_meta_boxes;
 
 	if ( is_string( $screen))
@@ -143,7 +143,7 @@ function meta_box_prefs( $screen) { yeah(__METHOD__);
  * @param string|WP_Screen $screen Screen identifier
  * @return array Hidden Meta Boxes
  */
-function get_hidden_meta_boxes( $screen) { yeah(__METHOD__);
+function get_hidden_meta_boxes( $screen) {
 	if ( is_string( $screen))
 		$screen = convert_to_screen( $screen);
 
@@ -193,7 +193,7 @@ function get_hidden_meta_boxes( $screen) { yeah(__METHOD__);
  * @param string $option An option name.
  * @param mixed $args Option-dependent arguments.
  */
-function add_screen_option( $option, $args = array()) { yeah(__METHOD__);
+function add_screen_option( $option, $args = array()) {
 	$current_screen = get_current_screen();
 
 	if ( !$current_screen)
@@ -211,7 +211,7 @@ function add_screen_option( $option, $args = array()) { yeah(__METHOD__);
  *
  * @return WP_Screen|null Current screen object or null when screen not defined.
  */
-function get_current_screen() { yeah(__METHOD__);
+function get_current_screen() {
 	global $current_screen;
 
 	if ( !isset( $current_screen))
@@ -228,6 +228,6 @@ function get_current_screen() { yeah(__METHOD__);
  * @param mixed $hook_name Optional. The hook name (also known as the hook suffix) used to determine the screen,
  *	                       or an existing screen object.
  */
-function set_current_screen( $hook_name = '') { yeah(__METHOD__);
+function set_current_screen( $hook_name = '') {
 	WP_Screen::get( $hook_name)->set_current_screen();
 }

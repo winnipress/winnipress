@@ -25,7 +25,7 @@ class Requests_Utility_CaseInsensitiveDictionary implements ArrayAccess, Iterato
 	 *
 	 * @param array $data Dictionary/map to convert to case-insensitive
 	 */
-	public function __construct(array $data = array()){ yeah(__METHOD__);
+	public function __construct(array $data = array()){
 		foreach ($data as $key => $value){
 			$this->offsetSet($key, $value);
 		}
@@ -37,7 +37,7 @@ class Requests_Utility_CaseInsensitiveDictionary implements ArrayAccess, Iterato
 	 * @param string $key Item key
 	 * @return boolean Does the item exist?
 	 */
-	public function offsetExists($key){ yeah(__METHOD__);
+	public function offsetExists($key){
 		$key = strtolower($key);
 		return isset($this->data[$key]);
 	}
@@ -48,7 +48,7 @@ class Requests_Utility_CaseInsensitiveDictionary implements ArrayAccess, Iterato
 	 * @param string $key Item key
 	 * @return string Item value
 	 */
-	public function offsetGet($key){ yeah(__METHOD__);
+	public function offsetGet($key){
 		$key = strtolower($key);
 		if (!isset($this->data[$key])){
 			return null;
@@ -65,7 +65,7 @@ class Requests_Utility_CaseInsensitiveDictionary implements ArrayAccess, Iterato
 	 * @param string $key Item name
 	 * @param string $value Item value
 	 */
-	public function offsetSet($key, $value){ yeah(__METHOD__);
+	public function offsetSet($key, $value){
 		if ($key === null){
 			throw new Requests_Exception('Object is a dictionary, not a list', 'invalidset');
 		}
@@ -79,7 +79,7 @@ class Requests_Utility_CaseInsensitiveDictionary implements ArrayAccess, Iterato
 	 *
 	 * @param string $key
 	 */
-	public function offsetUnset($key){ yeah(__METHOD__);
+	public function offsetUnset($key){
 		unset($this->data[strtolower($key)]);
 	}
 
@@ -88,7 +88,7 @@ class Requests_Utility_CaseInsensitiveDictionary implements ArrayAccess, Iterato
 	 *
 	 * @return ArrayIterator
 	 */
-	public function getIterator(){ yeah(__METHOD__);
+	public function getIterator(){
 		return new ArrayIterator($this->data);
 	}
 
@@ -97,7 +97,7 @@ class Requests_Utility_CaseInsensitiveDictionary implements ArrayAccess, Iterato
 	 *
 	 * @return array Header data
 	 */
-	public function getAll(){ yeah(__METHOD__);
+	public function getAll(){
 		return $this->data;
 	}
 }

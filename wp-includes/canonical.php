@@ -39,7 +39,7 @@
  * @param bool $do_redirect Optional. Redirect to the new URL.
  * @return string|void The string of the URL, if redirect needed.
  */
-function redirect_canonical($requested_url = null, $do_redirect = true){ yeah(__METHOD__);
+function redirect_canonical($requested_url = null, $do_redirect = true){
 	global $wp_rewrite, $is_IIS, $wp_query, $wpdb, $wp;
 
 	if(isset($_SERVER['REQUEST_METHOD']) && !in_array(strtoupper($_SERVER['REQUEST_METHOD']), array('GET', 'HEAD'))){
@@ -503,7 +503,7 @@ function redirect_canonical($requested_url = null, $do_redirect = true){ yeah(__
 			 * @param array $matches Hex-encoded octet matches for the requested URL.
 			 * @return string Lowercased version of the first match.
 			 */
-			function lowercase_octets($matches){ yeah(__METHOD__);
+			function lowercase_octets($matches){
 				return strtolower($matches[0]);
 			}
 		}
@@ -554,7 +554,7 @@ function redirect_canonical($requested_url = null, $do_redirect = true){ yeah(__
  * @param string $url
  * @return string The altered query string
  */
-function _remove_qs_args_if_not_in_url($query_string, Array $args_to_check, $url){ yeah(__METHOD__);
+function _remove_qs_args_if_not_in_url($query_string, Array $args_to_check, $url){
 	$parsed_url = @parse_url($url);
 	if(!empty($parsed_url['query'])){
 		parse_str($parsed_url['query'], $parsed_query);
@@ -576,7 +576,7 @@ function _remove_qs_args_if_not_in_url($query_string, Array $args_to_check, $url
  * @param string $url The URL to strip.
  * @return string The altered URL.
  */
-function strip_fragment_from_url($url){ yeah(__METHOD__);
+function strip_fragment_from_url($url){
 	$parsed_url = @parse_url($url);
 	if(!empty($parsed_url['host'])){
 		// This mirrors code in redirect_canonical(). It does not handle every case.
@@ -606,7 +606,7 @@ function strip_fragment_from_url($url){ yeah(__METHOD__);
  *
  * @return false|string The correct URL if one is found. False on failure.
  */
-function redirect_guess_404_permalink(){ yeah(__METHOD__);
+function redirect_guess_404_permalink(){
 	global $wpdb;
 
 	if(get_query_var('name')){
@@ -649,7 +649,7 @@ function redirect_guess_404_permalink(){ yeah(__METHOD__);
  *
  * @global WP_Rewrite $wp_rewrite
  */
-function wp_redirect_admin_locations(){ yeah(__METHOD__);
+function wp_redirect_admin_locations(){
 	global $wp_rewrite;
 	if(!(is_404() && $wp_rewrite->using_permalinks()))
 		return;

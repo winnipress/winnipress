@@ -26,7 +26,7 @@ class Requests_Utility_FilteredIterator extends ArrayIterator {
 	 * @param array $data
 	 * @param callable $callback Callback to be called on each value
 	 */
-	public function __construct($data, $callback){ yeah(__METHOD__);
+	public function __construct($data, $callback){
 		parent::__construct($data);
 
 		$this->callback = $callback;
@@ -37,7 +37,7 @@ class Requests_Utility_FilteredIterator extends ArrayIterator {
 	 *
 	 * @return string
 	 */
-	public function current(){ yeah(__METHOD__);
+	public function current(){
 		$value = parent::current();
 		$value = call_user_func($this->callback, $value);
 		return $value;

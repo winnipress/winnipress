@@ -65,7 +65,7 @@
  *     @type bool   $Network     Whether the plugin can only be activated network-wide.
  * }
  */
-function get_plugin_data( $plugin_file, $markup = true, $translate = true) { yeah(__METHOD__);
+function get_plugin_data( $plugin_file, $markup = true, $translate = true) {
 
 	$default_headers = array(
 		'Name' => 'Plugin Name',
@@ -117,7 +117,7 @@ function get_plugin_data( $plugin_file, $markup = true, $translate = true) { yea
  * @access private
  * @see get_plugin_data()
  */
-function _get_plugin_data_markup_translate( $plugin_file, $plugin_data, $markup = true, $translate = true) { yeah(__METHOD__);
+function _get_plugin_data_markup_translate( $plugin_file, $plugin_data, $markup = true, $translate = true) {
 
 	// Sanitize the plugin filename to a WP_PLUGIN_DIR relative path
 	$plugin_file = plugin_basename( $plugin_file);
@@ -190,7 +190,7 @@ function _get_plugin_data_markup_translate( $plugin_file, $plugin_data, $markup 
  * @param string $plugin Path to the main plugin file from plugins directory.
  * @return array List of files relative to the plugin root.
  */
-function get_plugin_files( $plugin) { yeah(__METHOD__);
+function get_plugin_files( $plugin) {
 	$plugin_file = WP_PLUGIN_DIR . '/' . $plugin;
 	$dir = dirname( $plugin_file);
 
@@ -237,7 +237,7 @@ function get_plugin_files( $plugin) { yeah(__METHOD__);
  * @param string $plugin_folder Optional. Relative path to single plugin folder.
  * @return array Key is the plugin file path and the value is an array of the plugin data.
  */
-function get_plugins($plugin_folder = '') { yeah(__METHOD__);
+function get_plugins($plugin_folder = '') {
 
 	if ( !$cache_plugins = wp_cache_get('plugins', 'plugins'))
 		$cache_plugins = array();
@@ -307,7 +307,7 @@ function get_plugins($plugin_folder = '') { yeah(__METHOD__);
  * @since 3.0.0
  * @return array Key is the mu-plugin file path and the value is an array of the mu-plugin data.
  */
-function get_mu_plugins() { yeah(__METHOD__);
+function get_mu_plugins() {
 	$wp_plugins = array();
 	// Files in wp-content/mu-plugins directory
 	$plugin_files = array();
@@ -354,7 +354,7 @@ function get_mu_plugins() { yeah(__METHOD__);
  * @since 3.1.0
  * @access private
  */
-function _sort_uname_callback( $a, $b) { yeah(__METHOD__);
+function _sort_uname_callback( $a, $b) {
 	return strnatcasecmp( $a['Name'], $b['Name']);
 }
 
@@ -364,7 +364,7 @@ function _sort_uname_callback( $a, $b) { yeah(__METHOD__);
  * @since 3.0.0
  * @return array Key is the file path and the value is an array of the plugin data.
  */
-function get_dropins() { yeah(__METHOD__);
+function get_dropins() {
 	$dropins = array();
 	$plugin_files = array();
 
@@ -409,7 +409,7 @@ function get_dropins() { yeah(__METHOD__);
  *	purpose of the drop-in and the second value the name of the constant that must be
  *	true for the drop-in to be used, or true if no constant is required.
  */
-function _get_dropins() { yeah(__METHOD__);
+function _get_dropins() {
 	$dropins = array(
 		'advanced-cache.php' => array( __( 'Advanced caching plugin.'      ), 'WP_CACHE'), // WP_CACHE
 		'db.php'             => array( __( 'Custom database class.'        ), true), // auto on load
@@ -442,7 +442,7 @@ function _get_dropins() { yeah(__METHOD__);
  * @param string $plugin Path to the main plugin file from plugins directory.
  * @return bool True, if in the active plugins list. False, not in the list.
  */
-function is_plugin_active( $plugin) { yeah(__METHOD__);
+function is_plugin_active( $plugin) {
 	return in_array( $plugin, (array) get_option( 'active_plugins', array())) || is_plugin_active_for_network( $plugin);
 }
 
@@ -457,7 +457,7 @@ function is_plugin_active( $plugin) { yeah(__METHOD__);
  * @param string $plugin Path to the main plugin file from plugins directory.
  * @return bool True if inactive. False if active.
  */
-function is_plugin_inactive( $plugin) { yeah(__METHOD__);
+function is_plugin_inactive( $plugin) {
 	return !is_plugin_active( $plugin);
 }
 
@@ -474,7 +474,7 @@ function is_plugin_inactive( $plugin) { yeah(__METHOD__);
  * @param string $plugin Path to the main plugin file from plugins directory.
  * @return bool True, if active for the network, otherwise false.
  */
-function is_plugin_active_for_network( $plugin) { yeah(__METHOD__);
+function is_plugin_active_for_network( $plugin) {
 
 		return false;
 
@@ -493,7 +493,7 @@ function is_plugin_active_for_network( $plugin) { yeah(__METHOD__);
  * @param string $plugin Path to the main plugin file from plugins directory.
  * @return bool True if plugin is network only, false otherwise.
  */
-function is_network_only_plugin( $plugin) { yeah(__METHOD__);
+function is_network_only_plugin( $plugin) {
 	$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin);
 	if ( $plugin_data)
 		return $plugin_data['Network'];
@@ -527,7 +527,7 @@ function is_network_only_plugin( $plugin) { yeah(__METHOD__);
  * @param bool   $silent       Optional. Whether to prevent calling activation hooks. Default false.
  * @return WP_Error|null WP_Error on invalid file or null on success.
  */
-function activate_plugin( $plugin, $redirect = '', $network_wide = false, $silent = false) { yeah(__METHOD__);
+function activate_plugin( $plugin, $redirect = '', $network_wide = false, $silent = false) {
 	$plugin = plugin_basename( trim( $plugin));
 
 	if ( is_multisite() && ( $network_wide || is_network_only_plugin($plugin))) {
@@ -632,7 +632,7 @@ function activate_plugin( $plugin, $redirect = '', $network_wide = false, $silen
  * @param mixed $network_wide Whether to deactivate the plugin for all sites in the network.
  * 	A value of null (the default) will deactivate plugins for both the site and the network.
  */
-function deactivate_plugins( $plugins, $silent = false, $network_wide = null) { yeah(__METHOD__);
+function deactivate_plugins( $plugins, $silent = false, $network_wide = null) {
 	if ( is_multisite())
 		$network_current = get_site_option( 'active_sitewide_plugins', array());
 	$current = get_option( 'active_plugins', array());
@@ -732,7 +732,7 @@ function deactivate_plugins( $plugins, $silent = false, $network_wide = null) { 
  * @param bool $silent Prevent calling activation hooks. Default is false.
  * @return bool|WP_Error True when finished or WP_Error if there were errors during a plugin activation.
  */
-function activate_plugins( $plugins, $redirect = '', $network_wide = false, $silent = false) { yeah(__METHOD__);
+function activate_plugins( $plugins, $redirect = '', $network_wide = false, $silent = false) {
 	if ( !is_array($plugins))
 		$plugins = array($plugins);
 
@@ -763,7 +763,7 @@ function activate_plugins( $plugins, $redirect = '', $network_wide = false, $sil
  * @return bool|null|WP_Error True on success, false is $plugins is empty, WP_Error on failure.
  *                            Null if filesystem credentials are required to proceed.
  */
-function delete_plugins( $plugins, $deprecated = '') { yeah(__METHOD__);
+function delete_plugins( $plugins, $deprecated = '') {
 	global $wp_filesystem;
 
 	if ( empty($plugins))
@@ -908,7 +908,7 @@ function delete_plugins( $plugins, $deprecated = '') { yeah(__METHOD__);
  * @since 2.5.0
  * @return array invalid plugins, plugin as key, error as value
  */
-function validate_active_plugins() { yeah(__METHOD__);
+function validate_active_plugins() {
 	$plugins = get_option( 'active_plugins', array());
 	// Validate vartype: array.
 	if ( !is_array( $plugins)) {
@@ -947,7 +947,7 @@ function validate_active_plugins() { yeah(__METHOD__);
  * @param string $plugin Path to the main plugin file from plugins directory.
  * @return WP_Error|int 0 on success, WP_Error on failure.
  */
-function validate_plugin($plugin) { yeah(__METHOD__);
+function validate_plugin($plugin) {
 	if ( validate_file($plugin))
 		return new WP_Error('plugin_invalid', __('Invalid plugin path.'));
 	if ( !file_exists(WP_PLUGIN_DIR . '/' . $plugin))
@@ -967,7 +967,7 @@ function validate_plugin($plugin) { yeah(__METHOD__);
  * @param string $plugin Path to the main plugin file from plugins directory.
  * @return bool Whether plugin can be uninstalled.
  */
-function is_uninstallable_plugin($plugin) { yeah(__METHOD__);
+function is_uninstallable_plugin($plugin) {
 	$file = plugin_basename($plugin);
 
 	$uninstallable_plugins = (array) get_option('uninstall_plugins');
@@ -987,7 +987,7 @@ function is_uninstallable_plugin($plugin) { yeah(__METHOD__);
  * @param string $plugin Path to the main plugin file from plugins directory.
  * @return true True if a plugin's uninstall.php file has been found and included.
  */
-function uninstall_plugin($plugin) { yeah(__METHOD__);
+function uninstall_plugin($plugin) {
 	$file = plugin_basename($plugin);
 
 	$uninstallable_plugins = (array) get_option('uninstall_plugins');
@@ -1073,7 +1073,7 @@ function uninstall_plugin($plugin) { yeah(__METHOD__);
  * @param int      $position   The position in the menu order this one should appear.
  * @return string The resulting page's hook_suffix.
  */
-function add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function = '', $icon_url = '', $position = null) { yeah(__METHOD__);
+function add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function = '', $icon_url = '', $position = null) {
 	global $menu, $admin_page_hooks, $_registered_pages, $_parent_pages;
 
 	$menu_slug = plugin_basename( $menu_slug);
@@ -1140,7 +1140,7 @@ function add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $func
  * @param callable $function    The function to be called to output the content for this page.
  * @return false|string The resulting page's hook_suffix, or false if the user does not have the capability required.
  */
-function add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function = '') { yeah(__METHOD__);
+function add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function = '') {
 	global $submenu, $menu, $_wp_real_parent_file, $_wp_submenu_nopriv,
 		$_registered_pages, $_parent_pages;
 
@@ -1205,7 +1205,7 @@ function add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, 
  * @param callable $function   The function to be called to output the content for this page.
  * @return false|string The resulting page's hook_suffix, or false if the user does not have the capability required.
  */
-function add_management_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') { yeah(__METHOD__);
+function add_management_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') {
 	return add_submenu_page( 'tools.php', $page_title, $menu_title, $capability, $menu_slug, $function);
 }
 
@@ -1225,7 +1225,7 @@ function add_management_page( $page_title, $menu_title, $capability, $menu_slug,
  * @param callable $function   The function to be called to output the content for this page.
  * @return false|string The resulting page's hook_suffix, or false if the user does not have the capability required.
  */
-function add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') { yeah(__METHOD__);
+function add_options_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') {
 	return add_submenu_page( 'options-general.php', $page_title, $menu_title, $capability, $menu_slug, $function);
 }
 
@@ -1245,7 +1245,7 @@ function add_options_page( $page_title, $menu_title, $capability, $menu_slug, $f
  * @param callable $function   The function to be called to output the content for this page.
  * @return false|string The resulting page's hook_suffix, or false if the user does not have the capability required.
  */
-function add_theme_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') { yeah(__METHOD__);
+function add_theme_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') {
 	return add_submenu_page( 'themes.php', $page_title, $menu_title, $capability, $menu_slug, $function);
 }
 
@@ -1265,7 +1265,7 @@ function add_theme_page( $page_title, $menu_title, $capability, $menu_slug, $fun
  * @param callable $function   The function to be called to output the content for this page.
  * @return false|string The resulting page's hook_suffix, or false if the user does not have the capability required.
  */
-function add_plugins_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') { yeah(__METHOD__);
+function add_plugins_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') {
 	return add_submenu_page( 'plugins.php', $page_title, $menu_title, $capability, $menu_slug, $function);
 }
 
@@ -1285,7 +1285,7 @@ function add_plugins_page( $page_title, $menu_title, $capability, $menu_slug, $f
  * @param callable $function   The function to be called to output the content for this page.
  * @return false|string The resulting page's hook_suffix, or false if the user does not have the capability required.
  */
-function add_users_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') { yeah(__METHOD__);
+function add_users_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') {
 	if ( current_user_can('edit_users'))
 		$parent = 'users.php';
 	else
@@ -1308,7 +1308,7 @@ function add_users_page( $page_title, $menu_title, $capability, $menu_slug, $fun
  * @param callable $function   The function to be called to output the content for this page.
  * @return false|string The resulting page's hook_suffix, or false if the user does not have the capability required.
  */
-function add_dashboard_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') { yeah(__METHOD__);
+function add_dashboard_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') {
 	return add_submenu_page( 'index.php', $page_title, $menu_title, $capability, $menu_slug, $function);
 }
 
@@ -1328,7 +1328,7 @@ function add_dashboard_page( $page_title, $menu_title, $capability, $menu_slug, 
  * @param callable $function   The function to be called to output the content for this page.
  * @return false|string The resulting page's hook_suffix, or false if the user does not have the capability required.
  */
-function add_posts_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') { yeah(__METHOD__);
+function add_posts_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') {
 	return add_submenu_page( 'edit.php', $page_title, $menu_title, $capability, $menu_slug, $function);
 }
 
@@ -1348,7 +1348,7 @@ function add_posts_page( $page_title, $menu_title, $capability, $menu_slug, $fun
  * @param callable $function   The function to be called to output the content for this page.
  * @return false|string The resulting page's hook_suffix, or false if the user does not have the capability required.
  */
-function add_media_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') { yeah(__METHOD__);
+function add_media_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') {
 	return add_submenu_page( 'upload.php', $page_title, $menu_title, $capability, $menu_slug, $function);
 }
 
@@ -1368,7 +1368,7 @@ function add_media_page( $page_title, $menu_title, $capability, $menu_slug, $fun
  * @param callable $function   The function to be called to output the content for this page.
  * @return false|string The resulting page's hook_suffix, or false if the user does not have the capability required.
  */
-function add_pages_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') { yeah(__METHOD__);
+function add_pages_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') {
 	return add_submenu_page( 'edit.php?post_type=page', $page_title, $menu_title, $capability, $menu_slug, $function);
 }
 
@@ -1388,7 +1388,7 @@ function add_pages_page( $page_title, $menu_title, $capability, $menu_slug, $fun
  * @param callable $function   The function to be called to output the content for this page.
  * @return false|string The resulting page's hook_suffix, or false if the user does not have the capability required.
  */
-function add_comments_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') { yeah(__METHOD__);
+function add_comments_page( $page_title, $menu_title, $capability, $menu_slug, $function = '') {
 	return add_submenu_page( 'edit-comments.php', $page_title, $menu_title, $capability, $menu_slug, $function);
 }
 
@@ -1402,7 +1402,7 @@ function add_comments_page( $page_title, $menu_title, $capability, $menu_slug, $
  * @param string $menu_slug The slug of the menu.
  * @return array|bool The removed menu on success, false if not found.
  */
-function remove_menu_page( $menu_slug) { yeah(__METHOD__);
+function remove_menu_page( $menu_slug) {
 	global $menu;
 
 	foreach ( $menu as $i => $item) {
@@ -1426,7 +1426,7 @@ function remove_menu_page( $menu_slug) { yeah(__METHOD__);
  * @param string $submenu_slug The slug of the submenu.
  * @return array|bool The removed submenu on success, false if not found.
  */
-function remove_submenu_page( $menu_slug, $submenu_slug) { yeah(__METHOD__);
+function remove_submenu_page( $menu_slug, $submenu_slug) {
 	global $submenu;
 
 	if ( !isset( $submenu[$menu_slug]))
@@ -1455,7 +1455,7 @@ function remove_submenu_page( $menu_slug, $submenu_slug) { yeah(__METHOD__);
  * @param bool $echo Whether or not to echo the url - default is true
  * @return string the url
  */
-function menu_page_url($menu_slug, $echo = true) { yeah(__METHOD__);
+function menu_page_url($menu_slug, $echo = true) {
 	global $_parent_pages;
 
 	if ( isset( $_parent_pages[$menu_slug])) {
@@ -1492,7 +1492,7 @@ function menu_page_url($menu_slug, $echo = true) { yeah(__METHOD__);
  * @global array $_wp_menu_nopriv
  * @global array $_wp_submenu_nopriv
  */
-function get_admin_page_parent( $parent = '') { yeah(__METHOD__);
+function get_admin_page_parent( $parent = '') {
 	global $parent_file, $menu, $submenu, $pagenow, $typenow,
 		$plugin_page, $_wp_real_parent_file, $_wp_menu_nopriv, $_wp_submenu_nopriv;
 
@@ -1557,7 +1557,7 @@ function get_admin_page_parent( $parent = '') { yeah(__METHOD__);
  * @global string $plugin_page
  * @global string $typenow
  */
-function get_admin_page_title() { yeah(__METHOD__);
+function get_admin_page_title() {
 	global $title, $menu, $submenu, $pagenow, $plugin_page, $typenow;
 
 	if ( !empty ( $title))
@@ -1635,7 +1635,7 @@ function get_admin_page_title() { yeah(__METHOD__);
  * @param string $parent_page
  * @return string|null
  */
-function get_plugin_page_hook( $plugin_page, $parent_page) { yeah(__METHOD__);
+function get_plugin_page_hook( $plugin_page, $parent_page) {
 	$hook = get_plugin_page_hookname( $plugin_page, $parent_page);
 	if ( has_action($hook))
 		return $hook;
@@ -1649,7 +1649,7 @@ function get_plugin_page_hook( $plugin_page, $parent_page) { yeah(__METHOD__);
  * @param string $plugin_page
  * @param string $parent_page
  */
-function get_plugin_page_hookname( $plugin_page, $parent_page) { yeah(__METHOD__);
+function get_plugin_page_hookname( $plugin_page, $parent_page) {
 	global $admin_page_hooks;
 
 	$parent = get_admin_page_parent( $parent_page);
@@ -1680,7 +1680,7 @@ function get_plugin_page_hookname( $plugin_page, $parent_page) { yeah(__METHOD__
  * @global string $plugin_page
  * @global array $_registered_pages
  */
-function user_can_access_admin_page() { yeah(__METHOD__);
+function user_can_access_admin_page() {
 	global $pagenow, $menu, $submenu, $_wp_menu_nopriv, $_wp_submenu_nopriv,
 		$plugin_page, $_registered_pages;
 
@@ -1762,7 +1762,7 @@ function user_can_access_admin_page() { yeah(__METHOD__);
  * @param array $options
  * @return array
  */
-function option_update_filter( $options) { yeah(__METHOD__);
+function option_update_filter( $options) {
 	global $new_whitelist_options;
 
 	if ( is_array( $new_whitelist_options))
@@ -1782,7 +1782,7 @@ function option_update_filter( $options) { yeah(__METHOD__);
  * @param string|array $options
  * @return array
  */
-function add_option_whitelist( $new_options, $options = '') { yeah(__METHOD__);
+function add_option_whitelist( $new_options, $options = '') {
 	if ( $options == '')
 		global $whitelist_options;
 	else
@@ -1815,7 +1815,7 @@ function add_option_whitelist( $new_options, $options = '') { yeah(__METHOD__);
  * @param string|array $options
  * @return array
  */
-function remove_option_whitelist( $del_options, $options = '') { yeah(__METHOD__);
+function remove_option_whitelist( $del_options, $options = '') {
 	if ( $options == '')
 		global $whitelist_options;
 	else
@@ -1841,7 +1841,7 @@ function remove_option_whitelist( $del_options, $options = '') { yeah(__METHOD__
  *
  * @param string $option_group A settings group name. This should match the group name used in register_setting().
  */
-function settings_fields($option_group) { yeah(__METHOD__);
+function settings_fields($option_group) {
 	echo "<input type='hidden' name='option_page' value='" . esc_attr($option_group) . "' />";
 	echo '<input type="hidden" name="action" value="update" />';
 	wp_nonce_field("$option_group-options");
@@ -1854,7 +1854,7 @@ function settings_fields($option_group) { yeah(__METHOD__);
  *
  * @param bool $clear_update_cache Whether to clear the Plugin updates cache
  */
-function wp_clean_plugins_cache( $clear_update_cache = true) { yeah(__METHOD__);
+function wp_clean_plugins_cache( $clear_update_cache = true) {
 	if ( $clear_update_cache)
 		delete_site_transient( 'update_plugins');
 	wp_cache_delete( 'plugins', 'plugins');
@@ -1868,7 +1868,7 @@ function wp_clean_plugins_cache( $clear_update_cache = true) { yeah(__METHOD__);
  *
  * @param string $plugin Plugin file to load.
  */
-function plugin_sandbox_scrape( $plugin) { yeah(__METHOD__);
+function plugin_sandbox_scrape( $plugin) {
 	wp_register_plugin_realpath( WP_PLUGIN_DIR . '/' . $plugin);
 	include( WP_PLUGIN_DIR . '/' . $plugin);
 }
@@ -1893,7 +1893,7 @@ function plugin_sandbox_scrape( $plugin) { yeah(__METHOD__);
  * @param string $plugin_name The name of the plugin or theme that is suggesting content for the site's privacy policy.
  * @param string $policy_text The suggested content for inclusion in the policy.
  */
-function wp_add_privacy_policy_content( $plugin_name, $policy_text) { yeah(__METHOD__);
+function wp_add_privacy_policy_content( $plugin_name, $policy_text) {
 	if ( !is_admin()) {
 		_doing_it_wrong(
 			__FUNCTION__,

@@ -1,19 +1,8 @@
 <?php
-if(!function_exists('yeah')){
-	function yeah($met){
-		if(!isset($GLOBALS['metoditos'])){
-			$GLOBALS['metoditos']=array();
-		}
-	
-		if (!in_array($met, $GLOBALS['metoditos'])){
-		$GLOBALS['metoditos'][] = $met;
-		}
-	}
-}
 
 $basepath = dirname(__FILE__);
 
-function get_file($path) { yeah(__METHOD__);
+function get_file($path) {
 
 	if(function_exists('realpath') )
 		$path = realpath($path);

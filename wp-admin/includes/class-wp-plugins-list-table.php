@@ -29,7 +29,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 *
 	 * @param array $args An associative array of arguments.
 	 */
-	public function __construct( $args = array() ) { yeah(__METHOD__);
+	public function __construct( $args = array() ) {
 		global $status, $page;
 
 		parent::__construct( array(
@@ -50,14 +50,14 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	/**
 	 * @return array
 	 */
-	protected function get_table_classes() { yeah(__METHOD__);
+	protected function get_table_classes() {
 		return array( 'widefat', $this->_args['plural'] );
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function ajax_user_can() { yeah(__METHOD__);
+	public function ajax_user_can() {
 		return current_user_can('activate_plugins');
 	}
 
@@ -71,7 +71,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 * @global string $order
 	 * @global string $s
 	 */
-	public function prepare_items() { yeah(__METHOD__);
+	public function prepare_items() {
 		global $status, $plugins, $totals, $page, $orderby, $order, $s;
 
 		wp_reset_vars( array( 'orderby', 'order' ) );
@@ -281,7 +281,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 * @param array $plugin
 	 * @return bool
 	 */
-	public function _search_callback( $plugin ) { yeah(__METHOD__);
+	public function _search_callback( $plugin ) {
 		global $s;
 
 		foreach ( $plugin as $value ) {
@@ -300,7 +300,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 * @param array $plugin_b
 	 * @return int
 	 */
-	public function _order_callback( $plugin_a, $plugin_b ) { yeah(__METHOD__);
+	public function _order_callback( $plugin_a, $plugin_b ) {
 		global $orderby, $order;
 
 		$a = $plugin_a[$orderby];
@@ -320,7 +320,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 *
 	 * @global array $plugins
 	 */
-	public function no_items() { yeah(__METHOD__);
+	public function no_items() {
 		global $plugins;
 
 		if ( !empty( $_REQUEST['s'] ) ) {
@@ -343,7 +343,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 * @param string $text     The 'submit' button label.
 	 * @param string $input_id ID attribute value for the search input field.
 	 */
-	public function search_box( $text, $input_id ) { yeah(__METHOD__);
+	public function search_box( $text, $input_id ) {
 		if ( empty( $_REQUEST['s'] ) && !$this->has_items() ) {
 			return;
 		}
@@ -370,7 +370,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 * @global string $status
 	 * @return array
 	 */
-	public function get_columns() { yeah(__METHOD__);
+	public function get_columns() {
 		global $status;
 
 		return array(
@@ -383,7 +383,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	/**
 	 * @return array
 	 */
-	protected function get_sortable_columns() { yeah(__METHOD__);
+	protected function get_sortable_columns() {
 		return array();
 	}
 
@@ -393,7 +393,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 * @global string $status
 	 * @return array
 	 */
-	protected function get_views() { yeah(__METHOD__);
+	protected function get_views() {
 		global $totals, $status;
 
 		$status_links = array();
@@ -442,7 +442,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 * @global string $status
 	 * @return array
 	 */
-	protected function get_bulk_actions() { yeah(__METHOD__);
+	protected function get_bulk_actions() {
 		global $status;
 
 		$actions = array();
@@ -465,7 +465,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 * @global string $status
 	 * @param string $which
 	 */
-	public function bulk_actions( $which = '' ) { yeah(__METHOD__);
+	public function bulk_actions( $which = '' ) {
 		global $status;
 
 		if ( in_array( $status, array( 'mustuse', 'dropins' ) ) )
@@ -478,7 +478,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 * @global string $status
 	 * @param string $which
 	 */
-	protected function extra_tablenav( $which ) { yeah(__METHOD__);
+	protected function extra_tablenav( $which ) {
 		global $status;
 
 		if ( !in_array($status, array('recently_activated', 'mustuse', 'dropins') ) )
@@ -505,7 +505,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	/**
 	 * @return string
 	 */
-	public function current_action() { yeah(__METHOD__);
+	public function current_action() {
 		if ( isset($_POST['clear-recent-list']) )
 			return 'clear-recent-list';
 
@@ -516,7 +516,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 *
 	 * @global string $status
 	 */
-	public function display_rows() { yeah(__METHOD__);
+	public function display_rows() {
 		global $status;
 
 		if ( is_multisite() && !$this->screen->in_admin( 'network' ) && in_array( $status, array( 'mustuse', 'dropins' ) ) )
@@ -534,7 +534,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 *
 	 * @param array $item
 	 */
-	public function single_row( $item ) { yeah(__METHOD__);
+	public function single_row( $item ) {
 		global $status, $page, $s, $totals;
 
 		list( $plugin_file, $plugin_data ) = $item;
@@ -857,7 +857,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 *
 	 * @return string Unalterable name for the primary column, in this case, 'name'.
 	 */
-	protected function get_primary_column_name() { yeah(__METHOD__);
+	protected function get_primary_column_name() {
 		return 'name';
 	}
 }

@@ -18,7 +18,7 @@
  * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global `$post`.
  * @return bool Whether the post has an image attached.
  */
-function has_post_thumbnail($post = null ){ yeah(__METHOD__);
+function has_post_thumbnail($post = null ){
 	return (bool) get_post_thumbnail_id($post );
 }
 
@@ -31,7 +31,7 @@ function has_post_thumbnail($post = null ){ yeah(__METHOD__);
  * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global `$post`.
  * @return string|int Post thumbnail ID or empty string.
  */
-function get_post_thumbnail_id($post = null ){ yeah(__METHOD__);
+function get_post_thumbnail_id($post = null ){
 	$post = get_post($post );
 	if (!$post ){
 		return '';
@@ -58,7 +58,7 @@ function get_post_thumbnail_id($post = null ){ yeah(__METHOD__);
  *                           Default 'post-thumbnail'.
  * @param string|array $attr Optional. Query string or array of attributes. Default empty.
  */
-function the_post_thumbnail($size = 'post-thumbnail', $attr = '' ){ yeah(__METHOD__);
+function the_post_thumbnail($size = 'post-thumbnail', $attr = '' ){
 	echo get_the_post_thumbnail(null, $size, $attr );
 }
 
@@ -71,7 +71,7 @@ function the_post_thumbnail($size = 'post-thumbnail', $attr = '' ){ yeah(__METHO
  *
  * @param WP_Query $wp_query Optional. A WP_Query instance. Defaults to the $wp_query global.
  */
-function update_post_thumbnail_cache($wp_query = null ){ yeah(__METHOD__);
+function update_post_thumbnail_cache($wp_query = null ){
 	if (!$wp_query )
 		$wp_query = $GLOBALS['wp_query'];
 
@@ -111,7 +111,7 @@ function update_post_thumbnail_cache($wp_query = null ){ yeah(__METHOD__);
  * @param string|array $attr Optional. Query string or array of attributes. Default empty.
  * @return string The post thumbnail image tag.
  */
-function get_the_post_thumbnail($post = null, $size = 'post-thumbnail', $attr = '' ){ yeah(__METHOD__);
+function get_the_post_thumbnail($post = null, $size = 'post-thumbnail', $attr = '' ){
 	$post = get_post($post );
 	if (!$post ){
 		return '';
@@ -189,7 +189,7 @@ function get_the_post_thumbnail($post = null, $size = 'post-thumbnail', $attr = 
  *                           array of height and width dimensions. Default 'post-thumbnail'.
  * @return string|false Post thumbnail URL or false if no URL is available.
  */
-function get_the_post_thumbnail_url($post = null, $size = 'post-thumbnail' ){ yeah(__METHOD__);
+function get_the_post_thumbnail_url($post = null, $size = 'post-thumbnail' ){
 	$post_thumbnail_id = get_post_thumbnail_id($post );
 	if (!$post_thumbnail_id ){
 		return false;
@@ -206,7 +206,7 @@ function get_the_post_thumbnail_url($post = null, $size = 'post-thumbnail' ){ ye
  *                           or an array of width and height values in pixels (in that order).
  *                           Default 'post-thumbnail'.
  */
-function the_post_thumbnail_url($size = 'post-thumbnail' ){ yeah(__METHOD__);
+function the_post_thumbnail_url($size = 'post-thumbnail' ){
 	$url = get_the_post_thumbnail_url(null, $size );
 	if ($url ){
 		echo esc_url($url );
@@ -221,7 +221,7 @@ function the_post_thumbnail_url($size = 'post-thumbnail' ){ yeah(__METHOD__);
  * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global `$post`.
  * @return string Post thumbnail caption.
  */
-function get_the_post_thumbnail_caption($post = null ){ yeah(__METHOD__);
+function get_the_post_thumbnail_caption($post = null ){
 	$post_thumbnail_id = get_post_thumbnail_id($post );
 	if (!$post_thumbnail_id ){
 		return '';
@@ -243,7 +243,7 @@ function get_the_post_thumbnail_caption($post = null ){ yeah(__METHOD__);
  *
  * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global `$post`.
  */
-function the_post_thumbnail_caption($post = null ){ yeah(__METHOD__);
+function the_post_thumbnail_caption($post = null ){
 	/**
 	 * Filters the displayed post thumbnail caption.
 	 *

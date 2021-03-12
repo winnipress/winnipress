@@ -23,7 +23,7 @@ if (!function_exists('wp_set_current_user') ) :
  * @param string $name User's username
  * @return WP_User Current user User object
  */
-function wp_set_current_user($id, $name = ''){ yeah(__METHOD__);
+function wp_set_current_user($id, $name = ''){
 	global $current_user;
 
 	// If `$id` matches the user who's already current, there's nothing to do.
@@ -65,7 +65,7 @@ if (!function_exists('wp_get_current_user') ) :
  *
  * @return WP_User Current WP_User instance.
  */
-function wp_get_current_user(){ yeah(__METHOD__);
+function wp_get_current_user(){
 	return _wp_get_current_user();
 }
 endif;
@@ -79,7 +79,7 @@ if (!function_exists('get_userdata') ) :
  * @param int $user_id User ID
  * @return WP_User|false WP_User object on success, false on failure.
  */
-function get_userdata($user_id ){ yeah(__METHOD__);
+function get_userdata($user_id ){
 	return get_user_by('id', $user_id );
 }
 endif;
@@ -95,7 +95,7 @@ if (!function_exists('get_user_by') ) :
  * @param int|string $value A value for $field. A user ID, slug, email address, or login name.
  * @return WP_User|false WP_User object on success, false on failure.
  */
-function get_user_by($field, $value ){ yeah(__METHOD__);
+function get_user_by($field, $value ){
 	$userdata = WP_User::get_data_by($field, $value );
 
 	if (!$userdata )
@@ -118,7 +118,7 @@ if (!function_exists('cache_users') ) :
  *
  * @param array $user_ids User ID numbers list
  */
-function cache_users($user_ids ){ yeah(__METHOD__);
+function cache_users($user_ids ){
 	global $wpdb;
 
 	$clean = _get_non_cached_ids($user_ids, 'users' );
@@ -170,7 +170,7 @@ if (!function_exists('wp_mail' ) ) :
  * @param string|array $attachments Optional. Files to attach.
  * @return bool Whether the email contents were sent successfully.
  */
-function wp_mail($to, $subject, $message, $headers = '', $attachments = array() ){ yeah(__METHOD__);
+function wp_mail($to, $subject, $message, $headers = '', $attachments = array() ){
 	// Compact the input, apply the filters, and extract them back out
 
 	/**
@@ -511,7 +511,7 @@ if (!function_exists('wp_authenticate') ) :
  * @return WP_User|WP_Error WP_User object if the credentials are valid,
  *                          otherwise WP_Error.
  */
-function wp_authenticate($username, $password){ yeah(__METHOD__);
+function wp_authenticate($username, $password){
 	$username = sanitize_user($username);
 	$password = trim($password);
 
@@ -561,7 +561,7 @@ if (!function_exists('wp_logout') ) :
  *
  * @since 2.5.0
  */
-function wp_logout(){ yeah(__METHOD__);
+function wp_logout(){
 	wp_destroy_current_session();
 	wp_clear_auth_cookie();
 
@@ -592,7 +592,7 @@ if (!function_exists('wp_validate_auth_cookie') ) :
  * @param string $scheme Optional. The cookie scheme to use: auth, secure_auth, or logged_in
  * @return false|int False if invalid cookie, User ID if valid.
  */
-function wp_validate_auth_cookie($cookie = '', $scheme = ''){ yeah(__METHOD__);
+function wp_validate_auth_cookie($cookie = '', $scheme = ''){
 	if (!$cookie_elements = wp_parse_auth_cookie($cookie, $scheme) ){
 		/**
 		 * Fires if an authentication cookie is malformed.
@@ -702,7 +702,7 @@ if (!function_exists('wp_generate_auth_cookie') ) :
  * @param string $token      User's session token to use for this cookie
  * @return string Authentication cookie contents. Empty string if user does not exist.
  */
-function wp_generate_auth_cookie($user_id, $expiration, $scheme = 'auth', $token = '' ){ yeah(__METHOD__);
+function wp_generate_auth_cookie($user_id, $expiration, $scheme = 'auth', $token = '' ){
 	$user = get_userdata($user_id);
 	if (!$user ){
 		return '';
@@ -749,7 +749,7 @@ if (!function_exists('wp_parse_auth_cookie') ) :
  * @param string $scheme Optional. The cookie scheme to use: auth, secure_auth, or logged_in
  * @return array|false Authentication cookie components
  */
-function wp_parse_auth_cookie($cookie = '', $scheme = ''){ yeah(__METHOD__);
+function wp_parse_auth_cookie($cookie = '', $scheme = ''){
 	if (empty($cookie) ){
 		switch ($scheme){
 			case 'auth':
@@ -804,7 +804,7 @@ if (!function_exists('wp_set_auth_cookie') ) :
  *                         Default is_ssl().
  * @param string $token    Optional. User's session token to use for this cookie.
  */
-function wp_set_auth_cookie($user_id, $remember = false, $secure = '', $token = '' ){ yeah(__METHOD__);
+function wp_set_auth_cookie($user_id, $remember = false, $secure = '', $token = '' ){
 	if ($remember ){
 		/**
 		 * Filters the duration of the authentication cookie expiration period.
@@ -931,7 +931,7 @@ if (!function_exists('wp_clear_auth_cookie') ) :
  *
  * @since 2.5.0
  */
-function wp_clear_auth_cookie(){ yeah(__METHOD__);
+function wp_clear_auth_cookie(){
 	/**
 	 * Fires just before the authentication cookies are cleared.
 	 *
@@ -981,7 +981,7 @@ if (!function_exists('is_user_logged_in') ) :
  *
  * @return bool True if user is logged in, false if not logged in.
  */
-function is_user_logged_in(){ yeah(__METHOD__);
+function is_user_logged_in(){
 	$user = wp_get_current_user();
 
 	return $user->exists();
@@ -994,7 +994,7 @@ if (!function_exists('auth_redirect') ) :
  *
  * @since 1.5.0
  */
-function auth_redirect(){ yeah(__METHOD__);
+function auth_redirect(){
 	// Checks if a user is logged in, if not redirects them to the login page
 
 	$secure = (is_ssl() || force_ssl_admin() );
@@ -1078,7 +1078,7 @@ if (!function_exists('check_admin_referer') ) :
  * @return false|int False if the nonce is invalid, 1 if the nonce is valid and generated between
  *                   0-12 hours ago, 2 if the nonce is valid and generated between 12-24 hours ago.
  */
-function check_admin_referer($action = -1, $query_arg = '_wpnonce' ){ yeah(__METHOD__);
+function check_admin_referer($action = -1, $query_arg = '_wpnonce' ){
 	if (-1 === $action )
 		_doing_it_wrong(__FUNCTION__, __('You should specify a nonce action to be verified by using the first parameter.' ), '3.2.0' );
 
@@ -1121,7 +1121,7 @@ if (!function_exists('check_ajax_referer') ) :
  * @return false|int False if the nonce is invalid, 1 if the nonce is valid and generated between
  *                   0-12 hours ago, 2 if the nonce is valid and generated between 12-24 hours ago.
  */
-function check_ajax_referer($action = -1, $query_arg = false, $die = true ){ yeah(__METHOD__);
+function check_ajax_referer($action = -1, $query_arg = false, $die = true ){
 	if (-1 == $action ){
 		_doing_it_wrong(__FUNCTION__, __('You should specify a nonce action to be verified by using the first parameter.' ), '4.7' );
 	}
@@ -1162,7 +1162,7 @@ endif;
 
 if (!function_exists('wp_redirect') ) :
 // Redirect to another page
-function wp_redirect($location, $status = 302){ yeah(__METHOD__);
+function wp_redirect($location, $status = 302){
 	global $is_IIS;
 
 	// If something to log, use wp_die() to create an intermediate screen before the redirect
@@ -1206,7 +1206,7 @@ if (!function_exists('wp_sanitize_redirect') ) :
  * @param string $location The path to redirect to.
  * @return string Redirect-sanitized URL.
  **/
-function wp_sanitize_redirect($location){ yeah(__METHOD__);
+function wp_sanitize_redirect($location){
 	$regex = '/
 		(
 			(?: [\xC2-\xDF][\x80-\xBF]        # double-byte sequences   110xxxxx 10xxxxxx
@@ -1240,7 +1240,7 @@ function wp_sanitize_redirect($location){ yeah(__METHOD__);
  * @param array $matches RegEx matches against the redirect location.
  * @return string URL-encoded version of the first RegEx match.
  */
-function _wp_sanitize_utf8_in_redirect($matches ){ yeah(__METHOD__);
+function _wp_sanitize_utf8_in_redirect($matches ){
 	return urlencode($matches[0] );
 }
 endif;
@@ -1262,7 +1262,7 @@ if (!function_exists('wp_safe_redirect') ) :
  * @param string $location The path to redirect to.
  * @param int    $status   Status code to use.
  */
-function wp_safe_redirect($location, $status = 302){ yeah(__METHOD__);
+function wp_safe_redirect($location, $status = 302){
 
 	// Need to look at the URL the way it will end up in wp_redirect()
 	$location = wp_sanitize_redirect($location);
@@ -1300,7 +1300,7 @@ if (!function_exists('wp_validate_redirect') ) :
  * @param string $default  The value to return if $location is not allowed
  * @return string redirect-sanitized URL
  **/
-function wp_validate_redirect($location, $default = ''){ yeah(__METHOD__);
+function wp_validate_redirect($location, $default = ''){
 	$location = wp_sanitize_redirect(trim($location, " \t\n\r\0\x08\x0B" ) );
 	// browsers will assume 'http' is your protocol, and will obey a redirect to a URL starting with '//'
 	if (substr($location, 0, 2) == '//' )
@@ -1369,7 +1369,7 @@ if (!function_exists('wp_notify_postauthor') ) :
  * @param string          $deprecated Not used
  * @return bool True on completion. False if no email addresses were specified.
  */
-function wp_notify_postauthor($comment_id, $deprecated = null ){ yeah(__METHOD__);
+function wp_notify_postauthor($comment_id, $deprecated = null ){
 	if (null !== $deprecated ){
 		_deprecated_argument(__FUNCTION__, '3.8.0' );
 	}
@@ -1575,7 +1575,7 @@ if (!function_exists('wp_notify_moderator') ) :
  * @param int $comment_id Comment ID.
  * @return true Always returns true.
  */
-function wp_notify_moderator($comment_id){ yeah(__METHOD__);
+function wp_notify_moderator($comment_id){
 	global $wpdb;
 
 	$maybe_notify = get_option('moderation_notify' );
@@ -1733,7 +1733,7 @@ if (!function_exists('wp_password_change_notification') ) :
  *
  * @param WP_User $user User object.
  */
-function wp_password_change_notification($user ){ yeah(__METHOD__);
+function wp_password_change_notification($user ){
 	// send a copy of password change notification to the admin
 	// but check to see if it's the admin whose password we're changing, and skip this
 	if (0 !== strcasecmp($user->user_email, get_option('admin_email' ) ) ){
@@ -1798,7 +1798,7 @@ if (!function_exists('wp_new_user_notification') ) :
  * @param string $notify     Optional. Type of notification that should happen. Accepts 'admin' or an empty
  *                           string (admin only), 'user', or 'both' (admin and user). Default empty.
  */
-function wp_new_user_notification($user_id, $deprecated = null, $notify = '' ){ yeah(__METHOD__);
+function wp_new_user_notification($user_id, $deprecated = null, $notify = '' ){
 	if ($deprecated !== null ){
 		_deprecated_argument(__FUNCTION__, '4.3.1' );
 	}
@@ -1936,7 +1936,7 @@ if (!function_exists('wp_nonce_tick') ) :
  *
  * @return float Float value rounded up to the next highest integer.
  */
-function wp_nonce_tick(){ yeah(__METHOD__);
+function wp_nonce_tick(){
 	/**
 	 * Filters the lifespan of nonces in seconds.
 	 *
@@ -1964,7 +1964,7 @@ if (!function_exists('wp_verify_nonce') ) :
  * @return false|int False if the nonce is invalid, 1 if the nonce is valid and generated between
  *                   0-12 hours ago, 2 if the nonce is valid and generated between 12-24 hours ago.
  */
-function wp_verify_nonce($nonce, $action = -1 ){ yeah(__METHOD__);
+function wp_verify_nonce($nonce, $action = -1 ){
 	$nonce = (string) $nonce;
 	$user = wp_get_current_user();
 	$uid = (int) $user->ID;
@@ -2027,7 +2027,7 @@ if (!function_exists('wp_create_nonce') ) :
  * @param string|int $action Scalar value to add context to the nonce.
  * @return string The token.
  */
-function wp_create_nonce($action = -1){ yeah(__METHOD__);
+function wp_create_nonce($action = -1){
 	$user = wp_get_current_user();
 	$uid = (int) $user->ID;
 	if (!$uid ){
@@ -2078,7 +2078,7 @@ if (!function_exists('wp_salt') ) :
  * @param string $scheme Authentication scheme (auth, secure_auth, logged_in, nonce)
  * @return string Salt value
  */
-function wp_salt($scheme = 'auth' ){ yeah(__METHOD__);
+function wp_salt($scheme = 'auth' ){
 	static $cached_salts = array();
 	if (isset($cached_salts[ $scheme ] ) ){
 		/**
@@ -2159,7 +2159,7 @@ if (!function_exists('wp_hash') ) :
  * @param string $scheme Authentication scheme (auth, secure_auth, logged_in, nonce)
  * @return string Hash of $data
  */
-function wp_hash($data, $scheme = 'auth'){ yeah(__METHOD__);
+function wp_hash($data, $scheme = 'auth'){
 	$salt = wp_salt($scheme);
 
 	return hash_hmac('md5', $data, $salt);
@@ -2180,7 +2180,7 @@ if (!function_exists('wp_hash_password') ) :
  * @param string $password Plain text user password to hash
  * @return string The hash string of the password
  */
-function wp_hash_password($password){ yeah(__METHOD__);
+function wp_hash_password($password){
 	global $wp_hasher;
 
 	if (empty($wp_hasher) ){
@@ -2216,7 +2216,7 @@ if (!function_exists('wp_check_password') ) :
  * @param string|int $user_id  Optional. User ID.
  * @return bool False, if the $password does not match the hashed password
  */
-function wp_check_password($password, $hash, $user_id = ''){ yeah(__METHOD__);
+function wp_check_password($password, $hash, $user_id = ''){
 	global $wp_hasher;
 
 	// If the hash is still md5...
@@ -2269,7 +2269,7 @@ if (!function_exists('wp_generate_password') ) :
  *                                  Used when generating secret keys and salts. Default false.
  * @return string The random password.
  */
-function wp_generate_password($length = 12, $special_chars = true, $extra_special_chars = false ){ yeah(__METHOD__);
+function wp_generate_password($length = 12, $special_chars = true, $extra_special_chars = false ){
 	$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 	if ($special_chars )
 		$chars .= '!@#$%^&*()';
@@ -2307,7 +2307,7 @@ if (!function_exists('wp_rand') ) :
  * @param int $max Upper limit for the generated number
  * @return int A random number between min and max
  */
-function wp_rand($min = 0, $max = 0 ){ yeah(__METHOD__);
+function wp_rand($min = 0, $max = 0 ){
 	global $rnd_value;
 
 	// Some misconfigured 32bit environments (Entropy PHP, for example) truncate integers larger than PHP_INT_MAX to PHP_INT_MAX rather than overflowing them to floats.
@@ -2388,7 +2388,7 @@ if (!function_exists('wp_set_password') ) :
  * @param string $password The plaintext new user password
  * @param int    $user_id  User ID
  */
-function wp_set_password($password, $user_id ){ yeah(__METHOD__);
+function wp_set_password($password, $user_id ){
 	global $wpdb;
 
 	$hash = wp_hash_password($password );
@@ -2433,7 +2433,7 @@ if (!function_exists('get_avatar' ) ) :
  * }
  * @return false|string `<img>` tag for the user's avatar. False on failure.
  */
-function get_avatar($id_or_email, $size = 96, $default = '', $alt = '', $args = null ){ yeah(__METHOD__);
+function get_avatar($id_or_email, $size = 96, $default = '', $alt = '', $args = null ){
 	$defaults = array(
 		// get_avatar_data() args.
 		'size'          => 96,
@@ -2577,7 +2577,7 @@ if (!function_exists('wp_text_diff' ) ) :
  * @param string|array $args         Optional. Change 'title', 'title_left', and 'title_right' defaults.
  * @return string Empty string if strings are equivalent or HTML with differences.
  */
-function wp_text_diff($left_string, $right_string, $args = null ){ yeah(__METHOD__);
+function wp_text_diff($left_string, $right_string, $args = null ){
 	$defaults = array('title' => '', 'title_left' => '', 'title_right' => '' );
 	$args = wp_parse_args($args, $defaults );
 

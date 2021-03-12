@@ -53,7 +53,7 @@ if (!isset($wp_current_filter ) )
  *
  * Note that `$example` is passed to the callback, (maybe) modified, then returned:
  *
- *     function example_callback($example ){ yeah(__METHOD__);
+ *     function example_callback($example ){
  *         // Maybe modify $example in some way.
  *         return $example;
  *     }
@@ -72,14 +72,14 @@ if (!isset($wp_current_filter ) )
  *     $value = apply_filters('hook', $value, $arg2, $arg3 );
  *
  *     // Accepting zero/one arguments.
- *     function example_callback(){ yeah(__METHOD__);
+ *     function example_callback(){
  *         ...
  *         return 'some value';
  *     }
  *     add_filter('hook', 'example_callback' ); // Where $priority is default 10, $accepted_args is default 1.
  *
  *     // Accepting two arguments (three possible).
- *     function example_callback($value, $arg2 ){ yeah(__METHOD__);
+ *     function example_callback($value, $arg2 ){
  *         ...
  *         return $maybe_modified_value;
  *     }
@@ -103,7 +103,7 @@ if (!isset($wp_current_filter ) )
  * @param int      $accepted_args   Optional. The number of arguments the function accepts. Default 1.
  * @return true
  */
-function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1 ){ yeah(__METHOD__);
+function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1 ){
 	global $wp_filter;
 	if (!isset($wp_filter[ $tag ] ) ){
 		$wp_filter[ $tag ] = new WP_Hook();
@@ -128,7 +128,7 @@ function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1 )
  *                   that evaluates to false (e.g.) 0, so use the === operator for testing the
  *                   return value.
  */
-function has_filter($tag, $function_to_check = false){ yeah(__METHOD__);
+function has_filter($tag, $function_to_check = false){
 	global $wp_filter;
 
 	if (!isset($wp_filter[ $tag ] ) ){
@@ -149,7 +149,7 @@ function has_filter($tag, $function_to_check = false){ yeah(__METHOD__);
  * The function allows for additional arguments to be added and passed to hooks.
  *
  *     // Our filter callback function
- *     function example_callback($string, $arg1, $arg2 ){ yeah(__METHOD__);
+ *     function example_callback($string, $arg1, $arg2 ){
  *         // (maybe) modify $string
  *         return $string;
  *     }
@@ -173,7 +173,7 @@ function has_filter($tag, $function_to_check = false){ yeah(__METHOD__);
  * @param mixed  $var,... Additional variables passed to the functions hooked to `$tag`.
  * @return mixed The filtered value after all hooked functions are applied to it.
  */
-function apply_filters($tag, $value ){ yeah(__METHOD__);
+function apply_filters($tag, $value ){
 	global $wp_filter, $wp_current_filter;
 
 	$args = array();
@@ -222,7 +222,7 @@ function apply_filters($tag, $value ){ yeah(__METHOD__);
  * @param array  $args The arguments supplied to the functions hooked to $tag.
  * @return mixed The filtered value after all hooked functions are applied to it.
  */
-function apply_filters_ref_array($tag, $args){ yeah(__METHOD__);
+function apply_filters_ref_array($tag, $args){
 	global $wp_filter, $wp_current_filter;
 
 	// Do 'all' actions first
@@ -268,7 +268,7 @@ function apply_filters_ref_array($tag, $args){ yeah(__METHOD__);
  * @param int      $priority           Optional. The priority of the function. Default 10.
  * @return bool    Whether the function existed before it was removed.
  */
-function remove_filter($tag, $function_to_remove, $priority = 10 ){ yeah(__METHOD__);
+function remove_filter($tag, $function_to_remove, $priority = 10 ){
 	global $wp_filter;
 
 	$r = false;
@@ -293,7 +293,7 @@ function remove_filter($tag, $function_to_remove, $priority = 10 ){ yeah(__METHO
  * @param int|bool $priority Optional. The priority number to remove. Default false.
  * @return true True when finished.
  */
-function remove_all_filters($tag, $priority = false ){ yeah(__METHOD__);
+function remove_all_filters($tag, $priority = false ){
 	global $wp_filter;
 
 	if (isset($wp_filter[ $tag ]) ){
@@ -315,7 +315,7 @@ function remove_all_filters($tag, $priority = false ){ yeah(__METHOD__);
  *
  * @return string Hook name of the current filter or action.
  */
-function current_filter(){ yeah(__METHOD__);
+function current_filter(){
 	global $wp_current_filter;
 	return end($wp_current_filter );
 }
@@ -327,7 +327,7 @@ function current_filter(){ yeah(__METHOD__);
  *
  * @return string Hook name of the current action.
  */
-function current_action(){ yeah(__METHOD__);
+function current_action(){
 	return current_filter();
 }
 
@@ -352,7 +352,7 @@ function current_action(){ yeah(__METHOD__);
  *                            checks if any filter is currently being run.
  * @return bool Whether the filter is currently in the stack.
  */
-function doing_filter($filter = null ){ yeah(__METHOD__);
+function doing_filter($filter = null ){
 	global $wp_current_filter;
 
 	if (null === $filter ){
@@ -371,7 +371,7 @@ function doing_filter($filter = null ){ yeah(__METHOD__);
  *                            if any action is currently being run.
  * @return bool Whether the action is currently in the stack.
  */
-function doing_action($action = null ){ yeah(__METHOD__);
+function doing_action($action = null ){
 	return doing_filter($action );
 }
 
@@ -395,7 +395,7 @@ function doing_action($action = null ){ yeah(__METHOD__);
  * @param int      $accepted_args   Optional. The number of arguments the function accepts. Default 1.
  * @return true Will always return true.
  */
-function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1){ yeah(__METHOD__);
+function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1){
 	return add_filter($tag, $function_to_add, $priority, $accepted_args);
 }
 
@@ -418,7 +418,7 @@ function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1){
  * @param mixed  $arg,... Optional. Additional arguments which are passed on to the
  *                        functions hooked to the action. Default empty.
  */
-function do_action($tag, $arg = ''){ yeah(__METHOD__);
+function do_action($tag, $arg = ''){
 	global $wp_filter, $wp_actions, $wp_current_filter;
 
 	if (!isset($wp_actions[$tag]) )
@@ -465,7 +465,7 @@ function do_action($tag, $arg = ''){ yeah(__METHOD__);
  * @param string $tag The name of the action hook.
  * @return int The number of times action hook $tag is fired.
  */
-function did_action($tag){ yeah(__METHOD__);
+function did_action($tag){
 	global $wp_actions;
 
 	if (!isset($wp_actions[ $tag ] ) )
@@ -488,7 +488,7 @@ function did_action($tag){ yeah(__METHOD__);
  * @param string $tag  The name of the action to be executed.
  * @param array  $args The arguments supplied to the functions hooked to `$tag`.
  */
-function do_action_ref_array($tag, $args){ yeah(__METHOD__);
+function do_action_ref_array($tag, $args){
 	global $wp_filter, $wp_actions, $wp_current_filter;
 
 	if (!isset($wp_actions[$tag]) )
@@ -533,7 +533,7 @@ function do_action_ref_array($tag, $args){ yeah(__METHOD__);
  *                  that evaluates to false (e.g.) 0, so use the === operator for testing the
  *                  return value.
  */
-function has_action($tag, $function_to_check = false){ yeah(__METHOD__);
+function has_action($tag, $function_to_check = false){
 	return has_filter($tag, $function_to_check);
 }
 
@@ -551,7 +551,7 @@ function has_action($tag, $function_to_check = false){ yeah(__METHOD__);
  * @param int      $priority           Optional. The priority of the function. Default 10.
  * @return bool Whether the function is removed.
  */
-function remove_action($tag, $function_to_remove, $priority = 10 ){ yeah(__METHOD__);
+function remove_action($tag, $function_to_remove, $priority = 10 ){
 	return remove_filter($tag, $function_to_remove, $priority );
 }
 
@@ -564,7 +564,7 @@ function remove_action($tag, $function_to_remove, $priority = 10 ){ yeah(__METHO
  * @param int|bool $priority The priority number to remove them from. Default false.
  * @return true True when finished.
  */
-function remove_all_actions($tag, $priority = false){ yeah(__METHOD__);
+function remove_all_actions($tag, $priority = false){
 	return remove_all_filters($tag, $priority);
 }
 
@@ -594,7 +594,7 @@ function remove_all_actions($tag, $priority = false){ yeah(__METHOD__);
  * @param string $replacement Optional. The hook that should have been used. Default false.
  * @param string $message     Optional. A message regarding the change. Default null.
  */
-function apply_filters_deprecated($tag, $args, $version, $replacement = false, $message = null ){ yeah(__METHOD__);
+function apply_filters_deprecated($tag, $args, $version, $replacement = false, $message = null ){
 	if (!has_filter($tag ) ){
 		return $args[0];
 	}
@@ -621,7 +621,7 @@ function apply_filters_deprecated($tag, $args, $version, $replacement = false, $
  * @param string $replacement Optional. The hook that should have been used.
  * @param string $message     Optional. A message regarding the change.
  */
-function do_action_deprecated($tag, $args, $version, $replacement = false, $message = null ){ yeah(__METHOD__);
+function do_action_deprecated($tag, $args, $version, $replacement = false, $message = null ){
 	if (!has_action($tag ) ){
 		return;
 	}
@@ -647,7 +647,7 @@ function do_action_deprecated($tag, $args, $version, $replacement = false, $mess
  * @param string $file The filename of plugin.
  * @return string The name of a plugin.
  */
-function plugin_basename($file ){ yeah(__METHOD__);
+function plugin_basename($file ){
 	global $wp_plugin_paths;
 
 	// $wp_plugin_paths contains normalized paths.
@@ -685,7 +685,7 @@ function plugin_basename($file ){ yeah(__METHOD__);
  * @param string $file Known path to the file.
  * @return bool Whether the path was able to be registered.
  */
-function wp_register_plugin_realpath($file ){ yeah(__METHOD__);
+function wp_register_plugin_realpath($file ){
 	global $wp_plugin_paths;
 
 	// Normalize, but store as static to avoid recalculation of a constant value
@@ -717,7 +717,7 @@ function wp_register_plugin_realpath($file ){ yeah(__METHOD__);
  * @param string $file The filename of the plugin (__FILE__).
  * @return string the filesystem path of the directory that contains the plugin.
  */
-function plugin_dir_path($file ){ yeah(__METHOD__);
+function plugin_dir_path($file ){
 	return trailingslashit(dirname($file ) );
 }
 
@@ -729,7 +729,7 @@ function plugin_dir_path($file ){ yeah(__METHOD__);
  * @param string $file The filename of the plugin (__FILE__).
  * @return string the URL path of the directory that contains the plugin.
  */
-function plugin_dir_url($file ){ yeah(__METHOD__);
+function plugin_dir_url($file ){
 	return trailingslashit(plugins_url('', $file ) );
 }
 
@@ -751,7 +751,7 @@ function plugin_dir_url($file ){ yeah(__METHOD__);
  * @param string   $file     The filename of the plugin including the path.
  * @param callable $function The function hooked to the 'activate_PLUGIN' action.
  */
-function register_activation_hook($file, $function){ yeah(__METHOD__);
+function register_activation_hook($file, $function){
 	$file = plugin_basename($file);
 	add_action('activate_' . $file, $function);
 }
@@ -774,7 +774,7 @@ function register_activation_hook($file, $function){ yeah(__METHOD__);
  * @param string   $file     The filename of the plugin including the path.
  * @param callable $function The function hooked to the 'deactivate_PLUGIN' action.
  */
-function register_deactivation_hook($file, $function){ yeah(__METHOD__);
+function register_deactivation_hook($file, $function){
 	$file = plugin_basename($file);
 	add_action('deactivate_' . $file, $function);
 }
@@ -805,7 +805,7 @@ function register_deactivation_hook($file, $function){ yeah(__METHOD__);
  * @param callable $callback The callback to run when the hook is called. Must be
  *                           a static method or function.
  */
-function register_uninstall_hook($file, $callback ){ yeah(__METHOD__);
+function register_uninstall_hook($file, $callback ){
 	if (is_array($callback ) && is_object($callback[0] ) ){
 		_doing_it_wrong(__FUNCTION__, __('Only a static class method or function can be used in an uninstall hook.' ), '3.1.0' );
 		return;
@@ -840,7 +840,7 @@ function register_uninstall_hook($file, $callback ){ yeah(__METHOD__);
  *
  * @param array $args The collected parameters from the hook that was called.
  */
-function _wp_call_all_hook($args){ yeah(__METHOD__);
+function _wp_call_all_hook($args){
 	global $wp_filter;
 
 	$wp_filter['all']->do_all_hook($args );
@@ -880,7 +880,7 @@ function _wp_call_all_hook($args){ yeah(__METHOD__);
  *                      and $function is an object reference, and it does not already have
  *                      a unique id.
  */
-function _wp_filter_build_unique_id($tag, $function, $priority){ yeah(__METHOD__);
+function _wp_filter_build_unique_id($tag, $function, $priority){
 	global $wp_filter;
 	static $filter_id_count = 0;
 

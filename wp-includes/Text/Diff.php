@@ -58,7 +58,7 @@ class Text_Diff {
 	/**
 	 * PHP4 constructor.
 	 */
-	public function Text_Diff($engine, $params ) { yeah(__METHOD__);
+	public function Text_Diff($engine, $params ) {
 		self::__construct($engine, $params );
 	}
 
@@ -397,7 +397,7 @@ class Text_Diff_Op_copy extends Text_Diff_Op {
 	/**
 	 * PHP4 constructor.
 	 */
-	public function Text_Diff_Op_copy($orig, $final = false ) { yeah(__METHOD__);
+	public function Text_Diff_Op_copy($orig, $final = false ) {
 		self::__construct($orig, $final );
 	}
 
@@ -429,7 +429,7 @@ class Text_Diff_Op_delete extends Text_Diff_Op {
 	/**
 	 * PHP4 constructor.
 	 */
-	public function Text_Diff_Op_delete($lines ) { yeah(__METHOD__);
+	public function Text_Diff_Op_delete($lines ) {
 		self::__construct($lines );
 	}
 
@@ -461,7 +461,7 @@ class Text_Diff_Op_add extends Text_Diff_Op {
 	/**
 	 * PHP4 constructor.
 	 */
-	public function Text_Diff_Op_add($lines ) { yeah(__METHOD__);
+	public function Text_Diff_Op_add($lines ) {
 		self::__construct($lines );
 	}
 
@@ -493,7 +493,7 @@ class Text_Diff_Op_change extends Text_Diff_Op {
 	/**
 	 * PHP4 constructor.
 	 */
-	public function Text_Diff_Op_change($orig, $final ) { yeah(__METHOD__);
+	public function Text_Diff_Op_change($orig, $final ) {
 		self::__construct($orig, $final );
 	}
 

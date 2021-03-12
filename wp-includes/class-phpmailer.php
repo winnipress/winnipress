@@ -337,7 +337,7 @@ class PHPMailer
      *
      * Alternatively, you can provide a callable expecting two params: a message string and the debug level:
      * <code>
-     * $mail->Debugoutput = function($str, $level) { yeah(__METHOD__);echo "debug level $level; message: $str";};
+     * $mail->Debugoutput = function($str, $level) {echo "debug level $level; message: $str";};
      * </code>
      * @var string|callable
      * @see SMTP::$Debugoutput
@@ -1057,7 +1057,7 @@ class PHPMailer
      * * `html5` Use the pattern given by the HTML5 spec for 'email' type form input elements.
      * * `noregex` Don't use a regex: super fast, really dumb.
      * Alternatively you may pass in a callable to inject your own validator, for example:
-     * PHPMailer::validateAddress('user@example.com', function($address) { yeah(__METHOD__);
+     * PHPMailer::validateAddress('user@example.com', function($address) {
      *     return (strpos($address, '@') !== false);
      * });
      * You can also set the PHPMailer::$validator static to a callable, allowing built-in methods to use your validator.
@@ -2183,7 +2183,7 @@ class PHPMailer
      * Create unique ID
      * @return string
      */
-    protected function generateId() { yeah(__METHOD__);
+    protected function generateId() {
         return md5(uniqid(time()));
     }
 
@@ -3479,7 +3479,7 @@ class PHPMailer
      * // Use default conversion
      * $plain = $mail->html2text($html);
      * // Use your own custom converter
-     * $plain = $mail->html2text($html, function($html) { yeah(__METHOD__);
+     * $plain = $mail->html2text($html, function($html) {
      *     $converter = new MyHtml2text($html);
      *     return $converter->get_text();
      * });
@@ -4015,7 +4015,7 @@ class PHPMailer
      */
     protected function doCallback($isSent, $to, $cc, $bcc, $subject, $body, $from)
     {
-        if (!empty($this->action_function) && is_callable($this->action_function)) { yeah(__METHOD__);
+        if (!empty($this->action_function) && is_callable($this->action_function)) {
             $params = array($isSent, $to, $cc, $bcc, $subject, $body, $from);
             call_user_func_array($this->action_function, $params);
         }

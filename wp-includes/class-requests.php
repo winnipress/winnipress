@@ -121,7 +121,7 @@ class Requests {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	private function __construct() { yeah(__METHOD__);}
+	private function __construct() {}
 
 	/**
 	 * Autoloader for Requests
@@ -135,7 +135,7 @@ class Requests {
 	 *
 	 * @param string $class Class name to load
 	 */
-	public static function autoloader($class) { yeah(__METHOD__);
+	public static function autoloader($class) {
 		// Check that the class starts with "Requests"
 		if(strpos($class, 'Requests') !== 0) {
 			return;
@@ -152,7 +152,7 @@ class Requests {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public static function register_autoloader() { yeah(__METHOD__);
+	public static function register_autoloader() {
 		spl_autoload_register(array('Requests', 'autoloader'));
 	}
 
@@ -161,7 +161,7 @@ class Requests {
 	 *
 	 * @param string $transport Transport class to add, must support the Requests_Transport interface
 	 */
-	public static function add_transport($transport) { yeah(__METHOD__);
+	public static function add_transport($transport) {
 		if(empty(self::$transports)) {
 			self::$transports = array(
 				'Requests_Transport_cURL',
@@ -178,7 +178,7 @@ class Requests {
 	 * @throws Requests_Exception If no valid transport is found (`notransport`)
 	 * @return Requests_Transport
 	 */
-	protected static function get_transport($capabilities = array()) { yeah(__METHOD__);
+	protected static function get_transport($capabilities = array()) {
 		// Caching code, don't bother testing coverage
 		// @codeCoverageIgnoreStart
 		// array of capabilities as a string to be used as an array key
@@ -227,28 +227,28 @@ class Requests {
 	/**
 	 * Send a GET request
 	 */
-	public static function get($url, $headers = array(), $options = array()) { yeah(__METHOD__);
+	public static function get($url, $headers = array(), $options = array()) {
 		return self::request($url, $headers, null, self::GET, $options);
 	}
 
 	/**
 	 * Send a HEAD request
 	 */
-	public static function head($url, $headers = array(), $options = array()) { yeah(__METHOD__);
+	public static function head($url, $headers = array(), $options = array()) {
 		return self::request($url, $headers, null, self::HEAD, $options);
 	}
 
 	/**
 	 * Send a DELETE request
 	 */
-	public static function delete($url, $headers = array(), $options = array()) { yeah(__METHOD__);
+	public static function delete($url, $headers = array(), $options = array()) {
 		return self::request($url, $headers, null, self::DELETE, $options);
 	}
 
 	/**
 	 * Send a TRACE request
 	 */
-	public static function trace($url, $headers = array(), $options = array()) { yeah(__METHOD__);
+	public static function trace($url, $headers = array(), $options = array()) {
 		return self::request($url, $headers, null, self::TRACE, $options);
 	}
 	/**#@-*/
@@ -264,20 +264,20 @@ class Requests {
 	/**
 	 * Send a POST request
 	 */
-	public static function post($url, $headers = array(), $data = array(), $options = array()) { yeah(__METHOD__);
+	public static function post($url, $headers = array(), $data = array(), $options = array()) {
 		return self::request($url, $headers, $data, self::POST, $options);
 	}
 	/**
 	 * Send a PUT request
 	 */
-	public static function put($url, $headers = array(), $data = array(), $options = array()) { yeah(__METHOD__);
+	public static function put($url, $headers = array(), $data = array(), $options = array()) {
 		return self::request($url, $headers, $data, self::PUT, $options);
 	}
 
 	/**
 	 * Send an OPTIONS request
 	 */
-	public static function options($url, $headers = array(), $data = array(), $options = array()) { yeah(__METHOD__);
+	public static function options($url, $headers = array(), $data = array(), $options = array()) {
 		return self::request($url, $headers, $data, self::OPTIONS, $options);
 	}
 
@@ -289,7 +289,7 @@ class Requests {
 	 *
 	 * @link https://tools.ietf.org/html/rfc5789
 	 */
-	public static function patch($url, $headers, $data = array(), $options = array()) { yeah(__METHOD__);
+	public static function patch($url, $headers, $data = array(), $options = array()) {
 		return self::request($url, $headers, $data, self::PATCH, $options);
 	}
 	/**#@-*/
@@ -354,7 +354,7 @@ class Requests {
 	 * @param array $options Options for the request (see description for more information)
 	 * @return Requests_Response
 	 */
-	public static function request($url, $headers = array(), $data = array(), $type = self::GET, $options = array()) { yeah(__METHOD__);
+	public static function request($url, $headers = array(), $data = array(), $type = self::GET, $options = array()) {
 		if(empty($options['type'])) {
 			$options['type'] = $type;
 		}
@@ -424,7 +424,7 @@ class Requests {
 	 * @param array $options Global and default options (see {@see Requests::request})
 	 * @return array Responses (either Requests_Response or a Requests_Exception object)
 	 */
-	public static function request_multiple($requests, $options = array()) { yeah(__METHOD__);
+	public static function request_multiple($requests, $options = array()) {
 		$options = array_merge(self::get_default_options(true), $options);
 
 		if(!empty($options['hooks'])) {
@@ -499,7 +499,7 @@ class Requests {
 	 * @param boolean $multirequest Is this a multirequest?
 	 * @return array Default option values
 	 */
-	protected static function get_default_options($multirequest = false) { yeah(__METHOD__);
+	protected static function get_default_options($multirequest = false) {
 		$defaults = array(
 			'timeout' => 10,
 			'connect_timeout' => 10,
@@ -532,7 +532,7 @@ class Requests {
 	 *
 	 * @return string Default certificate path.
 	 */
-	public static function get_certificate_path() { yeah(__METHOD__);
+	public static function get_certificate_path() {
 		if(!empty(Requests::$certificate_path)) {
 			return Requests::$certificate_path;
 		}
@@ -545,7 +545,7 @@ class Requests {
 	 *
 	 * @param string $path Certificate path, pointing to a PEM file.
 	 */
-	public static function set_certificate_path($path) { yeah(__METHOD__);
+	public static function set_certificate_path($path) {
 		Requests::$certificate_path = $path;
 	}
 
@@ -559,7 +559,7 @@ class Requests {
 	 * @param array $options Options for the request
 	 * @return array $options
 	 */
-	protected static function set_defaults(&$url, &$headers, &$data, &$type, &$options) { yeah(__METHOD__);
+	protected static function set_defaults(&$url, &$headers, &$data, &$type, &$options) {
 		if(!preg_match('/^http(s)?:\/\//i', $url, $matches)) {
 			throw new Requests_Exception('Only HTTP(S) requests are handled.', 'nonhttp', $url);
 		}
@@ -625,7 +625,7 @@ class Requests {
 	 * @param array $options Original $options array passed to {@link request()}, in case we need to follow redirects
 	 * @return Requests_Response
 	 */
-	protected static function parse_response($headers, $url, $req_headers, $req_data, $options) { yeah(__METHOD__);
+	protected static function parse_response($headers, $url, $req_headers, $req_data, $options) {
 		$return = new Requests_Response();
 		if(!$options['blocking']) {
 			return $return;
@@ -728,7 +728,7 @@ class Requests {
 	 * @param array $request Request data as passed into {@see Requests::request_multiple()}
 	 * @return null `$response` is either set to a Requests_Response instance, or a Requests_Exception object
 	 */
-	public static function parse_multiple(&$response, $request) { yeah(__METHOD__);
+	public static function parse_multiple(&$response, $request) {
 		try {
 			$url = $request['url'];
 			$headers = $request['headers'];
@@ -748,7 +748,7 @@ class Requests {
 	 * @param string $data Chunked body
 	 * @return string Decoded body
 	 */
-	protected static function decode_chunked($data) { yeah(__METHOD__);
+	protected static function decode_chunked($data) {
 		if(!preg_match('/^([0-9a-f]+)(?:;(?:[\w-]*)(?:=(?:(?:[\w-]*)*|"(?:[^\r\n])*"))?)*\r\n/i', trim($data))) {
 			return $data;
 		}
@@ -791,7 +791,7 @@ class Requests {
 	 * @param array $array Dictionary of header values
 	 * @return array List of headers
 	 */
-	public static function flatten($array) { yeah(__METHOD__);
+	public static function flatten($array) {
 		$return = array();
 		foreach ($array as $key => $value) {
 			$return[] = sprintf('%s: %s', $key, $value);
@@ -807,7 +807,7 @@ class Requests {
 	 * @param array $array Dictionary of header values
 	 * @return array List of headers
 	 */
-	public static function flattern($array) { yeah(__METHOD__);
+	public static function flattern($array) {
 		return self::flatten($array);
 	}
 
@@ -820,7 +820,7 @@ class Requests {
 	 * @param string $data Compressed data in one of the above formats
 	 * @return string Decompressed string
 	 */
-	public static function decompress($data) { yeah(__METHOD__);
+	public static function decompress($data) {
 		if(substr($data, 0, 2) !== "\x1f\x8b" && substr($data, 0, 2) !== "\x78\x9c") {
 			// Not actually compressed. Probably cURL ruining this for us.
 			return $data;
@@ -862,7 +862,7 @@ class Requests {
 	 * @param string $gzData String to decompress.
 	 * @return string|bool False on failure.
 	 */
-	public static function compatible_gzinflate($gzData) { yeah(__METHOD__);
+	public static function compatible_gzinflate($gzData) {
 		// Compressed data might contain a full zlib header, if so strip it for
 		// gzinflate()
 		if(substr($gzData, 0, 3) == "\x1f\x8b\x08") {
@@ -957,7 +957,7 @@ class Requests {
 		return false;
 	}
 
-	public static function match_domain($host, $reference) { yeah(__METHOD__);
+	public static function match_domain($host, $reference) {
 		// Check for a direct match
 		if($host === $reference) {
 			return true;

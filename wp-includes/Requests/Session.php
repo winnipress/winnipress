@@ -63,7 +63,7 @@ class Requests_Session {
 	 * @param array $data Default data for requests
 	 * @param array $options Default options for requests
 	 */
-	public function __construct($url = null, $headers = array(), $data = array(), $options = array()){ yeah(__METHOD__);
+	public function __construct($url = null, $headers = array(), $data = array(), $options = array()){
 		$this->url = $url;
 		$this->headers = $headers;
 		$this->data = $data;
@@ -80,7 +80,7 @@ class Requests_Session {
 	 * @param string $key Property key
 	 * @return mixed|null Property value, null if none found
 	 */
-	public function __get($key){ yeah(__METHOD__);
+	public function __get($key){
 		if (isset($this->options[$key])){
 			return $this->options[$key];
 		}
@@ -94,7 +94,7 @@ class Requests_Session {
 	 * @param string $key Property key
 	 * @param mixed $value Property value
 	 */
-	public function __set($key, $value){ yeah(__METHOD__);
+	public function __set($key, $value){
 		$this->options[$key] = $value;
 	}
 
@@ -103,7 +103,7 @@ class Requests_Session {
 	 *
 	 * @param string $key Property key
 	 */
-	public function __isset($key){ yeah(__METHOD__);
+	public function __isset($key){
 		return isset($this->options[$key]);
 	}
 
@@ -112,7 +112,7 @@ class Requests_Session {
 	 *
 	 * @param string $key Property key
 	 */
-	public function __unset($key){ yeah(__METHOD__);
+	public function __unset($key){
 		if (isset($this->options[$key])){
 			unset($this->options[$key]);
 		}
@@ -128,21 +128,21 @@ class Requests_Session {
 	/**
 	 * Send a GET request
 	 */
-	public function get($url, $headers = array(), $options = array()){ yeah(__METHOD__);
+	public function get($url, $headers = array(), $options = array()){
 		return $this->request($url, $headers, null, Requests::GET, $options);
 	}
 
 	/**
 	 * Send a HEAD request
 	 */
-	public function head($url, $headers = array(), $options = array()){ yeah(__METHOD__);
+	public function head($url, $headers = array(), $options = array()){
 		return $this->request($url, $headers, null, Requests::HEAD, $options);
 	}
 
 	/**
 	 * Send a DELETE request
 	 */
-	public function delete($url, $headers = array(), $options = array()){ yeah(__METHOD__);
+	public function delete($url, $headers = array(), $options = array()){
 		return $this->request($url, $headers, null, Requests::DELETE, $options);
 	}
 	/**#@-*/
@@ -158,14 +158,14 @@ class Requests_Session {
 	/**
 	 * Send a POST request
 	 */
-	public function post($url, $headers = array(), $data = array(), $options = array()){ yeah(__METHOD__);
+	public function post($url, $headers = array(), $data = array(), $options = array()){
 		return $this->request($url, $headers, $data, Requests::POST, $options);
 	}
 
 	/**
 	 * Send a PUT request
 	 */
-	public function put($url, $headers = array(), $data = array(), $options = array()){ yeah(__METHOD__);
+	public function put($url, $headers = array(), $data = array(), $options = array()){
 		return $this->request($url, $headers, $data, Requests::PUT, $options);
 	}
 
@@ -177,7 +177,7 @@ class Requests_Session {
 	 *
 	 * @link https://tools.ietf.org/html/rfc5789
 	 */
-	public function patch($url, $headers, $data = array(), $options = array()){ yeah(__METHOD__);
+	public function patch($url, $headers, $data = array(), $options = array()){
 		return $this->request($url, $headers, $data, Requests::PATCH, $options);
 	}
 	/**#@-*/
@@ -199,7 +199,7 @@ class Requests_Session {
 	 * @param array $options Options for the request (see {@see Requests::request})
 	 * @return Requests_Response
 	 */
-	public function request($url, $headers = array(), $data = array(), $type = Requests::GET, $options = array()){ yeah(__METHOD__);
+	public function request($url, $headers = array(), $data = array(), $type = Requests::GET, $options = array()){
 		$request = $this->merge_request(compact('url', 'headers', 'data', 'options'));
 
 		return Requests::request($request['url'], $request['headers'], $request['data'], $type, $request['options']);
@@ -214,7 +214,7 @@ class Requests_Session {
 	 * @param array $options Global and default options (see {@see Requests::request})
 	 * @return array Responses (either Requests_Response or a Requests_Exception object)
 	 */
-	public function request_multiple($requests, $options = array()){ yeah(__METHOD__);
+	public function request_multiple($requests, $options = array()){
 		foreach ($requests as $key => $request){
 			$requests[$key] = $this->merge_request($request, false);
 		}
@@ -234,7 +234,7 @@ class Requests_Session {
 	 * @param boolean $merge_options Should we merge options as well?
 	 * @return array Request data
 	 */
-	protected function merge_request($request, $merge_options = true){ yeah(__METHOD__);
+	protected function merge_request($request, $merge_options = true){
 		if ($this->url !== null){
 			$request['url'] = Requests_IRI::absolutize($this->url, $request['url']);
 			$request['url'] = $request['url']->uri;

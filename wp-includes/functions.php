@@ -23,7 +23,7 @@ require( ABSPATH . WPINC . '/option.php' );
  * @param bool   $translate Whether the return date should be translated. Default true.
  * @return string|int|bool Formatted date string or Unix timestamp. False if $date is empty.
  */
-function mysql2date( $format, $date, $translate = true ){ yeah(__METHOD__);
+function mysql2date( $format, $date, $translate = true ){
 	if ( empty( $date ) )
 		return false;
 
@@ -58,7 +58,7 @@ function mysql2date( $format, $date, $translate = true ){ yeah(__METHOD__);
  * @param int|bool $gmt  Optional. Whether to use GMT timezone. Default false.
  * @return int|string Integer if $type is 'timestamp', string otherwise.
  */
-function current_time( $type, $gmt = 0 ){ yeah(__METHOD__);
+function current_time( $type, $gmt = 0 ){
 	switch ( $type ){
 		case 'mysql':
 			return ( $gmt ) ? gmdate( 'Y-m-d H:i:s' ) : gmdate( 'Y-m-d H:i:s', ( time() + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) ) );
@@ -86,7 +86,7 @@ function current_time( $type, $gmt = 0 ){ yeah(__METHOD__);
  *
  * @return string The date, translated if locale specifies it.
  */
-function date_i18n( $dateformatstring, $unixtimestamp = false, $gmt = false ){ yeah(__METHOD__);
+function date_i18n( $dateformatstring, $unixtimestamp = false, $gmt = false ){
 	global $wp_locale;
 	$i = $unixtimestamp;
 
@@ -163,7 +163,7 @@ function date_i18n( $dateformatstring, $unixtimestamp = false, $gmt = false ){ y
  * @param string $date Formatted date string.
  * @return string The date, declined if locale specifies it.
  */
-function wp_maybe_decline_date( $date ){ yeah(__METHOD__);
+function wp_maybe_decline_date( $date ){
 	global $wp_locale;
 
 	// i18n functions are not available in SHORTINIT mode
@@ -214,7 +214,7 @@ function wp_maybe_decline_date( $date ){ yeah(__METHOD__);
  * @param int   $decimals Optional. Precision of the number of decimal places. Default 0.
  * @return string Converted number in string format.
  */
-function number_format_i18n( $number, $decimals = 0 ){ yeah(__METHOD__);
+function number_format_i18n( $number, $decimals = 0 ){
 	global $wp_locale;
 
 	if ( isset( $wp_locale ) ){
@@ -256,7 +256,7 @@ function number_format_i18n( $number, $decimals = 0 ){ yeah(__METHOD__);
  * @param int        $decimals Optional. Precision of number of decimal places. Default 0.
  * @return string|false False on failure. Number string on success.
  */
-function size_format( $bytes, $decimals = 0 ){ yeah(__METHOD__);
+function size_format( $bytes, $decimals = 0 ){
 	$quant = array(
 		'TB' => TB_IN_BYTES,
 		'GB' => GB_IN_BYTES,
@@ -287,7 +287,7 @@ function size_format( $bytes, $decimals = 0 ){ yeah(__METHOD__);
  * @param int|string $start_of_week Optional. Start of the week as an integer. Default empty string.
  * @return array Keys are 'start' and 'end'.
  */
-function get_weekstartend( $mysqlstring, $start_of_week = '' ){ yeah(__METHOD__);
+function get_weekstartend( $mysqlstring, $start_of_week = '' ){
 	// MySQL string year.
 	$my = substr( $mysqlstring, 0, 4 );
 
@@ -325,7 +325,7 @@ function get_weekstartend( $mysqlstring, $start_of_week = '' ){ yeah(__METHOD__)
  * @param string $original Maybe unserialized original, if is needed.
  * @return mixed Unserialized data can be any type.
  */
-function maybe_unserialize( $original ){ yeah(__METHOD__);
+function maybe_unserialize( $original ){
 	if ( is_serialized( $original ) ) // don't attempt to unserialize data that wasn't serialized going in
 		return @unserialize( $original );
 	return $original;
@@ -343,7 +343,7 @@ function maybe_unserialize( $original ){ yeah(__METHOD__);
  * @param bool   $strict Optional. Whether to be strict about the end of the string. Default true.
  * @return bool False if not serialized and true if it was.
  */
-function is_serialized( $data, $strict = true ){ yeah(__METHOD__);
+function is_serialized( $data, $strict = true ){
 	// if it isn't a string, it isn't serialized.
 	if ( !is_string( $data ) ){
 		return false;
@@ -406,7 +406,7 @@ function is_serialized( $data, $strict = true ){ yeah(__METHOD__);
  * @param string $data Serialized data.
  * @return bool False if not a serialized string, true if it is.
  */
-function is_serialized_string( $data ){ yeah(__METHOD__);
+function is_serialized_string( $data ){
 	// if it isn't a string, it isn't a serialized string.
 	if ( !is_string( $data ) ){
 		return false;
@@ -435,7 +435,7 @@ function is_serialized_string( $data ){ yeah(__METHOD__);
  * @param string|array|object $data Data that might be serialized.
  * @return mixed A scalar data
  */
-function maybe_serialize( $data ){ yeah(__METHOD__);
+function maybe_serialize( $data ){
 	if ( is_array( $data ) || is_object( $data ) )
 		return serialize( $data );
 
@@ -461,7 +461,7 @@ function maybe_serialize( $data ){ yeah(__METHOD__);
  * @param string $content XMLRPC XML Request content
  * @return string Post title
  */
-function xmlrpc_getposttitle( $content ){ yeah(__METHOD__);
+function xmlrpc_getposttitle( $content ){
 	global $post_default_title;
 	if ( preg_match( '/<title>(.+?)<\/title>/is', $content, $matchtitle ) ){
 		$post_title = $matchtitle[1];
@@ -485,7 +485,7 @@ function xmlrpc_getposttitle( $content ){ yeah(__METHOD__);
  * @param string $content XMLRPC XML Request content
  * @return string|array List of categories or category name.
  */
-function xmlrpc_getpostcategory( $content ){ yeah(__METHOD__);
+function xmlrpc_getpostcategory( $content ){
 	global $post_default_category;
 	if ( preg_match( '/<category>(.+?)<\/category>/is', $content, $matchcat ) ){
 		$post_category = trim( $matchcat[1], ',' );
@@ -504,7 +504,7 @@ function xmlrpc_getpostcategory( $content ){ yeah(__METHOD__);
  * @param string $content XML-RPC XML Request content.
  * @return string XMLRPC XML Request content without title and category elements.
  */
-function xmlrpc_removepostdata( $content ){ yeah(__METHOD__);
+function xmlrpc_removepostdata( $content ){
 	$content = preg_replace( '/<title>(.+?)<\/title>/si', '', $content );
 	$content = preg_replace( '/<category>(.+?)<\/category>/si', '', $content );
 	$content = trim( $content );
@@ -519,7 +519,7 @@ function xmlrpc_removepostdata( $content ){ yeah(__METHOD__);
  * @param string $content Content to extract URLs from.
  * @return array URLs found in passed string.
  */
-function wp_extract_urls( $content ){ yeah(__METHOD__);
+function wp_extract_urls( $content ){
 	preg_match_all(
 		"#([\"']?)("
 			. "(?:([\w-]+:)?//?)"
@@ -556,7 +556,7 @@ function wp_extract_urls( $content ){ yeah(__METHOD__);
  * @param string $content Post Content.
  * @param int    $post_ID Post ID.
  */
-function do_enclose( $content, $post_ID ){ yeah(__METHOD__);
+function do_enclose( $content, $post_ID ){
 	global $wpdb;
 
 	//TODO: Tidy this ghetto code up and make the debug code optional
@@ -641,7 +641,7 @@ function do_enclose( $content, $post_ID ){ yeah(__METHOD__);
  * @param bool   $deprecated Not Used.
  * @return bool|string False on failure, headers on success.
  */
-function wp_get_http_headers( $url, $deprecated = false ){ yeah(__METHOD__);
+function wp_get_http_headers( $url, $deprecated = false ){
 	if ( !empty( $deprecated ) )
 		_deprecated_argument( __FUNCTION__, '2.7.0' );
 
@@ -664,7 +664,7 @@ function wp_get_http_headers( $url, $deprecated = false ){ yeah(__METHOD__);
  *
  * @return int 1 when new day, 0 if not a new day.
  */
-function is_new_day(){ yeah(__METHOD__);
+function is_new_day(){
 	global $currentday, $previousday;
 	if ( $currentday != $previousday )
 		return 1;
@@ -687,7 +687,7 @@ function is_new_day(){ yeah(__METHOD__);
  * @param array $data URL-encode key/value pairs.
  * @return string URL-encoded string.
  */
-function build_query( $data ){ yeah(__METHOD__);
+function build_query( $data ){
 	return _http_build_query( $data, null, '&', '', false );
 }
 
@@ -709,7 +709,7 @@ function build_query( $data ){ yeah(__METHOD__);
  *
  * @return string The query string.
  */
-function _http_build_query( $data, $prefix = null, $sep = null, $key = '', $urlencode = true ){ yeah(__METHOD__);
+function _http_build_query( $data, $prefix = null, $sep = null, $key = '', $urlencode = true ){
 	$ret = array();
 
 	foreach ( (array) $data as $k => $v ){
@@ -773,7 +773,7 @@ function _http_build_query( $data, $prefix = null, $sep = null, $key = '', $urle
  * @param string       $url   Optional. A URL to act upon.
  * @return string New URL query string (unescaped).
  */
-function add_query_arg(){ yeah(__METHOD__);
+function add_query_arg(){
 	$args = func_get_args();
 	if ( is_array( $args[0] ) ){
 		if ( count( $args ) < 2 || false === $args[1] )
@@ -845,7 +845,7 @@ function add_query_arg(){ yeah(__METHOD__);
  * @param bool|string  $query Optional. When false uses the current URL. Default false.
  * @return string New URL query string.
  */
-function remove_query_arg( $key, $query = false ){ yeah(__METHOD__);
+function remove_query_arg( $key, $query = false ){
 	if ( is_array( $key ) ){ // removing multiple keys
 		foreach ( $key as $k )
 			$query = add_query_arg( $k, false, $query );
@@ -861,7 +861,7 @@ function remove_query_arg( $key, $query = false ){ yeah(__METHOD__);
  *
  * @return array An array of parameters to remove from the URL.
  */
-function wp_removable_query_args(){ yeah(__METHOD__);
+function wp_removable_query_args(){
 	$removable_query_args = array(
 		'activate',
 		'activated',
@@ -906,7 +906,7 @@ function wp_removable_query_args(){ yeah(__METHOD__);
  * @param array $array Array to walk while sanitizing contents.
  * @return array Sanitized $array.
  */
-function add_magic_quotes( $array ){ yeah(__METHOD__);
+function add_magic_quotes( $array ){
 	foreach ( (array) $array as $k => $v ){
 		if ( is_array( $v ) ){
 			$array[$k] = add_magic_quotes( $v );
@@ -927,7 +927,7 @@ function add_magic_quotes( $array ){ yeah(__METHOD__);
  * @param string $uri URI/URL of web page to retrieve.
  * @return false|string HTTP content. False on failure.
  */
-function wp_remote_fopen( $uri ){ yeah(__METHOD__);
+function wp_remote_fopen( $uri ){
 	$parsed_url = @parse_url( $uri );
 
 	if ( !$parsed_url || !is_array( $parsed_url ) )
@@ -955,7 +955,7 @@ function wp_remote_fopen( $uri ){ yeah(__METHOD__);
  *
  * @param string|array $query_vars Default WP_Query arguments.
  */
-function wp( $query_vars = '' ){ yeah(__METHOD__);
+function wp( $query_vars = '' ){
 	global $wp, $wp_query, $wp_the_query;
 	$wp->main( $query_vars );
 
@@ -973,7 +973,7 @@ function wp( $query_vars = '' ){ yeah(__METHOD__);
  * @param int $code HTTP status code.
  * @return string Empty string if not found, or description if found.
  */
-function get_status_header_desc( $code ){ yeah(__METHOD__);
+function get_status_header_desc( $code ){
 	global $wp_header_to_desc;
 
 	$code = absint( $code );
@@ -1063,7 +1063,7 @@ function get_status_header_desc( $code ){ yeah(__METHOD__);
  * @param int    $code        HTTP status code.
  * @param string $description Optional. A custom description for the HTTP status.
  */
-function status_header( $code, $description = '' ){ yeah(__METHOD__);
+function status_header( $code, $description = '' ){
 	if ( !$description ){
 		$description = get_status_header_desc( $code );
 	}
@@ -1101,7 +1101,7 @@ function status_header( $code, $description = '' ){ yeah(__METHOD__);
  *
  * @return array The associative array of header names and field values.
  */
-function wp_get_nocache_headers(){ yeah(__METHOD__);
+function wp_get_nocache_headers(){
 	$headers = array(
 		'Expires' => 'Wed, 11 Jan 1984 05:00:00 GMT',
 		'Cache-Control' => 'no-cache, must-revalidate, max-age=0',
@@ -1139,7 +1139,7 @@ function wp_get_nocache_headers(){ yeah(__METHOD__);
  *
  * @see wp_get_nocache_headers()
  */
-function nocache_headers(){ yeah(__METHOD__);
+function nocache_headers(){
 	$headers = wp_get_nocache_headers();
 
 	unset( $headers['Last-Modified'] );
@@ -1167,7 +1167,7 @@ function nocache_headers(){ yeah(__METHOD__);
  *
  * @since 2.1.0
  */
-function cache_javascript_headers(){ yeah(__METHOD__);
+function cache_javascript_headers(){
 	$expiresOffset = 10 * DAY_IN_SECONDS;
 
 	header( "Content-Type: text/javascript; charset=" . get_bloginfo( 'charset' ) );
@@ -1184,7 +1184,7 @@ function cache_javascript_headers(){ yeah(__METHOD__);
  *
  * @return int Number of database queries.
  */
-function get_num_queries(){ yeah(__METHOD__);
+function get_num_queries(){
 	global $wpdb;
 	return $wpdb->num_queries;
 }
@@ -1199,7 +1199,7 @@ function get_num_queries(){ yeah(__METHOD__);
  * @param string $yn Character string containing either 'y' (yes) or 'n' (no).
  * @return bool True if yes, false on anything else.
  */
-function bool_from_yn( $yn ){ yeah(__METHOD__);
+function bool_from_yn( $yn ){
 	return ( strtolower( $yn ) == 'y' );
 }
 
@@ -1215,7 +1215,7 @@ function bool_from_yn( $yn ){ yeah(__METHOD__);
  *
  * @global WP_Query $wp_query Used to tell if the use a comment feed.
  */
-function do_feed(){ yeah(__METHOD__);
+function do_feed(){
 	global $wp_query;
 
 	$feed = get_query_var( 'feed' );
@@ -1252,7 +1252,7 @@ function do_feed(){ yeah(__METHOD__);
  *
  * @see load_template()
  */
-function do_feed_rdf(){ yeah(__METHOD__);
+function do_feed_rdf(){
 	load_template( ABSPATH . WPINC . '/feed-rdf.php' );
 }
 
@@ -1263,7 +1263,7 @@ function do_feed_rdf(){ yeah(__METHOD__);
  *
  * @see load_template()
  */
-function do_feed_rss(){ yeah(__METHOD__);
+function do_feed_rss(){
 	load_template( ABSPATH . WPINC . '/feed-rss.php' );
 }
 
@@ -1276,7 +1276,7 @@ function do_feed_rss(){ yeah(__METHOD__);
  *
  * @param bool $for_comments True for the comment feed, false for normal feed.
  */
-function do_feed_rss2( $for_comments ){ yeah(__METHOD__);
+function do_feed_rss2( $for_comments ){
 	if ( $for_comments )
 		load_template( ABSPATH . WPINC . '/feed-rss2-comments.php' );
 	else
@@ -1292,7 +1292,7 @@ function do_feed_rss2( $for_comments ){ yeah(__METHOD__);
  *
  * @param bool $for_comments True for the comment feed, false for normal feed.
  */
-function do_feed_atom( $for_comments ){ yeah(__METHOD__);
+function do_feed_atom( $for_comments ){
 	if ($for_comments)
 		load_template( ABSPATH . WPINC . '/feed-atom-comments.php');
 	else
@@ -1307,7 +1307,7 @@ function do_feed_atom( $for_comments ){ yeah(__METHOD__);
  *
  * @since 2.1.0
  */
-function do_robots(){ yeah(__METHOD__);
+function do_robots(){
 	header( 'Content-Type: text/plain; charset=utf-8' );
 
 	/**
@@ -1354,7 +1354,7 @@ function do_robots(){ yeah(__METHOD__);
  *
  * @return bool Whether the site is already installed.
  */
-function is_wp_installed(){ yeah(__METHOD__);
+function is_wp_installed(){
 	global $wpdb;
 
 	/*
@@ -1434,7 +1434,7 @@ function is_wp_installed(){ yeah(__METHOD__);
  * @param string     $name      Optional. Nonce name. Default '_wpnonce'.
  * @return string Escaped URL with nonce action added.
  */
-function wp_nonce_url( $actionurl, $action = -1, $name = '_wpnonce' ){ yeah(__METHOD__);
+function wp_nonce_url( $actionurl, $action = -1, $name = '_wpnonce' ){
 	$actionurl = str_replace( '&amp;', '&', $actionurl );
 	return esc_html( add_query_arg( $name, wp_create_nonce( $action ), $actionurl ) );
 }
@@ -1465,7 +1465,7 @@ function wp_nonce_url( $actionurl, $action = -1, $name = '_wpnonce' ){ yeah(__ME
  * @param bool       $echo    Optional. Whether to display or return hidden form field. Default true.
  * @return string Nonce field HTML markup.
  */
-function wp_nonce_field( $action = -1, $name = "_wpnonce", $referer = true , $echo = true ){ yeah(__METHOD__);
+function wp_nonce_field( $action = -1, $name = "_wpnonce", $referer = true , $echo = true ){
 	$name = esc_attr( $name );
 	$nonce_field = '<input type="hidden" id="' . $name . '" name="' . $name . '" value="' . wp_create_nonce( $action ) . '" />';
 
@@ -1489,7 +1489,7 @@ function wp_nonce_field( $action = -1, $name = "_wpnonce", $referer = true , $ec
  * @param bool $echo Optional. Whether to echo or return the referer field. Default true.
  * @return string Referer field HTML markup.
  */
-function wp_referer_field( $echo = true ){ yeah(__METHOD__);
+function wp_referer_field( $echo = true ){
 	$referer_field = '<input type="hidden" name="_wp_http_referer" value="'. esc_attr( wp_unslash( $_SERVER['REQUEST_URI'] ) ) . '" />';
 
 	if ( $echo )
@@ -1511,7 +1511,7 @@ function wp_referer_field( $echo = true ){ yeah(__METHOD__);
  *                             Default 'current'.
  * @return string Original referer field.
  */
-function wp_original_referer_field( $echo = true, $jump_back_to = 'current' ){ yeah(__METHOD__);
+function wp_original_referer_field( $echo = true, $jump_back_to = 'current' ){
 	if ( !$ref = wp_get_original_referer() ){
 		$ref = 'previous' == $jump_back_to ? wp_get_referer() : wp_unslash( $_SERVER['REQUEST_URI'] );
 	}
@@ -1530,7 +1530,7 @@ function wp_original_referer_field( $echo = true, $jump_back_to = 'current' ){ y
  *
  * @return false|string False on failure. Referer URL on success.
  */
-function wp_get_referer(){ yeah(__METHOD__);
+function wp_get_referer(){
 	if ( !function_exists( 'wp_validate_redirect' ) ){ 
 		return false;
 	}
@@ -1553,7 +1553,7 @@ function wp_get_referer(){ yeah(__METHOD__);
  *
  * @return string|false Referer URL on success, false on failure.
  */
-function wp_get_raw_referer(){ yeah(__METHOD__);
+function wp_get_raw_referer(){
 	if ( !empty( $_REQUEST['_wp_http_referer'] ) ){
 		return wp_unslash( $_REQUEST['_wp_http_referer'] );
 	} else if ( !empty( $_SERVER['HTTP_REFERER'] ) ){
@@ -1570,7 +1570,7 @@ function wp_get_raw_referer(){ yeah(__METHOD__);
  *
  * @return string|false False if no original referer or original referer if set.
  */
-function wp_get_original_referer(){ yeah(__METHOD__);
+function wp_get_original_referer(){
 	if ( !empty( $_REQUEST['_wp_original_http_referer'] ) && function_exists( 'wp_validate_redirect' ) )
 		return wp_validate_redirect( wp_unslash( $_REQUEST['_wp_original_http_referer'] ), false );
 	return false;
@@ -1586,7 +1586,7 @@ function wp_get_original_referer(){ yeah(__METHOD__);
  * @param string $target Full path to attempt to create.
  * @return bool Whether the path was created. True if path already exists.
  */
-function wp_mkdir_p( $target ){ yeah(__METHOD__);
+function wp_mkdir_p( $target ){
 	$wrapper = null;
 
 	// Strip the protocol.
@@ -1660,7 +1660,7 @@ function wp_mkdir_p( $target ){ yeah(__METHOD__);
  * @param string $path File path.
  * @return bool True if path is absolute, false is not absolute.
  */
-function path_is_absolute( $path ){ yeah(__METHOD__);
+function path_is_absolute( $path ){
 	/*
 	 * This is definitive if true but fails if $path does not exist or contains
 	 * a symbolic link.
@@ -1691,7 +1691,7 @@ function path_is_absolute( $path ){ yeah(__METHOD__);
  * @param string $path Path relative to $base.
  * @return string The path with the base or absolute path.
  */
-function path_join( $base, $path ){ yeah(__METHOD__);
+function path_join( $base, $path ){
 	if ( path_is_absolute($path) )
 		return $path;
 
@@ -1714,7 +1714,7 @@ function path_join( $base, $path ){ yeah(__METHOD__);
  * @param string $path Path to normalize.
  * @return string Normalized path.
  */
-function wp_normalize_path( $path ){ yeah(__METHOD__);
+function wp_normalize_path( $path ){
 	$wrapper = '';
 	if ( wp_is_stream( $path ) ){
 		list( $wrapper, $path ) = explode( '://', $path, 2 );
@@ -1751,7 +1751,7 @@ function wp_normalize_path( $path ){ yeah(__METHOD__);
  *
  * @return string Writable temporary directory.
  */
-function get_temp_dir(){ yeah(__METHOD__);
+function get_temp_dir(){
 	static $temp = '';
 	if ( defined('WP_TEMP_DIR') )
 		return trailingslashit(WP_TEMP_DIR);
@@ -1789,7 +1789,7 @@ function get_temp_dir(){ yeah(__METHOD__);
  * @param string $path Path to check for write-ability.
  * @return bool Whether the path is writable.
  */
-function wp_is_writable( $path ){ yeah(__METHOD__);
+function wp_is_writable( $path ){
 	if ( 'WIN' === strtoupper( substr( PHP_OS, 0, 3 ) ) )
 		return win_is_writable( $path );
 	else
@@ -1812,7 +1812,7 @@ function wp_is_writable( $path ){ yeah(__METHOD__);
  * @param string $path Windows path to check for write-ability.
  * @return bool Whether the path is writable.
  */
-function win_is_writable( $path ){ yeah(__METHOD__);
+function win_is_writable( $path ){
 
 	if ( $path[strlen( $path ) - 1] == '/' ){ // if it looks like a directory, check a random file within the directory
 		return win_is_writable( $path . uniqid( mt_rand() ) . '.tmp');
@@ -1843,7 +1843,7 @@ function win_is_writable( $path ){ yeah(__METHOD__);
  *
  * @return array See wp_upload_dir() for description.
  */
-function wp_get_upload_dir(){ yeah(__METHOD__);
+function wp_get_upload_dir(){
 	return wp_upload_dir( null, false );
 }
 
@@ -1886,7 +1886,7 @@ function wp_get_upload_dir(){ yeah(__METHOD__);
  * @param bool   $refresh_cache Optional. Whether to refresh the cache. Default false.
  * @return array See above for description.
  */
-function wp_upload_dir( $time = null, $create_dir = true, $refresh_cache = false ){ yeah(__METHOD__);
+function wp_upload_dir( $time = null, $create_dir = true, $refresh_cache = false ){
 	static $cache = array(), $tested_paths = array();
 
 	$key = sprintf( '%d-%s', get_current_blog_id(), (string) $time );
@@ -1941,7 +1941,7 @@ function wp_upload_dir( $time = null, $create_dir = true, $refresh_cache = false
  * @param string $time Optional. Time formatted in 'yyyy/mm'. Default null.
  * @return array See wp_upload_dir()
  */
-function _wp_upload_dir( $time = null ){ yeah(__METHOD__);
+function _wp_upload_dir( $time = null ){
 	$siteurl = get_option( 'siteurl' );
 	$upload_path = trim( get_option( 'upload_path' ) );
 
@@ -2015,7 +2015,7 @@ function _wp_upload_dir( $time = null ){ yeah(__METHOD__);
  * @param callable $unique_filename_callback Callback. Default null.
  * @return string New filename, if given wasn't unique.
  */
-function wp_unique_filename( $dir, $filename, $unique_filename_callback = null ){ yeah(__METHOD__);
+function wp_unique_filename( $dir, $filename, $unique_filename_callback = null ){
 	// Sanitize the file name before we begin processing.
 	$filename = sanitize_file_name($filename);
 
@@ -2104,7 +2104,7 @@ function wp_unique_filename( $dir, $filename, $unique_filename_callback = null )
  * @param string       $time       Optional. Time formatted in 'yyyy/mm'. Default null.
  * @return array
  */
-function wp_upload_bits( $name, $deprecated, $bits, $time = null ){ yeah(__METHOD__);
+function wp_upload_bits( $name, $deprecated, $bits, $time = null ){
 	if ( !empty( $deprecated ) )
 		_deprecated_argument( __FUNCTION__, '2.0.0' );
 
@@ -2183,7 +2183,7 @@ function wp_upload_bits( $name, $deprecated, $bits, $time = null ){ yeah(__METHO
  * @param string $ext The extension to search.
  * @return string|void The file type, example: audio, video, document, spreadsheet, etc.
  */
-function wp_ext2type( $ext ){ yeah(__METHOD__);
+function wp_ext2type( $ext ){
 	$ext = strtolower( $ext );
 
 	$ext2type = wp_get_ext_types();
@@ -2203,7 +2203,7 @@ function wp_ext2type( $ext ){ yeah(__METHOD__);
  * @param array  $mimes    Optional. Key is the file extension with value as the mime type.
  * @return array Values with extension first and mime type.
  */
-function wp_check_filetype( $filename, $mimes = null ){ yeah(__METHOD__);
+function wp_check_filetype( $filename, $mimes = null ){
 	if ( empty($mimes) )
 		$mimes = get_allowed_mime_types();
 	$type = false;
@@ -2240,7 +2240,7 @@ function wp_check_filetype( $filename, $mimes = null ){ yeah(__METHOD__);
  * @return array Values for the extension, MIME, and either a corrected filename or false
  *               if original $filename is valid.
  */
-function wp_check_filetype_and_ext( $file, $filename, $mimes = null ){ yeah(__METHOD__);
+function wp_check_filetype_and_ext( $file, $filename, $mimes = null ){
 	$proper_filename = false;
 
 	// Do basic extension validation and MIME mapping
@@ -2378,7 +2378,7 @@ function wp_check_filetype_and_ext( $file, $filename, $mimes = null ){ yeah(__ME
  * @param string $file Full path to the file.
  * @return string|false The actual mime type or false if the type cannot be determined.
  */
-function wp_get_image_mime( $file ){ yeah(__METHOD__);
+function wp_get_image_mime( $file ){
 	/*
 	 * Use exif_imagetype() to check the mimetype if available or fall back to
 	 * getimagesize() if exif isn't avaialbe. If either function throws an Exception
@@ -2409,7 +2409,7 @@ function wp_get_image_mime( $file ){ yeah(__METHOD__);
  *
  * @return array Array of mime types keyed by the file extension regex corresponding to those types.
  */
-function wp_get_mime_types(){ yeah(__METHOD__);
+function wp_get_mime_types(){
 	/**
 	 * Filters the list of mime types and file extensions.
 	 *
@@ -2533,7 +2533,7 @@ function wp_get_mime_types(){ yeah(__METHOD__);
  *
  * @return array Array of file extensions types keyed by the type of file.
  */
-function wp_get_ext_types(){ yeah(__METHOD__);
+function wp_get_ext_types(){
 
 	/**
 	 * Filters file type based on the extension name.
@@ -2567,7 +2567,7 @@ function wp_get_ext_types(){ yeah(__METHOD__);
  * @return array Array of mime types keyed by the file extension regex corresponding
  *               to those types.
  */
-function get_allowed_mime_types( $user = null ){ yeah(__METHOD__);
+function get_allowed_mime_types( $user = null ){
 	$t = wp_get_mime_types();
 
 	unset( $t['swf'], $t['exe'] );
@@ -2601,7 +2601,7 @@ function get_allowed_mime_types( $user = null ){ yeah(__METHOD__);
  *
  * @param string $action The nonce action.
  */
-function wp_nonce_ays( $action ){ yeah(__METHOD__);
+function wp_nonce_ays( $action ){
 	if ( 'log-out' == $action ){
 		$html = sprintf(
 			/* translators: %s: site name */
@@ -2663,7 +2663,7 @@ function wp_nonce_ays( $action ){ yeah(__METHOD__);
  *                                  Default is the value of is_rtl().
  * }
  */
-function wp_die( $message = '', $title = '', $args = array() ){ yeah(__METHOD__);
+function wp_die( $message = '', $title = '', $args = array() ){
 
 	if ( is_int( $args ) ){
 		$args = array( 'response' => $args );
@@ -2708,7 +2708,7 @@ function wp_die( $message = '', $title = '', $args = array() ){ yeah(__METHOD__)
  * @param string          $title   Optional. Error title. Default empty.
  * @param string|array    $args    Optional. Arguments to control behavior. Default empty array.
  */
-function _default_wp_die_handler( $message, $title = '', $args = array() ){ yeah(__METHOD__);
+function _default_wp_die_handler( $message, $title = '', $args = array() ){
 	$defaults = array( 'response' => 500 );
 	$r = wp_parse_args($args, $defaults);
 
@@ -2888,7 +2888,7 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ){ yeah
  * @param string       $title   Optional. Error title. Default empty.
  * @param string|array $args    Optional. Arguments to control behavior. Default empty array.
  */
-function _xmlrpc_wp_die_handler( $message, $title = '', $args = array() ){ yeah(__METHOD__);
+function _xmlrpc_wp_die_handler( $message, $title = '', $args = array() ){
 	global $wp_xmlrpc_server;
 	$defaults = array( 'response' => 500 );
 
@@ -2913,7 +2913,7 @@ function _xmlrpc_wp_die_handler( $message, $title = '', $args = array() ){ yeah(
  * @param string       $title   Optional. Error title (unused). Default empty.
  * @param string|array $args    Optional. Arguments to control behavior. Default empty array.
  */
-function _ajax_wp_die_handler( $message, $title = '', $args = array() ){ yeah(__METHOD__);
+function _ajax_wp_die_handler( $message, $title = '', $args = array() ){
 	$defaults = array(
 		'response' => 200,
 	);
@@ -2938,7 +2938,7 @@ function _ajax_wp_die_handler( $message, $title = '', $args = array() ){ yeah(__
  *
  * @param string $message Optional. Response to print. Default empty.
  */
-function _scalar_wp_die_handler( $message = '' ){ yeah(__METHOD__);
+function _scalar_wp_die_handler( $message = '' ){
 	if ( is_scalar( $message ) )
 		die( (string) $message );
 	die();
@@ -2955,7 +2955,7 @@ function _scalar_wp_die_handler( $message = '' ){ yeah(__METHOD__);
  *                       greater than 0. Default 512.
  * @return string|false The JSON encoded string, or false if it cannot be encoded.
  */
-function wp_json_encode( $data, $options = 0, $depth = 512 ){ yeah(__METHOD__);
+function wp_json_encode( $data, $options = 0, $depth = 512 ){
 	/*
 	 * json_encode() has had extra params added over the years.
 	 * $options was added in 5.3, and $depth in 5.5.
@@ -3003,7 +3003,7 @@ function wp_json_encode( $data, $options = 0, $depth = 512 ){ yeah(__METHOD__);
  * @param int   $depth Maximum depth to walk through $data. Must be greater than 0.
  * @return mixed The sanitized data that shall be encoded to JSON.
  */
-function _wp_json_sanity_check( $data, $depth ){ yeah(__METHOD__);
+function _wp_json_sanity_check( $data, $depth ){
 	if ( $depth < 0 ){
 		throw new Exception( 'Reached depth limit' );
 	}
@@ -3067,7 +3067,7 @@ function _wp_json_sanity_check( $data, $depth ){ yeah(__METHOD__);
  * @param string $string The string which is to be converted.
  * @return string The checked string.
  */
-function _wp_json_convert_string( $string ){ yeah(__METHOD__);
+function _wp_json_convert_string( $string ){
 	static $use_mb = null;
 	if ( is_null( $use_mb ) ){
 		$use_mb = function_exists( 'mb_convert_encoding' );
@@ -3097,7 +3097,7 @@ function _wp_json_convert_string( $string ){ yeah(__METHOD__);
  * @param mixed $data Native representation.
  * @return bool|int|float|null|string|array Data ready for `json_encode()`.
  */
-function _wp_json_prepare_data( $data ){ yeah(__METHOD__);
+function _wp_json_prepare_data( $data ){
 	if ( !defined( 'WP_JSON_SERIALIZE_COMPATIBLE' ) || WP_JSON_SERIALIZE_COMPATIBLE === false ){
 		return $data;
 	}
@@ -3145,7 +3145,7 @@ function _wp_json_prepare_data( $data ){ yeah(__METHOD__);
  *                           then print and die.
  * @param int   $status_code The HTTP status code to output.
  */
-function wp_send_json( $response, $status_code = null ){ yeah(__METHOD__);
+function wp_send_json( $response, $status_code = null ){
 	@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
 	if ( null !== $status_code ){
 		status_header( $status_code );
@@ -3170,7 +3170,7 @@ function wp_send_json( $response, $status_code = null ){ yeah(__METHOD__);
  * @param mixed $data        Data to encode as JSON, then print and die.
  * @param int   $status_code The HTTP status code to output.
  */
-function wp_send_json_success( $data = null, $status_code = null ){ yeah(__METHOD__);
+function wp_send_json_success( $data = null, $status_code = null ){
 	$response = array( 'success' => true );
 
 	if ( isset( $data ) )
@@ -3194,7 +3194,7 @@ function wp_send_json_success( $data = null, $status_code = null ){ yeah(__METHO
  * @param mixed $data        Data to encode as JSON, then print and die.
  * @param int   $status_code The HTTP status code to output.
  */
-function wp_send_json_error( $data = null, $status_code = null ){ yeah(__METHOD__);
+function wp_send_json_error( $data = null, $status_code = null ){
 	$response = array( 'success' => false );
 
 	if ( isset( $data ) ){
@@ -3227,7 +3227,7 @@ function wp_send_json_error( $data = null, $status_code = null ){ yeah(__METHOD_
  * @param string $callback Supplied JSONP callback function.
  * @return bool True if valid callback, otherwise false.
  */
-function wp_check_jsonp_callback( $callback ){ yeah(__METHOD__);
+function wp_check_jsonp_callback( $callback ){
 	if ( !is_string( $callback ) ){
 		return false;
 	}
@@ -3252,7 +3252,7 @@ function wp_check_jsonp_callback( $callback ){ yeah(__METHOD__);
  * @param string $url URL for the home location.
  * @return string Homepage location.
  */
-function _config_wp_home( $url = '' ){ yeah(__METHOD__);
+function _config_wp_home( $url = '' ){
 	if ( defined( 'WP_HOME' ) )
 		return untrailingslashit( WP_HOME );
 	return $url;
@@ -3273,7 +3273,7 @@ function _config_wp_home( $url = '' ){ yeah(__METHOD__);
  * @param string $url URL to set the WordPress site location.
  * @return string The WordPress Site URL.
  */
-function _config_wp_siteurl( $url = '' ){ yeah(__METHOD__);
+function _config_wp_siteurl( $url = '' ){
 	if ( defined( 'WP_SITEURL' ) )
 		return untrailingslashit( WP_SITEURL );
 	return $url;
@@ -3285,7 +3285,7 @@ function _config_wp_siteurl( $url = '' ){ yeah(__METHOD__);
  * @since 4.7.0
  * @access private
  */
-function _delete_option_fresh_site(){ yeah(__METHOD__);
+function _delete_option_fresh_site(){
 	update_option( 'fresh_site', '0' );
 }
 
@@ -3306,7 +3306,7 @@ function _delete_option_fresh_site(){ yeah(__METHOD__);
  * @param array $mce_init MCE settings array.
  * @return array Direction set for 'rtl', if needed by locale.
  */
-function _mce_set_direction( $mce_init ){ yeah(__METHOD__);
+function _mce_set_direction( $mce_init ){
 	if ( is_rtl() ){
 		$mce_init['directionality'] = 'rtl';
 		$mce_init['rtl_ui'] = true;
@@ -3346,7 +3346,7 @@ function _mce_set_direction( $mce_init ){ yeah(__METHOD__);
  *
  * @since 2.2.0
  */
-function smilies_init(){ yeah(__METHOD__);
+function smilies_init(){
 	global $wpsmiliestrans, $wp_smiliessearch;
 
 	// don't bother setting up smilies if they are disabled
@@ -3467,7 +3467,7 @@ function smilies_init(){ yeah(__METHOD__);
  * @param array               $defaults Optional. Array that serves as the defaults. Default empty.
  * @return array Merged user defined values with defaults.
  */
-function wp_parse_args( $args, $defaults = '' ){ yeah(__METHOD__);
+function wp_parse_args( $args, $defaults = '' ){
 	if ( is_object( $args ) )
 		$r = get_object_vars( $args );
 	elseif ( is_array( $args ) )
@@ -3488,7 +3488,7 @@ function wp_parse_args( $args, $defaults = '' ){ yeah(__METHOD__);
  * @param array|string $list List of ids.
  * @return array Sanitized array of IDs.
  */
-function wp_parse_id_list( $list ){ yeah(__METHOD__);
+function wp_parse_id_list( $list ){
 	if ( !is_array($list) )
 		$list = preg_split('/[\s,]+/', $list);
 
@@ -3503,7 +3503,7 @@ function wp_parse_id_list( $list ){ yeah(__METHOD__);
  * @param  array|string $list List of slugs.
  * @return array Sanitized array of slugs.
  */
-function wp_parse_slug_list( $list ){ yeah(__METHOD__);
+function wp_parse_slug_list( $list ){
 	if ( !is_array( $list ) ){
 		$list = preg_split( '/[\s,]+/', $list );
 	}
@@ -3524,7 +3524,7 @@ function wp_parse_slug_list( $list ){ yeah(__METHOD__);
  * @param array $keys  The list of keys.
  * @return array The array slice.
  */
-function wp_array_slice_assoc( $array, $keys ){ yeah(__METHOD__);
+function wp_array_slice_assoc( $array, $keys ){
 	$slice = array();
 	foreach ( $keys as $key )
 		if ( isset( $array[ $key ] ) )
@@ -3541,7 +3541,7 @@ function wp_array_slice_assoc( $array, $keys ){ yeah(__METHOD__);
  * @param mixed $data Variable to check.
  * @return bool Whether the variable is a list.
  */
-function wp_is_numeric_array( $data ){ yeah(__METHOD__);
+function wp_is_numeric_array( $data ){
 	if ( !is_array( $data ) ){
 		return false;
 	}
@@ -3568,7 +3568,7 @@ function wp_is_numeric_array( $data ){ yeah(__METHOD__);
  *                              Default false.
  * @return array A list of objects or object fields.
  */
-function wp_filter_object_list( $list, $args = array(), $operator = 'and', $field = false ){ yeah(__METHOD__);
+function wp_filter_object_list( $list, $args = array(), $operator = 'and', $field = false ){
 	if ( !is_array( $list ) ){
 		return array();
 	}
@@ -3599,7 +3599,7 @@ function wp_filter_object_list( $list, $args = array(), $operator = 'and', $fiel
  *                         match. Default 'AND'.
  * @return array Array of found values.
  */
-function wp_list_filter( $list, $args = array(), $operator = 'AND' ){ yeah(__METHOD__);
+function wp_list_filter( $list, $args = array(), $operator = 'AND' ){
 	if ( !is_array( $list ) ){
 		return array();
 	}
@@ -3626,7 +3626,7 @@ function wp_list_filter( $list, $args = array(), $operator = 'AND' ){ yeah(__MET
  *               corresponding to `$index_key`. If `$index_key` is null, array keys from the original
  *               `$list` will be preserved in the results.
  */
-function wp_list_pluck( $list, $field, $index_key = null ){ yeah(__METHOD__);
+function wp_list_pluck( $list, $field, $index_key = null ){
 	$util = new WP_List_Util( $list );
 	return $util->pluck( $field, $index_key );
 }
@@ -3644,7 +3644,7 @@ function wp_list_pluck( $list, $field, $index_key = null ){ yeah(__METHOD__);
  * @param bool         $preserve_keys Optional. Whether to preserve keys. Default false.
  * @return array The sorted array.
  */
-function wp_list_sort( $list, $orderby = array(), $order = 'ASC', $preserve_keys = false ){ yeah(__METHOD__);
+function wp_list_sort( $list, $orderby = array(), $order = 'ASC', $preserve_keys = false ){
 	if ( !is_array( $list ) ){
 		return array();
 	}
@@ -3663,7 +3663,7 @@ function wp_list_sort( $list, $orderby = array(), $order = 'ASC', $preserve_keys
  *
  * @since 2.2.0
  */
-function wp_ob_end_flush_all(){ yeah(__METHOD__);
+function wp_ob_end_flush_all(){
 	$levels = ob_get_level();
 	for ($i=0; $i<$levels; $i++)
 		ob_end_flush();
@@ -3687,7 +3687,7 @@ function wp_ob_end_flush_all(){ yeah(__METHOD__);
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function dead_db(){ yeah(__METHOD__);
+function dead_db(){
 	global $wpdb;
 
 	wp_load_translations_early();
@@ -3730,7 +3730,7 @@ function dead_db(){ yeah(__METHOD__);
  * @param mixed $maybeint Data you wish to have converted to a non-negative integer.
  * @return int A non-negative integer.
  */
-function absint( $maybeint ){ yeah(__METHOD__);
+function absint( $maybeint ){
 	return abs( intval( $maybeint ) );
 }
 
@@ -3752,7 +3752,7 @@ function absint( $maybeint ){ yeah(__METHOD__);
  * @param string $version     The version of WordPress that deprecated the function.
  * @param string $replacement Optional. The function that should have been called. Default null.
  */
-function _deprecated_function( $function, $version, $replacement = null ){ yeah(__METHOD__);
+function _deprecated_function( $function, $version, $replacement = null ){
 
 	/**
 	 * Fires when a deprecated function is called.
@@ -3811,7 +3811,7 @@ function _deprecated_function( $function, $version, $replacement = null ){ yeah(
  * @param string $parent_class Optional. The parent class calling the deprecated constructor.
  *                             Default empty string.
  */
-function _deprecated_constructor( $class, $version, $parent_class = '' ){ yeah(__METHOD__);
+function _deprecated_constructor( $class, $version, $parent_class = '' ){
 
 	/**
 	 * Fires when a deprecated constructor is called.
@@ -3878,7 +3878,7 @@ function _deprecated_constructor( $class, $version, $parent_class = '' ){ yeah(_
  *                            Default null.
  * @param string $message     Optional. A message regarding the change. Default empty.
  */
-function _deprecated_file( $file, $version, $replacement = null, $message = '' ){ yeah(__METHOD__);
+function _deprecated_file( $file, $version, $replacement = null, $message = '' ){
 
 	/**
 	 * Fires when a deprecated file is called.
@@ -3944,7 +3944,7 @@ function _deprecated_file( $file, $version, $replacement = null, $message = '' )
  * @param string $version  The version of WordPress that deprecated the argument used.
  * @param string $message  Optional. A message regarding the change. Default null.
  */
-function _deprecated_argument( $function, $version, $message = null ){ yeah(__METHOD__);
+function _deprecated_argument( $function, $version, $message = null ){
 
 	/**
 	 * Fires when a deprecated argument is called.
@@ -4002,7 +4002,7 @@ function _deprecated_argument( $function, $version, $message = null ){ yeah(__ME
  * @param string $replacement Optional. The hook that should have been used.
  * @param string $message     Optional. A message regarding the change.
  */
-function _deprecated_hook( $hook, $version, $replacement = null, $message = null ){ yeah(__METHOD__);
+function _deprecated_hook( $hook, $version, $replacement = null, $message = null ){
 	/**
 	 * Fires when a deprecated hook is called.
 	 *
@@ -4051,7 +4051,7 @@ function _deprecated_hook( $hook, $version, $replacement = null, $message = null
  * @param string $message  A message explaining what has been done incorrectly.
  * @param string $version  The version of WordPress where the message was added.
  */
-function _doing_it_wrong( $function, $message, $version ){ yeah(__METHOD__);
+function _doing_it_wrong( $function, $message, $version ){
 
 	/**
 	 * Fires when the given function is being used incorrectly.
@@ -4106,7 +4106,7 @@ function _doing_it_wrong( $function, $message, $version ){ yeah(__METHOD__);
  *
  * @return bool Whether the server is running lighttpd < 1.5.0.
  */
-function is_lighttpd_before_150(){ yeah(__METHOD__);
+function is_lighttpd_before_150(){
 	$server_parts = explode( '/', isset( $_SERVER['SERVER_SOFTWARE'] )? $_SERVER['SERVER_SOFTWARE'] : '' );
 	$server_parts[1] = isset( $server_parts[1] )? $server_parts[1] : '';
 	return  'lighttpd' == $server_parts[0] && -1 == version_compare( $server_parts[1], '1.5.0' );
@@ -4123,7 +4123,7 @@ function is_lighttpd_before_150(){ yeah(__METHOD__);
  * @param bool   $default Optional. The default return value if the module is not found. Default false.
  * @return bool Whether the specified module is loaded.
  */
-function apache_mod_loaded($mod, $default = false){ yeah(__METHOD__);
+function apache_mod_loaded($mod, $default = false){
 	global $is_apache;
 
 	if ( !$is_apache )
@@ -4152,7 +4152,7 @@ function apache_mod_loaded($mod, $default = false){ yeah(__METHOD__);
  *
  * @return bool Whether IIS7 supports permalinks.
  */
-function iis7_supports_permalinks(){ yeah(__METHOD__);
+function iis7_supports_permalinks(){
 	global $is_iis7;
 
 	$supports_permalinks = false;
@@ -4194,7 +4194,7 @@ function iis7_supports_permalinks(){ yeah(__METHOD__);
  * @param array  $allowed_files Optional. List of allowed files.
  * @return int 0 means nothing is wrong, greater than 0 means something was wrong.
  */
-function validate_file( $file, $allowed_files = array() ){ yeah(__METHOD__);
+function validate_file( $file, $allowed_files = array() ){
 	// `../` on its own is not allowed:
 	if ( '../' === $file ){
 		return 1;
@@ -4231,7 +4231,7 @@ function validate_file( $file, $allowed_files = array() ){ yeah(__METHOD__);
  * @param string|bool $force Optional. Whether to force SSL in admin screens. Default null.
  * @return bool True if forced, false if not forced.
  */
-function force_ssl_admin( $force = null ){ yeah(__METHOD__);
+function force_ssl_admin( $force = null ){
 	static $forced = false;
 
 	if ( !is_null( $force ) ){
@@ -4253,7 +4253,7 @@ function force_ssl_admin( $force = null ){ yeah(__METHOD__);
  *
  * @return string The guessed URL.
  */
-function wp_guess_url(){ yeah(__METHOD__);
+function wp_guess_url(){
 	if ( defined('WP_SITEURL') && '' != WP_SITEURL ){
 		$url = WP_SITEURL;
 	} else {
@@ -4309,7 +4309,7 @@ function wp_guess_url(){ yeah(__METHOD__);
  * @param bool $suspend Optional. Suspends additions if true, re-enables them if false.
  * @return bool The current suspend setting
  */
-function wp_suspend_cache_addition( $suspend = null ){ yeah(__METHOD__);
+function wp_suspend_cache_addition( $suspend = null ){
 	static $_suspend = false;
 
 	if ( is_bool( $suspend ) )
@@ -4332,7 +4332,7 @@ function wp_suspend_cache_addition( $suspend = null ){ yeah(__METHOD__);
  * @param bool $suspend Optional. Whether to suspend or enable cache invalidation. Default true.
  * @return bool The current suspend setting.
  */
-function wp_suspend_cache_invalidation( $suspend = true ){ yeah(__METHOD__);
+function wp_suspend_cache_invalidation( $suspend = true ){
 	global $_wp_suspend_cache_invalidation;
 
 	$current_suspend = $_wp_suspend_cache_invalidation;
@@ -4352,7 +4352,7 @@ function wp_suspend_cache_invalidation( $suspend = true ){ yeah(__METHOD__);
  * @return bool True if $site_id is the main site of the network, or if not
  *              running Multisite.
  */
-function is_main_site( $site_id = null, $network_id = null ){ yeah(__METHOD__);
+function is_main_site( $site_id = null, $network_id = null ){
 	
 		return true;
 	
@@ -4367,7 +4367,7 @@ function is_main_site( $site_id = null, $network_id = null ){ yeah(__METHOD__);
  *                        Defaults to the current network.
  * @return int The ID of the main site.
  */
-function get_main_site_id( $network_id = null ){ yeah(__METHOD__);
+function get_main_site_id( $network_id = null ){
 	
 		return get_current_blog_id();
 	
@@ -4381,7 +4381,7 @@ function get_main_site_id( $network_id = null ){ yeah(__METHOD__);
  * @param int $network_id Optional. Network ID to test. Defaults to current network.
  * @return bool True if $network_id is the main network, or if not running Multisite.
  */
-function is_main_network( $network_id = null ){ yeah(__METHOD__);
+function is_main_network( $network_id = null ){
 	
 		return true;
 	
@@ -4394,7 +4394,7 @@ function is_main_network( $network_id = null ){ yeah(__METHOD__);
  *
  * @return int The ID of the main network.
  */
-function get_main_network_id(){ yeah(__METHOD__);
+function get_main_network_id(){
 
 		return 1;
 	
@@ -4409,7 +4409,7 @@ function get_main_network_id(){ yeah(__METHOD__);
  *
  * @return bool True if multisite and global terms enabled.
  */
-function global_terms_enabled(){ yeah(__METHOD__);
+function global_terms_enabled(){
 	
 		return false;
 
@@ -4424,7 +4424,7 @@ function global_terms_enabled(){ yeah(__METHOD__);
  *
  * @return float|false Timezone GMT offset, false otherwise.
  */
-function wp_timezone_override_offset(){ yeah(__METHOD__);
+function wp_timezone_override_offset(){
 	if ( !$timezone_string = get_option( 'timezone_string' ) ){
 		return false;
 	}
@@ -4447,7 +4447,7 @@ function wp_timezone_override_offset(){ yeah(__METHOD__);
  * @param array $b
  * @return int
  */
-function _wp_timezone_choice_usort_callback( $a, $b ){ yeah(__METHOD__);
+function _wp_timezone_choice_usort_callback( $a, $b ){
 	// Don't use translated versions of Etc
 	if ( 'Etc' === $a['continent'] && 'Etc' === $b['continent'] ){
 		// Make the order of these more like the old dropdown
@@ -4498,7 +4498,7 @@ function _wp_timezone_choice_usort_callback( $a, $b ){ yeah(__METHOD__);
  * @param string $locale        Optional. Locale to load the timezones in. Default current site locale.
  * @return string
  */
-function wp_timezone_choice( $selected_zone, $locale = null ){ yeah(__METHOD__);
+function wp_timezone_choice( $selected_zone, $locale = null ){
 	static $mo_loaded = false, $locale_loaded = null;
 
 	$continents = array( 'Africa', 'America', 'Antarctica', 'Arctic', 'Asia', 'Atlantic', 'Australia', 'Europe', 'Indian', 'Pacific');
@@ -4631,7 +4631,7 @@ function wp_timezone_choice( $selected_zone, $locale = null ){ yeah(__METHOD__);
  * @param string $str Header comment to clean up.
  * @return string
  */
-function _cleanup_header_comment( $str ){ yeah(__METHOD__);
+function _cleanup_header_comment( $str ){
 	return trim(preg_replace("/\s*(?:\*\/|\?>).*/", '', $str));
 }
 
@@ -4645,7 +4645,7 @@ function _cleanup_header_comment( $str ){ yeah(__METHOD__);
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  */
-function wp_scheduled_delete(){ yeah(__METHOD__);
+function wp_scheduled_delete(){
 	global $wpdb;
 
 	$delete_timestamp = time() - ( DAY_IN_SECONDS * EMPTY_TRASH_DAYS );
@@ -4705,7 +4705,7 @@ function wp_scheduled_delete(){ yeah(__METHOD__);
  *                                Default empty.
  * @return array Array of file headers in `HeaderKey => Header Value` format.
  */
-function get_file_data( $file, $default_headers, $context = '' ){ yeah(__METHOD__);
+function get_file_data( $file, $default_headers, $context = '' ){
 	// We don't need to write to the file, so just open for reading.
 	$fp = fopen( $file, 'r' );
 
@@ -4756,7 +4756,7 @@ function get_file_data( $file, $default_headers, $context = '' ){ yeah(__METHOD_
  *
  * @return true True.
  */
-function __return_true(){ yeah(__METHOD__);
+function __return_true(){
 	return true;
 }
 
@@ -4771,7 +4771,7 @@ function __return_true(){ yeah(__METHOD__);
  *
  * @return false False.
  */
-function __return_false(){ yeah(__METHOD__);
+function __return_false(){
 	return false;
 }
 
@@ -4784,7 +4784,7 @@ function __return_false(){ yeah(__METHOD__);
  *
  * @return int 0.
  */
-function __return_zero(){ yeah(__METHOD__);
+function __return_zero(){
 	return 0;
 }
 
@@ -4797,7 +4797,7 @@ function __return_zero(){ yeah(__METHOD__);
  *
  * @return array Empty array.
  */
-function __return_empty_array(){ yeah(__METHOD__);
+function __return_empty_array(){
 	return array();
 }
 
@@ -4810,7 +4810,7 @@ function __return_empty_array(){ yeah(__METHOD__);
  *
  * @return null Null value.
  */
-function __return_null(){ yeah(__METHOD__);
+function __return_null(){
 	return null;
 }
 
@@ -4825,7 +4825,7 @@ function __return_null(){ yeah(__METHOD__);
  *
  * @return string Empty string.
  */
-function __return_empty_string(){ yeah(__METHOD__);
+function __return_empty_string(){
 	return '';
 }
 
@@ -4837,7 +4837,7 @@ function __return_empty_string(){ yeah(__METHOD__);
  * @see https://blogs.msdn.com/ie/archive/2008/07/02/ie8-security-part-v-comprehensive-protection.aspx
  * @see https://src.chromium.org/viewvc/chrome?view=rev&revision=6985
  */
-function send_nosniff_header(){ yeah(__METHOD__);
+function send_nosniff_header(){
 	@header( 'X-Content-Type-Options: nosniff' );
 }
 
@@ -4850,7 +4850,7 @@ function send_nosniff_header(){ yeah(__METHOD__);
  * @param string $column Database column.
  * @return string SQL clause.
  */
-function _wp_mysql_week( $column ){ yeah(__METHOD__);
+function _wp_mysql_week( $column ){
 	switch ( $start_of_week = (int) get_option( 'start_of_week' ) ){
 	case 1 :
 		return "WEEK( $column, 1 )";
@@ -4879,7 +4879,7 @@ function _wp_mysql_week( $column ){ yeah(__METHOD__);
  * @param array    $callback_args Optional. Additional arguments to send to $callback.
  * @return array IDs of all members of loop.
  */
-function wp_find_hierarchy_loop( $callback, $start, $start_parent, $callback_args = array() ){ yeah(__METHOD__);
+function wp_find_hierarchy_loop( $callback, $start, $start_parent, $callback_args = array() ){
 	$override = is_null( $start_parent ) ? array() : array( $start => $start_parent );
 
 	if ( !$arbitrary_loop_member = wp_find_hierarchy_loop_tortoise_hare( $callback, $start, $override, $callback_args ) )
@@ -4908,7 +4908,7 @@ function wp_find_hierarchy_loop( $callback, $start, $start_parent, $callback_arg
  * @return mixed Scalar ID of some arbitrary member of the loop, or array of IDs of all members of loop if
  *               $_return_loop
  */
-function wp_find_hierarchy_loop_tortoise_hare( $callback, $start, $override = array(), $callback_args = array(), $_return_loop = false ){ yeah(__METHOD__);
+function wp_find_hierarchy_loop_tortoise_hare( $callback, $start, $override = array(), $callback_args = array(), $_return_loop = false ){
 	$tortoise = $hare = $evanescent_hare = $start;
 	$return = array();
 
@@ -4942,7 +4942,7 @@ function wp_find_hierarchy_loop_tortoise_hare( $callback, $start, $override = ar
  *
  * @see https://developer.mozilla.org/en/the_x-frame-options_response_header
  */
-function send_frame_options_header(){ yeah(__METHOD__);
+function send_frame_options_header(){
 	@header( 'X-Frame-Options: SAMEORIGIN' );
 }
 
@@ -4962,7 +4962,7 @@ function send_frame_options_header(){ yeah(__METHOD__);
  *               'ftp', 'ftps', 'mailto', 'news', 'irc', 'gopher', 'nntp', 'feed', 'telnet',
  *               'mms', 'rtsp', 'svn', 'tel', 'fax', 'xmpp', 'webcal', and 'urn'.
  */
-function wp_allowed_protocols(){ yeah(__METHOD__);
+function wp_allowed_protocols(){
 	static $protocols = array();
 
 	if ( empty( $protocols ) ){
@@ -5000,7 +5000,7 @@ function wp_allowed_protocols(){ yeah(__METHOD__);
  * @return string|array Either a string containing a reversed comma separated trace or an array
  *                      of individual calls.
  */
-function wp_debug_backtrace_summary( $ignore_class = null, $skip_frames = 0, $pretty = true ){ yeah(__METHOD__);
+function wp_debug_backtrace_summary( $ignore_class = null, $skip_frames = 0, $pretty = true ){
 	if ( version_compare( PHP_VERSION, '5.2.5', '>=' ) )
 		$trace = debug_backtrace( false );
 	else
@@ -5019,9 +5019,9 @@ function wp_debug_backtrace_summary( $ignore_class = null, $skip_frames = 0, $pr
 
 			$caller[] = "{$call['class']}{$call['type']}{$call['function']}";
 		} else {
-			if ( in_array( $call['function'], array( 'do_action', 'apply_filters' ) ) ){ yeah(__METHOD__);
+			if ( in_array( $call['function'], array( 'do_action', 'apply_filters' ) ) ){
 				$caller[] = "{$call['function']}('{$call['args'][0]}')";
-			} elseif ( in_array( $call['function'], array( 'include', 'include_once', 'require', 'require_once' ) ) ){ yeah(__METHOD__);
+			} elseif ( in_array( $call['function'], array( 'include', 'include_once', 'require', 'require_once' ) ) ){
 				$caller[] = $call['function'] . "('" . str_replace( array( WP_CONTENT_DIR, ABSPATH ) , '', $call['args'][0] ) . "')";
 			} else {
 				$caller[] = $call['function'];
@@ -5045,7 +5045,7 @@ function wp_debug_backtrace_summary( $ignore_class = null, $skip_frames = 0, $pr
  *
  * @return array List of ids not present in the cache.
  */
-function _get_non_cached_ids( $object_ids, $cache_key ){ yeah(__METHOD__);
+function _get_non_cached_ids( $object_ids, $cache_key ){
 	$clean = array();
 	foreach ( $object_ids as $id ){
 		$id = (int) $id;
@@ -5065,7 +5065,7 @@ function _get_non_cached_ids( $object_ids, $cache_key ){ yeah(__METHOD__);
  *
  * @return bool Whether the device is able to upload files.
  */
-function _device_can_upload(){ yeah(__METHOD__);
+function _device_can_upload(){
 	if ( !wp_is_mobile() )
 		return true;
 
@@ -5088,7 +5088,7 @@ function _device_can_upload(){ yeah(__METHOD__);
  * @param string $path The resource path or URL.
  * @return bool True if the path is a stream URL.
  */
-function wp_is_stream( $path ){ yeah(__METHOD__);
+function wp_is_stream( $path ){
 	if ( false === strpos( $path, '://' ) ){
 		// $path isn't a stream
 		return false;
@@ -5114,7 +5114,7 @@ function wp_is_stream( $path ){ yeah(__METHOD__);
  * @param  string $source_date The date to filter.
  * @return bool True if valid date, false if not valid date.
  */
-function wp_checkdate( $month, $day, $year, $source_date ){ yeah(__METHOD__);
+function wp_checkdate( $month, $day, $year, $source_date ){
 	/**
 	 * Filters whether the given date is valid for the Gregorian calendar.
 	 *
@@ -5137,7 +5137,7 @@ function wp_checkdate( $month, $day, $year, $source_date ){ yeah(__METHOD__);
  *
  * @since 3.6.0
  */
-function wp_auth_check_load(){ yeah(__METHOD__);
+function wp_auth_check_load(){
 	if ( !is_admin() && !is_user_logged_in() )
 		return;
 
@@ -5173,7 +5173,7 @@ function wp_auth_check_load(){ yeah(__METHOD__);
  *
  * @since 3.6.0
  */
-function wp_auth_check_html(){ yeah(__METHOD__);
+function wp_auth_check_html(){
 	$login_url = wp_login_url();
 	$current_domain = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'];
 	$same_domain = ( strpos( $login_url, $current_domain ) === 0 );
@@ -5229,7 +5229,7 @@ function wp_auth_check_html(){ yeah(__METHOD__);
  * @param array $response  The Heartbeat response.
  * @return array $response The Heartbeat response with 'wp-auth-check' value set.
  */
-function wp_auth_check( $response ){ yeah(__METHOD__);
+function wp_auth_check( $response ){
 	$response['wp-auth-check'] = is_user_logged_in() && empty( $GLOBALS['login_grace_period'] );
 	return $response;
 }
@@ -5250,7 +5250,7 @@ function wp_auth_check( $response ){ yeah(__METHOD__);
  * @param string $tag An HTML tag name. Example: 'video'.
  * @return string Tag RegEx.
  */
-function get_tag_regex( $tag ){ yeah(__METHOD__);
+function get_tag_regex( $tag ){
 	if ( empty( $tag ) )
 		return;
 	return sprintf( '<%1$s[^<]*(?:>[\s\S]*<\/%1$s>|\s*\/>)', tag_escape( $tag ) );
@@ -5268,7 +5268,7 @@ function get_tag_regex( $tag ){ yeah(__METHOD__);
  * @param string $charset A charset name.
  * @return string The canonical form of the charset.
  */
-function _canonical_charset( $charset ){ yeah(__METHOD__);
+function _canonical_charset( $charset ){
 	if ( 'utf-8' === strtolower( $charset ) || 'utf8' === strtolower( $charset) ){
 
 		return 'UTF-8';
@@ -5308,7 +5308,7 @@ function _canonical_charset( $charset ){ yeah(__METHOD__);
  * @param bool $reset Optional. Whether to reset the encoding back to a previously-set encoding.
  *                    Default false.
  */
-function mbstring_binary_safe_encoding( $reset = false ){ yeah(__METHOD__);
+function mbstring_binary_safe_encoding( $reset = false ){
 	static $encodings = array();
 	static $overloaded = null;
 
@@ -5337,7 +5337,7 @@ function mbstring_binary_safe_encoding( $reset = false ){ yeah(__METHOD__);
  *
  * @since 3.7.0
  */
-function reset_mbstring_encoding(){ yeah(__METHOD__);
+function reset_mbstring_encoding(){
 	mbstring_binary_safe_encoding( true );
 }
 
@@ -5351,7 +5351,7 @@ function reset_mbstring_encoding(){ yeah(__METHOD__);
  * @param mixed $var Boolean value to validate.
  * @return bool Whether the value is validated.
  */
-function wp_validate_boolean( $var ){ yeah(__METHOD__);
+function wp_validate_boolean( $var ){
 	if ( is_bool( $var ) ){
 		return $var;
 	}
@@ -5370,7 +5370,7 @@ function wp_validate_boolean( $var ){ yeah(__METHOD__);
  *
  * @param string $file The path to the file to delete.
  */
-function wp_delete_file( $file ){ yeah(__METHOD__);
+function wp_delete_file( $file ){
 	/**
 	 * Filters the path of the file to delete.
 	 *
@@ -5393,7 +5393,7 @@ function wp_delete_file( $file ){ yeah(__METHOD__);
  * @param string $directory Absolute path to a directory.
  * @return bool True on success, false on failure.
  */
-function wp_delete_file_from_directory( $file, $directory ){ yeah(__METHOD__);
+function wp_delete_file_from_directory( $file, $directory ){
 	$real_file = realpath( wp_normalize_path( $file ) );
 	$real_directory = realpath( wp_normalize_path( $directory ) );
 
@@ -5415,7 +5415,7 @@ function wp_delete_file_from_directory( $file, $directory ){ yeah(__METHOD__);
  *
  * @global WP_Post $post
  */
-function wp_post_preview_js(){ yeah(__METHOD__);
+function wp_post_preview_js(){
 	global $post;
 
 	if ( !is_preview() || empty( $post ) ){
@@ -5427,7 +5427,7 @@ function wp_post_preview_js(){ yeah(__METHOD__);
 
 	?>
 	<script>
-	( function(){ yeah(__METHOD__);
+	( function(){
 		var query = document.location.search;
 
 		if ( query && query.indexOf( 'preview=true' ) !== -1 ){
@@ -5435,7 +5435,7 @@ function wp_post_preview_js(){ yeah(__METHOD__);
 		}
 
 		if ( window.addEventListener ){
-			window.addEventListener( 'unload', function(){ yeah(__METHOD__); window.name = ''; }, false );
+			window.addEventListener( 'unload', function(){ window.name = ''; }, false );
 		}
 	}());
 	</script>
@@ -5453,7 +5453,7 @@ function wp_post_preview_js(){ yeah(__METHOD__);
  * @param string $date_string Date string to parse and format.
  * @return string Date formatted for ISO8601/RFC3339.
  */
-function mysql_to_rfc3339( $date_string ){ yeah(__METHOD__);
+function mysql_to_rfc3339( $date_string ){
 	$formatted = mysql2date( 'c', $date_string, false );
 
 	// Strip timezone information
@@ -5473,7 +5473,7 @@ function mysql_to_rfc3339( $date_string ){ yeah(__METHOD__);
  *                        invoked. Default 'admin'.
  * @return bool|int|string The limit that was set or false on failure.
  */
-function wp_raise_memory_limit( $context = 'admin' ){ yeah(__METHOD__);
+function wp_raise_memory_limit( $context = 'admin' ){
 	// Exit early if the limit cannot be changed.
 	if ( false === wp_is_ini_value_changeable( 'memory_limit' ) ){
 		return false;
@@ -5574,7 +5574,7 @@ function wp_raise_memory_limit( $context = 'admin' ){ yeah(__METHOD__);
  *
  * @return string UUID.
  */
-function wp_generate_uuid4(){ yeah(__METHOD__);
+function wp_generate_uuid4(){
 	return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
 		mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
 		mt_rand( 0, 0xffff ),
@@ -5593,7 +5593,7 @@ function wp_generate_uuid4(){ yeah(__METHOD__);
  * @param int   $version Specify which version of UUID to check against. Default is none, to accept any UUID version. Otherwise, only version allowed is `4`.
  * @return bool The string is a valid UUID or false on failure.
  */
-function wp_is_uuid( $uuid, $version = null ){ yeah(__METHOD__);
+function wp_is_uuid( $uuid, $version = null ){
 
 	if ( !is_string( $uuid ) ){
 		return false;
@@ -5621,7 +5621,7 @@ function wp_is_uuid( $uuid, $version = null ){ yeah(__METHOD__);
  *
  * @return string $last_changed UNIX timestamp with microseconds representing when the group was last changed.
  */
-function wp_cache_get_last_changed( $group ){ yeah(__METHOD__);
+function wp_cache_get_last_changed( $group ){
 	$last_changed = wp_cache_get( 'last_changed', $group );
 
 	if ( !$last_changed ){
@@ -5641,7 +5641,7 @@ function wp_cache_get_last_changed( $group ){ yeah(__METHOD__);
  * @param string $new_email   The new site admin email address.
  * @param string $option_name The relevant database option name.
  */
-function wp_site_admin_email_change_notification( $old_email, $new_email, $option_name ){ yeah(__METHOD__);
+function wp_site_admin_email_change_notification( $old_email, $new_email, $option_name ){
 	$send = true;
 
 	// Don't send the notification to the default 'admin_email' value.
@@ -5731,7 +5731,7 @@ All at ###SITENAME###
  *                                to anonymize it are not present. Default false, return `::` (unspecified address).
  * @return string  The anonymized IP address.
  */
-function wp_privacy_anonymize_ip( $ip_addr, $ipv6_fallback = false ){ yeah(__METHOD__);
+function wp_privacy_anonymize_ip( $ip_addr, $ipv6_fallback = false ){
 	// Detect what kind of IP address this is.
 	$ip_prefix = '';
 	$is_ipv6   = substr_count( $ip_addr, ':' ) > 1;
@@ -5800,7 +5800,7 @@ function wp_privacy_anonymize_ip( $ip_addr, $ipv6_fallback = false ){ yeah(__MET
  * @param  string $data Optional The data to be anonymized.
  * @return string The anonymous data for the requested type.
  */
-function wp_privacy_anonymize_data( $type, $data = '' ){ yeah(__METHOD__);
+function wp_privacy_anonymize_data( $type, $data = '' ){
 
 	switch ( $type ){
 		case 'email':
@@ -5848,7 +5848,7 @@ function wp_privacy_anonymize_data( $type, $data = '' ){ yeah(__METHOD__);
  *
  * @return string Exports directory.
  */
-function wp_privacy_exports_dir(){ yeah(__METHOD__);
+function wp_privacy_exports_dir(){
 	$upload_dir  = wp_upload_dir();
 	$exports_dir = trailingslashit( $upload_dir['basedir'] ) . 'wp-personal-data-exports/';
 
@@ -5871,7 +5871,7 @@ function wp_privacy_exports_dir(){ yeah(__METHOD__);
  *
  * @return string Exports directory URL.
  */
-function wp_privacy_exports_url(){ yeah(__METHOD__);
+function wp_privacy_exports_url(){
 	$upload_dir  = wp_upload_dir();
 	$exports_url = trailingslashit( $upload_dir['baseurl'] ) . 'wp-personal-data-exports/';
 
@@ -5890,7 +5890,7 @@ function wp_privacy_exports_url(){ yeah(__METHOD__);
  *
  * @since 4.9.6
  */
-function wp_schedule_delete_old_privacy_export_files(){ yeah(__METHOD__);
+function wp_schedule_delete_old_privacy_export_files(){
 	if ( wp_installing() ){
 		return;
 	}
@@ -5911,7 +5911,7 @@ function wp_schedule_delete_old_privacy_export_files(){ yeah(__METHOD__);
  *
  * @since 4.9.6
  */
-function wp_privacy_delete_old_export_files(){ yeah(__METHOD__);
+function wp_privacy_delete_old_export_files(){
 	require_once( ABSPATH . 'wp-admin/includes/file.php' );
 
 	$exports_dir  = wp_privacy_exports_dir();

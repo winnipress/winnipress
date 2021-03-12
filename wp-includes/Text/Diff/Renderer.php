@@ -46,7 +46,7 @@ class Text_Diff_Renderer {
 	/**
 	 * PHP4 constructor.
 	 */
-	public function Text_Diff_Renderer($params = array() ) { yeah(__METHOD__);
+	public function Text_Diff_Renderer($params = array() ) {
 		self::__construct($params );
 	}
 

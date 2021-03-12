@@ -142,7 +142,7 @@ class Requests_IRI {
 	 *
 	 * @return string
 	 */
-	public function __toString(){ yeah(__METHOD__);
+	public function __toString(){
 		return $this->get_iri();
 	}
 
@@ -152,7 +152,7 @@ class Requests_IRI {
 	 * @param string $name Property name
 	 * @param mixed $value Property value
 	 */
-	public function __set($name, $value){ yeah(__METHOD__);
+	public function __set($name, $value){
 		if (method_exists($this, 'set_' . $name)){
 			call_user_func(array($this, 'set_' . $name), $value);
 		}
@@ -174,7 +174,7 @@ class Requests_IRI {
 	 * @param string $name Property name
 	 * @return mixed
 	 */
-	public function __get($name){ yeah(__METHOD__);
+	public function __get($name){
 		// isset() returns false for null, we don't want to do that
 		// Also why we use array_key_exists below instead of isset()
 		$props = get_object_vars($this);
@@ -220,7 +220,7 @@ class Requests_IRI {
 	 * @param string $name Property name
 	 * @return bool
 	 */
-	public function __isset($name){ yeah(__METHOD__);
+	public function __isset($name){
 		return (method_exists($this, 'get_' . $name) || isset($this->$name));
 	}
 
@@ -229,7 +229,7 @@ class Requests_IRI {
 	 *
 	 * @param string $name Property name
 	 */
-	public function __unset($name){ yeah(__METHOD__);
+	public function __unset($name){
 		if (method_exists($this, 'set_' . $name)){
 			call_user_func(array($this, 'set_' . $name), '');
 		}
@@ -240,7 +240,7 @@ class Requests_IRI {
 	 *
 	 * @param string|null $iri
 	 */
-	public function __construct($iri = null){ yeah(__METHOD__);
+	public function __construct($iri = null){
 		$this->set_iri($iri);
 	}
 
@@ -253,7 +253,7 @@ class Requests_IRI {
 	 * @param IRI|string $relative Relative IRI
 	 * @return IRI|false
 	 */
-	public static function absolutize($base, $relative){ yeah(__METHOD__);
+	public static function absolutize($base, $relative){
 		if (!($relative instanceof Requests_IRI)){
 			$relative = new Requests_IRI($relative);
 		}
@@ -324,7 +324,7 @@ class Requests_IRI {
 	 * @param string $iri
 	 * @return array
 	 */
-	protected function parse_iri($iri){ yeah(__METHOD__);
+	protected function parse_iri($iri){
 		$iri = trim($iri, "\x20\x09\x0A\x0C\x0D");
 		$has_match = preg_match('/^((?P<scheme>[^:\/?#]+):)?(\/\/(?P<authority>[^\/?#]*))?(?P<path>[^?#]*)(\?(?P<query>[^#]*))?(#(?P<fragment>.*))?$/', $iri, $match);
 		if (!$has_match){
@@ -355,7 +355,7 @@ class Requests_IRI {
 	 * @param string $input
 	 * @return string
 	 */
-	protected function remove_dot_segments($input){ yeah(__METHOD__);
+	protected function remove_dot_segments($input){
 		$output = '';
 		while (strpos($input, './') !== false || strpos($input, '/.') !== false || $input === '.' || $input === '..'){
 			// A: If the input buffer begins with a prefix of "../" or "./",
@@ -417,7 +417,7 @@ class Requests_IRI {
 	 * @param bool $iprivate Allow iprivate
 	 * @return string
 	 */
-	protected function replace_invalid_with_pct_encoding($string, $extra_chars, $iprivate = false){ yeah(__METHOD__);
+	protected function replace_invalid_with_pct_encoding($string, $extra_chars, $iprivate = false){
 		// Normalize as many pct-encoded sections as possible
 		$string = preg_replace_callback('/(?:%[A-Fa-f0-9]{2})+/', array(&$this, 'remove_iunreserved_percent_encoded'), $string);
 
@@ -540,7 +540,7 @@ class Requests_IRI {
 	 * @param array $match PCRE match
 	 * @return string Replacement
 	 */
-	protected function remove_iunreserved_percent_encoded($match){ yeah(__METHOD__);
+	protected function remove_iunreserved_percent_encoded($match){
 		// As we just have valid percent encoded sequences we can just explode
 		// and ignore the first member of the returned array (an empty string).
 		$bytes = explode('%', $match[0]);
@@ -654,7 +654,7 @@ class Requests_IRI {
 		return $string;
 	}
 
-	protected function scheme_normalization(){ yeah(__METHOD__);
+	protected function scheme_normalization(){
 		if (isset($this->normalization[$this->scheme]['iuserinfo']) && $this->iuserinfo === $this->normalization[$this->scheme]['iuserinfo']){
 			$this->iuserinfo = null;
 		}
@@ -684,7 +684,7 @@ class Requests_IRI {
 	 *
 	 * @return bool
 	 */
-	public function is_valid(){ yeah(__METHOD__);
+	public function is_valid(){
 		$isauthority = $this->iuserinfo !== null || $this->ihost !== null || $this->port !== null;
 		if ($this->ipath !== '' &&
 			(
@@ -710,7 +710,7 @@ class Requests_IRI {
 	 * @param string $iri
 	 * @return bool
 	 */
-	protected function set_iri($iri){ yeah(__METHOD__);
+	protected function set_iri($iri){
 		static $cache;
 		if (!$cache){
 			$cache = array();
@@ -757,7 +757,7 @@ class Requests_IRI {
 	 * @param string $scheme
 	 * @return bool
 	 */
-	protected function set_scheme($scheme){ yeah(__METHOD__);
+	protected function set_scheme($scheme){
 		if ($scheme === null){
 			$this->scheme = null;
 		}
@@ -778,7 +778,7 @@ class Requests_IRI {
 	 * @param string $authority
 	 * @return bool
 	 */
-	protected function set_authority($authority){ yeah(__METHOD__);
+	protected function set_authority($authority){
 		static $cache;
 		if (!$cache){
 			$cache = array();
@@ -836,7 +836,7 @@ class Requests_IRI {
 	 * @param string $iuserinfo
 	 * @return bool
 	 */
-	protected function set_userinfo($iuserinfo){ yeah(__METHOD__);
+	protected function set_userinfo($iuserinfo){
 		if ($iuserinfo === null){
 			$this->iuserinfo = null;
 		}
@@ -855,7 +855,7 @@ class Requests_IRI {
 	 * @param string $ihost
 	 * @return bool
 	 */
-	protected function set_host($ihost){ yeah(__METHOD__);
+	protected function set_host($ihost){
 		if ($ihost === null){
 			$this->ihost = null;
 			return true;
@@ -902,7 +902,7 @@ class Requests_IRI {
 	 * @param string $port
 	 * @return bool
 	 */
-	protected function set_port($port){ yeah(__METHOD__);
+	protected function set_port($port){
 		if ($port === null){
 			$this->port = null;
 			return true;
@@ -924,7 +924,7 @@ class Requests_IRI {
 	 * @param string $ipath
 	 * @return bool
 	 */
-	protected function set_path($ipath){ yeah(__METHOD__);
+	protected function set_path($ipath){
 		static $cache;
 		if (!$cache){
 			$cache = array();
@@ -952,7 +952,7 @@ class Requests_IRI {
 	 * @param string $iquery
 	 * @return bool
 	 */
-	protected function set_query($iquery){ yeah(__METHOD__);
+	protected function set_query($iquery){
 		if ($iquery === null){
 			$this->iquery = null;
 		}
@@ -969,7 +969,7 @@ class Requests_IRI {
 	 * @param string $ifragment
 	 * @return bool
 	 */
-	protected function set_fragment($ifragment){ yeah(__METHOD__);
+	protected function set_fragment($ifragment){
 		if ($ifragment === null){
 			$this->ifragment = null;
 		}
@@ -986,7 +986,7 @@ class Requests_IRI {
 	 * @param string|bool IRI to convert (or false from {@see get_iri})
 	 * @return string|false URI if IRI is valid, false otherwise.
 	 */
-	protected function to_uri($string){ yeah(__METHOD__);
+	protected function to_uri($string){
 		if (!is_string($string)){
 			return false;
 		}
@@ -1012,7 +1012,7 @@ class Requests_IRI {
 	 *
 	 * @return string
 	 */
-	protected function get_iri(){ yeah(__METHOD__);
+	protected function get_iri(){
 		if (!$this->is_valid()){
 			return false;
 		}
@@ -1040,7 +1040,7 @@ class Requests_IRI {
 	 *
 	 * @return string
 	 */
-	protected function get_uri(){ yeah(__METHOD__);
+	protected function get_uri(){
 		return $this->to_uri($this->get_iri());
 	}
 
@@ -1049,7 +1049,7 @@ class Requests_IRI {
 	 *
 	 * @return string
 	 */
-	protected function get_iauthority(){ yeah(__METHOD__);
+	protected function get_iauthority(){
 		if ($this->iuserinfo === null && $this->ihost === null && $this->port === null){
 			return null;
 		}
@@ -1072,7 +1072,7 @@ class Requests_IRI {
 	 *
 	 * @return string
 	 */
-	protected function get_authority(){ yeah(__METHOD__);
+	protected function get_authority(){
 		$iauthority = $this->get_iauthority();
 		if (is_string($iauthority)){
 			return $this->to_uri($iauthority);

@@ -14,7 +14,7 @@
  * @param int|object|null $post Post ID or post object. Optional, default is the current post from the loop.
  * @return string|false The format if successful. False otherwise.
  */
-function get_post_format($post = null ){ yeah(__METHOD__);
+function get_post_format($post = null ){
 	if (!$post = get_post($post ) )
 		return false;
 
@@ -40,7 +40,7 @@ function get_post_format($post = null ){ yeah(__METHOD__);
  * @param object|int|null $post   Optional. The post to check. If not supplied, defaults to the current post if used in the loop.
  * @return bool True if the post has any of the given formats (or any format, if no format specified), false otherwise.
  */
-function has_post_format($format = array(), $post = null ){ yeah(__METHOD__);
+function has_post_format($format = array(), $post = null ){
 	$prefixed = array();
 
 	if ($format ){
@@ -61,7 +61,7 @@ function has_post_format($format = array(), $post = null ){ yeah(__METHOD__);
  * @param string     $format A format to assign. Use an empty string or array to remove all formats from the post.
  * @return array|WP_Error|false WP_Error on error. Array of affected term IDs on success.
  */
-function set_post_format($post, $format ){ yeah(__METHOD__);
+function set_post_format($post, $format ){
 	$post = get_post($post );
 
 	if (empty($post ) )
@@ -85,7 +85,7 @@ function set_post_format($post, $format ){ yeah(__METHOD__);
  *
  * @return array The array of translated post format names.
  */
-function get_post_format_strings(){ yeah(__METHOD__);
+function get_post_format_strings(){
 	$strings = array(
 		'standard' => _x('Standard', 'Post format' ), // Special case. any value that evals to false will be considered standard
 		'aside'    => _x('Aside',    'Post format' ),
@@ -108,7 +108,7 @@ function get_post_format_strings(){ yeah(__METHOD__);
  *
  * @return array The array of post format slugs as both keys and values.
  */
-function get_post_format_slugs(){ yeah(__METHOD__);
+function get_post_format_slugs(){
 	$slugs = array_keys(get_post_format_strings() );
 	return array_combine($slugs, $slugs );
 }
@@ -121,7 +121,7 @@ function get_post_format_slugs(){ yeah(__METHOD__);
  * @param string $slug A post format slug.
  * @return string The translated post format name.
  */
-function get_post_format_string($slug ){ yeah(__METHOD__);
+function get_post_format_string($slug ){
 	$strings = get_post_format_strings();
 	if (!$slug )
 		return $strings['standard'];
@@ -137,7 +137,7 @@ function get_post_format_string($slug ){ yeah(__METHOD__);
  * @param string $format The post format slug.
  * @return string|WP_Error|false The post format term link.
  */
-function get_post_format_link($format ){ yeah(__METHOD__);
+function get_post_format_link($format ){
 	$term = get_term_by('slug', 'post-format-' . $format, 'post_format' );
 	if (!$term || is_wp_error($term ) )
 		return false;
@@ -153,7 +153,7 @@ function get_post_format_link($format ){ yeah(__METHOD__);
  * @param array $qvs
  * @return array
  */
-function _post_format_request($qvs ){ yeah(__METHOD__);
+function _post_format_request($qvs ){
 	if (!isset($qvs['post_format'] ) )
 		return $qvs;
 	$slugs = get_post_format_slugs();
@@ -178,7 +178,7 @@ function _post_format_request($qvs ){ yeah(__METHOD__);
  * @param string $taxonomy
  * @return string
  */
-function _post_format_link($link, $term, $taxonomy ){ yeah(__METHOD__);
+function _post_format_link($link, $term, $taxonomy ){
 	global $wp_rewrite;
 	if ('post_format' != $taxonomy ){
 		return $link;
@@ -200,7 +200,7 @@ function _post_format_link($link, $term, $taxonomy ){ yeah(__METHOD__);
  * @param object $term
  * @return object
  */
-function _post_format_get_term($term ){ yeah(__METHOD__);
+function _post_format_get_term($term ){
 	if (isset($term->slug ) ){
 		$term->name = get_post_format_string(str_replace('post-format-', '', $term->slug ) );
 	}
@@ -218,7 +218,7 @@ function _post_format_get_term($term ){ yeah(__METHOD__);
  * @param array        $args
  * @return array
  */
-function _post_format_get_terms($terms, $taxonomies, $args ){ yeah(__METHOD__);
+function _post_format_get_terms($terms, $taxonomies, $args ){
 	if (in_array('post_format', (array) $taxonomies ) ){
 		if (isset($args['fields'] ) && 'names' == $args['fields'] ){
 			foreach ($terms as $order => $name ){
@@ -244,7 +244,7 @@ function _post_format_get_terms($terms, $taxonomies, $args ){ yeah(__METHOD__);
  * @param array $terms
  * @return array
  */
-function _post_format_wp_get_object_terms($terms ){ yeah(__METHOD__);
+function _post_format_wp_get_object_terms($terms ){
 	foreach ((array) $terms as $order => $term ){
 		if (isset($term->taxonomy ) && 'post_format' == $term->taxonomy ){
 			$terms[$order]->name = get_post_format_string(str_replace('post-format-', '', $term->slug ) );

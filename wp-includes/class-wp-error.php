@@ -51,7 +51,7 @@ class WP_Error {
 	 * @param string $message Error message
 	 * @param mixed $data Optional. Error data.
 	 */
-	public function __construct($code = '', $message = '', $data = '' ) { yeah(__METHOD__);
+	public function __construct($code = '', $message = '', $data = '' ) {
 		if (empty($code) )
 			return;
 
@@ -68,7 +68,7 @@ class WP_Error {
 	 *
 	 * @return array List of error codes, if available.
 	 */
-	public function get_error_codes() { yeah(__METHOD__);
+	public function get_error_codes() {
 		if (empty($this->errors) )
 			return array();
 
@@ -82,7 +82,7 @@ class WP_Error {
 	 *
 	 * @return string|int Empty string, if no error codes.
 	 */
-	public function get_error_code() { yeah(__METHOD__);
+	public function get_error_code() {
 		$codes = $this->get_error_codes();
 
 		if (empty($codes) )
@@ -99,7 +99,7 @@ class WP_Error {
 	 * @param string|int $code Optional. Retrieve messages matching code, if exists.
 	 * @return array Error strings on success, or empty array on failure (if using code parameter).
 	 */
-	public function get_error_messages($code = '') { yeah(__METHOD__);
+	public function get_error_messages($code = '') {
 		// Return all messages if no code specified.
 		if (empty($code) ) {
 			$all_messages = array();
@@ -126,7 +126,7 @@ class WP_Error {
 	 * @param string|int $code Optional. Error code to retrieve message.
 	 * @return string
 	 */
-	public function get_error_message($code = '') { yeah(__METHOD__);
+	public function get_error_message($code = '') {
 		if (empty($code) )
 			$code = $this->get_error_code();
 		$messages = $this->get_error_messages($code);
@@ -143,7 +143,7 @@ class WP_Error {
 	 * @param string|int $code Optional. Error code.
 	 * @return mixed Error data, if it exists.
 	 */
-	public function get_error_data($code = '') { yeah(__METHOD__);
+	public function get_error_data($code = '') {
 		if (empty($code) )
 			$code = $this->get_error_code();
 
@@ -160,7 +160,7 @@ class WP_Error {
 	 * @param string $message Error message.
 	 * @param mixed $data Optional. Error data.
 	 */
-	public function add($code, $message, $data = '') { yeah(__METHOD__);
+	public function add($code, $message, $data = '') {
 		$this->errors[$code][] = $message;
 		if (!empty($data) )
 			$this->error_data[$code] = $data;
@@ -176,7 +176,7 @@ class WP_Error {
 	 * @param mixed $data Error data.
 	 * @param string|int $code Error code.
 	 */
-	public function add_data($data, $code = '') { yeah(__METHOD__);
+	public function add_data($data, $code = '') {
 		if (empty($code) )
 			$code = $this->get_error_code();
 
@@ -193,7 +193,7 @@ class WP_Error {
 	 *
 	 * @param string|int $code Error code.
 	 */
-	public function remove($code ) { yeah(__METHOD__);
+	public function remove($code ) {
 		unset($this->errors[ $code ] );
 		unset($this->error_data[ $code ] );
 	}

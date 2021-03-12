@@ -26,7 +26,7 @@ class WP_Http_Streams {
 	 * @param string|array $args Optional. Override the defaults.
 	 * @return array|WP_Error Array containing 'headers', 'body', 'response', 'cookies', 'filename'. A WP_Error instance upon error
 	 */
-	public function request($url, $args = array()) { yeah(__METHOD__);
+	public function request($url, $args = array()) {
 		$defaults = array(
 			'method' => 'GET', 'timeout' => 5,
 			'redirection' => 5, 'httpversion' => '1.0',
@@ -334,7 +334,7 @@ class WP_Http_Streams {
 	 * @param string $host The hostname being requested
 	 * @return bool If the cerficiate presented in $stream is valid for $host
 	 */
-	public static function verify_ssl_certificate($stream, $host ) { yeah(__METHOD__);
+	public static function verify_ssl_certificate($stream, $host ) {
 		$context_options = stream_context_get_options($stream );
 
 		if(empty($context_options['ssl']['peer_certificate'] ) )
@@ -391,7 +391,7 @@ class WP_Http_Streams {
 	 * @param array $args Optional. Array of request arguments. Default empty array.
 	 * @return bool False means this class can not be used, true means it can.
 	 */
-	public static function test($args = array() ) { yeah(__METHOD__);
+	public static function test($args = array() ) {
 		if(!function_exists('stream_socket_client' ) )
 			return false;
 

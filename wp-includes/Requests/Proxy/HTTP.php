@@ -54,7 +54,7 @@ class Requests_Proxy_HTTP implements Requests_Proxy {
 	 * @throws Requests_Exception On incorrect number of arguments (`authbasicbadargs`)
 	 * @param array|null $args Array of user and password. Must have exactly two elements
 	 */
-	public function __construct($args = null){ yeah(__METHOD__);
+	public function __construct($args = null){
 		if (is_string($args)){
 			$this->proxy = $args;
 		}
@@ -82,7 +82,7 @@ class Requests_Proxy_HTTP implements Requests_Proxy {
 	 * @see fsockopen_header
 	 * @param Requests_Hooks $hooks Hook system
 	 */
-	public function register(Requests_Hooks &$hooks){ yeah(__METHOD__);
+	public function register(Requests_Hooks &$hooks){
 		$hooks->register('curl.before_send', array(&$this, 'curl_before_send'));
 
 		$hooks->register('fsockopen.remote_socket', array(&$this, 'fsockopen_remote_socket'));
@@ -98,7 +98,7 @@ class Requests_Proxy_HTTP implements Requests_Proxy {
 	 * @since 1.6
 	 * @param resource $handle cURL resource
 	 */
-	public function curl_before_send(&$handle){ yeah(__METHOD__);
+	public function curl_before_send(&$handle){
 		curl_setopt($handle, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
 		curl_setopt($handle, CURLOPT_PROXY, $this->proxy);
 
@@ -114,7 +114,7 @@ class Requests_Proxy_HTTP implements Requests_Proxy {
 	 * @since 1.6
 	 * @param string $remote_socket Socket connection string
 	 */
-	public function fsockopen_remote_socket(&$remote_socket){ yeah(__METHOD__);
+	public function fsockopen_remote_socket(&$remote_socket){
 		$remote_socket = $this->proxy;
 	}
 
@@ -125,7 +125,7 @@ class Requests_Proxy_HTTP implements Requests_Proxy {
 	 * @param string $path Path to send in HTTP request string ("GET ...")
 	 * @param string $url Full URL we're requesting
 	 */
-	public function fsockopen_remote_host_path(&$path, $url){ yeah(__METHOD__);
+	public function fsockopen_remote_host_path(&$path, $url){
 		$path = $url;
 	}
 
@@ -135,7 +135,7 @@ class Requests_Proxy_HTTP implements Requests_Proxy {
 	 * @since 1.6
 	 * @param string $out HTTP header string
 	 */
-	public function fsockopen_header(&$out){ yeah(__METHOD__);
+	public function fsockopen_header(&$out){
 		$out .= sprintf("Proxy-Authorization: Basic %s\r\n", base64_encode($this->get_auth_string()));
 	}
 
@@ -145,7 +145,7 @@ class Requests_Proxy_HTTP implements Requests_Proxy {
 	 * @since 1.6
 	 * @return string
 	 */
-	public function get_auth_string(){ yeah(__METHOD__);
+	public function get_auth_string(){
 		return $this->user . ':' . $this->pass;
 	}
 }

@@ -26,7 +26,7 @@
  *                          'edit_others_posts', etc. The parameter is accessed via func_get_args().
  * @return array Actual capabilities for meta capability.
  */
-function map_meta_cap($cap, $user_id){ yeah(__METHOD__);
+function map_meta_cap($cap, $user_id){
 	$args = array_slice(func_get_args(), 2);
 	$caps = array();
 
@@ -589,7 +589,7 @@ function map_meta_cap($cap, $user_id){ yeah(__METHOD__);
  * @return bool Whether the current user has the given capability. If `$capability` is a meta cap and `$object_id` is
  *              passed, whether the current user has the given meta capability for the given object.
  */
-function current_user_can($capability){ yeah(__METHOD__);
+function current_user_can($capability){
 	$current_user = wp_get_current_user();
 
 	if (empty($current_user))
@@ -610,7 +610,7 @@ function current_user_can($capability){ yeah(__METHOD__);
  * @param string $capability Capability name.
  * @return bool Whether the user has the given capability.
  */
-function current_user_can_for_blog($blog_id, $capability){ yeah(__METHOD__);
+function current_user_can_for_blog($blog_id, $capability){
 	$switched = is_multisite() ? switch_to_blog($blog_id) : false;
 
 	$current_user = wp_get_current_user();
@@ -643,7 +643,7 @@ function current_user_can_for_blog($blog_id, $capability){ yeah(__METHOD__);
  * @param string      $capability Capability name.
  * @return bool Whether the post author has the given capability.
  */
-function author_can($post, $capability){ yeah(__METHOD__);
+function author_can($post, $capability){
 	if (!$post = get_post($post))
 		return false;
 
@@ -667,7 +667,7 @@ function author_can($post, $capability){ yeah(__METHOD__);
  * @param string      $capability Capability name.
  * @return bool Whether the user has the given capability.
  */
-function user_can($user, $capability){ yeah(__METHOD__);
+function user_can($user, $capability){
 	if (!is_object($user))
 		$user = get_userdata($user);
 
@@ -689,7 +689,7 @@ function user_can($user, $capability){ yeah(__METHOD__);
  *
  * @return WP_Roles WP_Roles global instance if not already instantiated.
  */
-function wp_roles(){ yeah(__METHOD__);
+function wp_roles(){
 	global $wp_roles;
 
 	if (!isset($wp_roles)){
@@ -706,7 +706,7 @@ function wp_roles(){ yeah(__METHOD__);
  * @param string $role Role name.
  * @return WP_Role|null WP_Role object if found, null if the role does not exist.
  */
-function get_role($role){ yeah(__METHOD__);
+function get_role($role){
 	return wp_roles()->get_role($role);
 }
 
@@ -720,7 +720,7 @@ function get_role($role){ yeah(__METHOD__);
  * @param array $capabilities List of capabilities, e.g. array('edit_posts' => true, 'delete_posts' => false);
  * @return WP_Role|null WP_Role object if role is added, null if already exists.
  */
-function add_role($role, $display_name, $capabilities = array()){ yeah(__METHOD__);
+function add_role($role, $display_name, $capabilities = array()){
 	if (empty($role)){
 		return;
 	}
@@ -734,7 +734,7 @@ function add_role($role, $display_name, $capabilities = array()){ yeah(__METHOD_
  *
  * @param string $role Role name.
  */
-function remove_role($role){ yeah(__METHOD__);
+function remove_role($role){
 	wp_roles()->remove_role($role);
 }
 
@@ -747,7 +747,7 @@ function remove_role($role){ yeah(__METHOD__);
  *
  * @return array List of super admin logins
  */
-function get_super_admins(){ yeah(__METHOD__);
+function get_super_admins(){
 	global $super_admins;
 
 	if (isset($super_admins))
@@ -764,7 +764,7 @@ function get_super_admins(){ yeah(__METHOD__);
  * @param int $user_id (Optional) The ID of a user. Defaults to the current user.
  * @return bool True if the user is a site admin.
  */
-function is_super_admin($user_id = false){ yeah(__METHOD__);
+function is_super_admin($user_id = false){
 	if (!$user_id || $user_id == get_current_user_id())
 		$user = wp_get_current_user();
 	else
@@ -796,7 +796,7 @@ function is_super_admin($user_id = false){ yeah(__METHOD__);
  * @return bool True on success, false on failure. This can fail when the user is
  *              already a super admin or when the `$super_admins` global is defined.
  */
-function grant_super_admin($user_id){ yeah(__METHOD__);
+function grant_super_admin($user_id){
 		return false;
 	
 }
@@ -812,7 +812,7 @@ function grant_super_admin($user_id){ yeah(__METHOD__);
  * @return bool True on success, false on failure. This can fail when the user's email
  *              is the network admin email or when the `$super_admins` global is defined.
  */
-function revoke_super_admin($user_id){ yeah(__METHOD__);
+function revoke_super_admin($user_id){
 		return false;
 
 }
@@ -828,7 +828,7 @@ function revoke_super_admin($user_id){ yeah(__METHOD__);
  * @param array $allcaps An array of all the user's capabilities.
  * @return array Filtered array of the user's capabilities.
  */
-function wp_maybe_grant_install_languages_cap($allcaps){ yeah(__METHOD__);
+function wp_maybe_grant_install_languages_cap($allcaps){
 	if (!empty($allcaps['update_core']) || !empty($allcaps['install_plugins']) || !empty($allcaps['install_themes'])){
 		$allcaps['install_languages'] = true;
 	}

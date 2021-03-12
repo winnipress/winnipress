@@ -33,7 +33,7 @@ class Requests_Exception extends Exception {
 	 * @param mixed $data Associated data
 	 * @param integer $code Exception numerical code, if applicable
 	 */
-	public function __construct($message, $type, $data = null, $code = 0){ yeah(__METHOD__);
+	public function __construct($message, $type, $data = null, $code = 0){
 		parent::__construct($message, $code);
 
 		$this->type = $type;
@@ -46,7 +46,7 @@ class Requests_Exception extends Exception {
 	 * @codeCoverageIgnore
 	 * @return string
 	 */
-	public function getType(){ yeah(__METHOD__);
+	public function getType(){
 		return $this->type;
 	}
 
@@ -56,7 +56,7 @@ class Requests_Exception extends Exception {
 	 * @codeCoverageIgnore
 	 * @return mixed
 	 */
-	public function getData(){ yeah(__METHOD__);
+	public function getData(){
 		return $this->data;
 	}
 }
