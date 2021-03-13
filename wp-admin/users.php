@@ -315,7 +315,6 @@ default:
 		$userids = $_REQUEST['users'];
 		$sendback = wp_get_referer();
 
-		/** This action is documented in wp-admin/edit-comments.php */
 		$sendback = apply_filters('handle_bulk_actions-' . get_current_screen()->id, $sendback, $wp_list_table->current_action(), $userids );
 
 		wp_safe_redirect($sendback );

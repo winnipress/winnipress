@@ -49,10 +49,10 @@ $core_actions_get = array(
 );
 
 $core_actions_post = array(
-	'oembed-cache', 'image-editor', 'delete-comment', 'delete-tag', 'delete-link',
-	'delete-meta', 'delete-post', 'trash-post', 'untrash-post', 'delete-page', 'dim-comment',
-	'add-link-category', 'add-tag', 'get-tagcloud', 'get-comments', 'replyto-comment',
-	'edit-comment', 'add-menu-item', 'add-meta', 'add-user', 'closed-postboxes',
+	'oembed-cache', 'image-editor', 'delete-tag', 'delete-link',
+	'delete-meta', 'delete-post', 'trash-post', 'untrash-post', 'delete-page',
+	'add-link-category', 'add-tag', 'get-tagcloud',
+	'add-menu-item', 'add-meta', 'add-user', 'closed-postboxes',
 	'hidden-columns', 'menu-get-metabox', 'wp-link-ajax',
 	'menu-locations-save', 'menu-quick-search', 'meta-box-order', 'get-permalink',
 	'sample-permalink', 'inline-save', 'inline-save-tax', 'find_posts', 'widgets-order',
@@ -69,9 +69,6 @@ $core_actions_post = array(
 	'wp-privacy-erase-personal-data',
 );
 
-// Deprecated
-$core_actions_post_deprecated = array('wp-fullscreen-save-post', 'press-this-save-post', 'press-this-add-category');
-$core_actions_post = array_merge($core_actions_post, $core_actions_post_deprecated);
 
 // Register core Ajax calls.
 if (!empty($_GET['action']) && in_array($_GET['action'], $core_actions_get))

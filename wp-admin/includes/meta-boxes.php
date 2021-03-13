@@ -627,42 +627,6 @@ function post_excerpt_meta_box($post) {
 <?php
 }
 
-/**
- * Display trackback links form fields.
- *
- * @since 2.6.0
- *
- * @param object $post
- */
-function post_trackback_meta_box($post) {
-	$form_trackback = '<input type="text" name="trackback_url" id="trackback_url" class="code" value="' .
-		esc_attr( str_replace( "\n", ' ', $post->to_ping)) . '" aria-describedby="trackback-url-desc" />';
-	if ('' != $post->pinged) {
-		$pings = '<p>'. __('Already pinged:') . '</p><ul>';
-		$already_pinged = explode("\n", trim($post->pinged));
-		foreach ($already_pinged as $pinged_url) {
-			$pings .= "\n\t<li>" . esc_html($pinged_url) . "</li>";
-		}
-		$pings .= '</ul>';
-	}
-
-?>
-<p>
-	<label for="trackback_url"><?php _e( 'Send trackbacks to:'); ?></label>
-	<?php echo $form_trackback; ?>
-</p>
-<p id="trackback-url-desc" class="howto"><?php _e( 'Separate multiple URLs with spaces'); ?></p>
-<p><?php
-	printf(
-		/* translators: %s: Codex URL */
-		__( 'Trackbacks are a way to notify legacy blog systems that you&#8217;ve linked to them. If you link other WordPress sites, they&#8217;ll be notified automatically using <a href="%s">pingbacks</a>, no other action necessary.'),
-		__( 'https://codex.wordpress.org/Introduction_to_Blogging#Managing_Comments')
-	);
-?></p>
-<?php
-if ( !empty($pings))
-	echo $pings;
-}
 
 /**
  * Display custom fields form fields.

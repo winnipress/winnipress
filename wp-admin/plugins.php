@@ -51,23 +51,15 @@ if ( $action ) {
 				}
 			}
 
-			if ( !is_network_admin() ) {
+			
 				$recent = (array) get_option( 'recently_activated' );
 				unset( $recent[ $plugin ] );
 				update_option( 'recently_activated', $recent );
-			} else {
-				$recent = (array) get_site_option( 'recently_activated' );
-				unset( $recent[ $plugin ] );
-				update_site_option( 'recently_activated', $recent );
-			}
+			
 
-			if ( isset($_GET['from']) && 'import' == $_GET['from'] ) {
-				wp_redirect( self_admin_url("import.php?import=" . str_replace('-importer', '', dirname($plugin))) ); // overrides the ?error=true one above and redirects to the Imports page, stripping the -importer suffix
-			} else if ( isset($_GET['from']) && 'press-this' == $_GET['from'] ) {
-				wp_redirect( self_admin_url( "press-this.php") );
-			} else {
-				wp_redirect( self_admin_url("plugins.php?activate=true&plugin_status=$status&paged=$page&s=$s") ); // overrides the ?error=true one above
-			}
+			
+			wp_redirect( self_admin_url("plugins.php?activate=true&plugin_status=$status&paged=$page&s=$s") ); // overrides the ?error=true one above
+			
 			exit;
 
 		case 'activate-selected':
@@ -389,7 +381,6 @@ if ( $action ) {
 				$plugins = isset( $_POST['checked'] ) ? (array) wp_unslash( $_POST['checked'] ) : array();
 				$sendback = wp_get_referer();
 
-				/** This action is documented in wp-admin/edit-comments.php */
 				$sendback = apply_filters( 'handle_bulk_actions-' . get_current_screen()->id, $sendback, $action, $plugins );
 				wp_safe_redirect( $sendback );
 				exit;

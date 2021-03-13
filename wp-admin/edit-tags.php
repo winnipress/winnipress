@@ -176,7 +176,6 @@ default:
 	}
 	check_admin_referer( 'bulk-tags' );
 	$tags = (array) $_REQUEST['delete_tags'];
-	/** This action is documented in wp-admin/edit-comments.php */
 	$location = apply_filters( 'handle_bulk_actions-' . get_current_screen()->id, $location, $wp_list_table->current_action(), $tags );
 	break;
 }
@@ -283,11 +282,7 @@ require_once( ABSPATH . 'wp-admin/includes/edit-tag-messages.php' );
 
 $class = ( isset( $_REQUEST['error'] ) ) ? 'error' : 'updated';
 
-if ( is_plugin_active( 'wpcat2tag-importer/wpcat2tag-importer.php' ) ) {
-	$import_link = admin_url( 'admin.php?import=wpcat2tag' );
-} else {
-	$import_link = admin_url( 'import.php' );
-}
+
 
 ?>
 

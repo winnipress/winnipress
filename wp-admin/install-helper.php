@@ -11,9 +11,6 @@
  * do, then it is advised to just write the SQL code yourself.
  *
  *     check_column( 'wp_links', 'link_description', 'mediumtext');
- *     if ( check_column( $wpdb->comments, 'comment_author', 'tinytext')) {
- *         echo "ok\n";
- *     }
  *
  *     $error_count = 0;
  *     $tablename = $wpdb->links;

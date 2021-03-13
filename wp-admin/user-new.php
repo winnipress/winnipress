@@ -143,47 +143,7 @@ Please click the following link to confirm the invite:
 $title = __('Add New User');
 $parent_file = 'users.php';
 
-$do_both = false;
-if (is_multisite() && current_user_can('promote_users') && current_user_can('create_users') )
-	$do_both = true;
 
-$help = '<p>' . __('To add a new user to your site, fill in the form on this screen and click the Add New User button at the bottom.') . '</p>';
-
-if (is_multisite() ) {
-	$help .= '<p>' . __('Because this is a multisite installation, you may add accounts that already exist on the Network by specifying a username or email, and defining a role. For more options, such as specifying a password, you have to be a Network Administrator and use the hover link under an existing user&#8217;s name to Edit the user profile under Network Admin > All Users.') . '</p>' .
-	'<p>' . __('New users will receive an email letting them know they&#8217;ve been added as a user for your site. This email will also contain their password. Check the box if you don&#8217;t want the user to receive a welcome email.') . '</p>';
-} else {
-	$help .= '<p>' . __('New users are automatically assigned a password, which they can change after logging in. You can view or edit the assigned password by clicking the Show Password button. The username cannot be changed once the user has been added.') . '</p>' .
-
-	'<p>' . __('By default, new users will receive an email letting them know they&#8217;ve been added as a user for your site. This email will also contain a password reset link. Uncheck the box if you don&#8217;t want to send the new user a welcome email.') . '</p>';
-}
-
-$help .= '<p>' . __('Remember to click the Add New User button at the bottom of this screen when you are finished.') . '</p>';
-
-get_current_screen()->add_help_tab(array(
-	'id'      => 'overview',
-	'title'   => __('Overview'),
-	'content' => $help,
-) );
-
-get_current_screen()->add_help_tab(array(
-'id'      => 'user-roles',
-'title'   => __('User Roles'),
-'content' => '<p>' . __('Here is a basic overview of the different user roles and the permissions associated with each one:') . '</p>' .
-				'<ul>' .
-				'<li>' . __('Subscribers can read comments/comment/receive newsletters, etc. but cannot create regular site content.') . '</li>' .
-				'<li>' . __('Contributors can write and manage their posts but not publish posts or upload media files.') . '</li>' .
-				'<li>' . __('Authors can publish and manage their own posts, and are able to upload files.') . '</li>' .
-				'<li>' . __('Editors can publish posts, manage posts as well as manage other people&#8217;s posts, etc.') . '</li>' .
-				'<li>' . __('Administrators have access to all the administration features.') . '</li>' .
-				'</ul>'
-) );
-
-get_current_screen()->set_help_sidebar(
-    '<p><strong>' . __('For more information:') . '</strong></p>' .
-    '<p>' . __('<a href="https://codex.wordpress.org/Users_Add_New_Screen">Documentation on Adding New Users</a>') . '</p>' .
-    '<p>' . __('<a href="https://wordpress.org/support/">Support Forums</a>') . '</p>'
-);
 
 wp_enqueue_script('wp-ajax-response');
 wp_enqueue_script('user-profile' );
@@ -287,71 +247,6 @@ if (!empty($messages ) ) {
 <div id="ajax-response"></div>
 
 <?php
-if (is_multisite() && current_user_can('promote_users' ) ) {
-	if ($do_both )
-		echo '<h2 id="add-existing-user">' . __('Add Existing User' ) . '</h2>';
-	if (!current_user_can('manage_network_users' ) ) {
-		echo '<p>' . __('Enter the email address of an existing user on this network to invite them to this site. That person will be sent an email asking them to confirm the invite.' ) . '</p>';
-		$label = __('Email');
-		$type  = 'email';
-	} else {
-		echo '<p>' . __('Enter the email address or username of an existing user on this network to invite them to this site. That person will be sent an email asking them to confirm the invite.' ) . '</p>';
-		$label = __('Email or Username');
-		$type  = 'text';
-	}
-?>
-<form method="post" name="adduser" id="adduser" class="validate" novalidate="novalidate"<?php
-	/**
-	 * Fires inside the adduser form tag.
-	 *
-	 * @since 3.0.0
-	 */
-	do_action('user_new_form_tag' );
-?>>
-<input name="action" type="hidden" value="adduser" />
-<?php wp_nonce_field('add-user', '_wpnonce_add-user' ) ?>
-
-<table class="form-table">
-	<tr class="form-field form-required">
-		<th scope="row"><label for="adduser-email"><?php echo $label; ?></label></th>
-		<td><input name="email" type="<?php echo $type; ?>" id="adduser-email" class="wp-suggest-user" value="" /></td>
-	</tr>
-	<tr class="form-field">
-		<th scope="row"><label for="adduser-role"><?php _e('Role'); ?></label></th>
-		<td><select name="role" id="adduser-role">
-			<?php wp_dropdown_roles(get_option('default_role') ); ?>
-			</select>
-		</td>
-	</tr>
-<?php if (current_user_can('manage_network_users' ) ) { ?>
-	<tr>
-		<th scope="row"><?php _e('Skip Confirmation Email' ); ?></th>
-		<td>
-			<input type="checkbox" name="noconfirmation" id="adduser-noconfirmation" value="1" />
-			<label for="adduser-noconfirmation"><?php _e('Add the user without sending an email that requires their confirmation.' ); ?></label>
-		</td>
-	</tr>
-<?php } ?>
-</table>
-<?php
-/**
- * Fires at the end of the new user form.
- *
- * Passes a contextual string to make both types of new user forms
- * uniquely targetable. Contexts are 'add-existing-user' (Multisite),
- * and 'add-new-user' (single site and network admin).
- *
- * @since 3.7.0
- *
- * @param string $type A contextual string specifying which type of new user form the hook follows.
- */
-do_action('user_new_form', 'add-existing-user' );
-?>
-<?php submit_button(__('Add Existing User' ), 'primary', 'adduser', true, array('id' => 'addusersub' ) ); ?>
-</form>
-<?php
-} // is_multisite()
-
 if (current_user_can('create_users') ) {
 	if ($do_both )
 		echo '<h2 id="create-new-user">' . __('Add New User' ) . '</h2>';
