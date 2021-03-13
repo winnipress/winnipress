@@ -275,50 +275,6 @@ function _hash_hmac($algo, $data, $key, $raw_output = false) {
 	return $hmac;
 }
 
-if ( !function_exists('json_encode') ) { 
-	function json_encode( $string ) {
-		global $wp_json;
-
-		if ( !( $wp_json instanceof Services_JSON ) ) {
-			require_once( ABSPATH . WPINC . '/class-json.php' );
-			$wp_json = new Services_JSON();
-		}
-
-		return $wp_json->encodeUnsafe( $string );
-	}
-}
-
-if ( !function_exists('json_decode') ) { 
-	/**
-	 * @global Services_JSON $wp_json
-	 * @param string $string
-	 * @param bool   $assoc_array
-	 * @return object|array
-	 */
-	function json_decode( $string, $assoc_array = false ) {
-		global $wp_json;
-
-		if ( !($wp_json instanceof Services_JSON ) ) {
-			require_once( ABSPATH . WPINC . '/class-json.php' );
-			$wp_json = new Services_JSON();
-		}
-
-		$res = $wp_json->decode( $string );
-		if ( $assoc_array )
-			$res = _json_decode_object_helper( $res );
-		return $res;
-	}
-
-	/**
-	 * @param object $data
-	 * @return array
-	 */
-	function _json_decode_object_helper($data) {
-		if ( is_object($data) )
-			$data = get_object_vars($data);
-		return is_array($data) ? array_map(__FUNCTION__, $data) : $data;
-	}
-}
 
 if ( !function_exists( 'hash_equals' ) ) :
 /**
@@ -488,15 +444,6 @@ if ( !function_exists( 'array_replace_recursive' ) ) :
 	}
 endif;
 
-/**
- * Polyfill for the SPL autoloader. In PHP 5.2 (but not 5.3 and later), SPL can
- * be disabled, and PHP 7.2 raises notices if the compiler finds an __autoload()
- * function declaration. Function availability is checked here, and the
- * autoloader is included only if necessary.
- */
-if ( !function_exists( 'spl_autoload_register' ) ) { 
-	require_once ABSPATH . WPINC . '/spl-autoload-compat.php';
-}
 
 if ( !function_exists( 'is_countable' ) ) { 
 	/**
