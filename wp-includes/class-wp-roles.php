@@ -106,36 +106,6 @@ class WP_Roles {
 		return false;
 	}
 
-	/**
-	 * Set up the object properties.
-	 *
-	 * The role key is set to the current prefix for the $wpdb object with
-	 * 'user_roles' appended. If the $wp_user_roles global is set, then it will
-	 * be used and the role option will not be updated or used.
-	 *
-	 * @since 2.1.0
-	 * @deprecated 4.9.0 Use WP_Roles::for_site()
-	 */
-	protected function _init() {
-		_deprecated_function(__METHOD__, '4.9.0', 'WP_Roles::for_site()' );
-
-		$this->for_site();
-	}
-
-	/**
-	 * Reinitialize the object
-	 *
-	 * Recreates the role objects. This is typically called only by switch_to_blog()
-	 * after switching wpdb to a new site ID.
-	 *
-	 * @since 3.5.0
-	 * @deprecated 4.7.0 Use WP_Roles::for_site()
-	 */
-	public function reinit() {
-		_deprecated_function(__METHOD__, '4.7.0', 'WP_Roles::for_site()' );
-
-		$this->for_site();
-	}
 
 	/**
 	 * Add role name with capabilities to list.

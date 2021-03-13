@@ -171,33 +171,9 @@ $menu[80]                               = array(sprintf(__('Settings %s'), $chan
 	$submenu['options-general.php'][20] = array(__('Reading'), 'manage_options', 'options-reading.php');
 	$submenu['options-general.php'][30] = array(__('Media'), 'manage_options', 'options-media.php');
 	$submenu['options-general.php'][40] = array(__('Permalinks'), 'manage_options', 'options-permalink.php');
-	// translators: %s is the update notification bubble, if updates are available.
-	$submenu['options-general.php'][45] = array(sprintf(__('Privacy %s'), $change_notice), 'manage_privacy_options', 'privacy.php');
 
 $_wp_last_utility_menu = 80; // The index of the last top-level menu in the utility menu group
 
 $menu[99] = array('', 'read', 'separator-last', '', 'wp-menu-separator');
-
-// Back-compat for old top-levels
-$_wp_real_parent_file['post.php'] = 'edit.php';
-$_wp_real_parent_file['post-new.php'] = 'edit.php';
-$_wp_real_parent_file['edit-pages.php'] = 'edit.php?post_type=page';
-$_wp_real_parent_file['page-new.php'] = 'edit.php?post_type=page';
-$_wp_real_parent_file['wpmu-admin.php'] = 'tools.php';
-$_wp_real_parent_file['ms-admin.php'] = 'tools.php';
-
-// Ensure backward compatibility.
-$compat = array(
-	'index' => 'dashboard',
-	'edit' => 'posts',
-	'post' => 'posts',
-	'upload' => 'media',
-	'link-manager' => 'links',
-	'edit-pages' => 'pages',
-	'page' => 'pages',
-	'edit-comments' => 'comments',
-	'options-general' => 'settings',
-	'themes' => 'appearance',
-	);
 
 require_once(ABSPATH . 'wp-admin/includes/menu.php');

@@ -3734,68 +3734,11 @@ function absint( $maybeint ){
 	return abs( intval( $maybeint ) );
 }
 
-/**
- * Mark a function as deprecated and inform when it has been used.
- *
- * There is a {@see 'hook deprecated_function_run'} that will be called that can be used
- * to get the backtrace up to what file and function called the deprecated
- * function.
- *
- * The current behavior is to trigger a user error if `WP_DEBUG` is true.
- *
- * This function is to be used in every function that is deprecated.
- *
- * @since 2.5.0
- * @access private
- *
- * @param string $function    The function that was called.
- * @param string $version     The version of WordPress that deprecated the function.
- * @param string $replacement Optional. The function that should have been called. Default null.
- */
-function _deprecated_function( $function, $version, $replacement = null ){
 
-	/**
-	 * Fires when a deprecated function is called.
-	 *
-	 * @since 2.5.0
-	 *
-	 * @param string $function    The function that was called.
-	 * @param string $replacement The function that should have been called.
-	 * @param string $version     The version of WordPress that deprecated the function.
-	 */
-	do_action( 'deprecated_function_run', $function, $replacement, $version );
-
-	/**
-	 * Filters whether to trigger an error for deprecated functions.
-	 *
-	 * @since 2.5.0
-	 *
-	 * @param bool $trigger Whether to trigger the error for deprecated functions. Default true.
-	 */
-	if ( WP_DEBUG && apply_filters( 'deprecated_function_trigger_error', true ) ){
-		if ( function_exists( '__' ) ){ 
-			if ( !is_null( $replacement ) ){
-				/* translators: 1: PHP function name, 2: version number, 3: alternative function name */
-				trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since version %2$s!Use %3$s instead.'), $function, $version, $replacement ) );
-			} else {
-				/* translators: 1: PHP function name, 2: version number */
-				trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since version %2$s with no alternative available.'), $function, $version ) );
-			}
-		} else {
-			if ( !is_null( $replacement ) ){
-				trigger_error( sprintf( '%1$s is <strong>deprecated</strong> since version %2$s!Use %3$s instead.', $function, $version, $replacement ) );
-			} else {
-				trigger_error( sprintf( '%1$s is <strong>deprecated</strong> since version %2$s with no alternative available.', $function, $version ) );
-			}
-		}
-	}
-}
 
 /**
  * Marks a constructor as deprecated and informs when it has been used.
  *
- * Similar to _deprecated_function(), but with different strings. Used to
- * remove PHP4 style constructors.
  *
  * The current behavior is to trigger a user error if `WP_DEBUG` is true.
  *
@@ -3858,66 +3801,7 @@ function _deprecated_constructor( $class, $version, $parent_class = '' ){
 
 }
 
-/**
- * Mark a file as deprecated and inform when it has been used.
- *
- * There is a hook {@see 'deprecated_file_included'} that will be called that can be used
- * to get the backtrace up to what file and function included the deprecated
- * file.
- *
- * The current behavior is to trigger a user error if `WP_DEBUG` is true.
- *
- * This function is to be used in every file that is deprecated.
- *
- * @since 2.5.0
- * @access private
- *
- * @param string $file        The file that was included.
- * @param string $version     The version of WordPress that deprecated the file.
- * @param string $replacement Optional. The file that should have been included based on ABSPATH.
- *                            Default null.
- * @param string $message     Optional. A message regarding the change. Default empty.
- */
-function _deprecated_file( $file, $version, $replacement = null, $message = '' ){
 
-	/**
-	 * Fires when a deprecated file is called.
-	 *
-	 * @since 2.5.0
-	 *
-	 * @param string $file        The file that was called.
-	 * @param string $replacement The file that should have been included based on ABSPATH.
-	 * @param string $version     The version of WordPress that deprecated the file.
-	 * @param string $message     A message regarding the change.
-	 */
-	do_action( 'deprecated_file_included', $file, $replacement, $version, $message );
-
-	/**
-	 * Filters whether to trigger an error for deprecated files.
-	 *
-	 * @since 2.5.0
-	 *
-	 * @param bool $trigger Whether to trigger the error for deprecated files. Default true.
-	 */
-	if ( WP_DEBUG && apply_filters( 'deprecated_file_trigger_error', true ) ){
-		$message = empty( $message ) ? '' : ' ' . $message;
-		if ( function_exists( '__' ) ){ 
-			if ( !is_null( $replacement ) ){
-				/* translators: 1: PHP file name, 2: version number, 3: alternative file name */
-				trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since version %2$s!Use %3$s instead.'), $file, $version, $replacement ) . $message );
-			} else {
-				/* translators: 1: PHP file name, 2: version number */
-				trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since version %2$s with no alternative available.'), $file, $version ) . $message );
-			}
-		} else {
-			if ( !is_null( $replacement ) ){
-				trigger_error( sprintf( '%1$s is <strong>deprecated</strong> since version %2$s!Use %3$s instead.', $file, $version, $replacement ) . $message );
-			} else {
-				trigger_error( sprintf( '%1$s is <strong>deprecated</strong> since version %2$s with no alternative available.', $file, $version ) . $message );
-			}
-		}
-	}
-}
 /**
  * Mark a function argument as deprecated and inform when it has been used.
  *

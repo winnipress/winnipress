@@ -267,33 +267,6 @@ $show_syntax_highlighting_preference = (
 		</td>
 	</tr>
 <?php endif; ?>
-<?php if (count($_wp_admin_css_colors) > 1 && has_action('admin_color_scheme_picker') ) : ?>
-<tr class="user-admin-color-wrap">
-<th scope="row"><?php _e('Admin Color Scheme')?></th>
-<td><?php
-	/**
-	 * Fires in the 'Admin Color Scheme' section of the user editing screen.
-	 *
-	 * The section is only enabled if a callback is hooked to the action,
-	 * and if there is more than one defined color scheme for the admin.
-	 *
-	 * @since 3.0.0
-	 * @since 3.8.1 Added `$user_id` parameter.
-	 *
-	 * @param int $user_id The user ID.
-	 */
-	do_action('admin_color_scheme_picker', $user_id );
-?></td>
-</tr>
-<?php
-endif; // $_wp_admin_css_colors
-if (!(IS_PROFILE_PAGE && !$user_can_edit ) ) : ?>
-<tr class="user-comment-shortcuts-wrap">
-<th scope="row"><?php _e('Keyboard Shortcuts' ); ?></th>
-<td><label for="comment_shortcuts"><input type="checkbox" name="comment_shortcuts" id="comment_shortcuts" value="true" <?php if (!empty($profileuser->comment_shortcuts ) ) checked('true', $profileuser->comment_shortcuts ); ?> /> <?php _e('Enable keyboard shortcuts for comment moderation.'); ?></label> <?php _e('<a href="https://codex.wordpress.org/Keyboard_Shortcuts" target="_blank">More information</a>'); ?></td>
-</tr>
-<?php endif; ?>
-
 
 <?php
 $languages = get_available_languages();

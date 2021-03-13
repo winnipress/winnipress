@@ -1389,8 +1389,6 @@ function validate_username($username ) {
  *                                             False if not empty.
  *     @type string|bool $syntax_highlighting  Whether to enable the rich code editor for the user.
  *                                             False if not empty.
- *     @type string|bool $comment_shortcuts    Whether to enable comment moderation keyboard
- *                                             shortcuts for the user. Default false.
  *     @type string      $admin_color          Admin color scheme for the user. Default 'fresh'.
  *     @type bool        $use_ssl              Whether the user should always access the admin over
  *                                             https. Default false.
@@ -1688,7 +1686,6 @@ function wp_insert_user($userdata ) {
 	 *     @type string   $description          The user's description.
 	 *     @type bool     $rich_editing         Whether to enable the rich-editor for the user. False if not empty.
 	 *     @type bool     $syntax_highlighting  Whether to enable the rich code editor for the user. False if not empty.
-	 *     @type bool     $comment_shortcuts    Whether to enable keyboard shortcuts for the user. Default false.
 	 *     @type string   $admin_color          The color scheme for a user's admin screen. Default 'fresh'.
 	 *     @type int|bool $use_ssl              Whether to force SSL on the user's admin area. 0|false if SSL is
 	 *                                          not forced.
