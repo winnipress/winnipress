@@ -88,14 +88,6 @@ final class WP_Post {
 	public $post_status = 'publish';
 
 	/**
-	 * Whether comments are allowed.
-	 *
-	 * @since 3.5.0
-	 * @var string
-	 */
-	public $comment_status = 'open';
-
-	/**
 	 * Whether pings are allowed.
 	 *
 	 * @since 3.5.0
@@ -199,15 +191,6 @@ final class WP_Post {
 	 */
 	public $post_mime_type = '';
 
-	/**
-	 * Cached comment count.
-	 *
-	 * A numeric string, for compatibility reasons.
-	 *
-	 * @since 3.5.0
-	 * @var string
-	 */
-	public $comment_count = 0;
 
 	/**
 	 * Stores the post object's sanitization level.

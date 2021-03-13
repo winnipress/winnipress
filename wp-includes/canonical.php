@@ -288,30 +288,7 @@ function redirect_canonical($requested_url = null, $do_redirect = true){
 			}
 
 			$addl_path = '';
-			if(is_feed() && in_array(get_query_var('feed'), $wp_rewrite->feeds)){
-				$addl_path = !empty($addl_path) ? trailingslashit($addl_path) : '';
-				if(!is_singular() && get_query_var('withcomments'))
-					$addl_path .= 'comments/';
-				if(('rss' == get_default_feed() && 'feed' == get_query_var('feed')) || 'rss' == get_query_var('feed'))
-					$addl_path .= user_trailingslashit('feed/' . ((get_default_feed() == 'rss2') ? '' : 'rss2'), 'feed');
-				else
-					$addl_path .= user_trailingslashit('feed/' . ((get_default_feed() ==  get_query_var('feed') || 'feed' == get_query_var('feed')) ? '' : get_query_var('feed')), 'feed');
-				$redirect['query'] = remove_query_arg('feed', $redirect['query']);
-			} elseif(is_feed() && 'old' == get_query_var('feed')){
-				$old_feed_files = array(
-					'wp-atom.php'         => 'atom',
-					'wp-commentsrss2.php' => 'comments_rss2',
-					'wp-feed.php'         => get_default_feed(),
-					'wp-rdf.php'          => 'rdf',
-					'wp-rss.php'          => 'rss2',
-					'wp-rss2.php'         => 'rss2',
-				);
-				if(isset($old_feed_files[ basename($redirect['path']) ])){
-					$redirect_url = get_feed_link($old_feed_files[ basename($redirect['path']) ]);
-					wp_redirect($redirect_url, 301);
-					die();
-				}
-			}
+			
 
 			if(get_query_var('paged') > 0){
 				$paged = get_query_var('paged');
@@ -327,13 +304,7 @@ function redirect_canonical($requested_url = null, $do_redirect = true){
 				}
 			}
 
-			if(get_option('page_comments') && (
-				('newest' == get_option('default_comments_page') && get_query_var('cpage') > 0) ||
-				('newest' != get_option('default_comments_page') && get_query_var('cpage') > 1)
-			)){
-				$addl_path = (!empty($addl_path) ? trailingslashit($addl_path) : '') . user_trailingslashit($wp_rewrite->comments_pagination_base . '-' . get_query_var('cpage'), 'commentpaged');
-				$redirect['query'] = remove_query_arg('cpage', $redirect['query']);
-			}
+			
 
 			$redirect['path'] = user_trailingslashit(preg_replace('|/' . preg_quote($wp_rewrite->index, '|') . '/?$|', '/', $redirect['path'])); // strip off trailing /index.php/
 			if(!empty($addl_path) && $wp_rewrite->using_index_permalinks() && strpos($redirect['path'], '/' . $wp_rewrite->index . '/') === false)

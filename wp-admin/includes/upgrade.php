@@ -193,33 +193,10 @@ function wp_install_defaults($user_id){
 	));
 	$wpdb->insert($wpdb->term_relationships, array('term_taxonomy_id' => $cat_tt_id, 'object_id' => 1));
 
-	// Default comment
-	if(is_multisite()){
-		$first_comment_author = get_site_option('first_comment_author');
-		$first_comment_email = get_site_option('first_comment_email');
-		$first_comment_url = get_site_option('first_comment_url', network_home_url());
-		$first_comment = get_site_option('first_comment');
-	}
 
-	$first_comment_author = !empty($first_comment_author) ? $first_comment_author : __('A WordPress Commenter');
-	$first_comment_email = !empty($first_comment_email) ? $first_comment_email : 'wapuu@wordpress.example';
-	$first_comment_url = !empty($first_comment_url) ? $first_comment_url : 'https://wordpress.org/';
-	$first_comment = !empty($first_comment) ? $first_comment :  __('Hi, this is a comment.
-To get started with moderating, editing, and deleting comments, please visit the Comments screen in the dashboard.
-Commenter avatars come from <a href="https://gravatar.com">Gravatar</a>.');
-	$wpdb->insert($wpdb->comments, array(
-		'comment_post_ID' => 1,
-		'comment_author' => $first_comment_author,
-		'comment_author_email' => $first_comment_email,
-		'comment_author_url' => $first_comment_url,
-		'comment_date' => $now,
-		'comment_date_gmt' => $now_gmt,
-		'comment_content' => $first_comment
-	));
 
 	// First Page
-	if(is_multisite())
-		$first_page = get_site_option('first_page');
+
 
 	$first_page = !empty($first_page) ? $first_page : sprintf(__("This is an example page. It's different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this:
 
@@ -252,17 +229,7 @@ As a new WordPress user, you should go to <a href=\"%s\">your dashboard</a> to d
 	));
 	$wpdb->insert($wpdb->postmeta, array('post_id' => 2, 'meta_key' => '_wp_page_template', 'meta_value' => 'default'));
 
-	// Privacy Policy page
-	if(is_multisite()){
-		// Disable by default unless the suggested content is provided.
-		$privacy_policy_content = get_site_option('default_privacy_policy_content');
-	} else {
-		if(!class_exists('WP_Privacy_Policy_Content')){
-			include_once(ABSPATH . 'wp-admin/includes/misc.php');
-		}
 
-		$privacy_policy_content = WP_Privacy_Policy_Content::get_default_content();
-	}
 
 	if(!empty($privacy_policy_content)){
 		$privacy_policy_guid = get_option('home') . '/?page_id=3';
@@ -1149,7 +1116,7 @@ function make_site_theme_from_default($theme_name, $template){
 	$default_dir = WP_CONTENT_DIR . '/themes/' . WP_DEFAULT_THEME;
 
 	// Copy files from the default theme to the site theme.
-	//$files = array('index.php', 'comments.php', 'comments-popup.php', 'footer.php', 'header.php', 'sidebar.php', 'style.css');
+	//$files = array('index.php', 'footer.php', 'header.php', 'sidebar.php', 'style.css');
 
 	$theme_dir = @ opendir($default_dir);
 	if($theme_dir){

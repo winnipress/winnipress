@@ -11,87 +11,6 @@
  * @since 2.3.0
  */
 
-/** The descriptions for theme files. */
-$wp_file_descriptions = array(
-	'functions.php'         => __( 'Theme Functions'),
-	'header.php'            => __( 'Theme Header'),
-	'footer.php'            => __( 'Theme Footer'),
-	'sidebar.php'           => __( 'Sidebar'),
-	'comments.php'          => __( 'Comments'),
-	'searchform.php'        => __( 'Search Form'),
-	'404.php'               => __( '404 Template'),
-	'link.php'              => __( 'Links Template'),
-	// Archives
-	'index.php'             => __( 'Main Index Template'),
-	'archive.php'           => __( 'Archives'),
-	'author.php'            => __( 'Author Template'),
-	'taxonomy.php'          => __( 'Taxonomy Template'),
-	'category.php'          => __( 'Category Template'),
-	'tag.php'               => __( 'Tag Template'),
-	'home.php'              => __( 'Posts Page'),
-	'search.php'            => __( 'Search Results'),
-	'date.php'              => __( 'Date Template'),
-	// Content
-	'singular.php'          => __( 'Singular Template'),
-	'single.php'            => __( 'Single Post'),
-	'page.php'              => __( 'Single Page'),
-	'front-page.php'        => __( 'Homepage'),
-	// Attachments
-	'attachment.php'        => __( 'Attachment Template'),
-	'image.php'             => __( 'Image Attachment Template'),
-	'video.php'             => __( 'Video Attachment Template'),
-	'audio.php'             => __( 'Audio Attachment Template'),
-	'application.php'       => __( 'Application Attachment Template'),
-	// Embeds
-	'embed.php'             => __( 'Embed Template'),
-	'embed-404.php'         => __( 'Embed 404 Template'),
-	'embed-content.php'     => __( 'Embed Content Template'),
-	'header-embed.php'      => __( 'Embed Header Template'),
-	'footer-embed.php'      => __( 'Embed Footer Template'),
-	// Stylesheets
-	'style.css'             => __( 'Stylesheet'),
-	'editor-style.css'      => __( 'Visual Editor Stylesheet'),
-	'editor-style-rtl.css'  => __( 'Visual Editor RTL Stylesheet'),
-	'rtl.css'               => __( 'RTL Stylesheet'),
-	// Other
-	'my-hacks.php'          => __( 'my-hacks.php (legacy hacks support)'),
-	'.htaccess'             => __( '.htaccess (for rewrite rules)'),
-	// Deprecated files
-	'wp-layout.css'         => __( 'Stylesheet'),
-	'wp-comments.php'       => __( 'Comments Template'),
-	'wp-comments-popup.php' => __( 'Popup Comments Template'),
-	'comments-popup.php'    => __( 'Popup Comments'),
-);
-
-/**
- * Get the description for standard WordPress theme files and other various standard
- * WordPress files
- *
- * @since 1.5.0
- *
- * @global array $wp_file_descriptions Theme file descriptions.
- * @global array $allowed_files        List of allowed files.
- * @param string $file Filesystem path or filename
- * @return string Description of file from $wp_file_descriptions or basename of $file if description doesn't exist.
- *                Appends 'Page Template' to basename of $file if the file is a page template
- */
-function get_file_description( $file) {
-	global $wp_file_descriptions, $allowed_files;
-
-	$dirname = pathinfo( $file, PATHINFO_DIRNAME);
-
-	$file_path = $allowed_files[ $file ];
-	if ( isset( $wp_file_descriptions[ basename( $file) ]) && '.' === $dirname) {
-		return $wp_file_descriptions[ basename( $file) ];
-	} elseif ( file_exists( $file_path) && is_file( $file_path)) {
-		$template_data = implode( '', file( $file_path));
-		if ( preg_match( '|Template Name:(.*)$|mi', $template_data, $name)) {
-			return sprintf( __( '%s Page Template'), _cleanup_header_comment( $name[1]));
-		}
-	}
-
-	return trim( basename( $file));
-}
 
 /**
  * Get the absolute filesystem path to the root of the WordPress installation
@@ -1806,7 +1725,7 @@ function wp_print_request_filesystem_credentials_modal() {
  * @param array $group_data {
  *     The group data to render.
  *
- *     @type string $group_label  The user-facing heading for the group, e.g. 'Comments'.
+ *     @type string $group_label  The user-facing heading for the group,
  *     @type array  $items        {
  *         An array of group items.
  *
