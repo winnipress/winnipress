@@ -3,10 +3,7 @@
  * Edit post administration panel.
  *
  * Manage Post actions: post, edit, delete, etc.
- *
- * @package WordPress
- * @subpackage Administration
- */
+*/
 
 /** WordPress Administration Bootstrap */
 require_once( dirname( __FILE__ ) . '/admin.php' );
@@ -14,40 +11,38 @@ require_once( dirname( __FILE__ ) . '/admin.php' );
 $parent_file = 'edit.php';
 $submenu_file = 'edit.php';
 
-wp_reset_vars( array( 'action' ) );
+wp_reset_vars(array( 'action' ));
 
-if ( isset( $_GET['post'] ) && isset( $_POST['post_ID'] ) && (int) $_GET['post'] !== (int) $_POST['post_ID'] )
+if(isset($_GET['post']) && isset($_POST['post_ID']) && (int) $_GET['post'] !== (int) $_POST['post_ID']){
 	wp_die( __( 'A post ID mismatch has been detected.' ), __( 'Sorry, you are not allowed to edit this item.' ), 400 );
-elseif ( isset( $_GET['post'] ) )
+}elseif(isset($_GET['post'])){
  	$post_id = $post_ID = (int) $_GET['post'];
-elseif ( isset( $_POST['post_ID'] ) )
+}elseif(isset($_POST['post_ID'])){
  	$post_id = $post_ID = (int) $_POST['post_ID'];
-else
+}else{
  	$post_id = $post_ID = 0;
-
-/**
- * @global string  $post_type
- * @global object  $post_type_object
- * @global WP_Post $post
- */
-global $post_type, $post_type_object, $post;
-
-if ( $post_id )
-	$post = get_post( $post_id );
-
-if ( $post ) {
-	$post_type = $post->post_type;
-	$post_type_object = get_post_type_object( $post_type );
 }
 
-if ( isset( $_POST['post_type'] ) && $post && $post_type !== $_POST['post_type'] ) {
+global $post_type, $post_type_object, $post;
+
+if($post_id){
+	$post = get_post($post_id);
+}
+
+if($post){
+	$post_type = $post->post_type;
+	$post_type_object = get_post_type_object($post_type);
+}
+
+if (isset($_POST['post_type']) && $post && $post_type !== $_POST['post_type']){
 	wp_die( __( 'A post type mismatch has been detected.' ), __( 'Sorry, you are not allowed to edit this item.' ), 400 );
 }
 
-if ( isset( $_POST['deletepost'] ) )
+if(isset($_POST['deletepost'])){
 	$action = 'delete';
-elseif ( isset($_POST['wp-preview']) && 'dopreview' == $_POST['wp-preview'] )
+}elseif(isset($_POST['wp-preview']) && 'dopreview' == $_POST['wp-preview']){
 	$action = 'preview';
+}
 
 $sendback = wp_get_referer();
 if ( !$sendback ||
@@ -65,37 +60,10 @@ if ( !$sendback ||
 	$sendback = remove_query_arg( array('trashed', 'untrashed', 'deleted', 'ids'), $sendback );
 }
 
-switch($action) {
-case 'post-quickdraft-save':
-	// Check nonce and capabilities
-	$nonce = $_REQUEST['_wpnonce'];
-	$error_msg = false;
-
-	// For output of the quickdraft dashboard widget
-	require_once ABSPATH . 'wp-admin/includes/dashboard.php';
-
-	if ( !wp_verify_nonce( $nonce, 'add-post' ) )
-		$error_msg = __( 'Unable to submit this form, please refresh and try again.' );
-
-	if ( !current_user_can( get_post_type_object( 'post' )->cap->create_posts ) ) {
-		exit;
-	}
-
-	if ( $error_msg )
-		return wp_dashboard_quick_press( $error_msg );
-
-	$post = get_post( $_REQUEST['post_ID'] );
-	check_admin_referer( 'add-' . $post->post_type );
-
-
-	edit_post();
-	wp_dashboard_quick_press();
-	exit;
-
-case 'postajaxpost':
+switch($action){
 case 'post':
 	check_admin_referer( 'add-' . $post_type );
-	$post_id = 'postajaxpost' == $action ? edit_post() : write_post();
+	$post_id =  write_post();
 	redirect_post( $post_id );
 	exit();
 
@@ -148,29 +116,12 @@ case 'edit':
 		$post_new_file = "post-new.php?post_type=$post_type";
 	}
 
-	/**
-	 * Allows replacement of the editor.
-	 *
-	 * @since 4.9.0
-	 *
-	 * @param boolean      Whether to replace the editor. Default false.
-	 * @param object $post Post object.
-	 */
-	if ( apply_filters( 'replace_editor', false, $post ) === true ) {
-		break;
-	}
 
-	if ( !wp_check_post_lock( $post->ID ) ) {
-		$active_post_lock = wp_set_post_lock( $post->ID );
-
-		if ( 'attachment' !== $post_type )
-			wp_enqueue_script('autosave');
-	}
 
 	$title = $post_type_object->labels->edit_item;
 	$post = get_post($post_id, OBJECT, 'edit');
 
-	include( ABSPATH . 'wp-admin/edit-form-advanced.php' );
+	include( ABSPATH . 'wp-admin/includes/post-editor.php' );
 
 	break;
 
