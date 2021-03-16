@@ -103,8 +103,7 @@ function redirect_canonical($requested_url = null, $do_redirect = true){
 		$vars = $wpdb->get_results($wpdb->prepare("SELECT post_type, post_parent FROM $wpdb->posts WHERE ID = %d", $id));
 
 		if(isset($vars[0]) && $vars = $vars[0]){
-			if('revision' == $vars->post_type && $vars->post_parent > 0)
-				$id = $vars->post_parent;
+			
 
 			if($redirect_url = get_permalink($id))
 				$redirect['query'] = _remove_qs_args_if_not_in_url($redirect['query'], array('p', 'page_id', 'attachment_id', 'pagename', 'name', 'post_type'), $redirect_url);

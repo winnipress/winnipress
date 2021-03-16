@@ -15,18 +15,6 @@
 global $post_type, $post_type_object, $post;
 
 
-$check_users = get_users( array( 'fields' => 'ID', 'number' => 2 ) );
-
-if ( count( $check_users ) > 1 )
-	add_action( 'admin_footer', '_admin_notice_post_locked' );
-
-unset( $check_users );
-
-
-wp_enqueue_script('post');
-$_wp_editor_expand = $_content_editor_dfw = false;
-
-
 $post_ID = isset($post_ID) ? (int) $post_ID : 0;
 $user_ID = isset($user_ID) ? (int) $user_ID : 0;
 $action = isset($action) ? $action : '';
@@ -46,7 +34,6 @@ if ( !$thumbnail_support && 'attachment' === $post_type && $post->post_mime_type
 }
 
 if ( $thumbnail_support ) {
-	add_thickbox();
 	wp_enqueue_media( array( 'post' => $post_ID ) );
 }
 

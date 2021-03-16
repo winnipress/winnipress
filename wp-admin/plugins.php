@@ -393,7 +393,6 @@ if ( $action ) {
 $wp_list_table->prepare_items();
 
 wp_enqueue_script('plugin-install');
-add_thickbox();
 
 add_screen_option( 'per_page', array( 'default' => 999 ) );
 

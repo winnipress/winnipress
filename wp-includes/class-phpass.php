@@ -15,7 +15,7 @@
 #
 # Please be sure to update the Version line if you edit this file in any way.
 # It is suggested that you leave the main version number intact, but indicate
-# your project name (after the slash) and add your own revision information.
+# your project name (after the slash) and add your own  information.
 #
 # Please do not change the "private" password hashing method implemented in
 # here, thereby making your hashes incompatible.  However, if you must, please

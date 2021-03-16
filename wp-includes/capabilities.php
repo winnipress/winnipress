@@ -64,13 +64,7 @@ function map_meta_cap($cap, $user_id){
 			break;
 		}
 
-		if ('revision' == $post->post_type){
-			$post = get_post($post->post_parent);
-			if (!$post){
-				$caps[] = 'do_not_allow';
-				break;
-			}
-		}
+
 
 		if ((get_option('page_for_posts') == $post->ID) || (get_option('page_on_front') == $post->ID)){
 			$caps[] = 'manage_options';
@@ -139,13 +133,7 @@ function map_meta_cap($cap, $user_id){
 			break;
 		}
 
-		if ('revision' == $post->post_type){
-			$post = get_post($post->post_parent);
-			if (!$post){
-				$caps[] = 'do_not_allow';
-				break;
-			}
-		}
+
 
 		$post_type = get_post_type_object($post->post_type);
 		if (!$post_type){
@@ -207,13 +195,7 @@ function map_meta_cap($cap, $user_id){
 			break;
 		}
 
-		if ('revision' == $post->post_type){
-			$post = get_post($post->post_parent);
-			if (!$post){
-				$caps[] = 'do_not_allow';
-				break;
-			}
-		}
+
 
 		$post_type = get_post_type_object($post->post_type);
 		if (!$post_type){

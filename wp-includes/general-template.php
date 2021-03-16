@@ -3101,7 +3101,7 @@ function wp_editor($content, $editor_id, $settings = array()){
  * Outputs the editor scripts, stylesheets, and default settings.
  *
  * The editor can be initialized when needed after page load.
- * See wp.editor.initialize() in wp-admin/js/editor.js for initialization options.
+ * See wp.editor.initialize() in wp-a initialization options.
  */
 function wp_enqueue_editor(){
 	wp_enqueue_script('tiny-mce-js', 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js');
@@ -3560,24 +3560,6 @@ function wp_admin_css( $file = 'wp-admin', $force_echo = false ) {
 		echo apply_filters( 'wp_admin_css', "<link rel='stylesheet' href='" . esc_url( wp_admin_css_uri( "$file-rtl" ) ) . "' type='text/css' />\n", "$file-rtl" );
 	}
 }
-
-/**
- * Enqueues the default ThickBox js and css.
- *
- * If any of the settings need to be changed, this can be done with another js
- * file similar to media-upload.js. That file should
- * require array('thickbox') to ensure it is loaded after.
- *
- * @since 2.5.0
- */
-function add_thickbox() {
-	wp_enqueue_script( 'thickbox' );
-	wp_enqueue_style( 'thickbox' );
-
-	if ( is_network_admin() )
-		add_action( 'admin_head', '_thickbox_path_admin_subfolder' );
-}
-
 
 
 

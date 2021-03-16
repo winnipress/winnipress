@@ -2548,7 +2548,7 @@ function wp_video_shortcode($attr, $content = '' ){
 	}
 
 	// Mediaelement has issues with some URL formats for Vimeo and YouTube, so
-	// update the URL to prevent the ME.js player from breaking.
+	// update the URL to prevent layer from breaking.
 	if('mediaelement' === $library ){
 		if($is_youtube ){
 			// Remove `feature` query arg and force SSL - see #40866.

@@ -235,14 +235,7 @@ function edit_post( $post_data = null) {
 			wp_die( __('Sorry, you are not allowed to edit this post.'));
 	}
 
-	if ( post_type_supports( $ptype->name, 'revisions')) {
-		$revisions = wp_get_post_revisions( $post_ID, array( 'order' => 'ASC', 'posts_per_page' => 1));
-		$revision = current( $revisions);
 
-		// Check if the revisions have been upgraded
-		if ( $revisions && _wp_get_post_revision_version( $revision) < 1)
-			_wp_upgrade_revisions_of_post( $post, wp_get_post_revisions( $post_ID));
-	}
 
 	if ( isset($post_data['visibility'])) {
 		switch ( $post_data['visibility']) {
@@ -1529,161 +1522,7 @@ function wp_set_post_lock( $post_id) {
 	return array( $now, $user_id);
 }
 
-/**
- * Outputs the HTML for the notice to say that someone else is editing or has taken over editing of this post.
- *
- * @since 2.8.5
- * @return none
- */
-function _admin_notice_post_locked() {
-	if ( !$post = get_post())
-		return;
 
-	$user = null;
-	if (  $user_id = wp_check_post_lock( $post->ID))
-		$user = get_userdata( $user_id);
-
-	if ( $user) {
-
-		/**
-		 * Filters whether to show the post locked dialog.
-		 *
-		 * Returning a falsey value to the filter will short-circuit displaying the dialog.
-		 *
-		 * @since 3.6.0
-		 *
-		 * @param bool         $display Whether to display the dialog. Default true.
-		 * @param WP_Post      $post    Post object.
-		 * @param WP_User|bool $user    WP_User object on success, false otherwise.
-		 */
-		if ( !apply_filters( 'show_post_locked_dialog', true, $post, $user))
-			return;
-
-		$locked = true;
-	} else {
-		$locked = false;
-	}
-
-	if ( $locked && ( $sendback = wp_get_referer()) &&
-		false === strpos( $sendback, 'post.php') && false === strpos( $sendback, 'post-new.php')) {
-
-		$sendback_text = __('Go back');
-	} else {
-		$sendback = admin_url( 'edit.php');
-
-		if ( 'post' != $post->post_type)
-			$sendback = add_query_arg( 'post_type', $post->post_type, $sendback);
-
-		$sendback_text = get_post_type_object( $post->post_type)->labels->all_items;
-	}
-
-	$hidden = $locked ? '' : ' hidden';
-
-	?>
-	<div id="post-lock-dialog" class="notification-dialog-wrap<?php echo $hidden; ?>">
-	<div class="notification-dialog-background"></div>
-	<div class="notification-dialog">
-	<?php
-
-	if ( $locked) {
-		$query_args = array();
-		if ( get_post_type_object( $post->post_type)->public) {
-			if ( 'publish' == $post->post_status || $user->ID != $post->post_author) {
-				// Latest content is in autosave
-				$nonce = wp_create_nonce( 'post_preview_' . $post->ID);
-				$query_args['preview_id'] = $post->ID;
-				$query_args['preview_nonce'] = $nonce;
-			}
-		}
-
-		$preview_link = get_preview_post_link( $post->ID, $query_args);
-
-		/**
-		 * Filters whether to allow the post lock to be overridden.
-		 *
-		 * Returning a falsey value to the filter will disable the ability
-		 * to override the post lock.
-		 *
-		 * @since 3.6.0
-		 *
-		 * @param bool    $override Whether to allow overriding post locks. Default true.
-		 * @param WP_Post $post     Post object.
-		 * @param WP_User $user     User object.
-		 */
-		$override = apply_filters( 'override_post_lock', true, $post, $user);
-		$tab_last = $override ? '' : ' wp-tab-last';
-
-		?>
-		<div class="post-locked-message">
-		<div class="post-locked-avatar"><?php echo get_avatar( $user->ID, 64); ?></div>
-		<p class="currently-editing wp-tab-first" tabindex="0">
-		<?php
-			if ( $override) {
-				/* translators: %s: user's display name */
-				printf( __( '%s is already editing this post. Do you want to take over?'), esc_html( $user->display_name));
-			} else {
-				/* translators: %s: user's display name */
-				printf( __( '%s is already editing this post.'), esc_html( $user->display_name));
-			}
-		?>
-		</p>
-		<?php
-		/**
-		 * Fires inside the post locked dialog before the buttons are displayed.
-		 *
-		 * @since 3.6.0
-		 *
-		 * @param WP_Post $post Post object.
-		 */
-		do_action( 'post_locked_dialog', $post);
-		?>
-		<p>
-		<a class="button" href="<?php echo esc_url( $sendback); ?>"><?php echo $sendback_text; ?></a>
-		<?php if ( $preview_link) { ?>
-		<a class="button<?php echo $tab_last; ?>" href="<?php echo esc_url( $preview_link); ?>"><?php _e('Preview'); ?></a>
-		<?php
-		}
-
-		// Allow plugins to prevent some users overriding the post lock
-		if ( $override) {
-			?>
-			<a class="button button-primary wp-tab-last" href="<?php echo esc_url( add_query_arg( 'get-post-lock', '1', wp_nonce_url( get_edit_post_link( $post->ID, 'url'), 'lock-post_' . $post->ID))); ?>"><?php _e('Take over'); ?></a>
-			<?php
-		}
-
-		?>
-		</p>
-		</div>
-		<?php
-	} else {
-		?>
-		<div class="post-taken-over">
-			<div class="post-locked-avatar"></div>
-			<p class="wp-tab-first" tabindex="0">
-			<span class="currently-editing"></span><br />
-			<span class="locked-saving hidden"><img src="<?php echo esc_url( admin_url( 'images/spinner-2x.gif')); ?>" width="16" height="16" alt="" /> <?php _e( 'Saving revision&hellip;'); ?></span>
-			<span class="locked-saved hidden"><?php _e('Your latest changes were saved as a revision.'); ?></span>
-			</p>
-			<?php
-			/**
-			 * Fires inside the dialog displayed when a user has lost the post lock.
-			 *
-			 * @since 3.6.0
-			 *
-			 * @param WP_Post $post Post object.
-			 */
-			do_action( 'post_lock_lost_dialog', $post);
-			?>
-			<p><a class="button button-primary wp-tab-last" href="<?php echo esc_url( $sendback); ?>"><?php echo $sendback_text; ?></a></p>
-		</div>
-		<?php
-	}
-
-	?>
-	</div>
-	</div>
-	<?php
-}
 
 /**
  * Creates autosave data for the specified post from $_POST data.
@@ -1802,49 +1641,7 @@ function post_preview() {
 	return get_preview_post_link( $post, $query_args);
 }
 
-/**
- * Save a post submitted with XHR
- *
- * Intended for use with heartbeat and autosave.js
- *
- * @since 3.9.0
- *
- * @param array $post_data Associative array of the submitted post data.
- * @return mixed The value 0 or WP_Error on failure. The saved post ID on success.
- *               The ID can be the draft post_id or the autosave revision post_id.
- */
-function wp_autosave( $post_data) {
-	// Back-compat
-	if ( !defined( 'DOING_AUTOSAVE'))
-		define( 'DOING_AUTOSAVE', true);
 
-	$post_id = (int) $post_data['post_id'];
-	$post_data['ID'] = $post_data['post_ID'] = $post_id;
-
-	if ( false === wp_verify_nonce( $post_data['_wpnonce'], 'update-post_' . $post_id)) {
-		return new WP_Error( 'invalid_nonce', __( 'Error while saving.'));
-	}
-
-	$post = get_post( $post_id);
-
-	if ( !current_user_can( 'edit_post', $post->ID)) {
-		return new WP_Error( 'edit_posts', __( 'Sorry, you are not allowed to edit this item.'));
-	}
-
-	if ( 'auto-draft' == $post->post_status)
-		$post_data['post_status'] = 'draft';
-
-	if ( $post_data['post_type'] != 'page' && !empty( $post_data['catslist']))
-		$post_data['post_category'] = explode( ',', $post_data['catslist']);
-
-	if ( !wp_check_post_lock( $post->ID) && get_current_user_id() == $post->post_author && ( 'auto-draft' == $post->post_status || 'draft' == $post->post_status)) {
-		// Drafts and auto-drafts are just overwritten by autosave for the same user if the post is not locked
-		return edit_post( wp_slash( $post_data));
-	} else {
-		// Non drafts or other users drafts are not overwritten. The autosave is stored in a special post revision for each user.
-		return wp_create_post_autosave( wp_slash( $post_data));
-	}
-}
 
 /**
  * Redirect to previous page.

@@ -29,7 +29,7 @@ function create_initial_post_types(){
 		'rewrite' => false,
 		'query_var' => false,
 		'delete_with_user' => true,
-		'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields', 'comments', 'revisions', 'post-formats' ),
+		'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields', 'comments', 'post-formats' ),
 		'show_in_rest' => true,
 		'rest_base' => 'posts',
 		'rest_controller_class' => 'WP_REST_Posts_Controller',
@@ -83,124 +83,13 @@ function create_initial_post_types(){
 	add_post_type_support('attachment:audio', 'thumbnail' );
 	add_post_type_support('attachment:video', 'thumbnail' );
 
-	register_post_type('revision', array(
-		'labels' => array(
-			'name' => __('Revisions' ),
-			'singular_name' => __('Revision' ),
-		),
-		'public' => false,
-		'_builtin' => true, /* internal use only. don't use this when registering your own post type. */
-		'_edit_link' => 'revision.php?revision=%d', /* internal use only. don't use this when registering your own post type. */
-		'capability_type' => 'post',
-		'map_meta_cap' => true,
-		'hierarchical' => false,
-		'rewrite' => false,
-		'query_var' => false,
-		'can_export' => false,
-		'delete_with_user' => true,
-		'supports' => array('author' ),
-	) );
 
-	register_post_type('nav_menu_item', array(
-		'labels' => array(
-			'name' => __('Navigation Menu Items' ),
-			'singular_name' => __('Navigation Menu Item' ),
-		),
-		'public' => false,
-		'_builtin' => true, /* internal use only. don't use this when registering your own post type. */
-		'hierarchical' => false,
-		'rewrite' => false,
-		'delete_with_user' => false,
-		'query_var' => false,
-	) );
 
-	register_post_type('custom_css', array(
-		'labels' => array(
-			'name'          => __('Custom CSS' ),
-			'singular_name' => __('Custom CSS' ),
-		),
-		'public'           => false,
-		'hierarchical'     => false,
-		'rewrite'          => false,
-		'query_var'        => false,
-		'delete_with_user' => false,
-		'can_export'       => true,
-		'_builtin'         => true, /* internal use only. don't use this when registering your own post type. */
-		'supports'         => array('title', 'revisions' ),
-		'capabilities'     => array(
-			'delete_posts'           => 'edit_theme_options',
-			'delete_post'            => 'edit_theme_options',
-			'delete_published_posts' => 'edit_theme_options',
-			'delete_private_posts'   => 'edit_theme_options',
-			'delete_others_posts'    => 'edit_theme_options',
-			'edit_post'              => 'edit_css',
-			'edit_posts'             => 'edit_css',
-			'edit_others_posts'      => 'edit_css',
-			'edit_published_posts'   => 'edit_css',
-			'read_post'              => 'read',
-			'read_private_posts'     => 'read',
-			'publish_posts'          => 'edit_theme_options',
-		),
-	) );
 
-	register_post_type('customize_changeset', array(
-		'labels' => array(
-			'name'               => _x('Changesets', 'post type general name' ),
-			'singular_name'      => _x('Changeset', 'post type singular name' ),
-			'menu_name'          => _x('Changesets', 'admin menu' ),
-			'add_new'            => _x('Add New', 'Customize Changeset' ),
-			'add_new_item'       => __('Add New Changeset' ),
-			'new_item'           => __('New Changeset' ),
-			'edit_item'          => __('Edit Changeset' ),
-			'view_item'          => __('View Changeset' ),
-			'all_items'          => __('All Changesets' ),
-			'search_items'       => __('Search Changesets' ),
-			'not_found'          => __('No changesets found.' ),
-			'not_found_in_trash' => __('No changesets found in Trash.' ),
-		),
-		'public' => false,
-		'_builtin' => true, /* internal use only. don't use this when registering your own post type. */
-		'map_meta_cap' => true,
-		'hierarchical' => false,
-		'rewrite' => false,
-		'query_var' => false,
-		'can_export' => false,
-		'delete_with_user' => false,
-		'supports' => array('title', 'author' ),
-		'capability_type' => 'customize_changeset',
-		'capabilities' => array(
-			'create_posts' => 'customize',
-			'delete_others_posts' => 'customize',
-			'delete_post' => 'customize',
-			'delete_posts' => 'customize',
-			'delete_private_posts' => 'customize',
-			'delete_published_posts' => 'customize',
-			'edit_others_posts' => 'customize',
-			'edit_post' => 'customize',
-			'edit_posts' => 'customize',
-			'edit_private_posts' => 'customize',
-			'edit_published_posts' => 'do_not_allow',
-			'publish_posts' => 'customize',
-			'read' => 'read',
-			'read_post' => 'customize',
-			'read_private_posts' => 'customize',
-		),
-	) );
 
-	register_post_type('oembed_cache', array(
-		'labels' => array(
-			'name'          => __('oEmbed Responses' ),
-			'singular_name' => __('oEmbed Response' ),
-		),
-		'public'           => false,
-		'hierarchical'     => false,
-		'rewrite'          => false,
-		'query_var'        => false,
-		'delete_with_user' => false,
-		'can_export'       => false,
-		'_builtin'         => true, /* internal use only. don't use this when registering your own post type. */
-		'supports'         => array(),
-	) );
+
+	
+
 
 	register_post_type('user_request', array(
 		'labels'           => array(
@@ -260,11 +149,6 @@ function create_initial_post_types(){
 		'show_in_admin_status_list' => true,
 	) );
 
-	register_post_status('auto-draft', array(
-		'label'    => 'auto-draft',
-		'internal' => true,
-		'_builtin' => true, /* internal use only. */
-	) );
 
 	register_post_status('inherit', array(
 		'label'    => 'inherit',

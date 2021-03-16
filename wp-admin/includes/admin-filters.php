@@ -45,18 +45,8 @@ add_action( 'admin_head', 'wp_color_scheme_settings' );
 add_action( 'admin_head', 'wp_site_icon'             );
 add_action( 'admin_head', '_ipad_meta'               );
 
-// Privacy tools
-add_action( 'admin_menu', '_wp_privacy_hook_requests_page' );
-add_action( 'load-tools_page_export_personal_data', '_wp_privacy_requests_screen_options' );
-add_action( 'load-tools_page_remove_personal_data', '_wp_privacy_requests_screen_options' );
 
-// Prerendering.
-if ( !is_customize_preview() ) {
-	add_filter( 'admin_print_styles', 'wp_resource_hints', 1 );
-}
 
-add_action( 'admin_print_scripts-post.php',     'wp_page_reload_on_back_button_js' );
-add_action( 'admin_print_scripts-post-new.php', 'wp_page_reload_on_back_button_js' );
 
 add_action( 'update_option_home',          'update_home_siteurl', 10, 2 );
 add_action( 'update_option_siteurl',       'update_home_siteurl', 10, 2 );
@@ -79,29 +69,13 @@ add_action( 'admin_head-nav-menus.php', '_wp_delete_orphaned_draft_menu_items' )
 // Plugin hooks.
 add_filter( 'whitelist_options', 'option_update_filter' );
 
-// Plugin Install hooks.
-add_action( 'install_plugins_featured',               'install_dashboard' );
-add_action( 'install_plugins_upload',                 'install_plugins_upload' );
-add_action( 'install_plugins_search',                 'display_plugins_table' );
-add_action( 'install_plugins_popular',                'display_plugins_table' );
-add_action( 'install_plugins_recommended',            'display_plugins_table' );
-add_action( 'install_plugins_new',                    'display_plugins_table' );
-add_action( 'install_plugins_beta',                   'display_plugins_table' );
-add_action( 'install_plugins_favorites',              'display_plugins_table' );
-add_action( 'install_plugins_pre_plugin-information', 'install_plugin_information' );
+
 
 
 // Theme hooks.
 add_action( 'customize_controls_print_footer_scripts', 'customize_themes_print_templates' );
 
-// Theme Install hooks.
-// add_action('install_themes_dashboard', 'install_themes_dashboard');
-// add_action('install_themes_upload', 'install_themes_upload', 10, 0);
-// add_action('install_themes_search', 'display_themes');
-// add_action('install_themes_featured', 'display_themes');
-// add_action('install_themes_new', 'display_themes');
-// add_action('install_themes_updated', 'display_themes');
-add_action( 'install_themes_pre_theme-information', 'install_theme_information' );
+
 
 // User hooks.
 add_action( 'admin_init', 'default_password_nag_handler' );
@@ -112,16 +86,3 @@ add_action( 'admin_notices', 'new_user_email_admin_notice' );
 add_action( 'profile_update', 'default_password_nag_edit_user', 10, 2 );
 
 add_action( 'personal_options_update', 'send_confirmation_on_profile_email' );
-
-
-// Upgrade hooks.
-add_action( 'upgrader_process_complete', array( 'Language_Pack_Upgrader', 'async_upgrade' ), 20 );
-add_action( 'upgrader_process_complete', 'wp_version_check', 10, 0 );
-add_action( 'upgrader_process_complete', 'wp_update_plugins', 10, 0 );
-add_action( 'upgrader_process_complete', 'wp_update_themes', 10, 0 );
-
-// Privacy hooks
-add_filter( 'wp_privacy_personal_data_erasure_page', 'wp_privacy_process_personal_data_erasure_page', 10, 5 );
-add_filter( 'wp_privacy_personal_data_export_page', 'wp_privacy_process_personal_data_export_page', 10, 7 );
-add_action( 'wp_privacy_personal_data_export_file', 'wp_privacy_generate_personal_data_export_file', 10 );
-add_action( 'wp_privacy_personal_data_erased', '_wp_privacy_send_erasure_fulfillment_notification', 10 );

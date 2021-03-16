@@ -201,15 +201,7 @@ if ( 0 != $post->ID) {
 	$date = date_i18n( $datef, strtotime( current_time('mysql')));
 }
 
-if ( !empty( $args['args']['revisions_count'])) : ?>
-<div class="misc-pub-section misc-pub-revisions">
-	<?php
-		/* translators: Post revisions heading. 1: The number of available revisions */
-		printf( __( 'Revisions: %s'), '<b>' . number_format_i18n( $args['args']['revisions_count']) . '</b>');
-	?>
-	<a class="hide-if-no-js" href="<?php echo esc_url( get_edit_post_link( $args['args']['revision_id'])); ?>"><span aria-hidden="true"><?php _ex( 'Browse', 'revisions'); ?></span> <span class="screen-reader-text"><?php _e( 'Browse revisions'); ?></span></a>
-</div>
-<?php endif;
+
 
 if ( $can_publish) : // Contributors don't get to choose the date of publish ?>
 <div class="misc-pub-section curtime misc-pub-curtime">
@@ -698,16 +690,6 @@ function post_author_meta_box($post) {
 	));
 }
 
-/**
- * Display list of revisions.
- *
- * @since 2.6.0
- *
- * @param object $post
- */
-function post_revisions_meta_box( $post) {
-	wp_list_post_revisions( $post);
-}
 
 // -- Page related Meta Boxes
 

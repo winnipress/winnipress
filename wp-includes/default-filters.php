@@ -257,34 +257,18 @@ if (!defined('DOING_CRON' ) )
 	add_action('init', 'wp_cron' );
 
 // 2 Actions 2 Furious
-add_action('do_feed_rdf',                'do_feed_rdf',                             10, 1 );
-add_action('do_feed_rss',                'do_feed_rss',                             10, 1 );
-add_action('do_feed_rss2',               'do_feed_rss2',                            10, 1 );
-add_action('do_feed_atom',               'do_feed_atom',                            10, 1 );
-add_action('do_pings',                   'do_all_pings',                            10, 1 );
 add_action('do_robots',                  'do_robots'                                      );
-add_action('admin_print_scripts',        'print_emoji_detection_script'                   );
 add_action('admin_print_scripts',        'print_head_scripts',                      20    );
 add_action('admin_print_footer_scripts', '_wp_footer_scripts'                             );
-add_action('admin_print_styles',         'print_emoji_styles'                             );
 add_action('admin_print_styles',         'print_admin_styles',                      20    );
 add_action('init',                       'smilies_init',                             5    );
-// Create a revision whenever a post is updated.
 add_action('publish_post',               '_publish_post_hook',                       5, 1 );
 add_action('transition_post_status',     '_transition_post_status',                  5, 3 );
 add_action('transition_post_status',     '_update_term_count_on_transition_post_status', 10, 3 );
 add_action('admin_init',                 'send_frame_options_header',               10, 0 );
 add_action('welcome_panel',              'wp_welcome_panel'                               );
 
-// Privacy
-add_action('user_request_action_confirmed', '_wp_privacy_account_request_confirmed' );
-add_action('user_request_action_confirmed', '_wp_privacy_send_request_confirmation_notification', 12 ); // After request marked as completed.
-add_filter('wp_privacy_personal_data_exporters', 'wp_register_comment_personal_data_exporter' );
-add_filter('wp_privacy_personal_data_exporters', 'wp_register_media_personal_data_exporter' );
-add_filter('wp_privacy_personal_data_exporters', 'wp_register_user_personal_data_exporter', 1 );
-add_filter('wp_privacy_personal_data_erasers', 'wp_register_comment_personal_data_eraser' );
-add_action('init', 'wp_schedule_delete_old_privacy_export_files' );
-add_action('wp_privacy_delete_old_export_files', 'wp_privacy_delete_old_export_files' );
+
 
 // Cron tasks
 add_action('wp_scheduled_delete',            'wp_scheduled_delete'       );
@@ -312,11 +296,8 @@ add_action('attachment_updated', 'wp_check_for_changed_slugs', 12, 3 );
 add_action('post_updated',       'wp_check_for_changed_dates', 12, 3 );
 add_action('attachment_updated', 'wp_check_for_changed_dates', 12, 3 );
 
-// Nonce check for Post Previews
-add_action('init', '_show_post_preview' );
 
-// Output JS to reset window.name for previews
-add_action('wp_head', 'wp_post_preview_js', 1 );
+
 
 // Timezone
 add_filter('pre_option_gmt_offset','wp_timezone_override_offset' );
@@ -400,13 +381,6 @@ add_action('init', 'kses_init' );
 add_action('set_current_user', 'kses_init' );
 
 // Script Loader
-add_action('wp_default_scripts', 'wp_default_scripts' );
-add_action('wp_enqueue_scripts', 'wp_localize_jquery_ui_datepicker', 1000 );
-add_action('admin_enqueue_scripts', 'wp_localize_jquery_ui_datepicker', 1000 );
-add_filter('wp_print_scripts', 'wp_just_in_time_script_localization' );
-add_filter('print_scripts_array', 'wp_prototype_before_jquery' );
-add_filter('customize_controls_print_styles', 'wp_resource_hints', 1 );
-
 add_action('wp_default_styles', 'wp_default_styles' );
 add_filter('style_loader_src', 'wp_style_loader_src', 10, 2 );
 
