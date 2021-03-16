@@ -37,45 +37,6 @@ require(ABSPATH . WPINC . '/functions.wp-styles.php' );
 
 
 
-/**
- * Assign default styles to $styles object.
- *
- * Nothing is returned, because the $styles parameter is passed by reference.
- * Meaning that whatever object is passed will be updated without having to
- * reassign the variable that was passed back to the same value. This saves
- * memory.
- *
- * Adding default styles is not the only task, it also assigns the base_url
- * property, the default version, and text direction for the object.
- *
- * @since 2.6.0
- *
- * @param WP_Styles $styles
- */
-function wp_default_styles($styles){
-
-	if (!$guessurl = site_url() )
-		$guessurl = wp_guess_url();
-
-	$styles->base_url = $guessurl;
-	$styles->content_url = defined('WP_CONTENT_URL')? WP_CONTENT_URL : '';
-	$styles->default_version = get_bloginfo('version' );
-
-	$suffix = '.min';
-
-	// Admin CSS
-	$styles->add('common',              "/wp-admin/css/common$suffix.css" );
-	$styles->add('forms',               "/wp-admin/css/forms$suffix.css" );
-	$styles->add('admin-menu',          "/wp-admin/css/admin-menu$suffix.css" );
-	$styles->add('dashboard',           "/wp-admin/css/dashboard$suffix.css" );
-	$styles->add('list-tables',         "/wp-admin/css/list-tables$suffix.css" );
-	$styles->add('edit',                "/wp-admin/css/edit$suffix.css" );
-	$styles->add('media',               "/wp-admin/css/media$suffix.css" );
-	$styles->add('login',               "/wp-admin/css/login$suffix.css" );
-
-}
-
-
 
 /**
  * Load localized data on print rather than initialization.
