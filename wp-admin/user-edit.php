@@ -681,10 +681,6 @@ if (count($profileuser->caps ) > count($profileuser->roles )
 break;
 }
 ?>
-<script type="text/javascript">
-	if (window.location.hash == '#password') {
-		document.getElementById('pass1').focus();
-	}
-</script>
+
 <?php
 include(ABSPATH . 'wp-admin/admin-footer.php');

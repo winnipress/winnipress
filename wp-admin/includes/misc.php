@@ -744,120 +744,9 @@ function admin_color_scheme_picker( $user_id) {
 	<?php
 }
 
-/**
- *
- * @global array $_wp_admin_css_colors
- */
-function wp_color_scheme_settings() {
-	global $_wp_admin_css_colors;
 
-	$color_scheme = get_user_option( 'admin_color');
 
-	// It's possible to have a color scheme set that is no longer registered.
-	if ( empty( $_wp_admin_css_colors[ $color_scheme ])) {
-		$color_scheme = 'fresh';
-	}
 
-	if ( !empty( $_wp_admin_css_colors[ $color_scheme ]->icon_colors)) {
-		$icon_colors = $_wp_admin_css_colors[ $color_scheme ]->icon_colors;
-	} elseif ( !empty( $_wp_admin_css_colors['fresh']->icon_colors)) {
-		$icon_colors = $_wp_admin_css_colors['fresh']->icon_colors;
-	} else {
-		// Fall back to the default set of icon colors if the default scheme is missing.
-		$icon_colors = array( 'base' => '#82878c', 'focus' => '#00a0d2', 'current' => '#fff');
-	}
-
-	echo '<script type="text/javascript">var _wpColorScheme = ' . wp_json_encode( array( 'icons' => $icon_colors)) . ";</script>\n";
-}
-
-/**
- * @since 3.3.0
- */
-function _ipad_meta() {
-	if ( wp_is_mobile()) {
-		?>
-		<meta name="viewport" id="viewport-meta" content="width=device-width, initial-scale=1">
-		<?php
-	}
-}
-
-/**
- * Check lock status for posts displayed on the Posts screen
- *
- * @since 3.6.0
- *
- * @param array  $response  The Heartbeat response.
- * @param array  $data      The $_POST data sent.
- * @param string $screen_id The screen id.
- * @return array The Heartbeat response.
- */
-function wp_check_locked_posts( $response, $data, $screen_id) {
-	$checked = array();
-
-	if ( array_key_exists( 'wp-check-locked-posts', $data) && is_array( $data['wp-check-locked-posts'])) {
-		foreach ( $data['wp-check-locked-posts'] as $key) {
-			if ( !$post_id = absint( substr( $key, 5)))
-				continue;
-
-			if ( ( $user_id = wp_check_post_lock( $post_id)) && ( $user = get_userdata( $user_id)) && current_user_can( 'edit_post', $post_id)) {
-				$send = array( 'text' => sprintf( __( '%s is currently editing'), $user->display_name));
-
-				if ( ( $avatar = get_avatar( $user->ID, 18)) && preg_match( "|src='([^']+)'|", $avatar, $matches))
-					$send['avatar_src'] = $matches[1];
-
-				$checked[$key] = $send;
-			}
-		}
-	}
-
-	if ( !empty( $checked))
-		$response['wp-check-locked-posts'] = $checked;
-
-	return $response;
-}
-
-/**
- * Check lock status on the New/Edit Post screen and refresh the lock
- *
- * @since 3.6.0
- *
- * @param array  $response  The Heartbeat response.
- * @param array  $data      The $_POST data sent.
- * @param string $screen_id The screen id.
- * @return array The Heartbeat response.
- */
-function wp_refresh_post_lock( $response, $data, $screen_id) {
-	if ( array_key_exists( 'wp-refresh-post-lock', $data)) {
-		$received = $data['wp-refresh-post-lock'];
-		$send = array();
-
-		if ( !$post_id = absint( $received['post_id']))
-			return $response;
-
-		if ( !current_user_can('edit_post', $post_id))
-			return $response;
-
-		if ( ( $user_id = wp_check_post_lock( $post_id)) && ( $user = get_userdata( $user_id))) {
-			$error = array(
-				'text' => sprintf( __( '%s has taken over and is currently editing.'), $user->display_name)
-			);
-
-			if ( $avatar = get_avatar( $user->ID, 64)) {
-				if ( preg_match( "|src='([^']+)'|", $avatar, $matches))
-					$error['avatar_src'] = $matches[1];
-			}
-
-			$send['lock_error'] = $error;
-		} else {
-			if ( $new_lock = wp_set_post_lock( $post_id))
-				$send['new_lock'] = implode( ':', $new_lock);
-		}
-
-		$response['wp-refresh-post-lock'] = $send;
-	}
-
-	return $response;
-}
 
 /**
  * Check nonce expiration on the New/Edit Post screen and refresh if needed
@@ -965,11 +854,7 @@ function wp_admin_canonical_url() {
 	$filtered_url = remove_query_arg( $removable_query_args, $current_url);
 	?>
 	<link id="wp-admin-canonical" rel="canonical" href="<?php echo esc_url( $filtered_url); ?>" />
-	<script>
-		if ( window.history.replaceState) {
-			window.history.replaceState( null, null, document.getElementById( 'wp-admin-canonical').href + window.location.hash);
-		}
-	</script>
+
 <?php
 }
 
@@ -996,23 +881,7 @@ function wp_admin_headers() {
 	header( sprintf( 'Referrer-Policy: %s', $policy));
 }
 
-/**
- * Outputs JS that reloads the page if the user navigated to it with the Back or Forward button.
- *
- * Used on the Edit Post and Add New Post screens. Needed to ensure the page is not loaded from browser cache,
- * so the post title and editor content are the last saved versions. Ideally this script should run first in the head.
- *
- * @since 4.6.0
- */
-function wp_page_reload_on_back_button_js() {
-	?>
-	<script>
-		if ( typeof performance !== 'undefined' && performance.navigation && performance.navigation.type === 2) {
-			document.location.reload( true);
-		}
-	</script>
-	<?php
-}
+
 
 /**
  * Send a confirmation request email when a change of site admin email address is attempted.

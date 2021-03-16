@@ -38,6 +38,7 @@ foreach (array('pre_term_description', 'pre_link_description', 'pre_link_notes',
 if (is_admin() ) {
 
 	add_action('admin_enqueue_scripts', 'wp_enqueue_editor' );
+	add_action('admin_enqueue_scripts', 'wp_enqueue_default_admin_styles' );
 }
 
 // Email saves
@@ -237,7 +238,6 @@ add_action('wp_head',             'wp_print_styles',                  8    );
 add_action('wp_head',             'wp_print_head_scripts',            9    );
 add_action('wp_head',             'rel_canonical'                          );
 add_action('wp_head',             'wp_shortlink_wp_head',            10, 0 );
-add_action('wp_head',             'wp_custom_css_cb',                101   );
 add_action('wp_footer',           'wp_print_footer_scripts',         20    );
 add_action('template_redirect',   'wp_shortlink_header',             11, 0 );
 add_action('wp_print_footer_scripts', '_wp_footer_scripts'                 );
@@ -266,7 +266,6 @@ add_action('publish_post',               '_publish_post_hook',                  
 add_action('transition_post_status',     '_transition_post_status',                  5, 3 );
 add_action('transition_post_status',     '_update_term_count_on_transition_post_status', 10, 3 );
 add_action('admin_init',                 'send_frame_options_header',               10, 0 );
-add_action('welcome_panel',              'wp_welcome_panel'                               );
 
 
 

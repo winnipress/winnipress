@@ -1498,20 +1498,8 @@ function iframe_header( $title = '', $deprecated = false) {
 	_wp_admin_html_begin();
 ?>
 <title><?php bloginfo('name') ?> &rsaquo; <?php echo $title ?> &#8212; <?php _e('WordPress'); ?></title>
-<?php
-wp_enqueue_style( 'colors');
-?>
-<script type="text/javascript">
-addLoadEvent = function(func){if(typeof jQuery!="undefined")jQuery(document).ready(func);else if(typeof wpOnload!='function'){wpOnload=func;}else{var oldonload=wpOnload;wpOnload=function(){oldonload();func();}}};
-function tb_close(){var win=window.dialogArguments||opener||parent||top;win.tb_remove();}
-var ajaxurl = '<?php echo esc_js( admin_url( 'admin-ajax.php', 'relative')); ?>',
-	pagenow = '<?php echo esc_js( $current_screen->id); ?>',
-	typenow = '<?php echo esc_js( $current_screen->post_type); ?>',
-	adminpage = '<?php echo esc_js( $admin_body_class); ?>',
-	thousandsSeparator = '<?php echo esc_js( $wp_locale->number_format['thousands_sep']); ?>',
-	decimalPoint = '<?php echo esc_js( $wp_locale->number_format['decimal_point']); ?>',
-	isRtl = <?php echo (int) is_rtl(); ?>;
-</script>
+
+
 <?php
 /** This action is documented in wp-admin/admin-header.php */
 do_action( 'admin_enqueue_scripts', $hook_suffix);
@@ -1545,18 +1533,8 @@ if ( is_rtl())
 /** This filter is documented in wp-admin/admin-header.php */
 $admin_body_classes = apply_filters( 'admin_body_class', '');
 ?>
-<body<?php
-/**
- * @global string $body_id
- */
-if ( isset($GLOBALS['body_id'])) echo ' id="' . $GLOBALS['body_id'] . '"'; ?> class="wp-admin wp-core-ui no-js iframe <?php echo $admin_body_classes . ' ' . $admin_body_class; ?>">
-<script type="text/javascript">
-(function(){
-var c = document.body.className;
-c = c.replace(/no-js/, 'js');
-document.body.className = c;
-})();
-</script>
+<body>
+
 <?php
 }
 
@@ -1589,7 +1567,6 @@ function iframe_footer() {
 	do_action( 'admin_print_footer_scripts');
 ?>
 	</div>
-<script type="text/javascript">if(typeof wpOnload=="function")wpOnload();</script>
 </body>
 </html>
 <?php
@@ -1755,55 +1732,7 @@ function _media_states( $post) {
  */
 function compression_test() {
 ?>
-	<script type="text/javascript">
-	var compressionNonce = <?php echo wp_json_encode( wp_create_nonce( 'update_can_compress_scripts')); ?>;
-	var testCompression = {
-		get : function(test) {
-			var x;
-			if ( window.XMLHttpRequest) {
-				x = new XMLHttpRequest();
-			} else {
-				try{x=new ActiveXObject('Msxml2.XMLHTTP');}catch(e){try{x=new ActiveXObject('Microsoft.XMLHTTP');}catch(e){};}
-			}
-
-			if (x) {
-				x.onreadystatechange = function() {
-					var r, h;
-					if ( x.readyState == 4) {
-						r = x.responseText.substr(0, 18);
-						h = x.getResponseHeader('Content-Encoding');
-						testCompression.check(r, h, test);
-					}
-				};
-
-				x.open('GET', ajaxurl + '?action=wp-compression-test&test='+test+'&_ajax_nonce='+compressionNonce+'&'+(new Date()).getTime(), true);
-				x.send('');
-			}
-		},
-
-		check : function(r, h, test) {
-			if ( !r && !test)
-				this.get(1);
-
-			if ( 1 == test) {
-				if ( h && ( h.match(/deflate/i) || h.match(/gzip/i)))
-					this.get('no');
-				else
-					this.get(2);
-
-				return;
-			}
-
-			if ( 2 == test) {
-				if ( '"wpCompressionTest' == r)
-					this.get('yes');
-				else
-					this.get('no');
-			}
-		}
-	};
-	testCompression.check();
-	</script>
+	
 <?php
 }
 
@@ -1914,22 +1843,7 @@ function _wp_admin_html_begin() {
 
 ?>
 <!DOCTYPE html>
-<!--[if IE 8]>
-<htmlclass="ie8 <?php echo $admin_html_class; ?>" <?php
-	/**
-	 * Fires inside the HTML tag in the admin header.
-	 *
-	 * @since 2.2.0
-	 */
-	do_action( 'admin_xml_ns');
-?> >
-<![endif]-->
-<!--[if !(IE 8) ]><!-->
-<htmlclass="<?php echo $admin_html_class; ?>" <?php
-	/** This action is documented in wp-admin/includes/template.php */
-	do_action( 'admin_xml_ns');
-?> >
-<!--<![endif]-->
+<html>
 <head>
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php echo get_option('blog_charset'); ?>" />
 <?php
@@ -1962,25 +1876,7 @@ function convert_to_screen( $hook_name) {
 	return WP_Screen::get( $hook_name);
 }
 
-/**
- * Output the HTML for restoring the post data from DOM storage
- *
- * @since 3.6.0
- * @access private
- */
-function _local_storage_notice() {
-	?>
-	<div id="local-storage-notice" class="hidden notice is-dismissible">
-	<p class="local-restore">
-		<?php _e( 'The backup of this post in your browser is different from the version below.'); ?>
-		<button type="button" class="button restore-backup"><?php _e('Restore the backup'); ?></button>
-	</p>
-	<p class="help">
-		<?php _e( 'This will replace the current editor content with the last backup version. You can use undo and redo in the editor to get the old content back or to return to the restored version.'); ?>
-	</p>
-	</div>
-	<?php
-}
+
 
 /**
  * Output a HTML element with a star rating for a given rating.

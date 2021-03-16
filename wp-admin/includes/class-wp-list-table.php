@@ -1254,19 +1254,5 @@ class WP_List_Table {
 		die( wp_json_encode( $response ) );
 	}
 
-	/**
-	 * Send required variables to JavaScript land
-	 *
-	 */
-	public function _js_vars() {
-		$args = array(
-			'class'  => get_class( $this ),
-			'screen' => array(
-				'id'   => $this->screen->id,
-				'base' => $this->screen->base,
-			)
-		);
-
-		printf( "<script type='text/javascript'>list_args = %s;</script>\n", wp_json_encode( $args ) );
-	}
+	
 }

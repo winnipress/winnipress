@@ -72,12 +72,7 @@ function login_header($title = 'Log In', $message = '', $wp_error = null){
 	$login_title = apply_filters('login_title', $login_title, $title);
 
 	?><!DOCTYPE html>
-	<!--[if IE 8]>
-		<htmlclass="ie8" >
-	<![endif]-->
-	<!--[if !(IE 8) ]><!-->
-		<html>
-	<!--<![endif]-->
+	<html>
 	<head>
 	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 	<title><?php echo $login_title; ?></title>
@@ -85,16 +80,7 @@ function login_header($title = 'Log In', $message = '', $wp_error = null){
 
 	wp_enqueue_style('login');
 
-	/*
-	 * Remove all stored post data on logging out.
-	 * This could be added by add_action('login_head'...) like wp_shake_js(),
-	 * but maybe better if it's not removable by plugins
-	 */
-	if('loggedout' == $wp_error->get_error_code()){
-		?>
-		<script>if("sessionStorage" in window){try{for(var key in sessionStorage){if(key.indexOf("wp-autosave-")!=-1){sessionStorage.removeItem(key)}}}catch(e){}};</script>
-		<?php
-	}
+
 
 	/**
 	 * Enqueue scripts and styles for the login page.
@@ -258,12 +244,7 @@ function login_footer($input_id = ''){
 
 	</div>
 
-	<?php if(!empty($input_id)) : ?>
-	<script type="text/javascript">
-	try{document.getElementById('<?php echo $input_id; ?>').focus();}catch(e){}
-	if(typeof wpOnload=='function')wpOnload();
-	</script>
-	<?php endif; ?>
+
 
 	<?php
 	/**
@@ -278,20 +259,7 @@ function login_footer($input_id = ''){
 	<?php
 }
 
-/**
- * @since 3.0.0
- */
-function wp_shake_js(){
-?>
-<script type="text/javascript">
-addLoadEvent = function(func){if(typeof jQuery!="undefined")jQuery(document).ready(func);else if(typeof wpOnload!='function'){wpOnload=func;}else{var oldonload=wpOnload;wpOnload=function(){oldonload();func();}}};
-function s(id,pos){g(id).left=pos+'px';}
-function g(id){return document.getElementById(id).style;}
-function shake(id,a,d){c=a.shift();s(id,c);if(a.length>0){setTimeout(function(){shake(id,a,d);},d);}else{try{g(id).position='static';wp_attempt_focus();}catch(e){}}}
-addLoadEvent(function(){ var p=new Array(15,30,15,0,-15,-30,-15,0);p=p.concat(p.concat(p));var i=document.forms[0].id;g(i).position='relative';shake(i,p,20);});
-</script>
-<?php
-}
+
 
 /**
  * @since 3.7.0
@@ -948,9 +916,7 @@ default:
 			<?php
 			/** This action is documented in wp-login.php */
 			do_action('login_footer'); ?>
-			<?php if($customize_login) : ?>
-				<script type="text/javascript">setTimeout(function(){ new wp.customize.Messenger({ url: '<?php echo wp_customize_url(); ?>', channel: 'login' }).send('login') }, 1000);</script>
-			<?php endif; ?>
+			
 			</body></html>
 <?php		exit;
 		}
@@ -1071,50 +1037,6 @@ default:
 </p>
 <?php } ?>
 
-<script type="text/javascript">
-function wp_attempt_focus(){
-setTimeout(function(){ try{
-<?php if($user_login){ ?>
-d = document.getElementById('user_pass');
-d.value = '';
-<?php } else { ?>
-d = document.getElementById('user_login');
-<?php if('invalid_username' == $errors->get_error_code()){ ?>
-if(d.value != '')
-d.value = '';
-<?php
-}
-}?>
-d.focus();
-d.select();
-} catch(e){}
-}, 200);
-}
-
-<?php
-/**
- * Filters whether to print the call to `wp_attempt_focus()` on the login screen.
- *
- * @since 4.8.0
- *
- * @param bool $print Whether to print the function call. Default true.
- */
-if(apply_filters('enable_login_autofocus', true) && !$error){ ?>
-wp_attempt_focus();
-<?php } ?>
-if(typeof wpOnload=='function')wpOnload();
-<?php if($interim_login){ ?>
-(function(){
-try {
-	var i, links = document.getElementsByTagName('a');
-	for (i in links){
-		if(links[i].href)
-			links[i].target = '_blank';
-	}
-} catch(e){}
-}());
-<?php } ?>
-</script>
 
 <?php
 login_footer();

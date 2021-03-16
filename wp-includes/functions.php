@@ -5310,19 +5310,6 @@ function wp_post_preview_js(){
 	$name = 'wp-preview-' . (int) $post->ID;
 
 	?>
-	<script>
-	( function(){
-		var query = document.location.search;
-
-		if ( query && query.indexOf( 'preview=true' ) !== -1 ){
-			window.name = '<?php echo $name; ?>';
-		}
-
-		if ( window.addEventListener ){
-			window.addEventListener( 'unload', function(){ window.name = ''; }, false );
-		}
-	}());
-	</script>
 	<?php
 }
 

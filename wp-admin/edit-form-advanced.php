@@ -37,8 +37,7 @@ if ( $thumbnail_support ) {
 	wp_enqueue_media( array( 'post' => $post_ID ) );
 }
 
-// Add the local autosave notice HTML
-add_action( 'admin_footer', '_local_storage_notice' );
+
 
 /*
  * @todo Document the $messages array(s).

@@ -1655,8 +1655,7 @@ function get_posts($args = null ){
  */
 function add_post_meta($post_id, $meta_key, $meta_value, $unique = false ){
 	// Make sure meta is added to the post, not a revision.
-	if ($the_post = wp_is_post_revision($post_id) )
-		$post_id = $the_post;
+	
 
 	$added = add_metadata('post', $post_id, $meta_key, $meta_value, $unique );
 	if ($added ){
@@ -1682,8 +1681,7 @@ function add_post_meta($post_id, $meta_key, $meta_value, $unique = false ){
  */
 function delete_post_meta($post_id, $meta_key, $meta_value = '' ){
 	// Make sure meta is added to the post, not a revision.
-	if ($the_post = wp_is_post_revision($post_id) )
-		$post_id = $the_post;
+	
 
 	$deleted = delete_metadata('post', $post_id, $meta_key, $meta_value );
 	if ($deleted ){
@@ -1727,9 +1725,6 @@ function get_post_meta($post_id, $key = '', $single = false ){
  *                  false on failure.
  */
 function update_post_meta($post_id, $meta_key, $meta_value, $prev_value = '' ){
-	// Make sure meta is added to the post, not a revision.
-	if ($the_post = wp_is_post_revision($post_id) )
-		$post_id = $the_post;
 
 	$updated = update_metadata('post', $post_id, $meta_key, $meta_value, $prev_value );
 	if ($updated ){

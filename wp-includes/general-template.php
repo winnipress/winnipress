@@ -855,84 +855,6 @@ function has_custom_logo( $blog_id = 0 ) {
 	return (bool) $custom_logo_id;
 }
 
-/**
- * Returns a custom logo, linked to home.
- *
- * @since 4.5.0
- *
- * @param int $blog_id Optional. ID of the blog in question. Default is the ID of the current blog.
- * @return string Custom logo markup.
- */
-function get_custom_logo( $blog_id = 0 ) {
-	$html = '';
-	$switched_blog = false;
-
-	if ( is_multisite() && !empty( $blog_id ) && (int) $blog_id !== get_current_blog_id() ) {
-		switch_to_blog( $blog_id );
-		$switched_blog = true;
-	}
-
-	$custom_logo_id = get_theme_mod( 'custom_logo' );
-
-	// We have a logo. Logo is go.
-	if ( $custom_logo_id ) {
-		$custom_logo_attr = array(
-			'class'    => 'custom-logo',
-			'itemprop' => 'logo',
-		);
-
-		/*
-		 * If the logo alt attribute is empty, get the site title and explicitly
-		 * pass it to the attributes used by wp_get_attachment_image().
-		 */
-		$image_alt = get_post_meta( $custom_logo_id, '_wp_attachment_image_alt', true );
-		if ( empty( $image_alt ) ) {
-			$custom_logo_attr['alt'] = get_bloginfo( 'name', 'display' );
-		}
-
-		/*
-		 * If the alt attribute is not empty, there's no need to explicitly pass
-		 * it because wp_get_attachment_image() already adds the alt attribute.
-		 */
-		$html = sprintf( '<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url">%2$s</a>',
-			esc_url( home_url( '/' ) ),
-			wp_get_attachment_image( $custom_logo_id, 'full', false, $custom_logo_attr )
-		);
-	}
-
-	// If no logo is set but we're in the Customizer, leave a placeholder (needed for the live preview).
-	elseif ( is_customize_preview() ) {
-		$html = sprintf( '<a href="%1$s" class="custom-logo-link" style="display:none;"><img class="custom-logo"/></a>',
-			esc_url( home_url( '/' ) )
-		);
-	}
-
-	if ( $switched_blog ) {
-		restore_current_blog();
-	}
-
-	/**
-	 * Filters the custom logo output.
-	 *
-	 * @since 4.5.0
-	 * @since 4.6.0 Added the `$blog_id` parameter.
-	 *
-	 * @param string $html    Custom logo HTML output.
-	 * @param int    $blog_id ID of the blog to get the custom logo for.
-	 */
-	return apply_filters( 'get_custom_logo', $html, $blog_id );
-}
-
-/**
- * Displays a custom logo, linked to home.
- *
- * @since 4.5.0
- *
- * @param int $blog_id Optional. ID of the blog in question. Default is the ID of the current blog.
- */
-function the_custom_logo( $blog_id = 0 ) {
-	echo get_custom_logo( $blog_id );
-}
 
 /**
  * Returns document title for the current page.
@@ -2826,53 +2748,6 @@ function wp_sensitive_page_meta() {
 	<?php
 }
 
-/**
- * Display site icon meta tags.
- *
- * @since 4.3.0
- *
- * @link https://www.whatwg.org/specs/web-apps/current-work/multipage/links.html#rel-icon HTML5 specification link icon.
- */
-function wp_site_icon() {
-	if ( !has_site_icon() && !is_customize_preview() ) {
-		return;
-	}
-
-	$meta_tags = array();
-	$icon_32 = get_site_icon_url( 32 );
-	if ( empty( $icon_32 ) && is_customize_preview() ) {
-		$icon_32 = '/favicon.ico'; // Serve default favicon URL in customizer so element can be updated for preview.
-	}
-	if ( $icon_32 ) {
-		$meta_tags[] = sprintf( '<link rel="icon" href="%s" sizes="32x32" />', esc_url( $icon_32 ) );
-	}
-	$icon_192 = get_site_icon_url( 192 );
-	if ( $icon_192 ) {
-		$meta_tags[] = sprintf( '<link rel="icon" href="%s" sizes="192x192" />', esc_url( $icon_192 ) );
-	}
-	$icon_180 = get_site_icon_url( 180 );
-	if ( $icon_180 ) {
-		$meta_tags[] = sprintf( '<link rel="apple-touch-icon-precomposed" href="%s" />', esc_url( $icon_180 ) );
-	}
-	$icon_270 = get_site_icon_url( 270 );
-	if ( $icon_270 ) {
-		$meta_tags[] = sprintf( '<meta name="msapplication-TileImage" content="%s" />', esc_url( $icon_270 ) );
-	}
-
-	/**
-	 * Filters the site icon meta tags, so Plugins can add their own.
-	 *
-	 * @since 4.3.0
-	 *
-	 * @param array $meta_tags Site Icon meta elements.
-	 */
-	$meta_tags = apply_filters( 'site_icon_meta_tags', $meta_tags );
-	$meta_tags = array_filter( $meta_tags );
-
-	foreach ( $meta_tags as $meta_tag ) {
-		echo "$meta_tag\n";
-	}
-}
 
 /**
  * Prints resource hints to browsers for pre-fetching, pre-rendering
@@ -3105,6 +2980,10 @@ function wp_editor($content, $editor_id, $settings = array()){
  */
 function wp_enqueue_editor(){
 	wp_enqueue_script('tiny-mce-js', 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js');
+}
+
+function wp_enqueue_default_admin_styles(){
+	wp_enqueue_style('default-admin-css', '/wp-admin/css/wp-admin.min.css');
 }
 
 

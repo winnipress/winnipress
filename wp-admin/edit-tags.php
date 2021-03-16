@@ -574,12 +574,7 @@ do_action( "after-{$taxonomy}-table", $taxonomy );
 </div><!-- /col-container -->
 </div><!-- /wrap -->
 
-<?php if ( !wp_is_mobile() ) : ?>
-<script type="text/javascript">
-try{document.forms.addtag['tag-name'].focus();}catch(e){}
-</script>
-<?php
-endif;
+<?php 
 
 $wp_list_table->inline_edit();
 

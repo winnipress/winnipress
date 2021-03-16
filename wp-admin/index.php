@@ -58,7 +58,6 @@ include(ABSPATH . 'wp-admin/admin-header.php');
 		 *
 		 * To remove the default welcome panel, use remove_action():
 		 *
-		 *     remove_action('welcome_panel', 'wp_welcome_panel');
 		 *
 		 * @since 3.5.0
 		 */

@@ -52,11 +52,7 @@ require(ABSPATH . WPINC . '/functions.wp-styles.php' );
  *
  * @param WP_Styles $styles
  */
-function wp_default_styles(&$styles ){
-	include(ABSPATH . WPINC . '/version.php' ); // include an unmodified $wp_version
-
-	if (!defined('SCRIPT_DEBUG' ) )
-		define('SCRIPT_DEBUG', false !== strpos($wp_version, '-src' ) );
+function wp_default_styles($styles){
 
 	if (!$guessurl = site_url() )
 		$guessurl = wp_guess_url();
@@ -64,39 +60,8 @@ function wp_default_styles(&$styles ){
 	$styles->base_url = $guessurl;
 	$styles->content_url = defined('WP_CONTENT_URL')? WP_CONTENT_URL : '';
 	$styles->default_version = get_bloginfo('version' );
-	$styles->text_direction = function_exists('is_rtl' ) && is_rtl() ? 'rtl' : 'ltr';
-	$styles->default_dirs = array('/wp-admin/', '/wp-includes/css/');
 
-	// Open Sans is no longer used by core, but may be relied upon by themes and plugins.
-	$open_sans_font_url = '';
-
-	/* translators: If there are characters in your language that are not supported
-	 * by Open Sans, translate this to 'off'. Do not translate into your own language.
-	 */
-	if ('off' !== _x('on', 'Open Sans font: on or off' ) ){
-		$subsets = 'latin,latin-ext';
-
-		/* translators: To add an additional Open Sans character subset specific to your language,
-		 * translate this to 'greek', 'cyrillic' or 'vietnamese'. Do not translate into your own language.
-		 */
-		$subset = _x('no-subset', 'Open Sans font: add new subset (greek, cyrillic, vietnamese)' );
-
-		if ('cyrillic' == $subset ){
-			$subsets .= ',cyrillic,cyrillic-ext';
-		} elseif ('greek' == $subset ){
-			$subsets .= ',greek,greek-ext';
-		} elseif ('vietnamese' == $subset ){
-			$subsets .= ',vietnamese';
-		}
-
-		// Hotlink Open Sans, for now
-		$open_sans_font_url = "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,300,400,600&subset=$subsets";
-	}
-
-	// Register a stylesheet for the selected admin color scheme.
-	$styles->add('colors', true, array('wp-admin', 'buttons' ) );
-
-	$suffix = SCRIPT_DEBUG ? '' : '.min';
+	$suffix = '.min';
 
 	// Admin CSS
 	$styles->add('common',              "/wp-admin/css/common$suffix.css" );
@@ -106,20 +71,7 @@ function wp_default_styles(&$styles ){
 	$styles->add('list-tables',         "/wp-admin/css/list-tables$suffix.css" );
 	$styles->add('edit',                "/wp-admin/css/edit$suffix.css" );
 	$styles->add('media',               "/wp-admin/css/media$suffix.css" );
-
-	$styles->add('wp-admin', false, array('dashicons', 'common', 'forms', 'admin-menu', 'dashboard', 'list-tables', 'edit', 'revisions', 'media', 'themes', 'about', 'nav-menus', 'widgets', 'site-icon', 'l10n' ) );
-
-	$styles->add('login',               "/wp-admin/css/login$suffix.css", array('dashicons', 'buttons', 'forms', 'l10n' ) );
-
-
-	// Common dependencies
-	$styles->add('buttons',   "/wp-includes/css/buttons$suffix.css" );
-	$styles->add('dashicons', "/wp-includes/css/dashicons$suffix.css" );
-
-	// Includes CSS
-	$styles->add('wp-auth-check',        "/wp-includes/css/wp-auth-check$suffix.css", array('dashicons' ) );
-	$styles->add('media-views',          "/wp-includes/css/media-views$suffix.css", array('buttons', 'dashicons', 'wp-mediaelement' ) );
-
+	$styles->add('login',               "/wp-admin/css/login$suffix.css" );
 
 }
 

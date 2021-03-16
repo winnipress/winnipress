@@ -250,10 +250,7 @@ function _cleanup_image_add_caption( $matches) {
  */
 function media_send_to_editor($html) {
 ?>
-<script type="text/javascript">
-var win = window.dialogArguments || opener || parent || top;
-win.send_to_editor( <?php echo wp_json_encode( $html); ?>);
-</script>
+
 <?php
 	exit;
 }
@@ -471,11 +468,7 @@ if ( ( is_array( $content_func) && !empty( $content_func[1]) && 0 === strpos( (s
 	wp_enqueue_style( 'deprecated-media');
 wp_enqueue_style( 'ie');
 ?>
-<script type="text/javascript">
-addLoadEvent = function(func){if(typeof jQuery!="undefined")jQuery(document).ready(func);else if(typeof wpOnload!='function'){wpOnload=func;}else{var oldonload=wpOnload;wpOnload=function(){oldonload();func();}}};
-var ajaxurl = '<?php echo esc_js( admin_url( 'admin-ajax.php', 'relative')); ?>', pagenow = 'media-upload-popup', adminpage = 'media-upload-popup',
-isRtl = <?php echo (int) is_rtl(); ?>;
-</script>
+
 <?php
 	/** This action is documented in wp-admin/admin-header.php */
 	do_action( 'admin_enqueue_scripts', 'media-upload-popup');
@@ -528,9 +521,7 @@ if ( is_string( $content_func)) {
 ?>
 </head>
 <body<?php if ( isset($GLOBALS['body_id'])) echo ' id="' . $GLOBALS['body_id'] . '"'; ?> class="wp-core-ui no-js">
-<script type="text/javascript">
-document.body.className = document.body.className.replace('no-js', 'js');
-</script>
+
 <?php
 	$args = func_get_args();
 	$args = array_slice($args, 1);
@@ -539,7 +530,6 @@ document.body.className = document.body.className.replace('no-js', 'js');
 	/** This action is documented in wp-admin/admin-footer.php */
 	do_action( 'admin_print_footer_scripts');
 ?>
-<script type="text/javascript">if(typeof wpOnload=='function')wpOnload();</script>
 </body>
 </html>
 <?php
@@ -707,10 +697,7 @@ function media_upload_form_handler() {
 	}
 
 	if ( isset($_POST['insert-gallery']) || isset($_POST['update-gallery'])) { ?>
-		<script type="text/javascript">
-		var win = window.dialogArguments || opener || parent || top;
-		win.tb_remove();
-		</script>
+		
 		<?php
 		exit;
 	}
@@ -1782,7 +1769,7 @@ function get_compat_media_markup( $attachment_id, $args = null) {
 function media_upload_header() {
 	$post_id = isset( $_REQUEST['post_id']) ? intval( $_REQUEST['post_id']) : 0;
 
-	echo '<script type="text/javascript">post_id = ' . $post_id . ';</script>';
+
 	if ( empty( $_GET['chromeless'])) {
 		echo '<div id="media-upload-header">';
 		the_media_upload_tabs();
@@ -1904,19 +1891,7 @@ $plupload_init = apply_filters( 'plupload_init', $plupload_init);
 
 ?>
 
-<script type="text/javascript">
-<?php
-// Verify size is an int. If not return default value.
-$large_size_h = absint( get_option('large_size_h'));
-if( !$large_size_h)
-	$large_size_h = 1024;
-$large_size_w = absint( get_option('large_size_w'));
-if( !$large_size_w)
-	$large_size_w = 1024;
-?>
-var resize_height = <?php echo $large_size_h; ?>, resize_width = <?php echo $large_size_w; ?>,
-wpUploaderInit = <?php echo wp_json_encode( $plupload_init); ?>;
-</script>
+
 
 <div id="plupload-upload-ui" class="hide-if-no-js">
 <?php
@@ -2024,15 +1999,6 @@ function media_upload_type_form($type = 'file', $errors = null, $id = null) {
 
 <?php media_upload_form( $errors); ?>
 
-<script type="text/javascript">
-jQuery(function($){
-	var preloaded = $(".media-item.preloaded");
-	if ( preloaded.length > 0) {
-		preloaded.each(function(){prepareMediaItem({id:this.id.replace(/[^0-9]/g, '')},'');});
-	}
-	updateMediaForm();
-});
-</script>
 <div id="media-items"><?php
 
 if ( $id) {
@@ -2085,97 +2051,7 @@ function media_upload_type_url_form($type = null, $errors = null, $id = null) {
 
 <h3 class="media-title"><?php _e('Insert media from another website'); ?></h3>
 
-<script type="text/javascript">
-var addExtImage = {
 
-	width : '',
-	height : '',
-	align : 'alignnone',
-
-	insert : function() {
-		var t = this, html, f = document.forms[0], cls, title = '', alt = '', caption = '';
-
-		if ( '' == f.src.value || '' == t.width)
-			return false;
-
-		if ( f.alt.value)
-			alt = f.alt.value.replace(/'/g, '&#039;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-
-<?php
-	/** This filter is documented in wp-admin/includes/media.php */
-	if ( !apply_filters( 'disable_captions', '')) {
-		?>
-		if ( f.caption.value) {
-			caption = f.caption.value.replace(/\r\n|\r/g, '\n');
-			caption = caption.replace(/<[a-zA-Z0-9]+( [^<>]+)?>/g, function(a){
-				return a.replace(/[\r\n\t]+/, ' ');
-			});
-
-			caption = caption.replace(/\s*\n\s*/g, '<br />');
-		}
-<?php } ?>
-
-		cls = caption ? '' : ' class="'+t.align+'"';
-
-		html = '<img alt="'+alt+'" src="'+f.src.value+'"'+cls+' width="'+t.width+'" height="'+t.height+'" />';
-
-		if ( f.url.value) {
-			url = f.url.value.replace(/'/g, '&#039;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-			html = '<a href="'+url+'">'+html+'</a>';
-		}
-
-		if ( caption)
-			html = '[caption id="" align="'+t.align+'" width="'+t.width+'"]'+html+caption+'[/caption]';
-
-		var win = window.dialogArguments || opener || parent || top;
-		win.send_to_editor(html);
-		return false;
-	},
-
-	resetImageData : function() {
-		var t = addExtImage;
-
-		t.width = t.height = '';
-		document.getElementById('go_button').style.color = '#bbb';
-		if ( !document.forms[0].src.value)
-			document.getElementById('status_img').innerHTML = '';
-		else document.getElementById('status_img').innerHTML = '<img src="<?php echo esc_url( admin_url( 'images/no.png')); ?>" alt="" />';
-	},
-
-	updateImageData : function() {
-		var t = addExtImage;
-
-		t.width = t.preloadImg.width;
-		t.height = t.preloadImg.height;
-		document.getElementById('go_button').style.color = '#333';
-		document.getElementById('status_img').innerHTML = '<img src="<?php echo esc_url( admin_url( 'images/yes.png')); ?>" alt="" />';
-	},
-
-	getImageData : function() {
-		if ( jQuery('table.describe').hasClass('not-image'))
-			return;
-
-		var t = addExtImage, src = document.forms[0].src.value;
-
-		if ( !src) {
-			t.resetImageData();
-			return false;
-		}
-
-		document.getElementById('status_img').innerHTML = '<img src="<?php echo esc_url( admin_url( 'images/spinner-2x.gif')); ?>" alt="" width="16" height="16" />';
-		t.preloadImg = new Image();
-		t.preloadImg.onload = t.updateImageData;
-		t.preloadImg.onerror = t.resetImageData;
-		t.preloadImg.src = src;
-	}
-};
-
-jQuery(document).ready( function($) {
-	$('.media-types input').click( function() {
-		$('table.describe').toggleClass('not-image', $('#not-image').prop('checked'));
-	});
-});
-</script>
 
 <div id="media-items">
 <div class="media-item media-blank">
@@ -2222,15 +2098,6 @@ function media_upload_gallery_form($errors) {
 		$form_class .= ' html-uploader';
 ?>
 
-<script type="text/javascript">
-jQuery(function($){
-	var preloaded = $(".media-item.preloaded");
-	if ( preloaded.length > 0) {
-		preloaded.each(function(){prepareMediaItem({id:this.id.replace(/[^0-9]/g, '')},'');});
-		updateMediaForm();
-	}
-});
-</script>
 <div id="sort-buttons" class="hide-if-no-js">
 <span>
 <?php _e('All Tabs:'); ?>
@@ -2508,17 +2375,7 @@ foreach ($arc_result as $arc_row) {
 <?php wp_nonce_field('media-form'); ?>
 <?php //media_upload_form( $errors); ?>
 
-<script type="text/javascript">
-<!--
-jQuery(function($){
-	var preloaded = $(".media-item.preloaded");
-	if ( preloaded.length > 0) {
-		preloaded.each(function(){prepareMediaItem({id:this.id.replace(/[^0-9]/g, '')},'');});
-		updateMediaForm();
-	}
-});
--->
-</script>
+
 
 <div id="media-items">
 <?php add_filter('attachment_fields_to_edit', 'media_post_single_attachment_fields_to_edit', 10, 2); ?>

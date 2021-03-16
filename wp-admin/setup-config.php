@@ -378,15 +378,7 @@ switch($step) {
 ?></textarea>
 <p><?php _e( 'After you&#8217;ve done that, click &#8220;Run the installation.&#8221;' ); ?></p>
 <p class="step"><a href="<?php echo $install; ?>" class="button button-large"><?php _e( 'Run the installation' ); ?></a></p>
-<script>
-(function(){
-if ( !/iPad|iPod|iPhone/.test( navigator.userAgent ) ) {
-	var el = document.getElementById('wp-config');
-	el.focus();
-	el.select();
-}
-})();
-</script>
+
 <?php
 	else :
 		/*
