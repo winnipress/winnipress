@@ -2983,7 +2983,7 @@ function wp_enqueue_editor(){
 }
 
 function wp_enqueue_default_admin_styles(){
-	wp_enqueue_style('default-admin-css', '/wp-admin/css/wp-admin.min.css');
+	wp_enqueue_style('default-admin-css', '/wp-admin/css/wp-admin.css');
 }
 
 
