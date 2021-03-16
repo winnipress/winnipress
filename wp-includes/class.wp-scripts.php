@@ -138,14 +138,7 @@ class WP_Scripts extends WP_Dependencies {
 	 * @since 3.4.0
 	 */
 	public function init() {
-		/**
-		 * Fires when the WP_Scripts instance is initialized.
-		 *
-		 * @since 2.6.0
-		 *
-		 * @param WP_Scripts $this WP_Scripts instance (passed by reference).
-		 */
-		do_action_ref_array( 'wp_default_scripts', array(&$this) );
+
 	}
 
 	/**
