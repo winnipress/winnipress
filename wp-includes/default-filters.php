@@ -34,12 +34,10 @@ foreach (array('pre_term_description', 'pre_link_description', 'pre_link_notes',
 	add_filter($filter, 'wp_filter_kses' );
 }
 
-// Kses only for textarea admin displays
+
 if (is_admin() ) {
-	foreach (array('term_description', 'link_description', 'link_notes', 'user_description' ) as $filter ) {
-		add_filter($filter, 'wp_kses_data' );
-	}
-	add_filter('comment_text', 'wp_kses_post' );
+
+	add_action('admin_enqueue_scripts', 'wp_enqueue_editor' );
 }
 
 // Email saves
@@ -245,8 +243,6 @@ add_action('template_redirect',   'wp_shortlink_header',             11, 0 );
 add_action('wp_print_footer_scripts', '_wp_footer_scripts'                 );
 add_action('init',                'check_theme_switched',            99    );
 
-if (isset($_GET['replytocom'] ) )
-    add_action('wp_head', 'wp_no_robots' );
 
 // Login actions
 add_filter('login_head',          'wp_resource_hints',             8     );
@@ -340,6 +336,7 @@ add_filter('heartbeat_settings', 'wp_heartbeat_settings' );
 
 // Check if the user is logged out
 add_action('admin_enqueue_scripts', 'wp_auth_check_load' );
+
 add_filter('heartbeat_send',        'wp_auth_check' );
 add_filter('heartbeat_nopriv_send', 'wp_auth_check' );
 

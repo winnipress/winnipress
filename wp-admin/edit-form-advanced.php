@@ -6,9 +6,6 @@
  * @subpackage Administration
  */
 
-// don't load directly
-if ( !defined('ABSPATH') )
-	die('-1');
 
 /**
  * @global string       $post_type
@@ -17,46 +14,19 @@ if ( !defined('ABSPATH') )
  */
 global $post_type, $post_type_object, $post;
 
-if ( is_multisite() ) {
+
+$check_users = get_users( array( 'fields' => 'ID', 'number' => 2 ) );
+
+if ( count( $check_users ) > 1 )
 	add_action( 'admin_footer', '_admin_notice_post_locked' );
-} else {
-	$check_users = get_users( array( 'fields' => 'ID', 'number' => 2 ) );
 
-	if ( count( $check_users ) > 1 )
-		add_action( 'admin_footer', '_admin_notice_post_locked' );
+unset( $check_users );
 
-	unset( $check_users );
-}
 
 wp_enqueue_script('post');
 $_wp_editor_expand = $_content_editor_dfw = false;
 
-/**
- * Filters whether to enable the 'expand' functionality in the post editor.
- *
- * @since 4.0.0
- * @since 4.1.0 Added the `$post_type` parameter.
- *
- * @param bool   $expand    Whether to enable the 'expand' functionality. Default true.
- * @param string $post_type Post type.
- */
-if ( post_type_supports( $post_type, 'editor' ) && !wp_is_mobile() &&
-	 !( $is_IE && preg_match( '/MSIE [5678]/', $_SERVER['HTTP_USER_AGENT'] ) ) &&
-	 apply_filters( 'wp_editor_expand', true, $post_type ) ) {
 
-	wp_enqueue_script('editor-expand');
-	$_content_editor_dfw = true;
-	$_wp_editor_expand = ( get_user_setting( 'editor_expand', 'on' ) === 'on' );
-}
-
-if ( wp_is_mobile() )
-	wp_enqueue_script( 'jquery-touch-punch' );
-
-/**
- * Post ID global
- * @name $post_ID
- * @var int
- */
 $post_ID = isset($post_ID) ? (int) $post_ID : 0;
 $user_ID = isset($user_ID) ? (int) $user_ID : 0;
 $action = isset($action) ? $action : '';
@@ -149,8 +119,6 @@ $messages['post'] = array(
 	 2 => __( 'Custom field updated.' ),
 	 3 => __( 'Custom field deleted.' ),
 	 4 => __( 'Post updated.' ),
-	/* translators: %s: date and time of the revision */
-	 5 => isset($_GET['revision']) ? sprintf( __( 'Post restored to revision from %s.' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 	 6 => __( 'Post published.' ) . $view_post_link_html,
 	 7 => __( 'Post saved.' ),
 	 8 => __( 'Post submitted.' ) . $preview_post_link_html,
@@ -163,8 +131,6 @@ $messages['page'] = array(
 	 2 => __( 'Custom field updated.' ),
 	 3 => __( 'Custom field deleted.' ),
 	 4 => __( 'Page updated.' ),
-	/* translators: %s: date and time of the revision */
-	 5 => isset($_GET['revision']) ? sprintf( __( 'Page restored to revision from %s.' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 	 6 => __( 'Page published.' ) . $view_page_link_html,
 	 7 => __( 'Page saved.' ),
 	 8 => __( 'Page submitted.' ) . $preview_page_link_html,
@@ -193,32 +159,11 @@ if ( isset($_GET['message']) ) {
 
 $notice = false;
 $form_extra = '';
-if ( 'auto-draft' == $post->post_status ) {
-	if ( 'edit' == $action )
-		$post->post_title = '';
-	$autosave = false;
-	$form_extra .= "<input type='hidden' id='auto_draft' name='auto_draft' value='1' />";
-} else {
-	$autosave = wp_get_post_autosave( $post_ID );
-}
-
 $form_action = 'editpost';
 $nonce_action = 'update-post_' . $post_ID;
 $form_extra .= "<input type='hidden' id='post_ID' name='post_ID' value='" . esc_attr($post_ID) . "' />";
 
-// Detect if there exists an autosave newer than the post and if that autosave is different than the post
-if ( $autosave && mysql2date( 'U', $autosave->post_modified_gmt, false ) > mysql2date( 'U', $post->post_modified_gmt, false ) ) {
-	foreach ( _wp_post_revision_fields( $post ) as $autosave_field => $_autosave_field ) {
-		if ( normalize_whitespace( $autosave->$autosave_field ) != normalize_whitespace( $post->$autosave_field ) ) {
-			$notice = sprintf( __( 'There is an autosave of this post that is more recent than the version below. <a href="%s">View the autosave</a>' ), get_edit_post_link( $autosave->ID ) );
-			break;
-		}
-	}
-	// If this autosave isn't different from the current post, begone.
-	if ( !$notice )
-		wp_delete_post_revision( $autosave->ID );
-	unset($autosave_field, $_autosave_field);
-}
+
 
 $post_type_object = get_post_type_object($post_type);
 
@@ -227,32 +172,9 @@ require_once( ABSPATH . 'wp-admin/includes/meta-boxes.php' );
 
 
 $publish_callback_args = null;
-if ( post_type_supports($post_type, 'revisions') && 'auto-draft' != $post->post_status ) {
-	$revisions = wp_get_post_revisions( $post_ID );
 
-	// We should aim to show the revisions meta box only when there are revisions.
-	if ( count( $revisions ) > 1 ) {
-		reset( $revisions ); // Reset pointer for key()
-		$publish_callback_args = array( 'revisions_count' => count( $revisions ), 'revision_id' => key( $revisions ) );
-		add_meta_box('revisionsdiv', __('Revisions'), 'post_revisions_meta_box', null, 'normal', 'core');
-	}
-}
 
-if ( 'attachment' == $post_type ) {
-	wp_enqueue_script( 'image-edit' );
-	wp_enqueue_style( 'imgareaselect' );
-	add_meta_box( 'submitdiv', __('Save'), 'attachment_submit_meta_box', null, 'side', 'core' );
-	add_action( 'edit_form_after_title', 'edit_form_image_editor' );
-
-	if ( wp_attachment_is( 'audio', $post ) ) {
-		add_meta_box( 'attachment-id3', __( 'Metadata' ), 'attachment_id3_data_meta_box', null, 'normal', 'core' );
-	}
-} else {
-	add_meta_box( 'submitdiv', __( 'Publish' ), 'post_submit_meta_box', null, 'side', 'core', $publish_callback_args );
-}
-
-if ( current_theme_supports( 'post-formats' ) && post_type_supports( $post_type, 'post-formats' ) )
-	add_meta_box( 'formatdiv', _x( 'Format', 'post format' ), 'post_format_meta_box', null, 'side', 'core' );
+add_meta_box( 'submitdiv', __( 'Publish' ), 'post_submit_meta_box', null, 'side', 'core', $publish_callback_args );
 
 // all taxonomies
 foreach ( get_object_taxonomies( $post ) as $tax_name ) {
@@ -371,11 +293,8 @@ if ( isset( $post_new_file ) && current_user_can( $post_type_object->cap->create
 <?php if ( $message ) : ?>
 <div id="message" class="updated notice notice-success is-dismissible"><p><?php echo $message; ?></p></div>
 <?php endif; ?>
-<div id="lost-connection-notice" class="error hidden">
-	<p><span class="spinner"></span> <?php _e( '<strong>Connection lost.</strong> Saving has been disabled until you&#8217;re reconnected.' ); ?>
-	<span class="hide-if-no-sessionstorage"><?php _e( 'We&#8217;re backing up this post in your browser, just in case.' ); ?></span>
-	</p>
-</div>
+
+<p>AQUI_EMPIEZA_EL_FORM</p>
 <form name="post" action="post.php" method="post" id="post"<?php
 /**
  * Fires inside the post editor form tag.
@@ -499,18 +418,7 @@ if ( post_type_supports($post_type, 'editor') ) {
 ?>
 <div id="postdivrich" class="postarea<?php if ( $_wp_editor_expand ) { echo ' wp-editor-expand'; } ?>">
 
-<?php wp_editor( $post->post_content, 'content', array(
-	'_content_editor_dfw' => $_content_editor_dfw,
-	'drag_drop_upload' => true,
-	'tabfocus_elements' => 'content-html,save-post',
-	'editor_height' => 300,
-	'tinymce' => array(
-		'resize' => false,
-		'wp_autoresize_on' => $_wp_editor_expand,
-		'add_unload_trigger' => false,
-		'wp_keep_scroll_position' => !$is_IE,
-	),
-) ); ?>
+<?php wp_editor( $post->post_content, 'content' ); ?>
 <table id="post-status-info"><tbody><tr>
 	<td id="wp-word-count" class="hide-if-no-js"><?php printf( __( 'Word count: %s' ), '<span class="word-count">0</span>' ); ?></td>
 	<td class="autosave-info">
@@ -624,11 +532,3 @@ do_action( 'dbx_post_sidebar', $post );
 </div><!-- /poststuff -->
 </form>
 </div>
-
-
-
-<?php if ( !wp_is_mobile() && post_type_supports( $post_type, 'title' ) && '' === $post->post_title ) : ?>
-<script type="text/javascript">
-try{document.post.title.focus();}catch(e){}
-</script>
-<?php endif; ?>

@@ -3721,7 +3721,6 @@ function ent2ncr( $text ){
  *
  * @since 4.3.0
  *
- * @see _WP_Editors::editor()
  *
  * @param string $text           The text to be formatted.
  * @param string $default_editor The default editor for the current user.

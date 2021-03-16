@@ -6,7 +6,7 @@
  * @subpackage Administration
  */
 
-@header('Content-Type: ' . get_option('html_type') . '; charset=' . get_option('blog_charset'));
+@header('Content-Type: ' . get_option('html_type') . '; charset=utf-8');
 if ( !defined( 'WP_ADMIN'))
 	require_once( dirname( __FILE__) . '/admin.php');
 
@@ -95,6 +95,7 @@ var ajaxurl = '<?php echo esc_js( admin_url( 'admin-ajax.php', 'relative')); ?>'
  * @param string $hook_suffix The current admin page.
  */
 do_action( 'admin_enqueue_scripts', $hook_suffix);
+
 
 /**
  * Fires when styles are printed for a specific admin page based on $hook_suffix.

@@ -1010,40 +1010,7 @@ function wp_ajax_menu_get_metabox() {
 	wp_die();
 }
 
-/**
- * Ajax handler for internal linking.
- *
- * @since 3.1.0
- */
-function wp_ajax_wp_link_ajax() {
-	check_ajax_referer( 'internal-linking', '_ajax_linking_nonce' );
 
-	$args = array();
-
-	if ( isset( $_POST['search'] ) ) {
-		$args['s'] = wp_unslash( $_POST['search'] );
-	}
-
-	if ( isset( $_POST['term'] ) ) {
-		$args['s'] = wp_unslash( $_POST['term'] );
-	}
-
-	$args['pagenum'] = !empty( $_POST['page'] ) ? absint( $_POST['page'] ) : 1;
-
-	if ( !class_exists( '_WP_Editors', false ) ) {
-		require( ABSPATH . WPINC . '/class-wp-editor.php' );
-	}
-
-	$results = _WP_Editors::wp_link_query( $args );
-
-	if ( !isset( $results ) )
-		wp_die( 0 );
-
-	echo wp_json_encode( $results );
-	echo "\n";
-
-	wp_die();
-}
 
 /**
  * Ajax handler for menu locations save.

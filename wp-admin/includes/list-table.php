@@ -21,7 +21,6 @@
  */
 function _get_list_table( $class, $args = array()) {
 	$core_classes = array(
-		//Site Admin
 		'WP_Posts_List_Table' => 'posts',
 		'WP_Media_List_Table' => 'media',
 		'WP_Terms_List_Table' => 'terms',
