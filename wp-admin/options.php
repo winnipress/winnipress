@@ -72,18 +72,11 @@ if ( !empty( $_GET[ 'adminhash' ] ) ) {
 	exit;
 }
 
-if ( is_multisite() && !current_user_can( 'manage_network_options' ) && 'update' != $action ) {
-	wp_die(
-		'<h1>' . __( 'You need a higher level of permission.' ) . '</h1>' .
-		'<p>' . __( 'Sorry, you are not allowed to delete these items.' ) . '</p>',
-		403
-	);
-}
-
 $whitelist_options = array(
 	'general' => array(
 		'blogname',
 		'blogdescription',
+		'template',
 		'gmt_offset',
 		'date_format',
 		'time_format',
@@ -166,21 +159,13 @@ $whitelist_options = apply_filters( 'whitelist_options', $whitelist_options );
  * If $_GET['action'] == 'update' we are saving settings sent from a settings page
  */
 if ( 'update' == $action ) {
-	if ( 'options' == $option_page && !isset( $_POST['option_page'] ) ) { // This is for back compat and will eventually be removed.
-		$unregistered = true;
-		check_admin_referer( 'update-options' );
-	} else {
-		$unregistered = false;
-		check_admin_referer( $option_page . '-options' );
-	}
-
+	
+	check_admin_referer( $option_page . '-options' );
+	
 	if ( !isset( $whitelist_options[ $option_page ] ) )
 		wp_die( __( '<strong>ERROR</strong>: options page not found.' ) );
 
 	if ( 'options' == $option_page ) {
-		if ( is_multisite() && !current_user_can( 'manage_network_options' ) ) {
-			wp_die( __( 'Sorry, you are not allowed to modify unregistered settings for this site.' ) );
-		}
 		$options = explode( ',', wp_unslash( $_POST[ 'page_options' ] ) );
 	} else {
 		$options = $whitelist_options[ $option_page ];
@@ -206,15 +191,6 @@ if ( 'update' == $action ) {
 		$user_language_old = get_user_locale();
 
 		foreach ( $options as $option ) {
-			if ( $unregistered ) {
-				_deprecated_argument( 'options.php', '2.7.0',
-					sprintf(
-						/* translators: %s: the option/setting */
-						__( 'The %s setting is unregistered. Unregistered settings are deprecated. See https://codex.wordpress.org/Settings_API' ),
-						'<code>' . $option . '</code>'
-					)
-				);
-			}
 
 			$option = trim( $option );
 			$value = null;

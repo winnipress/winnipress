@@ -43,6 +43,12 @@ include(ABSPATH . 'wp-admin/admin-header.php' );
 <p class="description" id="tagline-description"><?php _e('In a few words, explain what this site is about.' ) ?></p></td>
 </tr>
 
+<tr>
+<th scope="row"><label for="template"><?php _e('Active Theme') ?></label></th>
+<td><input name="template" type="text" id="template" aria-describedby="tagline-description" value="<?php form_option('template'); ?>" class="regular-text" />
+<p class="description" id="template-description"><?php _e('Current active theme.' ) ?></p></td>
+</tr>
+
 
 <tr>
 <th scope="row"><label for="siteurl"><?php _e('WordPress Address (URL)') ?></label></th>

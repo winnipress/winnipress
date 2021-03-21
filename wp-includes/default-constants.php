@@ -335,7 +335,7 @@ function wp_functionality_constants() {
  *
  * @since 3.0.0
  */
-function wp_templating_constants() {
+function wp_templating_constants(){
 	/**
 	 * Filesystem path to the current active template directory
 	 * @since 1.5.0
