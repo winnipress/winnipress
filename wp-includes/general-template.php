@@ -2965,7 +2965,14 @@ function wp_default_editor() {
 
 function wp_editor($content, $editor_id, $settings = array()){
 ?>
-<script>tinymce.init({selector:'#<?php echo $editor_id; ?>'});</script>
+<script>
+tinymce.init({
+	selector:'#<?php echo $editor_id; ?>',
+	plugins: 'image',
+	toolbar: 'image',
+	}
+);
+</script>
 <textarea name="<?php echo $editor_id; ?>" id="<?php echo $editor_id; ?>">
 <?php echo htmlspecialchars($content); ?>
 </textarea>
@@ -2984,6 +2991,7 @@ function wp_enqueue_editor(){
 
 function wp_enqueue_default_admin_styles(){
 	wp_enqueue_style('default-admin-css', '/wp-admin/css/wp-admin.css');
+	wp_enqueue_style('line-awesome-icons', '/wp-admin/icons/line-awesome-1.3.0/css/line-awesome.min.css');
 }
 
 

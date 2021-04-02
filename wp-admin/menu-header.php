@@ -11,10 +11,8 @@
  *
  * @global string $self
  */
-$self = preg_replace('|^.*/wp-admin/network/|i', '', $_SERVER['PHP_SELF']);
 $self = preg_replace('|^.*/wp-admin/|i', '', $self);
 $self = preg_replace('|^.*/plugins/|i', '', $self);
-$self = preg_replace('|^.*/mu-plugins/|i', '', $self);
 
 /**
  * For when admin-header is included from within a function.
@@ -113,26 +111,8 @@ function _wp_menu_output($menu, $submenu, $submenu_as_parent = true) {
 			$is_separator = true;
 		}
 
-		/*
-		 * If the string 'none' (previously 'div') is passed instead of a URL, don't output
-		 * the default menu image so an icon can be added to div.wp-menu-image as background
-		 * with CSS. Dashicons and base64-encoded data:image/svg_xml URIs are also handled
-		 * as special cases.
-		 */
-		if (!empty($item[6])) {
-			$img = '<img src="' . $item[6] . '" alt="" />';
+		
 
-			if ('none' === $item[6] || 'div' === $item[6]) {
-				$img = '<br />';
-			} elseif (0 === strpos($item[6], 'data:image/svg+xml;base64,')) {
-				$img = '<br />';
-				$img_style = ' style="background-image:url(\'' . esc_attr($item[6]) . '\')"';
-				$img_class = ' svg';
-			} elseif (0 === strpos($item[6], 'dashicons-')) {
-				$img = '<br />';
-				$img_class = ' dashicons-before ' . sanitize_html_class($item[6]);
-			}
-		}
 		$arrow = '<div class="wp-menu-arrow"><div></div></div>';
 
 		$title = wptexturize($item[0]);
@@ -144,6 +124,13 @@ function _wp_menu_output($menu, $submenu, $submenu_as_parent = true) {
 
 		echo "\n\t<li$class$id$aria_hidden>";
 
+		// Print icon if set
+		if(empty($item[6]) or substr($item[6],0,3)!='la-'){
+			$icon = '<i class="las la-caret-right"></i> ';
+		}else{
+			$icon = '<i class="las '.$item[6].'"></i> ';
+		}
+
 		if ($is_separator) {
 			echo '<div class="separator"></div>';
 		} elseif ($submenu_as_parent && !empty($submenu_items)) {
@@ -154,9 +141,9 @@ function _wp_menu_output($menu, $submenu, $submenu_as_parent = true) {
 				$menu_file = substr($menu_file, 0, $pos);
 			if (!empty($menu_hook) || (('index.php' != $submenu_items[0][2]) && file_exists(WP_PLUGIN_DIR . "/$menu_file") && !file_exists(ABSPATH . "/wp-admin/$menu_file"))) {
 				$admin_is_parent = true;
-				echo "<a href='admin.php?page={$submenu_items[0][2]}'$class $aria_attributes>$arrow<div class='wp-menu-image$img_class'$img_style>$img</div><div class='wp-menu-name'>$title</div></a>";
+				echo "<a href='admin.php?page={$submenu_items[0][2]}'$class $aria_attributes>$arrow<div class='wp-menu-name'>$icon $title</div></a>";
 			} else {
-				echo "\n\t<a href='{$submenu_items[0][2]}'$class $aria_attributes>$arrow<div class='wp-menu-image$img_class'$img_style>$img</div><div class='wp-menu-name'>$title</div></a>";
+				echo "\n\t<a href='{$submenu_items[0][2]}'$class $aria_attributes>$arrow<div class='wp-menu-name'>$icon $title</div></a>";
 			}
 		} elseif (!empty($item[2]) && current_user_can($item[1])) {
 			$menu_hook = get_plugin_page_hook($item[2], 'admin.php');
@@ -165,9 +152,9 @@ function _wp_menu_output($menu, $submenu, $submenu_as_parent = true) {
 				$menu_file = substr($menu_file, 0, $pos);
 			if (!empty($menu_hook) || (('index.php' != $item[2]) && file_exists(WP_PLUGIN_DIR . "/$menu_file") && !file_exists(ABSPATH . "/wp-admin/$menu_file"))) {
 				$admin_is_parent = true;
-				echo "\n\t<a href='admin.php?page={$item[2]}'$class $aria_attributes>$arrow<div class='wp-menu-image$img_class'$img_style>$img</div><div class='wp-menu-name'>{$item[0]}</div></a>";
+				echo "\n\t<a href='admin.php?page={$item[2]}'$class $aria_attributes>$arrow<div class='wp-menu-name'>$icon{$item[0]}</div></a>";
 			} else {
-				echo "\n\t<a href='{$item[2]}'$class $aria_attributes>$arrow<div class='wp-menu-image$img_class'$img_style>$img</div><div class='wp-menu-name'>{$item[0]}</div></a>";
+				echo "\n\t<a href='{$item[2]}'$class $aria_attributes>$arrow<div class='wp-menu-name'>$icon{$item[0]}</div></a>";
 			}
 		}
 
@@ -243,11 +230,6 @@ function _wp_menu_output($menu, $submenu, $submenu_as_parent = true) {
 		echo "</li>";
 	}
 
-	echo '<li id="collapse-menu" class="hide-if-no-js">' .
-		'<button type="button" id="collapse-button" aria-label="' . esc_attr__('Collapse Main menu') . '" aria-expanded="true">' .
-		'<span class="collapse-button-icon" aria-hidden="true"></span>' .
-		'<span class="collapse-button-label">' . __('Collapse menu') . '</span>' .
-		'</button></li>';
 }
 
 ?>

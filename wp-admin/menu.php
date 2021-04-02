@@ -1,26 +1,9 @@
 <?php
-/**
- * Build Administration Menu.
- *
- * @package WordPress
- * @subpackage Administration
- */
 
-/**
- * Constructs the admin menu.
- *
- * The elements in the array are :
- *     0: Menu item name
- *     1: Minimum level or capability required.
- *     2: The URL of the item's file
- *     3: Class
- *     4: ID
- *     5: Icon for top level menu
- *
- * @global array $menu
- */
+// Constructs the admin menu.
+// 0 = menu_title, 1 = capability, 2 = menu_slug, 3 = page_title, 4 = classes, 5 = hookname, 6 = icon_url
 
-$menu[2] = array(__('Dashboard'), 'read', 'index.php', '', 'menu-top menu-top-first menu-icon-dashboard', 'menu-dashboard', 'dashicons-dashboard');
+$menu[2] = array(__('Dashboard'), 'read', 'index.php', '', 'menu-top menu-top-first menu-icon-dashboard', 'menu-dashboard', 'la-home');
 
 $submenu[ 'index.php' ][0] = array(__('Home'), 'read', 'index.php');
 
@@ -29,7 +12,7 @@ $menu[4] = array('', 'read', 'separator1', '', 'wp-menu-separator');
 
 // $menu[5] = Posts
 
-$menu[10] = array(__('Media'), 'upload_files', 'upload.php', '', 'menu-top menu-icon-media', 'menu-media', 'dashicons-admin-media');
+$menu[10] = array(__('Media'), 'upload_files', 'upload.php', '', 'menu-top menu-icon-media', 'menu-media', 'la-photo-video');
 	$submenu['upload.php'][5] = array(__('Library'), 'upload_files', 'upload.php');
 	/* translators: add new file */
 	$submenu['upload.php'][10] = array(_x('Add New', 'file'), 'upload_files', 'media-new.php');
@@ -41,10 +24,6 @@ $menu[10] = array(__('Media'), 'upload_files', 'upload.php', '', 'menu-top menu-
 		$submenu['upload.php'][$i++] = array(esc_attr($tax->labels->menu_name), $tax->cap->manage_terms, 'edit-tags.php?taxonomy=' . $tax->name . '&amp;post_type=attachment');
 	}
 	unset($tax, $i);
-
-
-
-// $menu[20] = Pages
 
 
 
@@ -60,16 +39,9 @@ foreach (array_merge($builtin, $types) as $ptype) {
 	$ptype_menu_position = is_int($ptype_obj->menu_position) ? $ptype_obj->menu_position : ++$_wp_last_object_menu; // If we're to use $_wp_last_object_menu, increment it first.
 	$ptype_for_id = sanitize_html_class($ptype);
 
-	$menu_icon = 'dashicons-admin-post';
-	if (is_string($ptype_obj->menu_icon)) {
-		// Special handling for data:image/svg+xml and Dashicons.
-		if (0 === strpos($ptype_obj->menu_icon, 'data:image/svg+xml;base64,') || 0 === strpos($ptype_obj->menu_icon, 'dashicons-')) {
-			$menu_icon = $ptype_obj->menu_icon;
-		} else {
-			$menu_icon = esc_url($ptype_obj->menu_icon);
-		}
-	} elseif (in_array($ptype, $builtin)) {
-		$menu_icon = 'dashicons-admin-' . $ptype;
+	$menu_icon = 'la-archive';
+	if(is_string($ptype_obj->menu_icon) and substr($ptype_obj->menu_icon,0,3)=='la-'){
+		$menu_icon = $ptype_obj->menu_icon;
 	}
 
 	$menu_class = 'menu-top menu-icon-' . $ptype_for_id;
@@ -115,29 +87,20 @@ unset($ptype, $ptype_obj, $ptype_for_id, $ptype_menu_position, $menu_icon, $i, $
 $menu[59] = array('', 'read', 'separator2', '', 'wp-menu-separator');
 
 
-/**
- * Adds the (theme) 'Editor' link to the bottom of the Appearance menu.
- *
- * @access private
- * @since 3.0.0
- */
-function _add_themes_utility_last() {
-	// Must use API on the admin_menu hook, direct modification is only possible on/before the _admin_menu hook
-	add_submenu_page('themes.php', _x('Editor', 'theme editor'), _x('Editor', 'theme editor'), 'edit_themes', 'theme-editor.php');
-}
+
 
 $count = '';
 
 
-$menu[65] = array(sprintf(__('Plugins %s'), $count), 'activate_plugins', 'plugins.php', '', 'menu-top menu-icon-plugins', 'menu-plugins', 'dashicons-admin-plugins');
+$menu[65] = array(sprintf(__('Plugins %s'), $count), 'activate_plugins', 'plugins.php', '', 'menu-top menu-icon-plugins', 'menu-plugins', 'la-puzzle-piece');
 
 
 
 
 if (current_user_can('list_users'))
-	$menu[70] = array(__('Users'), 'list_users', 'users.php', '', 'menu-top menu-icon-users', 'menu-users', 'dashicons-admin-users');
+	$menu[70] = array(__('Users'), 'list_users', 'users.php', '', 'menu-top menu-icon-users', 'menu-users', 'la-users');
 else
-	$menu[70] = array(__('Profile'), 'read', 'profile.php', '', 'menu-top menu-icon-users', 'menu-users', 'dashicons-admin-users');
+	$menu[70] = array(__('Profile'), 'read', 'profile.php', '', 'menu-top menu-icon-users', 'menu-users', 'la-users');
 
 if (current_user_can('list_users')) {
 	$_wp_real_parent_file['profile.php'] = 'users.php'; // Back-compat for plugins adding submenus to profile.php.
@@ -165,7 +128,7 @@ $change_notice = '';
 
 
 // translators: %s is the update notification bubble, if updates are available.
-$menu[80]                               = array(sprintf(__('Settings %s'), $change_notice), 'manage_options', 'options-general.php', '', 'menu-top menu-icon-settings', 'menu-settings', 'dashicons-admin-settings');
+$menu[80]                               = array(sprintf(__('Settings %s'), $change_notice), 'manage_options', 'options-general.php', '', 'menu-top menu-icon-settings', 'menu-settings', 'la-cog');
 	$submenu['options-general.php'][10] = array(_x('General', 'settings screen'), 'manage_options', 'options-general.php');
 	$submenu['options-general.php'][15] = array(__('Writing'), 'manage_options', 'options-writing.php');
 	$submenu['options-general.php'][20] = array(__('Reading'), 'manage_options', 'options-reading.php');
