@@ -20,7 +20,7 @@ $action = $wp_list_table->current_action();
 $plugin = isset($_REQUEST['plugin']) ? wp_unslash( $_REQUEST['plugin'] ) : '';
 $s = isset($_REQUEST['s']) ? urlencode( wp_unslash( $_REQUEST['s'] ) ) : '';
 
-// Clean up request URI from temporary args for screen options/paging uri's to work as expected.
+// Clean up request URI from temporary args for screeeen options/paging uri's to work as expected.
 $_SERVER['REQUEST_URI'] = remove_query_arg(array('error', 'deleted', 'activate', 'activate-multi', 'deactivate', 'deactivate-multi', '_error_nonce'), $_SERVER['REQUEST_URI']);
 
 wp_enqueue_script( 'updates' );

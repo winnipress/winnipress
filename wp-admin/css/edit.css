@@ -19,19 +19,11 @@
   11.0 - Write/Edit Post Screen
 ------------------------------------------------------------------------------*/
 
-#show-comments {
-	overflow: hidden;
-}
 
-#save-action .spinner,
-#show-comments a {
+#save-action .spinner{
 	float: left;
 }
 
-#show-comments .spinner {
-	float: none;
-	margin-top: 0;
-}
 
 #lost-connection-notice .spinner {
 	visibility: visible;
@@ -88,8 +80,7 @@ input#link_url {
 	margin-top: -1px;
 }
 
-#edit-slug-box,
-#comment-link-box {
+#edit-slug-box{
 	line-height: 1.84615384;
 	min-height: 25px;
 	margin-top: 5px;
@@ -103,10 +94,6 @@ input#link_url {
 	font-size: 11px;
 }
 
-#comment-link-box {
-	margin: 5px 0;
-	padding: 0 5px;
-}
 
 #editable-post-name-full {
 	display: none;
@@ -200,47 +187,13 @@ ul.category-tabs li,
 	text-decoration: none;
 }
 
-/* @todo: do these really need to be so specific? */
-#side-sortables .category-tabs .tabs a,
-#side-sortables .add-menu-item-tabs .tabs a,
-.wp-tab-bar .wp-tab-active a,
-#post-body ul.category-tabs li.tabs a,
-#post-body ul.add-menu-item-tabs li.tabs a {
-	color: #32373c;
-}
+
 
 .category-tabs {
 	margin: 8px 0 5px;
 }
 
-/* Back-compat for pre-4.4 */
-#category-adder h4 {
-	margin: 0;
-}
 
-.taxonomy-add-new {
-	display: inline-block;
-	margin: 10px 0;
-	font-weight: 600;
-}
-
-#side-sortables .add-menu-item-tabs,
-.wp-tab-bar {
-	margin-bottom: 3px;
-}
-
-#normal-sortables .postbox #replyrow .submit {
-	float: none;
-	margin: 0;
-	padding: 5px 7px 10px;
-	overflow: hidden;
-}
-
-#side-sortables .submitbox .submit input,
-#side-sortables .submitbox .submit .preview,
-#side-sortables .submitbox .submit a.preview:hover {
-	border: 0 none;
-}
 
 /* @todo: make this a more generic class */
 ul.category-tabs,
@@ -384,30 +337,6 @@ form#tags-filter {
 .wp-editor-expand div.mce-toolbar-grp {
 	z-index: 999;
 }
-
-/* TinyMCE native fullscreen mode override */
-.mce-fullscreen #wp-content-wrap .mce-menubar,
-.mce-fullscreen #wp-content-wrap .mce-toolbar-grp,
-.mce-fullscreen #wp-content-wrap .mce-edit-area,
-.mce-fullscreen #wp-content-wrap .mce-statusbar {
-	position: static !important;
-	width: auto !important;
-	padding: 0 !important;
-}
-
-.mce-fullscreen #wp-content-wrap .mce-statusbar {
-	visibility: visible !important;
-}
-
-.mce-fullscreen #wp-content-wrap .mce-tinymce .mce-wp-dfw {
-	display: none;
-}
-
-.post-php.mce-fullscreen #wpadminbar,
-.mce-fullscreen #wp-content-wrap .mce-wp-dfw {
-	display: none;
-}
-/* End TinyMCE native fullscreen mode override */
 
 #wp-content-editor-tools {
 	background-color: #f1f1f1;
@@ -605,8 +534,6 @@ form#tags-filter {
 	text-indent: 0;
 }
 
-#poststuff h3.hndle, /* Back-compat for pre-4.4 */
-#poststuff .stuffbox > h3, /* Back-compat for pre-4.4 */
 #poststuff h2 {
 	font-size: 14px;
 	padding: 8px 12px;
@@ -655,7 +582,6 @@ form#tags-filter {
 	margin-top: 3px;
 }
 
-#linksubmitdiv .inside, /* Old Link Manager back-compat. */
 #poststuff #submitdiv .inside {
 	margin: 0;
 	padding: 0;
@@ -670,126 +596,6 @@ form#tags-filter {
 	margin-top: 0.5385em;
 	display: inline-block;
 	min-height: 1.6923em;
-}
-
-/* Suggested text for privacy policy */
-.wp-privacy-policy-guide {
-	max-width: 1000px;
-}
-
-.privacy-text-box {
-	width: calc(100% - 260px);
-}
-
-.privacy-text-box-toc {
-	float: right;
-	width: 250px;
-	background-color: #fff;
-}
-
-.privacy-text-box-toc p {
-	margin: 0;
-	padding: 0.7em 1em;
-	border-bottom: 1px solid #eee;
-}
-
-.privacy-text-box-toc ol {
-	margin-left: 2em;
-}
-
-.wp-privacy-policy-guide h3 {
-	font-size: 1.2em;
-	margin: 1em 0 0.5em;
-}
-
-.privacy-text-section .privacy-text-copy {
-	float: right;
-}
-
-.privacy-text-section {
-	position: relative;
-	border-top: 1px solid #e3e3e3;
-}
-
-.privacy-text-box-head,
-.privacy-text-section.text-removed {
-	padding-bottom: 12px;
-}
-
-.text-removed .policy-text {
-	font-style: italic;
-	color: #666;
-	font-weight: 600;
-}
-
-.privacy-text-actions {
-	height: 32px;
-	line-height: 2.46153846;
-	padding-bottom: 6px;
-}
-
-.wp-privacy-policy-guide .policy-text h2 {
-	margin: 1.2em 0 1em;
-	padding: 0;
-}
-
-.suggested-policy-content {
-	font-style: italic;
-}
-
-.privacy-text-section a.return-to-top {
-	float: right;
-	margin-right: -250px;
-	margin-top: 6px;
-}
-
-.hide-privacy-policy-tutorial {
-	background-color: #fff;
-}
-
-.hide-privacy-policy-tutorial .wp-policy-help, /* For back-compat, see #49282 */
-.hide-privacy-policy-tutorial .privacy-policy-tutorial {
-	display: none;
-}
-
-.policy-text {
-	margin-bottom: 1em;
-}
-
-.policy-text > *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(div):not(.privacy-policy-tutorial):not(.wp-policy-help),
-.policy-text div > *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(div):not(.privacy-policy-tutorial):not(.wp-policy-help) {
-	background-color: #fff;
-	margin: 0;
-	padding: 1em;
-}
-
-.policy-text > *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(div):not(.privacy-policy-tutorial):not(.wp-policy-help) + *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(div):not(.privacy-policy-tutorial):not(.wp-policy-help),
-.policy-text div > *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(div):not(.privacy-policy-tutorial):not(.wp-policy-help) + *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(div):not(.privacy-policy-tutorial):not(.wp-policy-help) {
-	padding-top: 0;
-}
-
-.hide-privacy-policy-tutorial > *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(div):not(.privacy-policy-tutorial):not(.wp-policy-help) {
-	margin: 1em 0;
-	padding: 0;
-}
-
-.policy-text ul li,
-.policy-text ol li {
-	margin-left: 2em;
-}
-
-.policy-text ul {
-	list-style: disc;
-}
-
-strong.wp-policy-help, /* For back-compat, see #49282 */
-strong.privacy-policy-tutorial {
-	display: block;
-	margin: 0 0 1em;
-}
-
-.notice.wp-pp-notice {
-	margin: 15px 0 3px;
 }
 
 /*------------------------------------------------------------------------------
@@ -1232,44 +1038,6 @@ p.popular-tags a {
 	margin-top: 20px;
 }
 
-/* Comments */
-
-.comment-php .wp-editor-area {
-	height: 200px;
-}
-
-.comment-ays th,
-.comment-ays td {
-	padding: 10px 15px;
-}
-
-.comment-ays .comment-content ul {
-	list-style: initial;
-	margin-left: 2em;
-}
-
-.comment-ays .comment-content a[href]:after {
-	content: "(" attr( href ) ")";
-	display: inline-block;
-	padding: 0 4px;
-	color: #72777C;
-	font-size: 13px;
-	word-break: break-all;
-}
-
-.comment-ays .comment-content p.edit-comment {
-	margin-top: 10px;
-}
-
-.comment-ays .comment-content p.edit-comment a[href]:after {
-	content: "";
-	padding: 0;
-}
-
-.comment-ays-submit .button-cancel {
-	margin-left: 1em;
-}
-
 .trash-undo-inside,
 .spam-undo-inside {
 	margin: 1px 8px 1px 0;
@@ -1341,79 +1109,6 @@ table.links-table {
 
 .links-table #link_rel {
 	max-width: 280px;
-}
-
-/* DFW 2
--------------------------------------------------------------- */
-
-#qt_content_dfw {
-	display: none;
-}
-
-.wp-editor-expand #qt_content_dfw {
-	display: inline-block;
-}
-
-.focus-on .wrap > h1,
-.focus-on .page-title-action,
-.focus-on #wpfooter,
-.focus-on .postbox-container > *,
-.focus-on div.updated,
-.focus-on div.error,
-.focus-on div.notice,
-.focus-on .update-nag,
-.focus-on #wp-toolbar,
-.focus-on #screen-meta-links,
-.focus-on #screen-meta {
-	opacity: 0;
-	transition-duration: 0.6s;
-	transition-property: opacity;
-	transition-timing-function: ease-in-out;
-}
-
-.focus-on #wp-toolbar {
-	opacity: 0.3;
-}
-
-.focus-off .wrap > h1,
-.focus-off .page-title-action,
-.focus-off #wpfooter,
-.focus-off .postbox-container > *,
-.focus-off div.updated,
-.focus-off div.error,
-.focus-off div.notice,
-.focus-off .update-nag,
-.focus-off #wp-toolbar,
-.focus-off #screen-meta-links,
-.focus-off #screen-meta {
-	opacity: 1;
-	transition-duration: 0.2s;
-	transition-property: opacity;
-	transition-timing-function: ease-in-out;
-}
-
-.focus-off #wp-toolbar {
-	-webkit-transform: translate(0, 0);
-}
-
-.focus-on #adminmenuback,
-.focus-on #adminmenuwrap {
-	transition-duration: 0.6s;
-	transition-property: transform;
-	transition-timing-function: ease-in-out;
-}
-
-.focus-on #adminmenuback,
-.focus-on #adminmenuwrap {
-	transform: translateX( -100% );
-}
-
-.focus-off #adminmenuback,
-.focus-off #adminmenuwrap {
-	transform: translateX( 0 );
-	transition-duration: 0.2s;
-	transition-property: transform;
-	transition-timing-function: ease-in-out;
 }
 
 /* =Media Queries
@@ -1624,52 +1319,6 @@ table.links-table {
 		line-height: 1.4;
 	}
 
-	/* Discussion */
-	#commentstatusdiv p {
-		line-height: 2.8;
-	}
-
-	/* TinyMCE Adjustments */
-	.mceToolbar * {
-		white-space: normal !important;
-	}
-
-	.mceToolbar tr,
-	.mceToolbar td {
-		float: left !important;
-	}
-
-	.wp_themeSkin a.mceButton {
-		width: 30px;
-		height: 30px;
-	}
-
-	.wp_themeSkin .mceButton .mceIcon {
-		margin-top: 5px;
-		margin-left: 5px;
-	}
-
-	.wp_themeSkin .mceSplitButton {
-		margin-top: 1px;
-	}
-
-	.wp_themeSkin .mceSplitButton td a.mceAction {
-		padding-top: 6px;
-		padding-bottom: 6px;
-		padding-left: 6px;
-		padding-right: 3px;
-	}
-
-	.wp_themeSkin .mceSplitButton td a.mceOpen,
-	.wp_themeSkin .mceSplitButtonEnabled:hover td a.mceOpen {
-		padding-top: 6px;
-		padding-bottom: 6px;
-		background-position: 1px 6px;
-	}
-
-	.wp_themeSkin table.mceListBox {
-		margin: 5px;
-	}
 
 	div.quicktags-toolbar input {
 		padding: 10px 20px;
@@ -1721,38 +1370,5 @@ table.links-table {
 		margin-top: -2px; /* Half of the Publish button's bottom margin. */
 	}
 
-	/* Moderate Comment */
-	.comment-ays th,
-	.comment-ays td {
-		padding-bottom: 0;
-	}
 
-	.comment-ays td {
-		padding-top: 6px;
-	}
-
-	/* Links */
-	.links-table #link_rel {
-		max-width: none;
-	}
-
-	.links-table th,
-	.links-table td {
-		padding: 10px 0;
-	}
-
-	.privacy-text-box {
-		width: auto;
-	}
-
-	.privacy-text-box-toc {
-		float: none;
-		width: auto;
-		height: 100%;
-	}
-
-	.privacy-text-section a.return-to-top {
-		float: none;
-		margin: 0;
-	}
 }
