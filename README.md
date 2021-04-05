@@ -44,7 +44,7 @@ Removed. You are a developer, and you go seek and find the cool stuff out there 
   
 ### Where are comments gone?  
   
-The comments system is the first thing I threw away. If you don't like that then I am sorry.
+The comments system is the first thing I threw away.
   
 ### More things that are being trashed:  
   
