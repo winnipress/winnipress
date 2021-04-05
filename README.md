@@ -18,7 +18,7 @@ And away of the fuss of this fuzzy words I want to say something clear:
   
 > "WordPress is focusing too much on making itself a wittypitty toolbox for crappy websites. It's saying goodbye to developers and walking way too much into nondevs territory. Too many buttons for things that should just be coded. Is code not poetry anymore?"  
   
-That being said, WordPress and the new Gutentoy are very cool. It will allow people with a lack of knowledge in the web development field to own or sell a basic site with nicelooking stuff in them.  
+That being said, WordPress and the new Gutentoy are very cool. Such tools will allow people with a lack of knowledge in the web development field to own or sell a basic site with nicelooking stuff in them.  
   
 But, the more it walks into that direction, the more it's walking away from pure web development.  
   
@@ -60,5 +60,9 @@ The comments system is the first thing I threw away.
 Computers are getting more powerful every few months. But really, making thousands of function calls each time a user sees a page cannot be healthy. Let's clean this thing down to make it at least a 77% less bloated.  
   
 The vision for WinniPress is to throw away as much as possible and then clean what stays. Focus on security and efficiency. For the rest, whatever makes sense for itself, should become a well-written Plugin.
+
+## A message for YOU
+  
+I am currently doing this on my own. Some WP stuff is breaking because I am literally throwing away everything I don't need or want. This is a long-time project that I will be working on with ease, while I keep developing WordPress stuff for clients. I want this bunch of files to be clean and lean before the end of 2021, and stop using WordPress for client websites starting 2022. If you feel on the same wave I invite you to join the adventure.
 
 **The idea is**: If things are kept simple everything will always be compatible.
