@@ -18,7 +18,7 @@ And away of the fuss of this fuzzy words I want to say something clear:
   
 > "WordPress is focusing too much on making itself a wittypitty toolbox for crappy websites. It's saying goodbye to developers and walking way too much into nondevs territory. Too many buttons for things that should just be coded. Is code not poetry anymore?"  
   
-That being said, WordPress and the new Gutentoy is very cool. It will allow people with a lack of knowledge in the web development field to own or sell a basic site with nicelooking stuff in them.  
+That being said, WordPress and the new Gutentoy are very cool. It will allow people with a lack of knowledge in the web development field to own or sell a basic site with nicelooking stuff in them.  
   
 But, the more it walks into that direction, the more it's walking away from pure web development.  
   
