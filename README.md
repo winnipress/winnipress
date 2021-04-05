@@ -6,7 +6,7 @@ Then the idea of making web-logs with ease was planted into it and today WordPre
   
 WordPress is probably the most beautiful poem written in Human History. And will always be.  
   
-## So why WinniPress?  
+## So... why WinniPress?  
   
 WinniPress is not here to compete against it, but to walk behind it right into the future.  
   
@@ -24,7 +24,7 @@ But, the more it walks into that direction, the more it's walking away from pure
   
 I have always seen WordPress as a PHP framework to make stuff happen. I know it's not. But having fallen in love with an idea that is vanishing release after release, I decided to do something about it.  
   
-## So. TF is WinniPress?  
+## So... TF is WinniPress?  
   
 > "WinniPress is an opensource PHP based tool to develop webs, which includes an administration area to handle stuff and a framework to create applications in an easy way."  
   
@@ -53,7 +53,7 @@ The comments system is the first thing I threw away. If you don't like that then
 * **REST**. GraphQL is cool too. But: Plugin territory.  
 * **Emojis**. Seriously?  
 * **jQuery**. Thanks for making the web evolve but... you gotta go now.  
-* **Network**. [Teta y sopa, no caben en la boca](https://spanish.stackexchange.com/questions/37794/teta-y-sopa-no-caben-en-la-boca).  
+* **Multisite**. Too many `if(is_multisite)` around. Plus... low use cases.  
   
 ## The vision for the future.  
   
