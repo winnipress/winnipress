@@ -5,11 +5,13 @@ This is a map of the stuff I use in a daily basis. The purpose of this document 
 
 ### SETTINGS and OPTIONS
 
-`add_options_page()`: Add page to the settings Menu
-`add_settings_section()`: Add settings section to a settings page
+`add_options_page()`: Add page to the settings Menu  
+`add_settings_section()`: Add settings section to a settings page  
+`register_setting()`: Register a setting under an Options Group
+`add_settings_field()`: Add a settings field to a settings section
 
 ## BACK AND FRONT
 
 ### POSTS
 
-`get_posts()`: Get posts matching given arguments
+`get_posts()`: Get posts matching given arguments  
