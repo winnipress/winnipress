@@ -2,58 +2,26 @@
 
 session_start();
 
-/**
- * WordPress Administration Bootstrap
- *
- * @package WordPress
- * @subpackage Administration
- */
 
-/**
- * In WordPress Administration Screens
- *
- * @since 2.3.2
- */
+// In WordPress Administration Screens
 if (!defined('WP_ADMIN' ) ) {
 	define('WP_ADMIN', true );
 }
 
-if (!defined('WP_NETWORK_ADMIN') )
-	define('WP_NETWORK_ADMIN', false);
-
-if (!defined('WP_USER_ADMIN') )
-	define('WP_USER_ADMIN', false);
-
-if (!WP_NETWORK_ADMIN && !WP_USER_ADMIN ) {
-	define('WP_BLOG_ADMIN', true);
-}
-
-if (isset($_GET['import']) && !defined('WP_LOAD_IMPORTERS') )
-	define('WP_LOAD_IMPORTERS', true);
+define('WP_BLOG_ADMIN', true);
 
 // Require debug tools
-require_once(dirname(dirname(__FILE__)) . '/wp-includes/winni-debug-tools.php');
+require(dirname(dirname(__FILE__)) . '/wp-includes/winni-debug-tools.php');
+
+require(dirname(dirname(__FILE__)). '/wp-includes/class-wp-walker.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/class-walker-page.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/class-walker-page-dropdown.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/class-walker-category.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/class-walker-category-dropdown.php');
 
 require_once(dirname(dirname(__FILE__)) . '/wp-load.php');
 
 nocache_headers();
-
-if (get_option('db_upgraded') ) {
-	flush_rewrite_rules();
-	update_option('db_upgraded',  false );
-
-	/**
-	 * Fires on the next page load after a successful DB upgrade.
-	 *
-	 * @since 2.8.0
-	 */
-	do_action('after_db_upgrade' );
-} elseif (get_option('db_version') != $wp_db_version && empty($_POST) ) {
-
-		wp_redirect(admin_url('upgrade.php?_wp_http_referer=' . urlencode(wp_unslash($_SERVER['REQUEST_URI'] ) ) ) );
-		exit;
-	
-}
 
 require_once(ABSPATH . 'wp-admin/includes/admin.php');
 
@@ -73,7 +41,7 @@ set_screen_options();
 $date_format = __('F j, Y' );
 $time_format = __('g:i a' );
 
-wp_enqueue_script('common' );
+wp_enqueue_script('common');
 
 /**
  * $pagenow is set in vars.php
@@ -107,12 +75,8 @@ if (isset($_REQUEST['taxonomy'] ) && taxonomy_exists($_REQUEST['taxonomy'] ) )
 else
 	$taxnow = '';
 
-if (WP_NETWORK_ADMIN )
-	require(ABSPATH . 'wp-admin/network/menu.php');
-elseif (WP_USER_ADMIN )
-	require(ABSPATH . 'wp-admin/user/menu.php');
-else
-	require(ABSPATH . 'wp-admin/menu.php');
+
+require(ABSPATH . 'wp-admin/menu.php');
 
 if (current_user_can('manage_options' ) ) {
 	wp_raise_memory_limit('admin' );
@@ -258,8 +222,6 @@ if (isset($plugin_page) ) {
 	}  elseif ($pagenow == 'edit-tags.php' ) {
 		if ($taxnow == 'category' )
 			do_action('load-categories.php' );
-		elseif ($taxnow == 'link_category' )
-			do_action('load-edit-link-categories.php' );
 	} elseif('term.php' === $pagenow ) {
 		do_action('load-edit-tags.php' );
 	}

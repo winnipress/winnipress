@@ -114,7 +114,6 @@ require_once(ABSPATH . WPINC . '/class-wp-locale-switcher.php');
 wp_not_installed();
 
 // Load most of WordPress.
-require(ABSPATH . WPINC . '/class-wp-walker.php');
 require(ABSPATH . WPINC . '/class-wp-ajax-response.php');
 require(ABSPATH . WPINC . '/formatting.php');
 require(ABSPATH . WPINC . '/capabilities.php');
@@ -138,16 +137,12 @@ require(ABSPATH . WPINC . '/general-template.php');
 require(ABSPATH . WPINC . '/link-template.php');
 require(ABSPATH . WPINC . '/author-template.php');
 require(ABSPATH . WPINC . '/post.php');
-require(ABSPATH . WPINC . '/class-walker-page.php');
-require(ABSPATH . WPINC . '/class-walker-page-dropdown.php');
 require(ABSPATH . WPINC . '/class-wp-post-type.php');
 require(ABSPATH . WPINC . '/class-wp-post.php');
 require(ABSPATH . WPINC . '/post-template.php');
 require(ABSPATH . WPINC . '/post-formats.php');
 require(ABSPATH . WPINC . '/post-thumbnail-template.php');
 require(ABSPATH . WPINC . '/category.php');
-require(ABSPATH . WPINC . '/class-walker-category.php');
-require(ABSPATH . WPINC . '/class-walker-category-dropdown.php');
 require(ABSPATH . WPINC . '/category-template.php');
 require(ABSPATH . WPINC . '/rewrite.php');
 require(ABSPATH . WPINC . '/class-wp-rewrite.php');
@@ -172,8 +167,6 @@ require(ABSPATH . WPINC . '/class-wp-http-encoding.php');
 require(ABSPATH . WPINC . '/class-wp-http-response.php');
 require(ABSPATH . WPINC . '/class-wp-http-requests-response.php');
 require(ABSPATH . WPINC . '/class-wp-http-requests-hooks.php');
-require(ABSPATH . WPINC . '/nav-menu.php');
-require(ABSPATH . WPINC . '/nav-menu-template.php');
 
 // Define constants that rely on the API to obtain the default value.
 // Define must-use plugin directory constants, which may be overridden in the sunrise.php drop-in.

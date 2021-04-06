@@ -738,8 +738,7 @@ function is_blog_admin(){
 function is_network_admin(){
 	if(isset($GLOBALS['current_screen'] ) )
 		return $GLOBALS['current_screen']->in_admin('network' );
-	elseif(defined('WP_NETWORK_ADMIN' ) )
-		return WP_NETWORK_ADMIN;
+
 
 	return false;
 }
@@ -762,8 +761,6 @@ function is_network_admin(){
 function is_user_admin(){
 	if(isset($GLOBALS['current_screen'] ) )
 		return $GLOBALS['current_screen']->in_admin('user' );
-	elseif(defined('WP_USER_ADMIN' ) )
-		return WP_USER_ADMIN;
 
 	return false;
 }
