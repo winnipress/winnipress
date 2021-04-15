@@ -13,11 +13,11 @@ define('WP_BLOG_ADMIN', true);
 // Require debug tools
 require(dirname(dirname(__FILE__)) . '/wp-includes/winni-debug-tools.php');
 
-require(dirname(dirname(__FILE__)). '/wp-includes/class-wp-walker.php');
-require(dirname(dirname(__FILE__)). '/wp-includes/class-walker-page.php');
-require(dirname(dirname(__FILE__)). '/wp-includes/class-walker-page-dropdown.php');
-require(dirname(dirname(__FILE__)). '/wp-includes/class-walker-category.php');
-require(dirname(dirname(__FILE__)). '/wp-includes/class-walker-category-dropdown.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/classes/walker.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/classes/walker-page.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/classes/walker-page-dropdown.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/classes/walker-category.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/classes/walker-category-dropdown.php');
 
 require_once(dirname(dirname(__FILE__)) . '/wp-load.php');
 

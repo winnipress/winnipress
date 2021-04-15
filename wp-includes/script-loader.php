@@ -18,19 +18,19 @@
 
 
 /** WordPress Dependency Class */
-require(ABSPATH . WPINC . '/class-wp-dependency.php' );
+require(ABSPATH . WPINC . '/classes/dependency.php' );
 
 /** WordPress Dependencies Class */
-require(ABSPATH . WPINC . '/class.wp-dependencies.php' );
+require(ABSPATH . WPINC . '/classes/dependencies.php' );
 
 /** WordPress Scripts Class */
-require(ABSPATH . WPINC . '/class.wp-scripts.php' );
+require(ABSPATH . WPINC . '/classes/scripts.php' );
 
 /** WordPress Scripts Functions */
 require(ABSPATH . WPINC . '/functions.wp-scripts.php' );
 
 /** WordPress Styles Class */
-require(ABSPATH . WPINC . '/class.wp-styles.php' );
+require(ABSPATH . WPINC . '/classes/styles.php' );
 
 /** WordPress Styles Functions */
 require(ABSPATH . WPINC . '/functions.wp-styles.php' );

@@ -214,8 +214,8 @@ function wp_mail($to, $subject, $message, $headers = '', $attachments = array() 
 
 	// (Re)create it, if it's gone missing
 	if (!($phpmailer instanceof PHPMailer ) ){
-		require_once ABSPATH . WPINC . '/class-phpmailer.php';
-		require_once ABSPATH . WPINC . '/class-smtp.php';
+		require_once ABSPATH . WPINC . '/classes/phpmailer.php';
+		require_once ABSPATH . WPINC . '/classes/smtp.php';
 		$phpmailer = new PHPMailer(true );
 	}
 
@@ -1871,7 +1871,7 @@ function wp_new_user_notification($user_id, $deprecated = null, $notify = '' ){
 
 	// Now insert the key, hashed, into the DB.
 	if (empty($wp_hasher ) ){
-		require_once ABSPATH . WPINC . '/class-phpass.php';
+		require_once ABSPATH . WPINC . '/classes/phpass.php';
 		$wp_hasher = new PasswordHash(8, true );
 	}
 	$hashed = time() . ':' . $wp_hasher->HashPassword($key );
@@ -2184,7 +2184,7 @@ function wp_hash_password($password){
 	global $wp_hasher;
 
 	if (empty($wp_hasher) ){
-		require_once(ABSPATH . WPINC . '/class-phpass.php');
+		require_once(ABSPATH . WPINC . '/classes/phpass.php');
 		// By default, use the portable hash from phpass
 		$wp_hasher = new PasswordHash(8, true);
 	}
@@ -2244,7 +2244,7 @@ function wp_check_password($password, $hash, $user_id = ''){
 	// If the stored hash is longer than an MD5, presume the
 	// new style phpass portable hash.
 	if (empty($wp_hasher) ){
-		require_once(ABSPATH . WPINC . '/class-phpass.php');
+		require_once(ABSPATH . WPINC . '/classes/phpass.php');
 		// By default, use the portable hash from phpass
 		$wp_hasher = new PasswordHash(8, true);
 	}
@@ -2549,77 +2549,3 @@ function get_avatar($id_or_email, $size = 96, $default = '', $alt = '', $args = 
 }
 endif;
 
-if (!function_exists('wp_text_diff' ) ) :
-/**
- * Displays a human readable HTML representation of the difference between two strings.
- *
- * The Diff is available for getting the changes between versions. The output is
- * HTML, so the primary use is for displaying the changes. If the two strings
- * are equivalent, then an empty string will be returned.
- *
- * The arguments supported and can be changed are listed below.
- *
- * 'title' : Default is an empty string. Titles the diff in a manner compatible
- *		with the output.
- * 'title_left' : Default is an empty string. Change the HTML to the left of the
- *		title.
- * 'title_right' : Default is an empty string. Change the HTML to the right of
- *		the title.
- *
- * @since 2.6.0
- *
- * @see wp_parse_args() Used to change defaults to user defined settings.
- * @uses Text_Diff
- * @uses WP_Text_Diff_Renderer_Table
- *
- * @param string       $left_string  "old" (left) version of string
- * @param string       $right_string "new" (right) version of string
- * @param string|array $args         Optional. Change 'title', 'title_left', and 'title_right' defaults.
- * @return string Empty string if strings are equivalent or HTML with differences.
- */
-function wp_text_diff($left_string, $right_string, $args = null ){
-	$defaults = array('title' => '', 'title_left' => '', 'title_right' => '' );
-	$args = wp_parse_args($args, $defaults );
-
-	if (!class_exists('WP_Text_Diff_Renderer_Table', false ) )
-		require(ABSPATH . WPINC . '/wp-diff.php' );
-
-	$left_string  = normalize_whitespace($left_string);
-	$right_string = normalize_whitespace($right_string);
-
-	$left_lines  = explode("\n", $left_string);
-	$right_lines = explode("\n", $right_string);
-	$text_diff = new Text_Diff($left_lines, $right_lines);
-	$renderer  = new WP_Text_Diff_Renderer_Table($args );
-	$diff = $renderer->render($text_diff);
-
-	if (!$diff )
-		return '';
-
-	$r  = "<table class='diff'>\n";
-
-	if (!empty($args[ 'show_split_view' ] ) ){
-		$r .= "<col class='content diffsplit left' /><col class='content diffsplit middle' /><col class='content diffsplit right' />";
-	} else {
-		$r .= "<col class='content' />";
-	}
-
-	if ($args['title'] || $args['title_left'] || $args['title_right'] )
-		$r .= "<thead>";
-	if ($args['title'] )
-		$r .= "<tr class='diff-title'><th colspan='4'>$args[title]</th></tr>\n";
-	if ($args['title_left'] || $args['title_right'] ){
-		$r .= "<tr class='diff-sub-title'>\n";
-		$r .= "\t<td></td><th>$args[title_left]</th>\n";
-		$r .= "\t<td></td><th>$args[title_right]</th>\n";
-		$r .= "</tr>\n";
-	}
-	if ($args['title'] || $args['title_left'] || $args['title_right'] )
-		$r .= "</thead>\n";
-
-	$r .= "<tbody>\n$diff\n</tbody>\n";
-	$r .= "</table>";
-
-	return $r;
-}
-endif;

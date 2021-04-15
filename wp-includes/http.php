@@ -216,7 +216,7 @@ function wp_remote_head($url, $args = array()) {
  * @return array|\Requests_Utility_CaseInsensitiveDictionary The headers of the response. Empty array if incorrect parameter given.
  */
 function wp_remote_retrieve_headers( $response ) {
-	if ( is_wp_error( $response ) || !isset( $response['headers'] ) ) {
+	if ( is_wp_error( $response ) || ! isset( $response['headers'] ) ) {
 		return array();
 	}
 
@@ -233,7 +233,7 @@ function wp_remote_retrieve_headers( $response ) {
  * @return string The header value. Empty string on if incorrect parameter given, or if the header doesn't exist.
  */
 function wp_remote_retrieve_header( $response, $header ) {
-	if ( is_wp_error( $response ) || !isset( $response['headers'] ) ) {
+	if ( is_wp_error( $response ) || ! isset( $response['headers'] ) ) {
 		return '';
 	}
 
@@ -255,7 +255,7 @@ function wp_remote_retrieve_header( $response, $header ) {
  * @return int|string The response code as an integer. Empty string on incorrect parameter given.
  */
 function wp_remote_retrieve_response_code( $response ) {
-	if ( is_wp_error($response) || !isset($response['response']) || !is_array($response['response']))
+	if ( is_wp_error($response) || ! isset($response['response']) || ! is_array($response['response']))
 		return '';
 
 	return $response['response']['code'];
@@ -272,7 +272,7 @@ function wp_remote_retrieve_response_code( $response ) {
  * @return string The response message. Empty string on incorrect parameter given.
  */
 function wp_remote_retrieve_response_message( $response ) {
-	if ( is_wp_error($response) || !isset($response['response']) || !is_array($response['response']))
+	if ( is_wp_error($response) || ! isset($response['response']) || ! is_array($response['response']))
 		return '';
 
 	return $response['response']['message'];
@@ -287,7 +287,7 @@ function wp_remote_retrieve_response_message( $response ) {
  * @return string The body of the response. Empty string if no body or incorrect parameter given.
  */
 function wp_remote_retrieve_body( $response ) {
-	if ( is_wp_error($response) || !isset($response['body']) )
+	if ( is_wp_error($response) || ! isset($response['body']) )
 		return '';
 
 	return $response['body'];
@@ -346,7 +346,7 @@ function wp_remote_retrieve_cookie( $response, $name ) {
 function wp_remote_retrieve_cookie_value( $response, $name ) {
 	$cookie = wp_remote_retrieve_cookie( $response, $name );
 
-	if ( !is_a( $cookie, 'WP_Http_Cookie' ) ) {
+	if ( ! is_a( $cookie, 'WP_Http_Cookie' ) ) {
 		return '';
 	}
 
@@ -395,7 +395,7 @@ function wp_http_supports( $capabilities = array(), $url = null ) {
  */
 function get_http_origin() {
 	$origin = '';
-	if ( !empty ( $_SERVER[ 'HTTP_ORIGIN' ] ) )
+	if ( ! empty ( $_SERVER[ 'HTTP_ORIGIN' ] ) )
 		$origin = $_SERVER[ 'HTTP_ORIGIN' ];
 
 	/**
@@ -457,7 +457,7 @@ function is_allowed_http_origin( $origin = null ) {
 	if ( null === $origin )
 		$origin = get_http_origin();
 
-	if ( $origin && !in_array( $origin, get_allowed_http_origins() ) )
+	if ( $origin && ! in_array( $origin, get_allowed_http_origins() ) )
 		$origin = '';
 
 	/**
@@ -514,11 +514,11 @@ function send_origin_headers() {
 function wp_http_validate_url( $url ) {
 	$original_url = $url;
 	$url = wp_kses_bad_protocol( $url, array( 'http', 'https' ) );
-	if ( !$url || strtolower( $url ) !== strtolower( $original_url ) )
+	if ( ! $url || strtolower( $url ) !== strtolower( $original_url ) )
 		return false;
 
 	$parsed_url = @parse_url( $url );
-	if ( !$parsed_url || empty( $parsed_url['host'] ) )
+	if ( ! $parsed_url || empty( $parsed_url['host'] ) )
 		return false;
 
 	if ( isset( $parsed_url['user'] ) || isset( $parsed_url['pass'] ) )
@@ -535,7 +535,7 @@ function wp_http_validate_url( $url ) {
 		$same_host = false;
 	}
 
-	if ( !$same_host ) {
+	if ( ! $same_host ) {
 		$host = trim( $parsed_url['host'], '.' );
 		if ( preg_match( '#^(([1-9]?\d|1\d\d|25[0-5]|2[0-4]\d)\.){3}([1-9]?\d|1\d\d|25[0-5]|2[0-4]\d)$#', $host ) ) {
 			$ip = $host;
@@ -563,7 +563,7 @@ function wp_http_validate_url( $url ) {
 				 * @param string $host IP of the requested host.
 				 * @param string $url  URL of the requested host.
 				 */
-				if ( !apply_filters( 'http_request_host_is_external', false, $host, $url ) )
+				if ( ! apply_filters( 'http_request_host_is_external', false, $host, $url ) )
 					return false;
 			}
 		}
@@ -594,7 +594,7 @@ function wp_http_validate_url( $url ) {
  * @return bool
  */
 function allowed_http_request_hosts( $is_external, $host ) {
-	if ( !$is_external && wp_validate_redirect( 'http://' . $host ) )
+	if ( ! $is_external && wp_validate_redirect( 'http://' . $host ) )
 		$is_external = true;
 	return $is_external;
 }

@@ -51,8 +51,8 @@ if(file_exists(ABSPATH . 'wp-config.php')){
 
 	// Standardize $_SERVER variables across setups.
 	wp_fix_server_vars();
-
-	require_once(ABSPATH . WPINC . '/functions.php');
+	require_once(ABSPATH . WPINC . '/functions/options-transients.php');
+	require_once(ABSPATH . WPINC . '/functions/main.php');
 
 	$path = wp_guess_url() . '/wp-admin/setup-config.php';
 

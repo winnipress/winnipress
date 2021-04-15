@@ -217,9 +217,6 @@ add_action('login_head',          'wp_site_icon',                  99    );
 add_action('login_footer',        'wp_print_footer_scripts',       20    );
 add_action('login_init',          'send_frame_options_header',     10, 0 );
 
-// WP Cron
-if (!defined('DOING_CRON' ) )
-	add_action('init', 'wp_cron' );
 
 // 2 Actions 2 Furious
 add_action('do_robots',                  'do_robots'                                      );

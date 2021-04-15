@@ -76,11 +76,12 @@ if(WP_CACHE && apply_filters('enable_loading_advanced_cache_dropin', true)){
 wp_set_lang_dir();
 
 // Load early WordPress files.
-require(ABSPATH . WPINC . '/class-wp-list-util.php');
-require(ABSPATH . WPINC . '/functions.php');
-require(ABSPATH . WPINC . '/class-wp-matchesmapregex.php');
-require(ABSPATH . WPINC . '/class-wp.php');
-require(ABSPATH . WPINC . '/class-wp-error.php');
+require(ABSPATH . WPINC . '/classes/list-util.php');
+require(ABSPATH . WPINC . '/functions/options-transients.php');
+require(ABSPATH . WPINC . '/functions/main.php');
+require(ABSPATH . WPINC . '/classes/matchesmapregex.php');
+require(ABSPATH . WPINC . '/classes/wp.php');
+require(ABSPATH . WPINC . '/classes/error.php');
 require(ABSPATH . WPINC . '/pomo/mo.php');
 
 // Include the wpdb class and, if present, a db.php database drop-in.
@@ -107,66 +108,58 @@ if(SHORTINIT)
 
 // Load the L10n library.
 require_once(ABSPATH . WPINC . '/l10n.php');
-require_once(ABSPATH . WPINC . '/class-wp-locale.php');
-require_once(ABSPATH . WPINC . '/class-wp-locale-switcher.php');
+require_once(ABSPATH . WPINC . '/classes/locale.php');
+require_once(ABSPATH . WPINC . '/classes/locale-switcher.php');
 
 // Run the installer if WordPress is not installed.
 wp_not_installed();
 
 // Load most of WordPress.
-require(ABSPATH . WPINC . '/class-wp-ajax-response.php');
+require(ABSPATH . WPINC . '/classes/ajax-response.php');
 require(ABSPATH . WPINC . '/formatting.php');
 require(ABSPATH . WPINC . '/capabilities.php');
-require(ABSPATH . WPINC . '/class-wp-roles.php');
-require(ABSPATH . WPINC . '/class-wp-role.php');
-require(ABSPATH . WPINC . '/class-wp-user.php');
-require(ABSPATH . WPINC . '/class-wp-query.php');
+require(ABSPATH . WPINC . '/classes/roles.php');
+require(ABSPATH . WPINC . '/classes/role.php');
+require(ABSPATH . WPINC . '/classes/user.php');
+require(ABSPATH . WPINC . '/classes/query.php');
 require(ABSPATH . WPINC . '/query.php');
 require(ABSPATH . WPINC . '/date.php');
 require(ABSPATH . WPINC . '/theme.php');
-require(ABSPATH . WPINC . '/class-wp-theme.php');
+require(ABSPATH . WPINC . '/classes/theme.php');
 require(ABSPATH . WPINC . '/template.php');
 require(ABSPATH . WPINC . '/user.php');
-require(ABSPATH . WPINC . '/class-wp-user-query.php');
-require(ABSPATH . WPINC . '/class-wp-session-tokens.php');
-require(ABSPATH . WPINC . '/class-wp-user-meta-session-tokens.php');
+require(ABSPATH . WPINC . '/classes/user-query.php');
+require(ABSPATH . WPINC . '/classes/session-tokens.php');
+require(ABSPATH . WPINC . '/classes/user-meta-session-tokens.php');
 require(ABSPATH . WPINC . '/meta.php');
-require(ABSPATH . WPINC . '/class-wp-meta-query.php');
-require(ABSPATH . WPINC . '/class-wp-metadata-lazyloader.php');
-require(ABSPATH . WPINC . '/general-template.php');
-require(ABSPATH . WPINC . '/link-template.php');
-require(ABSPATH . WPINC . '/author-template.php');
+require(ABSPATH . WPINC . '/classes/meta-query.php');
+require(ABSPATH . WPINC . '/classes/metadata-lazyloader.php');
 require(ABSPATH . WPINC . '/post.php');
-require(ABSPATH . WPINC . '/class-wp-post-type.php');
-require(ABSPATH . WPINC . '/class-wp-post.php');
-require(ABSPATH . WPINC . '/post-template.php');
+require(ABSPATH . WPINC . '/classes/post-type.php');
+require(ABSPATH . WPINC . '/classes/post.php');
 require(ABSPATH . WPINC . '/post-formats.php');
-require(ABSPATH . WPINC . '/post-thumbnail-template.php');
 require(ABSPATH . WPINC . '/category.php');
-require(ABSPATH . WPINC . '/category-template.php');
 require(ABSPATH . WPINC . '/rewrite.php');
-require(ABSPATH . WPINC . '/class-wp-rewrite.php');
+require(ABSPATH . WPINC . '/classes/rewrite.php');
 require(ABSPATH . WPINC . '/kses.php');
 require(ABSPATH . WPINC . '/cron.php');
 require(ABSPATH . WPINC . '/script-loader.php');
 require(ABSPATH . WPINC . '/taxonomy.php');
-require(ABSPATH . WPINC . '/class-wp-taxonomy.php');
-require(ABSPATH . WPINC . '/class-wp-term.php');
-require(ABSPATH . WPINC . '/class-wp-term-query.php');
-require(ABSPATH . WPINC . '/class-wp-tax-query.php');
+require(ABSPATH . WPINC . '/classes/taxonomy.php');
+require(ABSPATH . WPINC . '/classes/term.php');
+require(ABSPATH . WPINC . '/classes/term-query.php');
+require(ABSPATH . WPINC . '/classes/tax-query.php');
 require(ABSPATH . WPINC . '/canonical.php');
 require(ABSPATH . WPINC . '/shortcodes.php');
 require(ABSPATH . WPINC . '/media.php');
 require(ABSPATH . WPINC . '/http.php');
-require(ABSPATH . WPINC . '/class-http.php');
-require(ABSPATH . WPINC . '/class-wp-http-streams.php');
-require(ABSPATH . WPINC . '/class-wp-http-curl.php');
-require(ABSPATH . WPINC . '/class-wp-http-proxy.php');
-require(ABSPATH . WPINC . '/class-wp-http-cookie.php');
-require(ABSPATH . WPINC . '/class-wp-http-encoding.php');
-require(ABSPATH . WPINC . '/class-wp-http-response.php');
-require(ABSPATH . WPINC . '/class-wp-http-requests-response.php');
-require(ABSPATH . WPINC . '/class-wp-http-requests-hooks.php');
+
+require(ABSPATH . WPINC . '/functions/general.php'); // Functions to handle general stuff
+require(ABSPATH . WPINC . '/functions/urls-and-links.php'); // Functions to handle urls and links
+require(ABSPATH . WPINC . '/functions/authors.php'); // Functions to handle authors
+require(ABSPATH . WPINC . '/functions/posts.php'); // Functions to handle posts
+require(ABSPATH . WPINC . '/functions/post-thumbnails.php'); // Functions to handle post thumbnails
+require(ABSPATH . WPINC . '/functions/categories.php'); // Functions to handle categories
 
 // Define constants that rely on the API to obtain the default value.
 // Define must-use plugin directory constants, which may be overridden in the sunrise.php drop-in.
