@@ -29,7 +29,7 @@ function wp_get_db_schema( $scope = 'all', $blog_id = null) {
 
 	$charset_collate = $wpdb->get_charset_collate();
 
-	if ( $blog_id && $blog_id != $wpdb->blogid)
+	if( $blog_id && $blog_id != $wpdb->blogid)
 		$old_blog_id = $wpdb->set_blog_id( $blog_id);
 
 	// Engage multisite if in the middle of turning it on from network.php.
@@ -264,7 +264,7 @@ CREATE TABLE $wpdb->signups (
 			break;
 	}
 
-	if ( isset( $old_blog_id))
+	if( isset( $old_blog_id))
 		$wpdb->set_blog_id( $old_blog_id);
 
 	return $queries;
@@ -293,7 +293,7 @@ function populate_options() {
 	 */
 	do_action( 'populate_options');
 
-	if ( ini_get('safe_mode')) {
+	if( ini_get('safe_mode')) {
 		// Safe mode can break mkdir() so use a flat structure by default.
 		$uploads_use_yearmonth_folders = 0;
 	} else {
@@ -303,12 +303,12 @@ function populate_options() {
 	// If WP_DEFAULT_THEME doesn't exist, fall back to the latest core default theme.
 	$stylesheet = $template = WP_DEFAULT_THEME;
 	$theme = wp_get_theme( WP_DEFAULT_THEME);
-	if ( !$theme->exists()) {
+	if( !$theme->exists()) {
 		$theme = WP_Theme::get_core_default_theme();
 	}
 
 	// If we can't find a core default theme, WP_DEFAULT_THEME is the best we can do.
-	if ( $theme) {
+	if( $theme) {
 		$stylesheet = $theme->get_stylesheet();
 		$template   = $theme->get_template();
 	}
@@ -320,9 +320,9 @@ function populate_options() {
 	   for all timezone strings supported by PHP.
 	*/
 	$offset_or_tz = _x( '0', 'default GMT offset or timezone string');
-	if ( is_numeric( $offset_or_tz))
+	if( is_numeric( $offset_or_tz))
 		$gmt_offset = $offset_or_tz;
-	elseif ( $offset_or_tz && in_array( $offset_or_tz, timezone_identifiers_list()))
+	elseif( $offset_or_tz && in_array( $offset_or_tz, timezone_identifiers_list()))
 			$timezone_string = $offset_or_tz;
 
 	$options = array(
@@ -439,26 +439,26 @@ function populate_options() {
 	$existing_options = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE option_name in ( $keys)");
 
 	$insert = '';
-	foreach ( $options as $option => $value) {
-		if ( in_array($option, $existing_options))
+	foreach( $options as $option => $value) {
+		if( in_array($option, $existing_options))
 			continue;
-		if ( in_array($option, $fat_options))
+		if( in_array($option, $fat_options))
 			$autoload = 'no';
 		else
 			$autoload = 'yes';
 
-		if ( is_array($value))
+		if( is_array($value))
 			$value = serialize($value);
-		if ( !empty($insert))
+		if( !empty($insert))
 			$insert .= ', ';
 		$insert .= $wpdb->prepare( "(%s, %s, %s)", $option, $value, $autoload);
 	}
 
-	if ( !empty($insert))
+	if( !empty($insert))
 		$wpdb->query("INSERT INTO $wpdb->options (option_name, option_value, autoload) VALUES " . $insert);
 
 	// In case it is set, but blank, update "home".
-	if ( !__get_option('home')) update_option('home', $guessurl);
+	if( !__get_option('home')) update_option('home', $guessurl);
 
 	// Clear expired transients
 	delete_expired_transients( true);
@@ -592,9 +592,9 @@ function populate_roles_160() {
  */
 function populate_roles_210() {
 	$roles = array('administrator', 'editor');
-	foreach ($roles as $role) {
+	foreach($roles as $role) {
 		$role = get_role($role);
-		if ( empty($role))
+		if( empty($role))
 			continue;
 
 		$role->add_cap('edit_others_pages');
@@ -615,19 +615,19 @@ function populate_roles_210() {
 	}
 
 	$role = get_role('administrator');
-	if ( !empty($role)) {
+	if( !empty($role)) {
 		$role->add_cap('delete_users');
 		$role->add_cap('create_users');
 	}
 
 	$role = get_role('author');
-	if ( !empty($role)) {
+	if( !empty($role)) {
 		$role->add_cap('delete_posts');
 		$role->add_cap('delete_published_posts');
 	}
 
 	$role = get_role('contributor');
-	if ( !empty($role)) {
+	if( !empty($role)) {
 		$role->add_cap('delete_posts');
 	}
 }
@@ -640,7 +640,7 @@ function populate_roles_210() {
 function populate_roles_230() {
 	$role = get_role( 'administrator');
 
-	if ( !empty( $role)) {
+	if( !empty( $role)) {
 		$role->add_cap( 'unfiltered_upload');
 	}
 }
@@ -653,7 +653,7 @@ function populate_roles_230() {
 function populate_roles_250() {
 	$role = get_role( 'administrator');
 
-	if ( !empty( $role)) {
+	if( !empty( $role)) {
 		$role->add_cap( 'edit_dashboard');
 	}
 }
@@ -666,7 +666,7 @@ function populate_roles_250() {
 function populate_roles_260() {
 	$role = get_role( 'administrator');
 
-	if ( !empty( $role)) {
+	if( !empty( $role)) {
 		$role->add_cap( 'update_plugins');
 		$role->add_cap( 'delete_plugins');
 	}
@@ -680,7 +680,7 @@ function populate_roles_260() {
 function populate_roles_270() {
 	$role = get_role( 'administrator');
 
-	if ( !empty( $role)) {
+	if( !empty( $role)) {
 		$role->add_cap( 'install_plugins');
 		$role->add_cap( 'update_themes');
 	}
@@ -694,7 +694,7 @@ function populate_roles_270() {
 function populate_roles_280() {
 	$role = get_role( 'administrator');
 
-	if ( !empty( $role)) {
+	if( !empty( $role)) {
 		$role->add_cap( 'install_themes');
 	}
 }
@@ -707,7 +707,7 @@ function populate_roles_280() {
 function populate_roles_300() {
 	$role = get_role( 'administrator');
 
-	if ( !empty( $role)) {
+	if( !empty( $role)) {
 		$role->add_cap( 'update_core');
 		$role->add_cap( 'list_users');
 		$role->add_cap( 'remove_users');

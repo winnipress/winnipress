@@ -168,7 +168,7 @@ wp_plugin_directory_constants();
 $GLOBALS['wp_plugin_paths'] = array();
 
 // Load must-use plugins.
-foreach (wp_get_mu_plugins() as $mu_plugin){
+foreach(wp_get_mu_plugins() as $mu_plugin){
 	include_once($mu_plugin);
 }
 unset($mu_plugin);
@@ -202,7 +202,7 @@ wp_start_scraping_edited_file_errors();
 register_theme_directory(get_theme_root());
 
 // Load active plugins.
-foreach (wp_get_active_and_valid_plugins() as $plugin){
+foreach(wp_get_active_and_valid_plugins() as $plugin){
 	wp_register_plugin_realpath($plugin);
 	include_once($plugin);
 }
@@ -329,10 +329,10 @@ $GLOBALS['wp']->init();
  * Fires after WordPress has finished loading but before any headers are sent.
  *
  * Most of WP is loaded at this stage, and the user is authenticated. WP continues
- * to load on the {@see 'init'} hook that follows (e.g. widgets), and many plugins instantiate
+ * to load on the{@see 'init'} hook that follows (e.g. widgets), and many plugins instantiate
  * themselves on it for all sorts of reasons (e.g. they need a user, a taxonomy, etc.).
  *
- * If you wish to plug an action once WP is loaded, use the {@see 'wp_loaded'} hook below.
+ * If you wish to plug an action once WP is loaded, use the{@see 'wp_loaded'} hook below.
  *
  * @since 1.5.0
  */

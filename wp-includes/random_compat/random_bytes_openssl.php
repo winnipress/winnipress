@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-if (!is_callable('random_bytes' ) ):
+if(!is_callable('random_bytes')):
 /**
  * Since openssl_random_pseudo_bytes() uses openssl's 
  * RAND_pseudo_bytes() API, which has been marked as deprecated by the
@@ -42,18 +42,18 @@ if (!is_callable('random_bytes' ) ):
  */
 function random_bytes($bytes)
 {
-    try {
+    try{
         $bytes = RandomCompat_intval($bytes);
     } catch (TypeError $ex){
         throw new TypeError(
             'random_bytes(): $bytes must be an integer'
-        );
+       );
     }
 
-    if ($bytes < 1){
+    if($bytes < 1){
         throw new Error(
             'Length must be greater than 0'
-        );
+       );
     }
 
     /**
@@ -65,13 +65,13 @@ function random_bytes($bytes)
      */
     $secure = true;
     $buf = openssl_random_pseudo_bytes($bytes, $secure);
-    if (
+    if(
         $buf !== false
         &&
         $secure
         &&
         RandomCompat_strlen($buf) === $bytes
-    ){
+   ){
         return $buf;
     }
 
@@ -80,6 +80,6 @@ function random_bytes($bytes)
      */
     throw new Exception(
         'Could not gather sufficient random data'
-    );
+   );
 }
 endif;

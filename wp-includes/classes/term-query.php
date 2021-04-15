@@ -15,7 +15,7 @@
  *
  * @see WP_Term_Query::__construct() for accepted arguments.
  */
-class WP_Term_Query {
+class WP_Term_Query{
 
 	/**
 	 * SQL string used to perform database query.
@@ -89,7 +89,7 @@ class WP_Term_Query {
 	 * @since 4.7.0 Introduced 'object_ids' parameter.
 	 * @since 4.9.0 Added 'slug__in' support for 'orderby'.
 	 *
-	 * @param string|array $query {
+	 * @param string|array $query{
 	 *     Optional. Array or query string of term query parameters. Default empty.
 	 *
 	 *     @type string|array $taxonomy               Taxonomy name, or array of taxonomies, to which results should
@@ -177,7 +177,7 @@ class WP_Term_Query {
 	 *     @type string       $meta_compare           Comparison operator to test the 'meta_value'. Default empty.
 	 * }
 	 */
-	public function __construct($query = '' ) {
+	public function __construct($query = '' ){
 		$this->query_var_defaults = array(
 			'taxonomy'               => null,
 			'object_ids'             => null,
@@ -212,7 +212,7 @@ class WP_Term_Query {
 			'meta_compare'           => '',
 		);
 
-		if (!empty($query ) ) {
+		if(!empty($query ) ){
 			$this->query($query );
 		}
 	}
@@ -224,8 +224,8 @@ class WP_Term_Query {
 	 *
 	 * @param string|array $query WP_Term_Query arguments. See WP_Term_Query::__construct()
 	 */
-	public function parse_query($query = '' ) {
-		if (empty($query ) ) {
+	public function parse_query($query = '' ){
+		if(empty($query ) ){
 			$query = $this->query_vars;
 		}
 
@@ -234,7 +234,7 @@ class WP_Term_Query {
 		/**
 		 * Filters the terms query default arguments.
 		 *
-		 * Use {@see 'get_terms_args'} to filter the passed arguments.
+		 * Use{@see 'get_terms_args'} to filter the passed arguments.
 		 *
 		 * @since 4.4.0
 		 *
@@ -249,11 +249,11 @@ class WP_Term_Query {
 		$query['offset'] = absint($query['offset'] );
 
 		// 'parent' overrides 'child_of'.
-		if (0 < intval($query['parent'] ) ) {
+		if(0 < intval($query['parent'] ) ){
 			$query['child_of'] = false;
 		}
 
-		if ('all' == $query['get'] ) {
+		if('all' == $query['get'] ){
 			$query['childless'] = false;
 			$query['child_of'] = 0;
 			$query['hide_empty'] = 0;
@@ -283,7 +283,7 @@ class WP_Term_Query {
 	 * @param string|array $query Array or URL query string of parameters.
 	 * @return array|int List of terms, or number of terms when 'count' is passed as a query var.
 	 */
-	public function query($query ) {
+	public function query($query ){
 		$this->query_vars = wp_parse_args($query );
 		return $this->get_terms();
 	}
@@ -297,7 +297,7 @@ class WP_Term_Query {
 	 *
 	 * @return array List of terms.
 	 */
-	public function get_terms() {
+	public function get_terms(){
 		global $wpdb;
 
 		$this->parse_query($this->query_vars );
@@ -320,25 +320,25 @@ class WP_Term_Query {
 
 		// Save queries by not crawling the tree in the case of multiple taxes or a flat tax.
 		$has_hierarchical_tax = false;
-		if ($taxonomies ) {
-			foreach ($taxonomies as $_tax ) {
-				if (is_taxonomy_hierarchical($_tax ) ) {
+		if($taxonomies ){
+			foreach($taxonomies as $_tax ){
+				if(is_taxonomy_hierarchical($_tax ) ){
 					$has_hierarchical_tax = true;
 				}
 			}
 		}
 
-		if (!$has_hierarchical_tax ) {
+		if(!$has_hierarchical_tax ){
 			$args['hierarchical'] = false;
 			$args['pad_counts'] = false;
 		}
 
 		// 'parent' overrides 'child_of'.
-		if (0 < intval($args['parent'] ) ) {
+		if(0 < intval($args['parent'] ) ){
 			$args['child_of'] = false;
 		}
 
-		if ('all' == $args['get'] ) {
+		if('all' == $args['get'] ){
 			$args['childless'] = false;
 			$args['child_of'] = 0;
 			$args['hide_empty'] = 0;
@@ -360,43 +360,43 @@ class WP_Term_Query {
 		$child_of = $args['child_of'];
 		$parent   = $args['parent'];
 
-		if ($child_of ) {
+		if($child_of ){
 			$_parent = $child_of;
-		} elseif ($parent ) {
+		} elseif($parent ){
 			$_parent = $parent;
-		} else {
+		} else{
 			$_parent = false;
 		}
 
-		if ($_parent ) {
+		if($_parent ){
 			$in_hierarchy = false;
-			foreach ($taxonomies as $_tax ) {
+			foreach($taxonomies as $_tax ){
 				$hierarchy = _get_term_hierarchy($_tax );
 
-				if (isset($hierarchy[ $_parent ] ) ) {
+				if(isset($hierarchy[ $_parent ] ) ){
 					$in_hierarchy = true;
 				}
 			}
 
-			if (!$in_hierarchy ) {
+			if(!$in_hierarchy ){
 				return array();
 			}
 		}
 
 		// 'term_order' is a legal sort order only when joining the relationship table.
 		$_orderby = $this->query_vars['orderby'];
-		if ('term_order' === $_orderby && empty($this->query_vars['object_ids'] ) ) {
+		if('term_order' === $_orderby && empty($this->query_vars['object_ids'] ) ){
 			$_orderby = 'term_id';
 		}
 		$orderby = $this->parse_orderby($_orderby );
 
-		if ($orderby ) {
+		if($orderby ){
 			$orderby = "ORDER BY $orderby";
 		}
 
 		$order = $this->parse_order($this->query_vars['order'] );
 
-		if ($taxonomies ) {
+		if($taxonomies ){
 			$this->sql_clauses['where']['taxonomy'] = "tt.taxonomy IN ('" . implode("', '", array_map('esc_sql', $taxonomies ) ) . "')";
 		}
 
@@ -405,21 +405,21 @@ class WP_Term_Query {
 		$include      = $args['include'];
 
 		$inclusions = '';
-		if (!empty($include ) ) {
+		if(!empty($include ) ){
 			$exclude = '';
 			$exclude_tree = '';
 			$inclusions = implode(',', wp_parse_id_list($include ) );
 		}
 
-		if (!empty($inclusions ) ) {
+		if(!empty($inclusions ) ){
 			$this->sql_clauses['where']['inclusions'] = 't.term_id IN (' . $inclusions . ' )';
 		}
 
 		$exclusions = array();
-		if (!empty($exclude_tree ) ) {
+		if(!empty($exclude_tree ) ){
 			$exclude_tree = wp_parse_id_list($exclude_tree );
 			$excluded_children = $exclude_tree;
-			foreach ($exclude_tree as $extrunk ) {
+			foreach($exclude_tree as $extrunk ){
 				$excluded_children = array_merge(
 					$excluded_children,
 					(array) get_terms(reset($taxonomies ), array(
@@ -432,22 +432,22 @@ class WP_Term_Query {
 			$exclusions = array_merge($excluded_children, $exclusions );
 		}
 
-		if (!empty($exclude ) ) {
+		if(!empty($exclude ) ){
 			$exclusions = array_merge(wp_parse_id_list($exclude ), $exclusions );
 		}
 
 		// 'childless' terms are those without an entry in the flattened term hierarchy.
 		$childless = (bool) $args['childless'];
-		if ($childless ) {
-			foreach ($taxonomies as $_tax ) {
+		if($childless ){
+			foreach($taxonomies as $_tax ){
 				$term_hierarchy = _get_term_hierarchy($_tax );
 				$exclusions = array_merge(array_keys($term_hierarchy ), $exclusions );
 			}
 		}
 
-		if (!empty($exclusions ) ) {
+		if(!empty($exclusions ) ){
 			$exclusions = 't.term_id NOT IN (' . implode(',', array_map('intval', $exclusions ) ) . ')';
-		} else {
+		} else{
 			$exclusions = '';
 		}
 
@@ -462,17 +462,17 @@ class WP_Term_Query {
 		 */
 		$exclusions = apply_filters('list_terms_exclusions', $exclusions, $args, $taxonomies );
 
-		if (!empty($exclusions ) ) {
+		if(!empty($exclusions ) ){
 			// Must do string manipulation here for backward compatibility with filter.
 			$this->sql_clauses['where']['exclusions'] = preg_replace('/^\s*AND\s*/', '', $exclusions );
 		}
 
-		if (
+		if(
 			(!empty($args['name'] ) ) ||
 			(is_string($args['name'] ) && 0 !== strlen($args['name'] ) )
-		) {
+		){
 			$names = (array) $args['name'];
-			foreach ($names as &$_name ) {
+			foreach($names as &$_name ){
 				// `sanitize_term_field()` returns slashed data.
 				$_name = stripslashes(sanitize_term_field('name', $_name, 0, reset($taxonomies ), 'db' ) );
 			}
@@ -480,39 +480,39 @@ class WP_Term_Query {
 			$this->sql_clauses['where']['name'] = "t.name IN ('" . implode("', '", array_map('esc_sql', $names ) ) . "')";
 		}
 
-		if (
+		if(
 			(!empty($args['slug'] ) ) ||
 			(is_string($args['slug'] ) && 0 !== strlen($args['slug'] ) )
-		) {
-			if (is_array($args['slug'] ) ) {
+		){
+			if(is_array($args['slug'] ) ){
 				$slug = array_map('sanitize_title', $args['slug'] );
 				$this->sql_clauses['where']['slug'] = "t.slug IN ('" . implode("', '", $slug ) . "')";
-			} else {
+			} else{
 				$slug = sanitize_title($args['slug'] );
 				$this->sql_clauses['where']['slug'] = "t.slug = '$slug'";
 			}
 		}
 
-		if (!empty($args['term_taxonomy_id'] ) ) {
-			if (is_array($args['term_taxonomy_id'] ) ) {
+		if(!empty($args['term_taxonomy_id'] ) ){
+			if(is_array($args['term_taxonomy_id'] ) ){
 				$tt_ids = implode(',', array_map('intval', $args['term_taxonomy_id'] ) );
 				$this->sql_clauses['where']['term_taxonomy_id'] = "tt.term_taxonomy_id IN ({$tt_ids})";
-			} else {
+			} else{
 				$this->sql_clauses['where']['term_taxonomy_id'] = $wpdb->prepare("tt.term_taxonomy_id = %d", $args['term_taxonomy_id'] );
 			}
 		}
 
-		if (!empty($args['name__like'] ) ) {
+		if(!empty($args['name__like'] ) ){
 			$this->sql_clauses['where']['name__like'] = $wpdb->prepare("t.name LIKE %s", '%' . $wpdb->esc_like($args['name__like'] ) . '%' );
 		}
 
-		if (!empty($args['description__like'] ) ) {
+		if(!empty($args['description__like'] ) ){
 			$this->sql_clauses['where']['description__like'] = $wpdb->prepare("tt.description LIKE %s", '%' . $wpdb->esc_like($args['description__like'] ) . '%' );
 		}
 
-		if (!empty($args['object_ids'] ) ) {
+		if(!empty($args['object_ids'] ) ){
 			$object_ids = $args['object_ids'];
-			if (!is_array($object_ids ) ) {
+			if(!is_array($object_ids ) ){
 				$object_ids = array($object_ids );
 			}
 
@@ -524,20 +524,20 @@ class WP_Term_Query {
 		 * When querying for object relationships, the 'count > 0' check
 		 * added by 'hide_empty' is superfluous.
 		 */
-		if (!empty($args['object_ids'] ) ) {
+		if(!empty($args['object_ids'] ) ){
 			$args['hide_empty'] = false;
 		}
 
-		if ('' !== $parent ) {
+		if('' !== $parent ){
 			$parent = (int) $parent;
 			$this->sql_clauses['where']['parent'] = "tt.parent = '$parent'";
 		}
 
 		$hierarchical = $args['hierarchical'];
-		if ('count' == $args['fields'] ) {
+		if('count' == $args['fields'] ){
 			$hierarchical = false;
 		}
-		if ($args['hide_empty'] && !$hierarchical ) {
+		if($args['hide_empty'] && !$hierarchical ){
 			$this->sql_clauses['where']['count'] = 'tt.count > 0';
 		}
 
@@ -545,18 +545,18 @@ class WP_Term_Query {
 		$offset = $args['offset'];
 
 		// Don't limit the query results when we have to descend the family tree.
-		if ($number && !$hierarchical && !$child_of && '' === $parent ) {
-			if ($offset ) {
+		if($number && !$hierarchical && !$child_of && '' === $parent ){
+			if($offset ){
 				$limits = 'LIMIT ' . $offset . ',' . $number;
-			} else {
+			} else{
 				$limits = 'LIMIT ' . $number;
 			}
-		} else {
+		} else{
 			$limits = '';
 		}
 
 
-		if (!empty($args['search'] ) ) {
+		if(!empty($args['search'] ) ){
 			$this->sql_clauses['where']['search'] = $this->get_search_sql($args['search'] );
 		}
 
@@ -569,7 +569,7 @@ class WP_Term_Query {
 		$mq_sql = $this->meta_query->get_sql('term', 't', 'term_id' );
 		$meta_clauses = $this->meta_query->get_clauses();
 
-		if (!empty($meta_clauses ) ) {
+		if(!empty($meta_clauses ) ){
 			$join .= $mq_sql['join'];
 			$this->sql_clauses['where']['meta_query'] = preg_replace('/^\s*AND\s*/', '', $mq_sql['where'] );
 			$distinct .= "DISTINCT";
@@ -577,13 +577,13 @@ class WP_Term_Query {
 		}
 
 		$selects = array();
-		switch ($args['fields'] ) {
+		switch ($args['fields'] ){
 			case 'all':
 			case 'all_with_object_id' :
 			case 'tt_ids' :
 			case 'slugs' :
 				$selects = array('t.*', 'tt.*' );
-				if ('all_with_object_id' === $args['fields'] && !empty($args['object_ids'] ) ) {
+				if('all_with_object_id' === $args['fields'] && !empty($args['object_ids'] ) ){
 					$selects[] = 'tr.object_id';
 				}
 				break;
@@ -629,8 +629,8 @@ class WP_Term_Query {
 
 		$join .= " INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id";
 
-		if (!empty($this->query_vars['object_ids'] ) ) {
-			$join .= " INNER JOIN {$wpdb->term_relationships} AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id";
+		if(!empty($this->query_vars['object_ids'] ) ){
+			$join .= " INNER JOIN{$wpdb->term_relationships} AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id";
 		}
 
 		$where = implode(' AND ', $this->sql_clauses['where'] );
@@ -654,7 +654,7 @@ class WP_Term_Query {
 		$order = isset($clauses[ 'order' ] ) ? $clauses[ 'order' ] : '';
 		$limits = isset($clauses[ 'limits' ] ) ? $clauses[ 'limits' ] : '';
 
-		if ($where ) {
+		if($where ){
 			$where = "WHERE $where";
 		}
 
@@ -663,15 +663,15 @@ class WP_Term_Query {
 		$this->sql_clauses['orderby'] = $orderby ? "$orderby $order" : '';
 		$this->sql_clauses['limits']  = $limits;
 
-		$this->request = "{$this->sql_clauses['select']} {$this->sql_clauses['from']} {$where} {$this->sql_clauses['orderby']} {$this->sql_clauses['limits']}";
+		$this->request = "{$this->sql_clauses['select']}{$this->sql_clauses['from']}{$where}{$this->sql_clauses['orderby']}{$this->sql_clauses['limits']}";
 
 		// $args can be anything. Only use the args defined in defaults to compute the key.
 		$key = md5(serialize(wp_array_slice_assoc($args, array_keys($this->query_var_defaults ) ) ) . serialize($taxonomies ) . $this->request );
 		$last_changed = wp_cache_get_last_changed('terms' );
 		$cache_key = "get_terms:$key:$last_changed";
 		$cache = wp_cache_get($cache_key, 'terms' );
-		if (false !== $cache ) {
-			if ('all' === $_fields || 'all_with_object_id' === $_fields ) {
+		if(false !== $cache ){
+			if('all' === $_fields || 'all_with_object_id' === $_fields ){
 				$cache = $this->populate_terms($cache );
 			}
 
@@ -679,53 +679,53 @@ class WP_Term_Query {
 			return $this->terms;
 		}
 
-		if ('count' == $_fields ) {
+		if('count' == $_fields ){
 			$count = $wpdb->get_var($this->request );
 			wp_cache_set($cache_key, $count, 'terms' );
 			return $count;
 		}
 
 		$terms = $wpdb->get_results($this->request );
-		if ('all' == $_fields || 'all_with_object_id' === $_fields ) {
+		if('all' == $_fields || 'all_with_object_id' === $_fields ){
 			update_term_cache($terms );
 		}
 
 		// Prime termmeta cache.
-		if ($args['update_term_meta_cache'] ) {
+		if($args['update_term_meta_cache'] ){
 			$term_ids = wp_list_pluck($terms, 'term_id' );
 			update_termmeta_cache($term_ids );
 		}
 
-		if (empty($terms ) ) {
+		if(empty($terms ) ){
 			wp_cache_add($cache_key, array(), 'terms', DAY_IN_SECONDS );
 			return array();
 		}
 
-		if ($child_of ) {
-			foreach ($taxonomies as $_tax ) {
+		if($child_of ){
+			foreach($taxonomies as $_tax ){
 				$children = _get_term_hierarchy($_tax );
-				if (!empty($children ) ) {
+				if(!empty($children ) ){
 					$terms = _get_term_children($child_of, $terms, $_tax );
 				}
 			}
 		}
 
 		// Update term counts to include children.
-		if ($args['pad_counts'] && 'all' == $_fields ) {
-			foreach ($taxonomies as $_tax ) {
+		if($args['pad_counts'] && 'all' == $_fields ){
+			foreach($taxonomies as $_tax ){
 				_pad_term_counts($terms, $_tax );
 			}
 		}
 
 		// Make sure we show empty categories that have children.
-		if ($hierarchical && $args['hide_empty'] && is_array($terms ) ) {
-			foreach ($terms as $k => $term ) {
-				if (!$term->count ) {
+		if($hierarchical && $args['hide_empty'] && is_array($terms ) ){
+			foreach($terms as $k => $term ){
+				if(!$term->count ){
 					$children = get_term_children($term->term_id, $term->taxonomy );
-					if (is_array($children ) ) {
-						foreach ($children as $child_id ) {
+					if(is_array($children ) ){
+						foreach($children as $child_id ){
 							$child = get_term($child_id, $term->taxonomy );
-							if ($child->count ) {
+							if($child->count ){
 								continue 2;
 							}
 						}
@@ -743,10 +743,10 @@ class WP_Term_Query {
 		 * `$fields` is 'all_with_object_id', but should otherwise be
 		 * removed.
 		 */
-		if (!empty($args['object_ids'] ) && 'all_with_object_id' != $_fields ) {
+		if(!empty($args['object_ids'] ) && 'all_with_object_id' != $_fields ){
 			$_tt_ids = $_terms = array();
-			foreach ($terms as $term ) {
-				if (isset($_tt_ids[ $term->term_id ] ) ) {
+			foreach($terms as $term ){
+				if(isset($_tt_ids[ $term->term_id ] ) ){
 					continue;
 				}
 
@@ -758,52 +758,52 @@ class WP_Term_Query {
 		}
 
 		$_terms = array();
-		if ('id=>parent' == $_fields ) {
-			foreach ($terms as $term ) {
+		if('id=>parent' == $_fields ){
+			foreach($terms as $term ){
 				$_terms[ $term->term_id ] = $term->parent;
 			}
-		} elseif ('ids' == $_fields ) {
-			foreach ($terms as $term ) {
+		} elseif('ids' == $_fields ){
+			foreach($terms as $term ){
 				$_terms[] = (int) $term->term_id;
 			}
-		} elseif ('tt_ids' == $_fields ) {
-			foreach ($terms as $term ) {
+		} elseif('tt_ids' == $_fields ){
+			foreach($terms as $term ){
 				$_terms[] = (int) $term->term_taxonomy_id;
 			}
-		} elseif ('names' == $_fields ) {
-			foreach ($terms as $term ) {
+		} elseif('names' == $_fields ){
+			foreach($terms as $term ){
 				$_terms[] = $term->name;
 			}
-		} elseif ('slugs' == $_fields ) {
-			foreach ($terms as $term ) {
+		} elseif('slugs' == $_fields ){
+			foreach($terms as $term ){
 				$_terms[] = $term->slug;
 			}
-		} elseif ('id=>name' == $_fields ) {
-			foreach ($terms as $term ) {
+		} elseif('id=>name' == $_fields ){
+			foreach($terms as $term ){
 				$_terms[ $term->term_id ] = $term->name;
 			}
-		} elseif ('id=>slug' == $_fields ) {
-			foreach ($terms as $term ) {
+		} elseif('id=>slug' == $_fields ){
+			foreach($terms as $term ){
 				$_terms[ $term->term_id ] = $term->slug;
 			}
 		}
 
-		if (!empty($_terms ) ) {
+		if(!empty($_terms ) ){
 			$terms = $_terms;
 		}
 
 		// Hierarchical queries are not limited, so 'offset' and 'number' must be handled now.
-		if ($hierarchical && $number && is_array($terms ) ) {
-			if ($offset >= count($terms ) ) {
+		if($hierarchical && $number && is_array($terms ) ){
+			if($offset >= count($terms ) ){
 				$terms = array();
-			} else {
+			} else{
 				$terms = array_slice($terms, $offset, $number, true );
 			}
 		}
 
 		wp_cache_add($cache_key, $terms, 'terms', DAY_IN_SECONDS );
 
-		if ('all' === $_fields || 'all_with_object_id' === $_fields ) {
+		if('all' === $_fields || 'all_with_object_id' === $_fields ){
 			$terms = $this->populate_terms($terms );
 		}
 
@@ -821,27 +821,27 @@ class WP_Term_Query {
 	 * @param string $orderby_raw Alias for the field to order by.
 	 * @return string|false Value to used in the ORDER clause. False otherwise.
 	 */
-	protected function parse_orderby($orderby_raw ) {
+	protected function parse_orderby($orderby_raw ){
 		$_orderby = strtolower($orderby_raw );
 		$maybe_orderby_meta = false;
 
-		if (in_array($_orderby, array('term_id', 'name', 'slug', 'term_group' ), true ) ) {
+		if(in_array($_orderby, array('term_id', 'name', 'slug', 'term_group' ), true ) ){
 			$orderby = "t.$_orderby";
-		} elseif (in_array($_orderby, array('count', 'parent', 'taxonomy', 'term_taxonomy_id', 'description' ), true ) ) {
+		} elseif(in_array($_orderby, array('count', 'parent', 'taxonomy', 'term_taxonomy_id', 'description' ), true ) ){
 			$orderby = "tt.$_orderby";
-		} elseif ('term_order' === $_orderby ) {
+		} elseif('term_order' === $_orderby ){
 			$orderby = 'tr.term_order';
-		} elseif ('include' == $_orderby && !empty($this->query_vars['include'] ) ) {
+		} elseif('include' == $_orderby && !empty($this->query_vars['include'] ) ){
 			$include = implode(',', wp_parse_id_list($this->query_vars['include'] ) );
 			$orderby = "FIELD(t.term_id, $include )";
-		} elseif ('slug__in' == $_orderby && !empty($this->query_vars['slug'] ) && is_array($this->query_vars['slug'] ) ) {
+		} elseif('slug__in' == $_orderby && !empty($this->query_vars['slug'] ) && is_array($this->query_vars['slug'] ) ){
 			$slugs = implode("', '", array_map('sanitize_title_for_query', $this->query_vars['slug'] ) );
 			$orderby = "FIELD(t.slug, '" . $slugs . "')";
-		} elseif ('none' == $_orderby ) {
+		} elseif('none' == $_orderby ){
 			$orderby = '';
-		} elseif (empty($_orderby ) || 'id' == $_orderby || 'term_id' === $_orderby ) {
+		} elseif(empty($_orderby ) || 'id' == $_orderby || 'term_id' === $_orderby ){
 			$orderby = 't.term_id';
-		} else {
+		} else{
 			$orderby = 't.name';
 
 			// This may be a value of orderby related to meta.
@@ -860,9 +860,9 @@ class WP_Term_Query {
 		$orderby = apply_filters('get_terms_orderby', $orderby, $this->query_vars, $this->query_vars['taxonomy'] );
 
 		// Run after the 'get_terms_orderby' filter for backward compatibility.
-		if ($maybe_orderby_meta ) {
+		if($maybe_orderby_meta ){
 			$maybe_orderby_meta = $this->parse_orderby_meta($_orderby );
-			if ($maybe_orderby_meta ) {
+			if($maybe_orderby_meta ){
 				$orderby = $maybe_orderby_meta;
 			}
 		}
@@ -878,20 +878,20 @@ class WP_Term_Query {
 	 * @param string $orderby_raw Raw 'orderby' value passed to WP_Term_Query.
 	 * @return string ORDER BY clause.
 	 */
-	protected function parse_orderby_meta($orderby_raw ) {
+	protected function parse_orderby_meta($orderby_raw ){
 		$orderby = '';
 
 		// Tell the meta query to generate its SQL, so we have access to table aliases.
 		$this->meta_query->get_sql('term', 't', 'term_id' );
 		$meta_clauses = $this->meta_query->get_clauses();
-		if (!$meta_clauses || !$orderby_raw ) {
+		if(!$meta_clauses || !$orderby_raw ){
 			return $orderby;
 		}
 
 		$allowed_keys = array();
 		$primary_meta_key = null;
 		$primary_meta_query = reset($meta_clauses );
-		if (!empty($primary_meta_query['key'] ) ) {
+		if(!empty($primary_meta_query['key'] ) ){
 			$primary_meta_key = $primary_meta_query['key'];
 			$allowed_keys[] = $primary_meta_key;
 		}
@@ -899,16 +899,16 @@ class WP_Term_Query {
 		$allowed_keys[] = 'meta_value_num';
 		$allowed_keys   = array_merge($allowed_keys, array_keys($meta_clauses ) );
 
-		if (!in_array($orderby_raw, $allowed_keys, true ) ) {
+		if(!in_array($orderby_raw, $allowed_keys, true ) ){
 			return $orderby;
 		}
 
-		switch($orderby_raw ) {
+		switch($orderby_raw ){
 			case $primary_meta_key:
 			case 'meta_value':
-				if (!empty($primary_meta_query['type'] ) ) {
-					$orderby = "CAST({$primary_meta_query['alias']}.meta_value AS {$primary_meta_query['cast']})";
-				} else {
+				if(!empty($primary_meta_query['type'] ) ){
+					$orderby = "CAST({$primary_meta_query['alias']}.meta_value AS{$primary_meta_query['cast']})";
+				} else{
 					$orderby = "{$primary_meta_query['alias']}.meta_value";
 				}
 				break;
@@ -918,10 +918,10 @@ class WP_Term_Query {
 				break;
 
 			default:
-				if (array_key_exists($orderby_raw, $meta_clauses ) ) {
+				if(array_key_exists($orderby_raw, $meta_clauses ) ){
 					// $orderby corresponds to a meta_query clause.
 					$meta_clause = $meta_clauses[ $orderby_raw ];
-					$orderby = "CAST({$meta_clause['alias']}.meta_value AS {$meta_clause['cast']})";
+					$orderby = "CAST({$meta_clause['alias']}.meta_value AS{$meta_clause['cast']})";
 				}
 				break;
 		}
@@ -937,14 +937,14 @@ class WP_Term_Query {
 	 * @param string $order The 'order' query variable.
 	 * @return string The sanitized 'order' query variable.
 	 */
-	protected function parse_order($order ) {
-		if (!is_string($order ) || empty($order ) ) {
+	protected function parse_order($order ){
+		if(!is_string($order ) || empty($order ) ){
 			return 'DESC';
 		}
 
-		if ('ASC' === strtoupper($order ) ) {
+		if('ASC' === strtoupper($order ) ){
 			return 'ASC';
-		} else {
+		} else{
 			return 'DESC';
 		}
 	}
@@ -959,7 +959,7 @@ class WP_Term_Query {
 	 * @param string $string
 	 * @return string
 	 */
-	protected function get_search_sql($string ) {
+	protected function get_search_sql($string ){
 		global $wpdb;
 
 		$like = '%' . $wpdb->esc_like($string ) . '%';
@@ -977,16 +977,16 @@ class WP_Term_Query {
 	 * @param array $term_ids Term IDs.
 	 * @return array
 	 */
-	protected function populate_terms($term_ids ) {
+	protected function populate_terms($term_ids ){
 		$terms = array();
 
-		if (!is_array($term_ids ) ) {
+		if(!is_array($term_ids ) ){
 			return $terms;
 		}
 
-		foreach ($term_ids as $key => $term_id ) {
+		foreach($term_ids as $key => $term_id ){
 			$term = get_term($term_id );
-			if ($term instanceof WP_Term ) {
+			if($term instanceof WP_Term ){
 				$terms[ $key ] = $term;
 			}
 		}

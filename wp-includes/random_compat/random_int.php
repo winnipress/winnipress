@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-if (!is_callable('random_int' ) ):
+if(!is_callable('random_int')):
 /**
  * Fetch a random integer between $min and $max inclusive
  * 
@@ -49,20 +49,20 @@ function random_int($min, $max)
      * through.
      */
     
-    try {
+    try{
         $min = RandomCompat_intval($min);
     } catch (TypeError $ex){
         throw new TypeError(
             'random_int(): $min must be an integer'
-        );
+       );
     }
 
-    try {
+    try{
         $max = RandomCompat_intval($max);
     } catch (TypeError $ex){
         throw new TypeError(
             'random_int(): $max must be an integer'
-        );
+       );
     }
     
     /**
@@ -70,13 +70,13 @@ function random_int($min, $max)
      * let's validate the logic then we can move forward with generating random
      * integers along a given range.
      */
-    if ($min > $max){
+    if($min > $max){
         throw new Error(
             'Minimum value must be less than or equal to the maximum value'
-        );
+       );
     }
 
-    if ($max === $min){
+    if($max === $min){
         return $min;
     }
 
@@ -100,7 +100,7 @@ function random_int($min, $max)
     /**
      * Test for integer overflow:
      */
-    if (!is_int($range)){
+    if(!is_int($range)){
 
         /**
          * Still safely calculate wider ranges.
@@ -116,14 +116,14 @@ function random_int($min, $max)
         $bytes = PHP_INT_SIZE;
         $mask = ~0;
 
-    } else {
+    } else{
 
         /**
          * $bits is effectively ceil(log($range, 2)) without dealing with 
          * type juggling
          */
         while ($range > 0){
-            if ($bits % 8 === 0){
+            if($bits % 8 === 0){
                ++$bytes;
             }
             ++$bits;
@@ -137,25 +137,25 @@ function random_int($min, $max)
      * Now that we have our parameters set up, let's begin generating
      * random integers until one falls between $min and $max
      */
-    do {
+    do{
         /**
          * The rejection probability is at most 0.5, so this corresponds
          * to a failure probability of 2^-128 for a working RNG
          */
-        if ($attempts > 128){
+        if($attempts > 128){
             throw new Exception(
                 'random_int: RNG is broken - too many rejections'
-            );
+           );
         }
 
         /**
          * Let's grab the necessary number of random bytes
          */
         $randomByteString = random_bytes($bytes);
-        if ($randomByteString === false){
+        if($randomByteString === false){
             throw new Exception(
                 'Random number generator failure'
-            );
+           );
         }
 
         /**

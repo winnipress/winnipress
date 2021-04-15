@@ -149,7 +149,7 @@ function get_the_author_meta($field = '', $user_id = false){
 	if(!$user_id){
 		global $authordata;
 		$user_id = isset($authordata->ID) ? $authordata->ID : 0;
-	} else {
+	} else{
 		$authordata = get_userdata($user_id);
 	}
 
@@ -219,7 +219,7 @@ function get_the_author_link(){
 			esc_attr(sprintf(__('Visit %s&#8217;s website'), get_the_author())),
 			get_the_author()
 		);
-	} else {
+	} else{
 		return get_the_author();
 	}
 }
@@ -331,7 +331,7 @@ function get_author_posts_url($author_id, $author_nicename = ''){
 	if(empty($link)){
 		$file = home_url('/');
 		$link = $file . '?author=' . $auth_ID;
-	} else {
+	} else{
 		if('' == $author_nicename){
 			$user = get_userdata($author_id);
 			if(!empty($user->user_nicename))
@@ -364,7 +364,7 @@ function get_author_posts_url($author_id, $author_nicename = ''){
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  *
- * @param string|array $args {
+ * @param string|array $args{
  *     Optional. Array or string of default arguments.
  *
  *     @type string       $orderby       How to sort the authors. Accepts 'nicename', 'email', 'url', 'registered',
@@ -410,10 +410,10 @@ function wp_list_authors($args = ''){
 	$authors = get_users($query_args);
 
 	$author_count = array();
-	foreach ((array) $wpdb->get_results("SELECT DISTINCT post_author, COUNT(ID) AS count FROM $wpdb->posts WHERE " . get_private_posts_cap_sql('post') . " GROUP BY post_author") as $row){
+	foreach((array) $wpdb->get_results("SELECT DISTINCT post_author, COUNT(ID) AS count FROM $wpdb->posts WHERE " . get_private_posts_cap_sql('post') . " GROUP BY post_author") as $row){
 		$author_count[$row->post_author] = $row->count;
 	}
-	foreach ($authors as $author_id){
+	foreach($authors as $author_id){
 		$author = get_userdata($author_id);
 
 		if($args['exclude_admin'] && 'admin' == $author->display_name){
@@ -428,7 +428,7 @@ function wp_list_authors($args = ''){
 
 		if($args['show_fullname'] && $author->first_name && $author->last_name){
 			$name = "$author->first_name $author->last_name";
-		} else {
+		} else{
 			$name = $author->display_name;
 		}
 
@@ -467,7 +467,7 @@ function wp_list_authors($args = ''){
 
 			if(!empty($args['feed_image'])){
 				$link .= '<img src="' . esc_url($args['feed_image']) . '" style="border: none;"' . $alt . ' />';
-			} else {
+			} else{
 				$link .= $name;
 			}
 

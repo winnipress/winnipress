@@ -33,7 +33,7 @@ function wp_dashboard_setup() {
 
 	
 
-	if ( is_user_admin()) {
+	if( is_user_admin()) {
 
 		/**
 		 * Fires after core widgets for the User Admin dashboard have been registered.
@@ -69,7 +69,7 @@ function wp_dashboard_setup() {
 		$dashboard_widgets = apply_filters( 'wp_dashboard_widgets', array());
 	}
 
-	foreach ( $dashboard_widgets as $widget_id) {
+	foreach( $dashboard_widgets as $widget_id) {
 		$name = empty( $wp_registered_widgets[$widget_id]['all_link']) ? $wp_registered_widgets[$widget_id]['name'] : $wp_registered_widgets[$widget_id]['name'] . " <a href='{$wp_registered_widgets[$widget_id]['all_link']}' class='edit-box open-box'>" . __('View all') . '</a>';
 		wp_add_dashboard_widget( $widget_id, $name, $wp_registered_widgets[$widget_id]['callback'], $wp_registered_widget_controls[$widget_id]['callback']);
 	}
@@ -97,15 +97,15 @@ function wp_add_dashboard_widget( $widget_id, $widget_name, $callback, $control_
 
 	$private_callback_args = array( '__widget_basename' => $widget_name);
 
-	if ( is_null( $callback_args)) {
+	if( is_null( $callback_args)) {
 		$callback_args = $private_callback_args;
-	} else if ( is_array( $callback_args)) {
+	} else if( is_array( $callback_args)) {
 		$callback_args = array_merge( $callback_args, $private_callback_args);
 	}
 
-	if ( $control_callback && current_user_can( 'edit_dashboard') && is_callable( $control_callback)) {
+	if( $control_callback && current_user_can( 'edit_dashboard') && is_callable( $control_callback)) {
 		$wp_dashboard_control_callbacks[$widget_id] = $control_callback;
-		if ( isset( $_GET['edit']) && $widget_id == $_GET['edit']) {
+		if( isset( $_GET['edit']) && $widget_id == $_GET['edit']) {
 			list($url) = explode( '#', add_query_arg( 'edit', false), 2);
 			$widget_name .= ' <span class="postbox-title-action"><a href="' . esc_url( $url) . '">' . __( 'Cancel') . '</a></span>';
 			$callback = '_wp_dashboard_control_callback';
@@ -118,11 +118,11 @@ function wp_add_dashboard_widget( $widget_id, $widget_name, $callback, $control_
 	$side_widgets = array( 'dashboard_quick_press', 'dashboard_primary');
 
 	$location = 'normal';
-	if ( in_array($widget_id, $side_widgets))
+	if( in_array($widget_id, $side_widgets))
 		$location = 'side';
 
 	$priority = 'core';
-	if ( 'dashboard_browser_nag' === $widget_id)
+	if( 'dashboard_browser_nag' === $widget_id)
 		$priority = 'high';
 
 	add_meta_box( $widget_id, $widget_name, $callback, $screen, $location, $priority, $callback_args);
@@ -155,7 +155,7 @@ function wp_dashboard() {
 	$screen = get_current_screen();
 	$columns = absint( $screen->get_columns());
 	$columns_css = '';
-	if ( $columns) {
+	if( $columns) {
 		$columns_css = " columns-$columns";
 	}
 
@@ -198,17 +198,17 @@ function wp_dashboard_right_now() {
 	<ul>
 	<?php
 	// Posts and Pages
-	foreach ( array( 'post', 'page') as $post_type) {
+	foreach( array( 'post', 'page') as $post_type) {
 		$num_posts = wp_count_posts( $post_type);
-		if ( $num_posts && $num_posts->publish) {
-			if ( 'post' == $post_type) {
+		if( $num_posts && $num_posts->publish) {
+			if( 'post' == $post_type) {
 				$text = _n( '%s Post', '%s Posts', $num_posts->publish);
 			} else {
 				$text = _n( '%s Page', '%s Pages', $num_posts->publish);
 			}
 			$text = sprintf( $text, number_format_i18n( $num_posts->publish));
 			$post_type_object = get_post_type_object( $post_type);
-			if ( $post_type_object && current_user_can( $post_type_object->cap->edit_posts)) {
+			if( $post_type_object && current_user_can( $post_type_object->cap->edit_posts)) {
 				printf( '<li class="%1$s-count"><a href="edit.php?post_type=%1$s">%2$s</a></li>', $post_type, $text);
 			} else {
 				printf( '<li class="%1$s-count"><span>%2$s</span></li>', $post_type, $text);
@@ -231,7 +231,7 @@ function wp_dashboard_right_now() {
 	 */
 	$elements = apply_filters( 'dashboard_glance_items', array());
 
-	if ( $elements) {
+	if( $elements) {
 		echo '<li>' . implode( "</li>\n<li>", $elements) . "</li>\n";
 	}
 
@@ -266,7 +266,7 @@ function wp_dashboard_right_now() {
 
 	$actions = ob_get_clean();
 
-	if ( !empty( $actions)) : ?>
+	if( !empty( $actions)) : ?>
 	<div class="sub">
 		<?php echo $actions; ?>
 	</div>
@@ -278,9 +278,9 @@ function wp_dashboard_right_now() {
  */
 function wp_network_dashboard_right_now() {
 	$actions = array();
-	if ( current_user_can('create_sites'))
+	if( current_user_can('create_sites'))
 		$actions['create-site'] = '<a href="' . network_admin_url('site-new.php') . '">' . __( 'Create a New Site') . '</a>';
-	if ( current_user_can('create_users'))
+	if( current_user_can('create_users'))
 		$actions['create-user'] = '<a href="' . network_admin_url('user-new.php') . '">' . __( 'Create a New User') . '</a>';
 
 	$c_users = get_user_count();
@@ -294,9 +294,9 @@ function wp_network_dashboard_right_now() {
 	/* translators: 1: text indicating the number of sites on the network, 2: text indicating the number of users on the network */
 	$sentence = sprintf( __( 'You have %1$s and %2$s.'), $blog_text, $user_text);
 
-	if ( $actions) {
+	if( $actions) {
 		echo '<ul class="subsubsub">';
-		foreach ( $actions as $class => $action) {
+		foreach( $actions as $class => $action) {
 			 $actions[ $class ] = "\t<li class='$class'>$action";
 		}
 		echo implode( " |</li>\n", $actions) . "</li>\n";
@@ -361,7 +361,7 @@ function wp_network_dashboard_right_now() {
  * @param array $drafts
  */
 function wp_dashboard_recent_drafts( $drafts = false) {
-	if ( !$drafts) {
+	if( !$drafts) {
 		$query_args = array(
 			'post_type'      => 'post',
 			'post_status'    => 'draft',
@@ -381,26 +381,26 @@ function wp_dashboard_recent_drafts( $drafts = false) {
 		$query_args = apply_filters( 'dashboard_recent_drafts_query_args', $query_args);
 
 		$drafts = get_posts( $query_args);
-		if ( !$drafts) {
+		if( !$drafts) {
 			return;
  		}
  	}
 
 	echo '<div class="drafts">';
-	if ( count( $drafts) > 3) {
+	if( count( $drafts) > 3) {
 		echo '<p class="view-all"><a href="' . esc_url( admin_url( 'edit.php?post_status=draft')) . '">' . __( 'View all drafts') . "</a></p>\n";
  	}
 	echo '<h2 class="hide-if-no-js">' . __( 'Your Recent Drafts') . "</h2>\n<ul>";
 
 	$drafts = array_slice( $drafts, 0, 3);
-	foreach ( $drafts as $draft) {
+	foreach( $drafts as $draft) {
 		$url = get_edit_post_link( $draft->ID);
 		$title = _draft_or_post_title( $draft->ID);
 		echo "<li>\n";
 		/* translators: %s: post title */
 		echo '<div class="draft-title"><a href="' . esc_url( $url) . '" aria-label="' . esc_attr( sprintf( __( 'Edit &#8220;%s&#8221;'), $title)) . '">' . esc_html( $title) . '</a>';
 		echo '<time datetime="' . get_the_time( 'c', $draft) . '">' . get_the_time( __( 'F j, Y'), $draft) . '</time></div>';
-		if ( $the_content = wp_trim_words( $draft->post_content, 10)) {
+		if( $the_content = wp_trim_words( $draft->post_content, 10)) {
 			echo '<p>' . $the_content . '</p>';
  		}
 		echo "</li>\n";
@@ -448,7 +448,7 @@ function wp_dashboard_recent_posts( $args) {
 	$query_args = apply_filters( 'dashboard_recent_posts_query_args', $query_args);
 	$posts = new WP_Query( $query_args);
 
-	if ( $posts->have_posts()) {
+	if( $posts->have_posts()) {
 
 		echo '<div id="' . $args['id'] . '" class="activity-block">';
 
@@ -463,11 +463,11 @@ function wp_dashboard_recent_posts( $args) {
 			$posts->the_post();
 
 			$time = get_the_time( 'U');
-			if ( date( 'Y-m-d', $time) == $today) {
+			if( date( 'Y-m-d', $time) == $today) {
 				$relative = __( 'Today');
-			} elseif ( date( 'Y-m-d', $time) == $tomorrow) {
+			} elseif( date( 'Y-m-d', $time) == $tomorrow) {
 				$relative = __( 'Tomorrow');
-			} elseif ( date( 'Y', $time) !== date( 'Y', current_time( 'timestamp'))) {
+			} elseif( date( 'Y', $time) !== date( 'Y', current_time( 'timestamp'))) {
 				/* translators: date and time format for recent posts on the dashboard, from a different calendar year, see https://secure.php.net/date */
 				$relative = date_i18n( __( 'M jS Y'), $time);
 			} else {
@@ -537,9 +537,9 @@ function wp_dashboard_cached_rss_widget( $widget_id, $callback, $check_urls = ar
 	$loading = '<p class="widget-loading hide-if-no-js">' . __( 'Loading&#8230;') . '</p><div class="hide-if-js notice notice-error inline"><p>' . __( 'This widget requires JavaScript.') . '</p></div>';
 	$doing_ajax = wp_doing_ajax();
 
-	if ( empty($check_urls)) {
+	if( empty($check_urls)) {
 		$widgets = get_option( 'dashboard_widget_options');
-		if ( empty($widgets[$widget_id]['url']) && !$doing_ajax) {
+		if( empty($widgets[$widget_id]['url']) && !$doing_ajax) {
 			echo $loading;
 			return false;
 		}
@@ -548,17 +548,17 @@ function wp_dashboard_cached_rss_widget( $widget_id, $callback, $check_urls = ar
 
 	$locale = get_user_locale();
 	$cache_key = 'dash_v2_' . md5( $widget_id . '_' . $locale);
-	if ( false !== ( $output = get_transient( $cache_key))) {
+	if( false !== ( $output = get_transient( $cache_key))) {
 		echo $output;
 		return true;
 	}
 
-	if ( !$doing_ajax) {
+	if( !$doing_ajax) {
 		echo $loading;
 		return false;
 	}
 
-	if ( $callback && is_callable( $callback)) {
+	if( $callback && is_callable( $callback)) {
 		$args = array_slice( func_get_args(), 3);
 		array_unshift( $args, $widget_id, $check_urls);
 		ob_start();
@@ -585,7 +585,7 @@ function wp_dashboard_cached_rss_widget( $widget_id, $callback, $check_urls = ar
 function wp_dashboard_trigger_widget_control( $widget_control_id = false) {
 	global $wp_dashboard_control_callbacks;
 
-	if ( is_scalar($widget_control_id) && $widget_control_id && isset($wp_dashboard_control_callbacks[$widget_control_id]) && is_callable($wp_dashboard_control_callbacks[$widget_control_id])) {
+	if( is_scalar($widget_control_id) && $widget_control_id && isset($wp_dashboard_control_callbacks[$widget_control_id]) && is_callable($wp_dashboard_control_callbacks[$widget_control_id])) {
 		call_user_func( $wp_dashboard_control_callbacks[$widget_control_id], '', array( 'id' => $widget_control_id, 'callback' => $wp_dashboard_control_callbacks[$widget_control_id]));
 	}
 }
@@ -602,24 +602,24 @@ function wp_dashboard_trigger_widget_control( $widget_control_id = false) {
  * @param array $form_inputs
  */
 function wp_dashboard_rss_control( $widget_id, $form_inputs = array()) {
-	if ( !$widget_options = get_option( 'dashboard_widget_options'))
+	if( !$widget_options = get_option( 'dashboard_widget_options'))
 		$widget_options = array();
 
-	if ( !isset($widget_options[$widget_id]))
+	if( !isset($widget_options[$widget_id]))
 		$widget_options[$widget_id] = array();
 
 	$number = 1; // Hack to use wp_widget_rss_form()
 	$widget_options[$widget_id]['number'] = $number;
 
-	if ( 'POST' == $_SERVER['REQUEST_METHOD'] && isset($_POST['widget-rss'][$number])) {
+	if( 'POST' == $_SERVER['REQUEST_METHOD'] && isset($_POST['widget-rss'][$number])) {
 		$_POST['widget-rss'][$number] = wp_unslash( $_POST['widget-rss'][$number]);
 		$widget_options[$widget_id] = wp_widget_rss_process( $_POST['widget-rss'][$number]);
 		$widget_options[$widget_id]['number'] = $number;
 
 		// Title is optional. If black, fill it if possible.
-		if ( !$widget_options[$widget_id]['title'] && isset($_POST['widget-rss'][$number]['title'])) {
+		if( !$widget_options[$widget_id]['title'] && isset($_POST['widget-rss'][$number]['title'])) {
 			$rss = fetch_feed($widget_options[$widget_id]['url']);
-			if ( is_wp_error($rss)) {
+			if( is_wp_error($rss)) {
 				$widget_options[$widget_id]['title'] = htmlentities(__('Unknown Feed'));
 			} else {
 				$widget_options[$widget_id]['title'] = htmlentities(strip_tags($rss->get_title()));

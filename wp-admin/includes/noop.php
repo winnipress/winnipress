@@ -58,18 +58,18 @@ function includes_url() {}
 
 function wp_guess_url() {}
 
-if ( !function_exists( 'json_encode')) :
+if( !function_exists( 'json_encode')) :
 
 function json_encode() {}
 endif;
 
 function get_file( $path) {
 
-	if ( function_exists('realpath')) { 
+	if( function_exists('realpath')) { 
 		$path = realpath( $path);
 	}
 
-	if ( !$path || !@is_file( $path)) {
+	if( !$path || !@is_file( $path)) {
 		return '';
 	}
 

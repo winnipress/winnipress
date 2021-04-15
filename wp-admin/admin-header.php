@@ -7,7 +7,7 @@
  */
 
 @header('Content-Type: ' . get_option('html_type') . '; charset=utf-8');
-if ( !defined( 'WP_ADMIN'))
+if( !defined( 'WP_ADMIN'))
 	require_once( dirname( __FILE__) . '/admin.php');
 
 /**
@@ -26,23 +26,23 @@ global $title, $hook_suffix, $current_screen, $wp_locale, $pagenow,
 	$update_title, $total_update_count, $parent_file;
 
 // Catch plugins that include admin-header.php before admin.php completes.
-if ( empty( $current_screen))
+if( empty( $current_screen))
 	set_current_screen();
 
 get_admin_page_title();
 $title = esc_html( strip_tags( $title));
 
-if ( is_network_admin()) {
+if( is_network_admin()) {
 	/* translators: Network admin screen title. 1: Network name */
 	$admin_title = sprintf( __( 'Network Admin: %s'), esc_html( get_network()->site_name));
-} elseif ( is_user_admin()) {
+} elseif( is_user_admin()) {
 	/* translators: User dashboard screen title. 1: Network name */
 	$admin_title = sprintf( __( 'User Dashboard: %s'), esc_html( get_network()->site_name));
 } else {
 	$admin_title = get_bloginfo( 'name');
 }
 
-if ( $admin_title == $title) {
+if( $admin_title == $title) {
 	/* translators: Admin screen title. 1: Admin screen name */
 	$admin_title = sprintf( __( '%1$s &#8212; WordPress'), $title);
 } else {
@@ -175,14 +175,14 @@ $current_screen->set_parentage( $parent_file);
 
 $current_screen->render_screen_meta();
 
-if ( is_network_admin()) {
+if( is_network_admin()) {
 	/**
 	 * Prints network admin screen notices.
 	 *
 	 * @since 3.1.0
 	 */
 	do_action( 'network_admin_notices');
-} elseif ( is_user_admin()) {
+} elseif( is_user_admin()) {
 	/**
 	 * Prints user admin screen notices.
 	 *
@@ -205,5 +205,5 @@ if ( is_network_admin()) {
  */
 do_action( 'all_admin_notices');
 
-if ( $parent_file == 'options-general.php')
+if( $parent_file == 'options-general.php')
 	require(ABSPATH . 'wp-admin/options-head.php');

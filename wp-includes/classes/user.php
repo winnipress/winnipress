@@ -35,7 +35,7 @@
  * @property string $rich_editing
  * @property string $syntax_highlighting
  */
-class WP_User {
+class WP_User{
 	/**
 	 * User data container.
 	 *
@@ -120,8 +120,8 @@ class WP_User {
 	 * @param string $name Optional. User's username
 	 * @param int $site_id Optional Site ID, defaults to current site.
 	 */
-	public function __construct( $id = 0, $name = '', $site_id = '' ) {
-		if ( !isset( self::$back_compat_keys ) ) {
+	public function __construct( $id = 0, $name = '', $site_id = '' ){
+		if( !isset( self::$back_compat_keys ) ){
 			$prefix = $GLOBALS['wpdb']->prefix;
 			self::$back_compat_keys = array(
 				'user_firstname' => 'first_name',
@@ -133,28 +133,28 @@ class WP_User {
 			);
 		}
 
-		if ( $id instanceof WP_User ) {
+		if( $id instanceof WP_User ){
 			$this->init( $id->data, $site_id );
 			return;
-		} elseif ( is_object( $id ) ) {
+		} elseif( is_object( $id ) ){
 			$this->init( $id, $site_id );
 			return;
 		}
 
-		if ( !empty( $id ) && !is_numeric( $id ) ) {
+		if( !empty( $id ) && !is_numeric( $id ) ){
 			$name = $id;
 			$id = 0;
 		}
 
-		if ( $id ) {
+		if( $id ){
 			$data = self::get_data_by( 'id', $id );
-		} else {
+		} else{
 			$data = self::get_data_by( 'login', $name );
 		}
 
-		if ( $data ) {
+		if( $data ){
 			$this->init( $data, $site_id );
-		} else {
+		} else{
 			$this->data = new stdClass;
 		}
 	}
@@ -167,7 +167,7 @@ class WP_User {
 	 * @param object $data    User DB row object.
 	 * @param int    $site_id Optional. The site ID to initialize for.
 	 */
-	public function init( $data, $site_id = '' ) {
+	public function init( $data, $site_id = '' ){
 		$this->data = $data;
 		$this->ID = (int) $data->ID;
 
@@ -188,30 +188,30 @@ class WP_User {
 	 * @param string|int $value The field value
 	 * @return object|false Raw user object
 	 */
-	public static function get_data_by( $field, $value ) {
+	public static function get_data_by( $field, $value ){
 		global $wpdb;
 
 		// 'ID' is an alias of 'id'.
-		if ( 'ID' === $field ) {
+		if( 'ID' === $field ){
 			$field = 'id';
 		}
 
-		if ( 'id' == $field ) {
+		if( 'id' == $field ){
 			// Make sure the value is numeric to avoid casting objects, for example,
 			// to int 1.
-			if ( !is_numeric( $value ) )
+			if( !is_numeric( $value ) )
 				return false;
 			$value = intval( $value );
-			if ( $value < 1 )
+			if( $value < 1 )
 				return false;
-		} else {
+		} else{
 			$value = trim( $value );
 		}
 
-		if ( !$value )
+		if( !$value )
 			return false;
 
-		switch ( $field ) {
+		switch ( $field ){
 			case 'id':
 				$user_id = $value;
 				$db_field = 'ID';
@@ -233,12 +233,12 @@ class WP_User {
 				return false;
 		}
 
-		if ( false !== $user_id ) {
-			if ( $user = wp_cache_get( $user_id, 'users' ) )
+		if( false !== $user_id ){
+			if( $user = wp_cache_get( $user_id, 'users' ) )
 				return $user;
 		}
 
-		if ( !$user = $wpdb->get_row( $wpdb->prepare(
+		if( !$user = $wpdb->get_row( $wpdb->prepare(
 			"SELECT * FROM $wpdb->users WHERE $db_field = %s", $value
 		) ) )
 			return false;
@@ -256,8 +256,8 @@ class WP_User {
 	 * @param string $key User meta key to check if set.
 	 * @return bool Whether the given user meta key is set.
 	 */
-	public function __isset( $key ) {
-		if ( 'id' == $key ) {
+	public function __isset( $key ){
+		if( 'id' == $key ){
 			_deprecated_argument( 'WP_User->id', '2.1.0',
 				sprintf(
 					/* translators: %s: WP_User->ID */
@@ -268,10 +268,10 @@ class WP_User {
 			$key = 'ID';
 		}
 
-		if ( isset( $this->data->$key ) )
+		if( isset( $this->data->$key ) )
 			return true;
 
-		if ( isset( self::$back_compat_keys[ $key ] ) )
+		if( isset( self::$back_compat_keys[ $key ] ) )
 			$key = self::$back_compat_keys[ $key ];
 
 		return metadata_exists( 'user', $this->ID, $key );
@@ -285,8 +285,8 @@ class WP_User {
 	 * @param string $key User meta key to retrieve.
 	 * @return mixed Value of the given user meta key (if set). If `$key` is 'id', the user ID.
 	 */
-	public function __get( $key ) {
-		if ( 'id' == $key ) {
+	public function __get( $key ){
+		if( 'id' == $key ){
 			_deprecated_argument( 'WP_User->id', '2.1.0',
 				sprintf(
 					/* translators: %s: WP_User->ID */
@@ -297,15 +297,15 @@ class WP_User {
 			return $this->ID;
 		}
 
-		if ( isset( $this->data->$key ) ) {
+		if( isset( $this->data->$key ) ){
 			$value = $this->data->$key;
-		} else {
-			if ( isset( self::$back_compat_keys[ $key ] ) )
+		} else{
+			if( isset( self::$back_compat_keys[ $key ] ) )
 				$key = self::$back_compat_keys[ $key ];
 			$value = get_user_meta( $this->ID, $key, true );
 		}
 
-		if ( $this->filter ) {
+		if( $this->filter ){
 			$value = sanitize_user_field( $key, $value, $this->ID, $this->filter );
 		}
 
@@ -323,8 +323,8 @@ class WP_User {
 	 * @param string $key   User meta key.
 	 * @param mixed  $value User meta value.
 	 */
-	public function __set( $key, $value ) {
-		if ( 'id' == $key ) {
+	public function __set( $key, $value ){
+		if( 'id' == $key ){
 			_deprecated_argument( 'WP_User->id', '2.1.0',
 				sprintf(
 					/* translators: %s: WP_User->ID */
@@ -346,8 +346,8 @@ class WP_User {
 	 *
 	 * @param string $key User meta key to unset.
 	 */
-	public function __unset( $key ) {
-		if ( 'id' == $key ) {
+	public function __unset( $key ){
+		if( 'id' == $key ){
 			_deprecated_argument( 'WP_User->id', '2.1.0',
 				sprintf(
 					/* translators: %s: WP_User->ID */
@@ -357,11 +357,11 @@ class WP_User {
 			);
 		}
 
-		if ( isset( $this->data->$key ) ) {
+		if( isset( $this->data->$key ) ){
 			unset( $this->data->$key );
 		}
 
-		if ( isset( self::$back_compat_keys[ $key ] ) ) {
+		if( isset( self::$back_compat_keys[ $key ] ) ){
 			unset( self::$back_compat_keys[ $key ] );
 		}
 	}
@@ -373,7 +373,7 @@ class WP_User {
 	 *
 	 * @return bool True if user exists in the database, false if not.
 	 */
-	public function exists() {
+	public function exists(){
 		return !empty( $this->ID );
 	}
 
@@ -387,7 +387,7 @@ class WP_User {
 	 * @param string $key Property
 	 * @return mixed
 	 */
-	public function get( $key ) {
+	public function get( $key ){
 		return $this->__get( $key );
 	}
 
@@ -401,7 +401,7 @@ class WP_User {
 	 * @param string $key Property
 	 * @return bool
 	 */
-	public function has_prop( $key ) {
+	public function has_prop( $key ){
 		return $this->__isset( $key );
 	}
 
@@ -412,7 +412,7 @@ class WP_User {
 	 *
 	 * @return array Array representation.
 	 */
-	public function to_array() {
+	public function to_array(){
 		return get_object_vars( $this->data );
 	}
 
@@ -425,8 +425,8 @@ class WP_User {
 	 * @param array    $arguments Arguments to pass when calling.
 	 * @return mixed|false Return value of the callback, false otherwise.
 	 */
-	public function __call( $name, $arguments ) {
-		if ( '_init_caps' === $name ) {
+	public function __call( $name, $arguments ){
+		if( '_init_caps' === $name ){
 			return call_user_func_array( array( $this, $name ), $arguments );
 		}
 		return false;
@@ -444,24 +444,24 @@ class WP_User {
 	 *
 	 * @return array List of all capabilities for the user.
 	 */
-	public function get_role_caps() {
+	public function get_role_caps(){
 		$switch_site = false;
 
 		$wp_roles = wp_roles();
 
 		//Filter out caps that are not role names and assign to $this->roles
-		if ( is_array( $this->caps ) )
+		if( is_array( $this->caps ) )
 			$this->roles = array_filter( array_keys( $this->caps ), array( $wp_roles, 'is_role' ) );
 
 		//Build $allcaps from role caps, overlay user's $caps
 		$this->allcaps = array();
-		foreach ( (array) $this->roles as $role ) {
+		foreach( (array) $this->roles as $role ){
 			$the_role = $wp_roles->get_role( $role );
 			$this->allcaps = array_merge( (array) $this->allcaps, (array) $the_role->capabilities );
 		}
 		$this->allcaps = array_merge( (array) $this->allcaps, (array) $this->caps );
 
-		if ( $switch_site ) {
+		if( $switch_site ){
 			restore_current_blog();
 		}
 
@@ -477,8 +477,8 @@ class WP_User {
 	 *
 	 * @param string $role Role name.
 	 */
-	public function add_role( $role ) {
-		if ( empty( $role ) ) {
+	public function add_role( $role ){
+		if( empty( $role ) ){
 			return;
 		}
 
@@ -505,8 +505,8 @@ class WP_User {
 	 *
 	 * @param string $role Role name.
 	 */
-	public function remove_role( $role ) {
-		if ( !in_array($role, $this->roles) )
+	public function remove_role( $role ){
+		if( !in_array($role, $this->roles) )
 			return;
 		unset( $this->caps[$role] );
 		update_user_meta( $this->ID, $this->cap_key, $this->caps );
@@ -535,18 +535,18 @@ class WP_User {
 	 *
 	 * @param string $role Role name.
 	 */
-	public function set_role( $role ) {
-		if ( 1 == count( $this->roles ) && $role == current( $this->roles ) )
+	public function set_role( $role ){
+		if( 1 == count( $this->roles ) && $role == current( $this->roles ) )
 			return;
 
-		foreach ( (array) $this->roles as $oldrole )
+		foreach( (array) $this->roles as $oldrole )
 			unset( $this->caps[$oldrole] );
 
 		$old_roles = $this->roles;
-		if ( !empty( $role ) ) {
+		if( !empty( $role ) ){
 			$this->caps[$role] = true;
 			$this->roles = array( $role => true );
-		} else {
+		} else{
 			$this->roles = false;
 		}
 		update_user_meta( $this->ID, $this->cap_key, $this->caps );
@@ -584,11 +584,11 @@ class WP_User {
 	 * @param string $item Level capability name.
 	 * @return int Max Level.
 	 */
-	public function level_reduction( $max, $item ) {
-		if ( preg_match( '/^level_(10|[0-9])$/i', $item, $matches ) ) {
+	public function level_reduction( $max, $item ){
+		if( preg_match( '/^level_(10|[0-9])$/i', $item, $matches ) ){
 			$level = intval( $matches[1] );
 			return max( $max, $level );
-		} else {
+		} else{
 			return $max;
 		}
 	}
@@ -604,7 +604,7 @@ class WP_User {
 	 *
 	 * @global wpdb $wpdb WordPress database abstraction object.
 	 */
-	public function update_user_level_from_caps() {
+	public function update_user_level_from_caps(){
 		global $wpdb;
 		$this->user_level = array_reduce( array_keys( $this->allcaps ), array( $this, 'level_reduction' ), 0 );
 		update_user_meta( $this->ID, $wpdb->get_blog_prefix() . 'user_level', $this->user_level );
@@ -618,7 +618,7 @@ class WP_User {
 	 * @param string $cap Capability name.
 	 * @param bool $grant Whether to grant capability to user.
 	 */
-	public function add_cap( $cap, $grant = true ) {
+	public function add_cap( $cap, $grant = true ){
 		$this->caps[$cap] = $grant;
 		update_user_meta( $this->ID, $this->cap_key, $this->caps );
 		$this->get_role_caps();
@@ -632,8 +632,8 @@ class WP_User {
 	 *
 	 * @param string $cap Capability name.
 	 */
-	public function remove_cap( $cap ) {
-		if ( !isset( $this->caps[ $cap ] ) ) {
+	public function remove_cap( $cap ){
+		if( !isset( $this->caps[ $cap ] ) ){
 			return;
 		}
 		unset( $this->caps[ $cap ] );
@@ -649,7 +649,7 @@ class WP_User {
 	 *
 	 * @global wpdb $wpdb WordPress database abstraction object.
 	 */
-	public function remove_all_caps() {
+	public function remove_all_caps(){
 		global $wpdb;
 		$this->caps = array();
 		delete_user_meta( $this->ID, $this->cap_key );
@@ -675,8 +675,8 @@ class WP_User {
 	 * @return bool Whether the user has the given capability, or, if `$object_id` is passed, whether the user has
 	 *              the given capability for that object.
 	 */
-	public function has_cap( $cap ) {
-		if ( is_numeric( $cap ) ) {
+	public function has_cap( $cap ){
+		if( is_numeric( $cap ) ){
 			_deprecated_argument( __FUNCTION__, '2.0.0', __( 'Usage of user levels is deprecated. Use capabilities instead.' ) );
 			$cap = $this->translate_level_to_cap( $cap );
 		}
@@ -707,8 +707,8 @@ class WP_User {
 		unset( $capabilities['do_not_allow'] );
 
 		// Must have ALL requested caps.
-		foreach ( (array) $caps as $cap ) {
-			if ( empty( $capabilities[ $cap ] ) )
+		foreach( (array) $caps as $cap ){
+			if( empty( $capabilities[ $cap ] ) )
 				return false;
 		}
 
@@ -725,7 +725,7 @@ class WP_User {
 	 * @param int $level Level number, 1 to 10.
 	 * @return string
 	 */
-	public function translate_level_to_cap( $level ) {
+	public function translate_level_to_cap( $level ){
 		return 'level_' . $level;
 	}
 
@@ -738,12 +738,12 @@ class WP_User {
 	 *
 	 * @param int $site_id Site ID to initialize user capabilities for. Default is the current site.
 	 */
-	public function for_site( $site_id = '' ) {
+	public function for_site( $site_id = '' ){
 		global $wpdb;
 
-		if ( !empty( $site_id ) ) {
+		if( !empty( $site_id ) ){
 			$this->site_id = absint( $site_id );
-		} else {
+		} else{
 			$this->site_id = get_current_blog_id();
 		}
 
@@ -761,7 +761,7 @@ class WP_User {
 	 *
 	 * @return int Site ID.
 	 */
-	public function get_site_id() {
+	public function get_site_id(){
 		return $this->site_id;
 	}
 
@@ -772,10 +772,10 @@ class WP_User {
 	 *
 	 * @return array User capabilities array.
 	 */
-	private function get_caps_data() {
+	private function get_caps_data(){
 		$caps = get_user_meta( $this->ID, $this->cap_key, true );
 
-		if ( !is_array( $caps ) ) {
+		if( !is_array( $caps ) ){
 			return array();
 		}
 

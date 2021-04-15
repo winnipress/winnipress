@@ -7,12 +7,12 @@
  */
 
 // don't load directly
-if ( !defined( 'ABSPATH' ) ) {
+if( !defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
 // Back compat hooks
-if ( 'category' == $taxonomy ) {
+if( 'category' == $taxonomy ) {
 	/**
  	 * Fires before the Edit Category form.
 	 *
@@ -22,7 +22,7 @@ if ( 'category' == $taxonomy ) {
 	 * @param object $tag Current category term object.
 	 */
 	do_action( 'edit_category_form_pre', $tag );
-} elseif ( 'link_category' == $taxonomy ) {
+} elseif( 'link_category' == $taxonomy ) {
 	/**
 	 * Fires before the Edit Link Category form.
 	 *
@@ -70,10 +70,10 @@ do_action( "{$taxonomy}_pre_edit_form", $tag, $taxonomy ); ?>
 <div class="wrap">
 <h1><?php echo $tax->labels->edit_item; ?></h1>
 
-<?php if ( $message ) : ?>
+<?php if( $message ) : ?>
 <div id="message" class="updated">
 	<p><strong><?php echo $message; ?></strong></p>
-	<?php if ( $wp_http_referer ) { ?>
+	<?php if( $wp_http_referer ) { ?>
 	<p><a href="<?php echo esc_url( wp_validate_redirect( esc_url_raw( $wp_http_referer ), admin_url( 'term.php?taxonomy=' . $taxonomy ) ) ); ?>"><?php
 		echo esc_html( $tax->labels->back_to_items );
 	?></a></p>
@@ -117,10 +117,10 @@ do_action( "{$taxonomy}_term_edit_form_top", $tag, $taxonomy );
 	<table class="form-table">
 		<tr class="form-field form-required term-name-wrap">
 			<th scope="row"><label for="name"><?php _ex( 'Name', 'term name' ); ?></label></th>
-			<td><input name="name" id="name" type="text" value="<?php if ( isset( $tag->name ) ) echo esc_attr($tag->name); ?>" size="40" aria-required="true" />
+			<td><input name="name" id="name" type="text" value="<?php if( isset( $tag->name ) ) echo esc_attr($tag->name); ?>" size="40" aria-required="true" />
 			<p class="description"><?php _e('The name is how it appears on your site.'); ?></p></td>
 		</tr>
-<?php if ( !global_terms_enabled() ) { ?>
+<?php if( !global_terms_enabled() ) { ?>
 		<tr class="form-field term-slug-wrap">
 			<th scope="row"><label for="slug"><?php _e( 'Slug' ); ?></label></th>
 			<?php
@@ -143,7 +143,7 @@ do_action( "{$taxonomy}_term_edit_form_top", $tag, $taxonomy );
 			<p class="description"><?php _e('The &#8220;slug&#8221; is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.'); ?></p></td>
 		</tr>
 <?php } ?>
-<?php if ( is_taxonomy_hierarchical($taxonomy) ) : ?>
+<?php if( is_taxonomy_hierarchical($taxonomy) ) : ?>
 		<tr class="form-field term-parent-wrap">
 			<th scope="row"><label for="parent"><?php echo esc_html( $tax->labels->parent_item ); ?></label></th>
 			<td>
@@ -163,7 +163,7 @@ do_action( "{$taxonomy}_term_edit_form_top", $tag, $taxonomy );
 				/** This filter is documented in wp-admin/edit-tags.php */
 				$dropdown_args = apply_filters( 'taxonomy_parent_dropdown_args', $dropdown_args, $taxonomy, 'edit' );
 				wp_dropdown_categories( $dropdown_args ); ?>
-				<?php if ( 'category' == $taxonomy ) : ?>
+				<?php if( 'category' == $taxonomy ) : ?>
 					<p class="description"><?php _e( 'Categories, unlike tags, can have a hierarchy. You might have a Jazz category, and under that have children categories for Bebop and Big Band. Totally optional.' ); ?></p>
 				<?php else : ?>
 					<p class="description"><?php _e( 'Assign a parent term to create a hierarchy. The term Jazz, for example, would be the parent of Bebop and Big Band.' ); ?></p>
@@ -178,7 +178,7 @@ do_action( "{$taxonomy}_term_edit_form_top", $tag, $taxonomy );
 		</tr>
 		<?php
 		// Back compat hooks
-		if ( 'category' == $taxonomy ) {
+		if( 'category' == $taxonomy ) {
 			/**
 			 * Fires after the Edit Category form fields are displayed.
 			 *
@@ -188,7 +188,7 @@ do_action( "{$taxonomy}_term_edit_form_top", $tag, $taxonomy );
 			 * @param object $tag Current category term object.
 			 */
 			do_action( 'edit_category_form_fields', $tag );
-		} elseif ( 'link_category' == $taxonomy ) {
+		} elseif( 'link_category' == $taxonomy ) {
 			/**
 			 * Fires after the Edit Link Category form fields are displayed.
 			 *
@@ -225,10 +225,10 @@ do_action( "{$taxonomy}_term_edit_form_top", $tag, $taxonomy );
 	</table>
 <?php
 // Back compat hooks
-if ( 'category' == $taxonomy ) {
+if( 'category' == $taxonomy ) {
 	/** This action is documented in wp-admin/edit-tags.php */
 	do_action( 'edit_category_form', $tag );
-} elseif ( 'link_category' == $taxonomy ) {
+} elseif( 'link_category' == $taxonomy ) {
 	/** This action is documented in wp-admin/edit-tags.php */
 	do_action( 'edit_link_category_form', $tag );
 } else {
@@ -259,7 +259,7 @@ do_action( "{$taxonomy}_edit_form", $tag, $taxonomy );
 
 	<?php submit_button( __( 'Update' ), 'primary', null, false ); ?>
 
-	<?php if ( current_user_can( 'delete_term', $tag->term_id ) ) : ?>
+	<?php if( current_user_can( 'delete_term', $tag->term_id ) ) : ?>
 		<span id="delete-link">
 			<a class="delete" href="<?php echo admin_url( wp_nonce_url( "edit-tags.php?action=delete&taxonomy=$taxonomy&tag_ID=$tag->term_id", 'delete-tag_' . $tag->term_id ) ) ?>"><?php _e( 'Delete' ); ?></a>
 		</span>

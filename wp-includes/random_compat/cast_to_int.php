@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-if (!function_exists('RandomCompat_intval')){ 
+if(!function_exists('RandomCompat_intval')){ 
     
     /**
      * Cast to an integer if we can, safely.
@@ -45,27 +45,27 @@ if (!function_exists('RandomCompat_intval')){
      * @throws TypeError
      */
     function RandomCompat_intval($number, $fail_open = false)
-    {
-        if (is_numeric($number)){
+   {
+        if(is_numeric($number)){
             $number += 0;
         }
 
-        if (
+        if(
             is_float($number)
             &&
             $number > ~PHP_INT_MAX
             &&
             $number < PHP_INT_MAX
-        ){
+       ){
             $number = (int) $number;
         }
 
-        if (is_int($number) || $fail_open){
+        if(is_int($number) || $fail_open){
             return $number;
         }
 
         throw new TypeError(
             'Expected an integer.'
-        );
+       );
     }
 }

@@ -16,13 +16,13 @@
  * @param int|object $category Category ID or object.
  * @return string Link on success, empty string if category does not exist.
  */
-function get_category_link($category) {
-	if (!is_object($category))
+function get_category_link($category){
+	if(!is_object($category))
 		$category = (int) $category;
 
 	$category = get_term_link($category);
 
-	if (is_wp_error($category))
+	if(is_wp_error($category))
 		return '';
 
 	return $category;
@@ -41,9 +41,9 @@ function get_category_link($category) {
  * @param array $deprecated Not used.
  * @return string|WP_Error A list of category parents on success, WP_Error on failure.
  */
-function get_category_parents($id, $link = false, $separator = '/', $nicename = false, $deprecated = array()) {
+function get_category_parents($id, $link = false, $separator = '/', $nicename = false, $deprecated = array()){
 
-	if (!empty($deprecated)) {
+	if(!empty($deprecated)){
 		_deprecated_argument(__FUNCTION__, '4.8.0');
 	}
 
@@ -71,14 +71,14 @@ function get_category_parents($id, $link = false, $separator = '/', $nicename = 
  * @param int $id Optional, default to current post ID. The post ID.
  * @return array Array of WP_Term objects, one for each category assigned to the post.
  */
-function get_the_category($id = false) {
+function get_the_category($id = false){
 	$categories = get_the_terms($id, 'category');
-	if (!$categories || is_wp_error($categories))
+	if(!$categories || is_wp_error($categories))
 		$categories = array();
 
 	$categories = array_values($categories);
 
-	foreach (array_keys($categories) as $key) {
+	foreach(array_keys($categories) as $key){
 		_make_cat_compat($categories[$key]);
 	}
 
@@ -102,11 +102,11 @@ function get_the_category($id = false) {
  * @param int $cat_ID Category ID.
  * @return string|WP_Error Category name on success, WP_Error on failure.
  */
-function get_the_category_by_ID($cat_ID) {
+function get_the_category_by_ID($cat_ID){
 	$cat_ID = (int) $cat_ID;
 	$category = get_term($cat_ID);
 
-	if (is_wp_error($category))
+	if(is_wp_error($category))
 		return $category;
 
 	return ($category) ? $category->name : '';
@@ -125,9 +125,9 @@ function get_the_category_by_ID($cat_ID) {
  * @param int $post_id Optional. Post ID to retrieve categories.
  * @return string
  */
-function get_the_category_list($separator = '', $parents = '', $post_id = false) {
+function get_the_category_list($separator = '', $parents = '', $post_id = false){
 	global $wp_rewrite;
-	if (!is_object_in_taxonomy(get_post_type($post_id), 'category')) {
+	if(!is_object_in_taxonomy(get_post_type($post_id), 'category')){
 		/** This filter is documented in wp-includes/category-template.php */
 		return apply_filters('the_category', '', $separator, $parents);
 	}
@@ -143,7 +143,7 @@ function get_the_category_list($separator = '', $parents = '', $post_id = false)
 	 */
 	$categories = apply_filters('the_category_list', get_the_category($post_id), $post_id);
 
-	if (empty($categories)) {
+	if(empty($categories)){
 		/** This filter is documented in wp-includes/category-template.php */
 		return apply_filters('the_category', __('Uncategorized'), $separator, $parents);
 	}
@@ -151,19 +151,19 @@ function get_the_category_list($separator = '', $parents = '', $post_id = false)
 	$rel = (is_object($wp_rewrite) && $wp_rewrite->using_permalinks()) ? 'rel="category tag"' : 'rel="category"';
 
 	$thelist = '';
-	if ('' == $separator) {
+	if('' == $separator){
 		$thelist .= '<ul class="post-categories">';
-		foreach ($categories as $category) {
+		foreach($categories as $category){
 			$thelist .= "\n\t<li>";
-			switch (strtolower($parents)) {
+			switch (strtolower($parents)){
 				case 'multiple':
-					if ($category->parent)
+					if($category->parent)
 						$thelist .= get_category_parents($category->parent, true, $separator);
 					$thelist .= '<a href="' . esc_url(get_category_link($category->term_id)) . '" ' . $rel . '>' . $category->name.'</a></li>';
 					break;
 				case 'single':
 					$thelist .= '<a href="' . esc_url(get_category_link($category->term_id)) . '"  ' . $rel . '>';
-					if ($category->parent)
+					if($category->parent)
 						$thelist .= get_category_parents($category->parent, false, $separator);
 					$thelist .= $category->name.'</a></li>';
 					break;
@@ -173,20 +173,20 @@ function get_the_category_list($separator = '', $parents = '', $post_id = false)
 			}
 		}
 		$thelist .= '</ul>';
-	} else {
+	} else{
 		$i = 0;
-		foreach ($categories as $category) {
-			if (0 < $i)
+		foreach($categories as $category){
+			if(0 < $i)
 				$thelist .= $separator;
-			switch (strtolower($parents)) {
+			switch (strtolower($parents)){
 				case 'multiple':
-					if ($category->parent)
+					if($category->parent)
 						$thelist .= get_category_parents($category->parent, true, $separator);
 					$thelist .= '<a href="' . esc_url(get_category_link($category->term_id)) . '" ' . $rel . '>' . $category->name.'</a>';
 					break;
 				case 'single':
 					$thelist .= '<a href="' . esc_url(get_category_link($category->term_id)) . '" ' . $rel . '>';
-					if ($category->parent)
+					if($category->parent)
 						$thelist .= get_category_parents($category->parent, false, $separator);
 					$thelist .= "$category->name</a>";
 					break;
@@ -229,8 +229,8 @@ function get_the_category_list($separator = '', $parents = '', $post_id = false)
  * @param int|object $post Optional. Post to check instead of the current post. (since 2.7.0)
  * @return bool True if the current post is in any of the given categories.
  */
-function in_category($category, $post = null) {
-	if (empty($category))
+function in_category($category, $post = null){
+	if(empty($category))
 		return false;
 
 	return has_category($category, $post);
@@ -246,7 +246,7 @@ function in_category($category, $post = null) {
  * @param string $parents Optional. How to display the parents.
  * @param int $post_id Optional. Post ID to retrieve categories.
  */
-function the_category($separator = '', $parents = '', $post_id = false) {
+function the_category($separator = '', $parents = '', $post_id = false){
 	echo get_the_category_list($separator, $parents, $post_id);
 }
 
@@ -258,7 +258,7 @@ function the_category($separator = '', $parents = '', $post_id = false) {
  * @param int $category Optional. Category ID. Will use global category ID by default.
  * @return string Category description, available.
  */
-function category_description($category = 0) {
+function category_description($category = 0){
 	return term_description($category, 'category');
 }
 
@@ -274,7 +274,7 @@ function category_description($category = 0) {
  * @since 4.2.0 Introduced the `value_field` argument.
  * @since 4.6.0 Introduced the `required` argument.
  *
- * @param string|array $args {
+ * @param string|array $args{
  *     Optional. Array or string of arguments to generate a categories drop-down element. See WP_Term_Query::__construct()
  *     for information on additional accepted arguments.
  *
@@ -309,7 +309,7 @@ function category_description($category = 0) {
  * }
  * @return string HTML content only if 'echo' argument is 0.
  */
-function wp_dropdown_categories($args = '') {
+function wp_dropdown_categories($args = ''){
 	$defaults = array(
 		'show_option_all'   => '',
 		'show_option_none'  => '',
@@ -337,7 +337,7 @@ function wp_dropdown_categories($args = '') {
 	$defaults['selected'] = (is_category()) ? get_query_var('cat') : 0;
 
 	// Back compat.
-	if (isset($args['type']) && 'link' == $args['type']) {
+	if(isset($args['type']) && 'link' == $args['type']){
 		_deprecated_argument(__FUNCTION__, '3.0.0',
 			/* translators: 1: "type => link", 2: "taxonomy => link_category" */
 			sprintf(__('%1$s is deprecated. Use %2$s instead.'),
@@ -351,14 +351,14 @@ function wp_dropdown_categories($args = '') {
 	$r = wp_parse_args($args, $defaults);
 	$option_none_value = $r['option_none_value'];
 
-	if (!isset($r['pad_counts']) && $r['show_count'] && $r['hierarchical']) {
+	if(!isset($r['pad_counts']) && $r['show_count'] && $r['hierarchical']){
 		$r['pad_counts'] = true;
 	}
 
 	$tab_index = $r['tab_index'];
 
 	$tab_index_attribute = '';
-	if ((int) $tab_index > 0) {
+	if((int) $tab_index > 0){
 		$tab_index_attribute = " tabindex=\"$tab_index\"";
 	}
 
@@ -372,12 +372,12 @@ function wp_dropdown_categories($args = '') {
 	$id = $r['id'] ? esc_attr($r['id']) : $name;
 	$required = $r['required'] ? 'required' : '';
 
-	if (!$r['hide_if_empty'] || !empty($categories)) {
+	if(!$r['hide_if_empty'] || !empty($categories)){
 		$output = "<select $required name='$name' id='$id' class='$class' $tab_index_attribute>\n";
-	} else {
+	} else{
 		$output = '';
 	}
-	if (empty($categories) && !$r['hide_if_empty'] && !empty($r['show_option_none'])) {
+	if(empty($categories) && !$r['hide_if_empty'] && !empty($r['show_option_none'])){
 
 		/**
 		 * Filters a taxonomy drop-down display element.
@@ -398,9 +398,9 @@ function wp_dropdown_categories($args = '') {
 		$output .= "\t<option value='" . esc_attr($option_none_value) . "' selected='selected'>$show_option_none</option>\n";
 	}
 
-	if (!empty($categories)) {
+	if(!empty($categories)){
 
-		if ($r['show_option_all']) {
+		if($r['show_option_all']){
 
 			/** This filter is documented in wp-includes/category-template.php */
 			$show_option_all = apply_filters('list_cats', $r['show_option_all'], null);
@@ -408,7 +408,7 @@ function wp_dropdown_categories($args = '') {
 			$output .= "\t<option value='0'$selected>$show_option_all</option>\n";
 		}
 
-		if ($r['show_option_none']) {
+		if($r['show_option_none']){
 
 			/** This filter is documented in wp-includes/category-template.php */
 			$show_option_none = apply_filters('list_cats', $r['show_option_none'], null);
@@ -416,15 +416,15 @@ function wp_dropdown_categories($args = '') {
 			$output .= "\t<option value='" . esc_attr($option_none_value) . "'$selected>$show_option_none</option>\n";
 		}
 
-		if ($r['hierarchical']) {
+		if($r['hierarchical']){
 			$depth = $r['depth'];  // Walk the full depth.
-		} else {
+		} else{
 			$depth = -1; // Flat.
 		}
 		$output .= walk_category_dropdown_tree($categories, $depth, $r);
 	}
 
-	if (!$r['hide_if_empty'] || !empty($categories)) {
+	if(!$r['hide_if_empty'] || !empty($categories)){
 		$output .= "</select>\n";
 	}
 	/**
@@ -437,7 +437,7 @@ function wp_dropdown_categories($args = '') {
 	 */
 	$output = apply_filters('wp_dropdown_cats', $output, $r);
 
-	if ($r['echo']) {
+	if($r['echo']){
 		echo $output;
 	}
 	return $output;
@@ -450,7 +450,7 @@ function wp_dropdown_categories($args = '') {
  * @since 4.4.0 Introduced the `hide_title_if_empty` and `separator` arguments. The `current_category` argument was modified to
  *              optionally accept an array of values.
  *
- * @param string|array $args {
+ * @param string|array $args{
  *     Array of optional arguments.
  *
  *     @type int          $child_of              Term ID to retrieve child terms of. See get_terms(). Default 0.
@@ -494,7 +494,7 @@ function wp_dropdown_categories($args = '') {
  * }
  * @return false|string HTML content only if 'echo' argument is 0.
  */
-function wp_list_categories($args = '') {
+function wp_list_categories($args = ''){
 	$defaults = array(
 		'child_of'            => 0,
 		'current_category'    => 0,
@@ -522,18 +522,18 @@ function wp_list_categories($args = '') {
 
 	$r = wp_parse_args($args, $defaults);
 
-	if (!isset($r['pad_counts']) && $r['show_count'] && $r['hierarchical'])
+	if(!isset($r['pad_counts']) && $r['show_count'] && $r['hierarchical'])
 		$r['pad_counts'] = true;
 
 	// Descendants of exclusions should be excluded too.
-	if (true == $r['hierarchical']) {
+	if(true == $r['hierarchical']){
 		$exclude_tree = array();
 
-		if ($r['exclude_tree']) {
+		if($r['exclude_tree']){
 			$exclude_tree = array_merge($exclude_tree, wp_parse_id_list($r['exclude_tree']));
 		}
 
-		if ($r['exclude']) {
+		if($r['exclude']){
 			$exclude_tree = array_merge($exclude_tree, wp_parse_id_list($r['exclude']));
 		}
 
@@ -541,10 +541,10 @@ function wp_list_categories($args = '') {
 		$r['exclude'] = '';
 	}
 
-	if (!isset($r['class']))
+	if(!isset($r['class']))
 		$r['class'] = ('category' == $r['taxonomy']) ? 'categories' : $r['taxonomy'];
 
-	if (!taxonomy_exists($r['taxonomy'])) {
+	if(!taxonomy_exists($r['taxonomy'])){
 		return false;
 	}
 
@@ -554,30 +554,30 @@ function wp_list_categories($args = '') {
 	$categories = get_categories($r);
 
 	$output = '';
-	if ($r['title_li'] && 'list' == $r['style'] && (!empty($categories) || !$r['hide_title_if_empty'])) {
+	if($r['title_li'] && 'list' == $r['style'] && (!empty($categories) || !$r['hide_title_if_empty'])){
 		$output = '<li class="' . esc_attr($r['class']) . '">' . $r['title_li'] . '<ul>';
 	}
-	if (empty($categories)) {
-		if (!empty($show_option_none)) {
-			if ('list' == $r['style']) {
+	if(empty($categories)){
+		if(!empty($show_option_none)){
+			if('list' == $r['style']){
 				$output .= '<li class="cat-item-none">' . $show_option_none . '</li>';
-			} else {
+			} else{
 				$output .= $show_option_none;
 			}
 		}
-	} else {
-		if (!empty($show_option_all)) {
+	} else{
+		if(!empty($show_option_all)){
 
 			$posts_page = '';
 
 			// For taxonomies that belong only to custom post types, point to a valid archive.
 			$taxonomy_object = get_taxonomy($r['taxonomy']);
-			if (!in_array('post', $taxonomy_object->object_type) && !in_array('page', $taxonomy_object->object_type)) {
-				foreach ($taxonomy_object->object_type as $object_type) {
+			if(!in_array('post', $taxonomy_object->object_type) && !in_array('page', $taxonomy_object->object_type)){
+				foreach($taxonomy_object->object_type as $object_type){
 					$_object_type = get_post_type_object($object_type);
 
 					// Grab the first one.
-					if (!empty($_object_type->has_archive)) {
+					if(!empty($_object_type->has_archive)){
 						$posts_page = get_post_type_archive_link($object_type);
 						break;
 					}
@@ -585,38 +585,38 @@ function wp_list_categories($args = '') {
 			}
 
 			// Fallback for the 'All' link is the posts page.
-			if (!$posts_page) {
-				if ('page' == get_option('show_on_front') && get_option('page_for_posts')) {
+			if(!$posts_page){
+				if('page' == get_option('show_on_front') && get_option('page_for_posts')){
 					$posts_page = get_permalink(get_option('page_for_posts'));
-				} else {
+				} else{
 					$posts_page = home_url('/');
 				}
 			}
 
 			$posts_page = esc_url($posts_page);
-			if ('list' == $r['style']) {
+			if('list' == $r['style']){
 				$output .= "<li class='cat-item-all'><a href='$posts_page'>$show_option_all</a></li>";
-			} else {
+			} else{
 				$output .= "<a href='$posts_page'>$show_option_all</a>";
 			}
 		}
 
-		if (empty($r['current_category']) && (is_category() || is_tax() || is_tag())) {
+		if(empty($r['current_category']) && (is_category() || is_tax() || is_tag())){
 			$current_term_object = get_queried_object();
-			if ($current_term_object && $r['taxonomy'] === $current_term_object->taxonomy) {
+			if($current_term_object && $r['taxonomy'] === $current_term_object->taxonomy){
 				$r['current_category'] = get_queried_object_id();
 			}
 		}
 
-		if ($r['hierarchical']) {
+		if($r['hierarchical']){
 			$depth = $r['depth'];
-		} else {
+		} else{
 			$depth = -1; // Flat.
 		}
 		$output .= walk_category_tree($categories, $depth, $r);
 	}
 
-	if ($r['title_li'] && 'list' == $r['style'] && (!empty($categories) || !$r['hide_title_if_empty'])) {
+	if($r['title_li'] && 'list' == $r['style'] && (!empty($categories) || !$r['hide_title_if_empty'])){
 		$output .= '</ul></li>';
 	}
 
@@ -630,9 +630,9 @@ function wp_list_categories($args = '') {
 	 */
 	$html = apply_filters('wp_list_categories', $output, $args);
 
-	if ($r['echo']) {
+	if($r['echo']){
 		echo $html;
-	} else {
+	} else{
 		return $html;
 	}
 }
@@ -672,7 +672,7 @@ function wp_list_categories($args = '') {
  * @return void|array Generated tag cloud, only if no failures and 'array' is set for the 'format' argument.
  *                    Otherwise, this function outputs the tag cloud.
  */
-function wp_tag_cloud($args = '') {
+function wp_tag_cloud($args = ''){
 	$defaults = array(
 		'smallest' => 8, 'largest' => 22, 'unit' => 'pt', 'number' => 45,
 		'format' => 'flat', 'separator' => "\n", 'orderby' => 'name', 'order' => 'ASC',
@@ -683,15 +683,15 @@ function wp_tag_cloud($args = '') {
 
 	$tags = get_terms($args['taxonomy'], array_merge($args, array('orderby' => 'count', 'order' => 'DESC'))); // Always query top tags
 
-	if (empty($tags) || is_wp_error($tags))
+	if(empty($tags) || is_wp_error($tags))
 		return;
 
-	foreach ($tags as $key => $tag) {
-		if ('edit' == $args['link'])
+	foreach($tags as $key => $tag){
+		if('edit' == $args['link'])
 			$link = get_edit_term_link($tag->term_id, $tag->taxonomy, $args['post_type']);
 		else
 			$link = get_term_link(intval($tag->term_id), $tag->taxonomy);
-		if (is_wp_error($link))
+		if(is_wp_error($link))
 			return;
 
 		$tags[ $key ]->link = $link;
@@ -710,7 +710,7 @@ function wp_tag_cloud($args = '') {
 	 */
 	$return = apply_filters('wp_tag_cloud', $return, $args);
 
-	if ('array' == $args['format'] || empty($args['echo']))
+	if('array' == $args['format'] || empty($args['echo']))
 		return $return;
 
 	echo $return;
@@ -724,7 +724,7 @@ function wp_tag_cloud($args = '') {
  * @param int $count Number of posts with that tag.
  * @return int Scaled count.
  */
-function default_topic_count_scale($count) {
+function default_topic_count_scale($count){
 	return round(log10($count + 1) * 100);
 }
 
@@ -736,7 +736,7 @@ function default_topic_count_scale($count) {
  * @since 4.8.0 Added the `show_count` argument.
  *
  * @param array $tags List of tags.
- * @param string|array $args {
+ * @param string|array $args{
  *     Optional. Array of string of arguments for generating a tag cloud.
  *
  *     @type int      $smallest                   Smallest font size used to display tags. Paired
@@ -757,12 +757,12 @@ function default_topic_count_scale($count) {
  *                                                Default 'flat'.
  *     @type string   $separator                  HTML or text to separate the tags. Default "\n" (newline).
  *     @type string   $orderby                    Value to order tags by. Accepts 'name' or 'count'.
- *                                                Default 'name'. The {@see 'tag_cloud_sort'} filter
+ *                                                Default 'name'. The{@see 'tag_cloud_sort'} filter
  *                                                can also affect how tags are sorted.
  *     @type string   $order                      How to order the tags. Accepts 'ASC' (ascending),
  *                                                'DESC' (descending), or 'RAND' (random). Default 'ASC'.
  *     @type int|bool $filter                     Whether to enable filtering of the final output
- *                                                via {@see 'wp_generate_tag_cloud'}. Default 1|true.
+ *                                                via{@see 'wp_generate_tag_cloud'}. Default 1|true.
  *     @type string   $topic_count_text           Nooped plural text from _n_noop() to supply to
  *                                                tag counts. Default null.
  *     @type callable $topic_count_text_callback  Callback used to generate nooped plural text for
@@ -774,7 +774,7 @@ function default_topic_count_scale($count) {
  * }
  * @return string|array Tag cloud as a string or an array, depending on 'format' argument.
  */
-function wp_generate_tag_cloud($tags, $args = '') {
+function wp_generate_tag_cloud($tags, $args = ''){
 	$defaults = array(
 		'smallest' => 8, 'largest' => 22, 'unit' => 'pt', 'number' => 0,
 		'format' => 'flat', 'separator' => "\n", 'orderby' => 'name', 'order' => 'ASC',
@@ -787,25 +787,25 @@ function wp_generate_tag_cloud($tags, $args = '') {
 
 	$return = ('array' === $args['format']) ? array() : '';
 
-	if (empty($tags)) {
+	if(empty($tags)){
 		return $return;
 	}
 
 	// Juggle topic counts.
-	if (isset($args['topic_count_text'])) {
+	if(isset($args['topic_count_text'])){
 		// First look for nooped plural support via topic_count_text.
 		$translate_nooped_plural = $args['topic_count_text'];
-	} elseif (!empty($args['topic_count_text_callback'])) {
+	} elseif(!empty($args['topic_count_text_callback'])){
 		// Look for the alternative callback style. Ignore the previous default.
-		if ($args['topic_count_text_callback'] === 'default_topic_count_text') {
+		if($args['topic_count_text_callback'] === 'default_topic_count_text'){
 			$translate_nooped_plural = _n_noop('%s item', '%s items');
-		} else {
+		} else{
 			$translate_nooped_plural = false;
 		}
-	} elseif (isset($args['single_text']) && isset($args['multiple_text'])) {
+	} elseif(isset($args['single_text']) && isset($args['multiple_text'])){
 		// If no callback exists, look for the old-style single_text and multiple_text arguments.
 		$translate_nooped_plural = _n_noop($args['single_text'], $args['multiple_text']);
-	} else {
+	} else{
 		// This is the default for when no callback, plural, or argument is passed in.
 		$translate_nooped_plural = _n_noop('%s item', '%s items');
 	}
@@ -819,46 +819,46 @@ function wp_generate_tag_cloud($tags, $args = '') {
 	 * @param array $args An array of tag cloud arguments.
 	 */
 	$tags_sorted = apply_filters('tag_cloud_sort', $tags, $args);
-	if (empty($tags_sorted)) {
+	if(empty($tags_sorted)){
 		return $return;
 	}
 
-	if ($tags_sorted !== $tags) {
+	if($tags_sorted !== $tags){
 		$tags = $tags_sorted;
 		unset($tags_sorted);
-	} else {
-		if ('RAND' === $args['order']) {
+	} else{
+		if('RAND' === $args['order']){
 			shuffle($tags);
-		} else {
+		} else{
 			// SQL cannot save you; this is a second (potentially different) sort on a subset of data.
-			if ('name' === $args['orderby']) {
+			if('name' === $args['orderby']){
 				uasort($tags, '_wp_object_name_sort_cb');
-			} else {
+			} else{
 				uasort($tags, '_wp_object_count_sort_cb');
 			}
 
-			if ('DESC' === $args['order']) {
+			if('DESC' === $args['order']){
 				$tags = array_reverse($tags, true);
 			}
 		}
 	}
 
-	if ($args['number'] > 0)
+	if($args['number'] > 0)
 		$tags = array_slice($tags, 0, $args['number']);
 
 	$counts = array();
 	$real_counts = array(); // For the alt tag
-	foreach ((array) $tags as $key => $tag) {
+	foreach((array) $tags as $key => $tag){
 		$real_counts[ $key ] = $tag->count;
 		$counts[ $key ] = call_user_func($args['topic_count_scale_callback'], $tag->count);
 	}
 
 	$min_count = min($counts);
 	$spread = max($counts) - $min_count;
-	if ($spread <= 0)
+	if($spread <= 0)
 		$spread = 1;
 	$font_spread = $args['largest'] - $args['smallest'];
-	if ($font_spread < 0)
+	if($font_spread < 0)
 		$font_spread = 1;
 	$font_step = $font_spread / $spread;
 
@@ -874,21 +874,21 @@ function wp_generate_tag_cloud($tags, $args = '') {
 	 * - when the tag count is displayed (for example when users check the checkbox in the
 	 *   Tag Cloud widget), regardless of the tags font size
 	 */
-	if ($args['show_count'] || 0 !== $font_spread) {
+	if($args['show_count'] || 0 !== $font_spread){
 		$aria_label = true;
 	}
 
 	// Assemble the data that will be used to generate the tag cloud markup.
 	$tags_data = array();
-	foreach ($tags as $key => $tag) {
+	foreach($tags as $key => $tag){
 		$tag_id = isset($tag->id) ? $tag->id : $key;
 
 		$count = $counts[ $key ];
 		$real_count = $real_counts[ $key ];
 
-		if ($translate_nooped_plural) {
+		if($translate_nooped_plural){
 			$formatted_count = sprintf(translate_nooped_plural($translate_nooped_plural, $real_count), number_format_i18n($real_count));
-		} else {
+		} else{
 			$formatted_count = call_user_func($args['topic_count_text_callback'], $real_count, $tag, $args);
 		}
 
@@ -919,7 +919,7 @@ function wp_generate_tag_cloud($tags, $args = '') {
 	$a = array();
 
 	// Generate the output links array.
-	foreach ($tags_data as $key => $tag_data) {
+	foreach($tags_data as $key => $tag_data){
 		$class = $tag_data['class'] . ' tag-link-position-' . ($key + 1);
 		$a[] = sprintf(
 			'<a href="%1$s"%2$s class="%3$s" style="font-size: %4$s;"%5$s>%6$s%7$s</a>',
@@ -933,7 +933,7 @@ function wp_generate_tag_cloud($tags, $args = '') {
 		);
 	}
 
-	switch ($args['format']) {
+	switch ($args['format']){
 		case 'array' :
 			$return =& $a;
 			break;
@@ -952,7 +952,7 @@ function wp_generate_tag_cloud($tags, $args = '') {
 			break;
 	}
 
-	if ($args['filter']) {
+	if($args['filter']){
 		/**
 		 * Filters the generated output of a tag cloud.
 		 *
@@ -989,7 +989,7 @@ function wp_generate_tag_cloud($tags, $args = '') {
  * @return int Negative number if `$a->name` is less than `$b->name`, zero if they are equal,
  *             or greater than zero if `$a->name` is greater than `$b->name`.
  */
-function _wp_object_name_sort_cb($a, $b) {
+function _wp_object_name_sort_cb($a, $b){
 	return strnatcasecmp($a->name, $b->name);
 }
 
@@ -1005,7 +1005,7 @@ function _wp_object_name_sort_cb($a, $b) {
  * @param object $b The second object to compare.
  * @return bool Whether the count value for `$a` is greater than the count value for `$b`.
  */
-function _wp_object_count_sort_cb($a, $b) {
+function _wp_object_count_sort_cb($a, $b){
 	return ($a->count > $b->count);
 }
 
@@ -1021,12 +1021,12 @@ function _wp_object_count_sort_cb($a, $b) {
  * @see Walker_Category::walk() for parameters and return description.
  * @return string
  */
-function walk_category_tree() {
+function walk_category_tree(){
 	$args = func_get_args();
 	// the user's options are the third parameter
-	if (empty($args[2]['walker']) || !($args[2]['walker'] instanceof Walker)) {
+	if(empty($args[2]['walker']) || !($args[2]['walker'] instanceof Walker)){
 		$walker = new Walker_Category;
-	} else {
+	} else{
 		$walker = $args[2]['walker'];
 	}
 	return call_user_func_array(array($walker, 'walk'), $args);
@@ -1040,12 +1040,12 @@ function walk_category_tree() {
  * @see Walker_CategoryDropdown::walk() for parameters and return description.
  * @return string
  */
-function walk_category_dropdown_tree() {
+function walk_category_dropdown_tree(){
 	$args = func_get_args();
 	// the user's options are the third parameter
-	if (empty($args[2]['walker']) || !($args[2]['walker'] instanceof Walker)) {
+	if(empty($args[2]['walker']) || !($args[2]['walker'] instanceof Walker)){
 		$walker = new Walker_CategoryDropdown;
-	} else {
+	} else{
 		$walker = $args[2]['walker'];
 	}
 	return call_user_func_array(array($walker, 'walk'), $args);
@@ -1064,7 +1064,7 @@ function walk_category_dropdown_tree() {
  * @param int|object $tag Tag ID or object.
  * @return string Link on success, empty string if tag does not exist.
  */
-function get_tag_link($tag) {
+function get_tag_link($tag){
 	return get_category_link($tag);
 }
 
@@ -1076,7 +1076,7 @@ function get_tag_link($tag) {
  * @param int $id Post ID.
  * @return array|false|WP_Error Array of tag objects on success, false on failure.
  */
-function get_the_tags($id = 0) {
+function get_the_tags($id = 0){
 
 	/**
 	 * Filters the array of tags for the given post.
@@ -1101,7 +1101,7 @@ function get_the_tags($id = 0) {
  * @param int $id Optional. Post ID. Defaults to the current post.
  * @return string|false|WP_Error A list of tags on success, false if there are no terms, WP_Error on failure.
  */
-function get_the_tag_list($before = '', $sep = '', $after = '', $id = 0) {
+function get_the_tag_list($before = '', $sep = '', $after = '', $id = 0){
 
 	/**
 	 * Filters the tags list for a given post.
@@ -1126,13 +1126,13 @@ function get_the_tag_list($before = '', $sep = '', $after = '', $id = 0) {
  * @param string $sep Optional. Separate items using this.
  * @param string $after Optional. After list.
  */
-function the_tags($before = null, $sep = ', ', $after = '') {
-	if (null === $before)
+function the_tags($before = null, $sep = ', ', $after = ''){
+	if(null === $before)
 		$before = __('Tags: ');
 
 	$the_tags = get_the_tag_list($before, $sep, $after);
 
-	if (!is_wp_error($the_tags)) {
+	if(!is_wp_error($the_tags)){
 		echo $the_tags;
 	}
 }
@@ -1145,7 +1145,7 @@ function the_tags($before = null, $sep = ', ', $after = '') {
  * @param int $tag Optional. Tag ID. Will use global tag ID by default.
  * @return string Tag description, available.
  */
-function tag_description($tag = 0) {
+function tag_description($tag = 0){
 	return term_description($tag);
 }
 
@@ -1159,10 +1159,10 @@ function tag_description($tag = 0) {
  * @param null $deprecated Deprecated argument.
  * @return string Term description, available.
  */
-function term_description($term = 0, $deprecated = null) {
-	if (!$term && (is_tax() || is_tag() || is_category())) {
+function term_description($term = 0, $deprecated = null){
+	if(!$term && (is_tax() || is_tag() || is_category())){
 		$term = get_queried_object();
-		if ($term) {
+		if($term){
 			$term = $term->term_id;
 		}
 	}
@@ -1180,14 +1180,14 @@ function term_description($term = 0, $deprecated = null) {
  * @return array|false|WP_Error Array of WP_Term objects on success, false if there are no terms
  *                              or the post does not exist, WP_Error on failure.
  */
-function get_the_terms($post, $taxonomy) {
-	if (!$post = get_post($post))
+function get_the_terms($post, $taxonomy){
+	if(!$post = get_post($post))
 		return false;
 
 	$terms = get_object_term_cache($post->ID, $taxonomy);
-	if (false === $terms) {
+	if(false === $terms){
 		$terms = wp_get_object_terms($post->ID, $taxonomy);
-		if (!is_wp_error($terms)) {
+		if(!is_wp_error($terms)){
 			$term_ids = wp_list_pluck($terms, 'term_id');
 			wp_cache_add($post->ID, $term_ids, $taxonomy . '_relationships');
 		}
@@ -1204,7 +1204,7 @@ function get_the_terms($post, $taxonomy) {
 	 */
 	$terms = apply_filters('get_the_terms', $terms, $post->ID, $taxonomy);
 
-	if (empty($terms))
+	if(empty($terms))
 		return false;
 
 	return $terms;
@@ -1222,20 +1222,20 @@ function get_the_terms($post, $taxonomy) {
  * @param string $after Optional. After list.
  * @return string|false|WP_Error A list of terms on success, false if there are no terms, WP_Error on failure.
  */
-function get_the_term_list($id, $taxonomy, $before = '', $sep = '', $after = '') {
+function get_the_term_list($id, $taxonomy, $before = '', $sep = '', $after = ''){
 	$terms = get_the_terms($id, $taxonomy);
 
-	if (is_wp_error($terms))
+	if(is_wp_error($terms))
 		return $terms;
 
-	if (empty($terms))
+	if(empty($terms))
 		return false;
 
 	$links = array();
 
-	foreach ($terms as $term) {
+	foreach($terms as $term){
 		$link = get_term_link($term, $taxonomy);
-		if (is_wp_error($link)) {
+		if(is_wp_error($link)){
 			return $link;
 		}
 		$links[] = '<a href="' . esc_url($link) . '" rel="tag">' . $term->name . '</a>';
@@ -1263,7 +1263,7 @@ function get_the_term_list($id, $taxonomy, $before = '', $sep = '', $after = '')
  *
  * @param int     $term_id  Term ID.
  * @param string  $taxonomy Taxonomy name.
- * @param string|array $args {
+ * @param string|array $args{
  *     Array of optional arguments.
  *
  *     @type string $format    Use term names or slugs for display. Accepts 'name' or 'slug'.
@@ -1274,15 +1274,15 @@ function get_the_term_list($id, $taxonomy, $before = '', $sep = '', $after = '')
  * }
  * @return string|WP_Error A list of term parents on success, WP_Error or empty string on failure.
  */
-function get_term_parents_list($term_id, $taxonomy, $args = array()) {
+function get_term_parents_list($term_id, $taxonomy, $args = array()){
 	$list = '';
 	$term = get_term($term_id, $taxonomy);
 
-	if (is_wp_error($term)) {
+	if(is_wp_error($term)){
 		return $term;
 	}
 
-	if (!$term) {
+	if(!$term){
 		return $list;
 	}
 
@@ -1297,23 +1297,23 @@ function get_term_parents_list($term_id, $taxonomy, $args = array()) {
 
 	$args = wp_parse_args($args, $defaults);
 
-	foreach (array('link', 'inclusive') as $bool) {
+	foreach(array('link', 'inclusive') as $bool){
 		$args[ $bool ] = wp_validate_boolean($args[ $bool ]);
 	}
 
 	$parents = get_ancestors($term_id, $taxonomy, 'taxonomy');
 
-	if ($args['inclusive']) {
+	if($args['inclusive']){
 		array_unshift($parents, $term_id);
 	}
 
-	foreach (array_reverse($parents) as $term_id) {
+	foreach(array_reverse($parents) as $term_id){
 		$parent = get_term($term_id, $taxonomy);
 		$name   = ('slug' === $args['format']) ? $parent->slug : $parent->name;
 
-		if ($args['link']) {
+		if($args['link']){
 			$list .= '<a href="' . esc_url(get_term_link($parent->term_id, $taxonomy)) . '">' . $name . '</a>' . $args['separator'];
-		} else {
+		} else{
 			$list .= $name . $args['separator'];
 		}
 	}
@@ -1333,10 +1333,10 @@ function get_term_parents_list($term_id, $taxonomy, $args = array()) {
  * @param string $after Optional. After list.
  * @return false|void False on WordPress error.
  */
-function the_terms($id, $taxonomy, $before = '', $sep = ', ', $after = '') {
+function the_terms($id, $taxonomy, $before = '', $sep = ', ', $after = ''){
 	$term_list = get_the_term_list($id, $taxonomy, $before, $sep, $after);
 
-	if (is_wp_error($term_list))
+	if(is_wp_error($term_list))
 		return false;
 
 	/**
@@ -1362,7 +1362,7 @@ function the_terms($id, $taxonomy, $before = '', $sep = ', ', $after = '') {
  * @param int|object $post Optional. Post to check instead of the current post.
  * @return bool True if the current post has any of the given categories (or any category, if no category specified).
  */
-function has_category($category = '', $post = null) {
+function has_category($category = '', $post = null){
 	return has_term($category, 'category', $post);
 }
 
@@ -1383,7 +1383,7 @@ function has_category($category = '', $post = null) {
  * @param int|object $post Optional. Post to check instead of the current post. (since 2.7.0)
  * @return bool True if the current post has any of the given tags (or any tag, if no tag specified).
  */
-function has_tag($tag = '', $post = null) {
+function has_tag($tag = '', $post = null){
 	return has_term($tag, 'post_tag', $post);
 }
 
@@ -1401,14 +1401,14 @@ function has_tag($tag = '', $post = null) {
  * @param int|object $post Optional. Post to check instead of the current post.
  * @return bool True if the current post has any of the given tags (or any tag, if no tag specified).
  */
-function has_term($term = '', $taxonomy = '', $post = null) {
+function has_term($term = '', $taxonomy = '', $post = null){
 	$post = get_post($post);
 
-	if (!$post)
+	if(!$post)
 		return false;
 
 	$r = is_object_in_term($post->ID, $taxonomy, $term);
-	if (is_wp_error($r))
+	if(is_wp_error($r))
 		return false;
 
 	return $r;

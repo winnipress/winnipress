@@ -14,7 +14,7 @@
  *
  * @see register_post_type()
  */
-final class WP_Post_Type {
+final class WP_Post_Type{
 	/**
 	 * Post type key.
 	 *
@@ -340,7 +340,7 @@ final class WP_Post_Type {
 	 * @param array|string $args      Optional. Array or string of arguments for registering a post type.
 	 *                                Default empty array.
 	 */
-	public function __construct($post_type, $args = array() ) {
+	public function __construct($post_type, $args = array() ){
 		$this->name = $post_type;
 
 		$this->set_props($args );
@@ -353,7 +353,7 @@ final class WP_Post_Type {
 	 *
 	 * @param array|string $args Array or string of arguments for registering a post type.
 	 */
-	public function set_props($args ) {
+	public function set_props($args ){
 		$args = wp_parse_args($args );
 
 		/**
@@ -404,88 +404,88 @@ final class WP_Post_Type {
 		$args['name'] = $this->name;
 
 		// If not set, default to the setting for public.
-		if(null === $args['publicly_queryable'] ) {
+		if(null === $args['publicly_queryable'] ){
 			$args['publicly_queryable'] = $args['public'];
 		}
 
 		// If not set, default to the setting for public.
-		if(null === $args['show_ui'] ) {
+		if(null === $args['show_ui'] ){
 			$args['show_ui'] = $args['public'];
 		}
 
 		// If not set, default to the setting for show_ui.
-		if(null === $args['show_in_menu'] || !$args['show_ui'] ) {
+		if(null === $args['show_in_menu'] || !$args['show_ui'] ){
 			$args['show_in_menu'] = $args['show_ui'];
 		}
 
 
 
 		// If not set, default to the setting for public.
-		if(null === $args['show_in_nav_menus'] ) {
+		if(null === $args['show_in_nav_menus'] ){
 			$args['show_in_nav_menus'] = $args['public'];
 		}
 
 		// If not set, default to true if not public, false if public.
-		if(null === $args['exclude_from_search'] ) {
+		if(null === $args['exclude_from_search'] ){
 			$args['exclude_from_search'] = !$args['public'];
 		}
 
 		// Back compat with quirky handling in version 3.0. #14122.
-		if(empty($args['capabilities'] ) && null === $args['map_meta_cap'] && in_array($args['capability_type'], array('post', 'page' ) ) ) {
+		if(empty($args['capabilities'] ) && null === $args['map_meta_cap'] && in_array($args['capability_type'], array('post', 'page' ) ) ){
 			$args['map_meta_cap'] = true;
 		}
 
 		// If not set, default to false.
-		if(null === $args['map_meta_cap'] ) {
+		if(null === $args['map_meta_cap'] ){
 			$args['map_meta_cap'] = false;
 		}
 
 		// If there's no specified edit link and no UI, remove the edit link.
-		if(!$args['show_ui'] && !$has_edit_link ) {
+		if(!$args['show_ui'] && !$has_edit_link ){
 			$args['_edit_link'] = '';
 		}
 
 		$this->cap = get_post_type_capabilities((object) $args );
 		unset($args['capabilities'] );
 
-		if(is_array($args['capability_type'] ) ) {
+		if(is_array($args['capability_type'] ) ){
 			$args['capability_type'] = $args['capability_type'][0];
 		}
 
-		if(false !== $args['query_var'] ) {
-			if(true === $args['query_var'] ) {
+		if(false !== $args['query_var'] ){
+			if(true === $args['query_var'] ){
 				$args['query_var'] = $this->name;
-			} else {
+			} else{
 				$args['query_var'] = sanitize_title_with_dashes($args['query_var'] );
 			}
 		}
 
-		if(false !== $args['rewrite'] && (is_admin() || '' != get_option('permalink_structure' ) ) ) {
-			if(!is_array($args['rewrite'] ) ) {
+		if(false !== $args['rewrite'] && (is_admin() || '' != get_option('permalink_structure' ) ) ){
+			if(!is_array($args['rewrite'] ) ){
 				$args['rewrite'] = array();
 			}
-			if(empty($args['rewrite']['slug'] ) ) {
+			if(empty($args['rewrite']['slug'] ) ){
 				$args['rewrite']['slug'] = $this->name;
 			}
-			if(!isset($args['rewrite']['with_front'] ) ) {
+			if(!isset($args['rewrite']['with_front'] ) ){
 				$args['rewrite']['with_front'] = true;
 			}
-			if(!isset($args['rewrite']['pages'] ) ) {
+			if(!isset($args['rewrite']['pages'] ) ){
 				$args['rewrite']['pages'] = true;
 			}
-			if(!isset($args['rewrite']['feeds'] ) || !$args['has_archive'] ) {
+			if(!isset($args['rewrite']['feeds'] ) || !$args['has_archive'] ){
 				$args['rewrite']['feeds'] = (bool) $args['has_archive'];
 			}
-			if(!isset($args['rewrite']['ep_mask'] ) ) {
-				if(isset($args['permalink_epmask'] ) ) {
+			if(!isset($args['rewrite']['ep_mask'] ) ){
+				if(isset($args['permalink_epmask'] ) ){
 					$args['rewrite']['ep_mask'] = $args['permalink_epmask'];
-				} else {
+				} else{
 					$args['rewrite']['ep_mask'] = EP_PERMALINK;
 				}
 			}
 		}
 
-		foreach ($args as $property_name => $property_value ) {
+		foreach($args as $property_name => $property_value ){
 			$this->$property_name = $property_value;
 		}
 
@@ -498,11 +498,11 @@ final class WP_Post_Type {
 	 *
 	 * @since 4.6.0
 	 */
-	public function add_supports() {
-		if(!empty($this->supports ) ) {
+	public function add_supports(){
+		if(!empty($this->supports ) ){
 			add_post_type_support($this->name, $this->supports );
 			unset($this->supports );
-		} elseif(false !== $this->supports ) {
+		} elseif(false !== $this->supports ){
 			// Add default features.
 			add_post_type_support($this->name, array('title', 'editor' ) );
 		}
@@ -516,35 +516,35 @@ final class WP_Post_Type {
 	 * @global WP_Rewrite $wp_rewrite WordPress Rewrite Component.
 	 * @global WP         $wp         Current WordPress environment instance.
 	 */
-	public function add_rewrite_rules() {
+	public function add_rewrite_rules(){
 		global $wp_rewrite, $wp;
 
-		if(false !== $this->query_var && $wp && is_post_type_viewable($this ) ) {
+		if(false !== $this->query_var && $wp && is_post_type_viewable($this ) ){
 			$wp->add_query_var($this->query_var );
 		}
 
-		if(false !== $this->rewrite && (is_admin() || '' != get_option('permalink_structure' ) ) ) {
-			if($this->hierarchical ) {
+		if(false !== $this->rewrite && (is_admin() || '' != get_option('permalink_structure' ) ) ){
+			if($this->hierarchical ){
 				add_rewrite_tag("%$this->name%", '(.+?)', $this->query_var ? "{$this->query_var}=" : "post_type=$this->name&pagename=" );
-			} else {
+			} else{
 				add_rewrite_tag("%$this->name%", '([^/]+)', $this->query_var ? "{$this->query_var}=" : "post_type=$this->name&name=" );
 			}
 
-			if($this->has_archive ) {
+			if($this->has_archive ){
 				$archive_slug = true === $this->has_archive ? $this->rewrite['slug'] : $this->has_archive;
-				if($this->rewrite['with_front'] ) {
+				if($this->rewrite['with_front'] ){
 					$archive_slug = substr($wp_rewrite->front, 1 ) . $archive_slug;
-				} else {
+				} else{
 					$archive_slug = $wp_rewrite->root . $archive_slug;
 				}
 
 				add_rewrite_rule("{$archive_slug}/?$", "index.php?post_type=$this->name", 'top' );
-				if($this->rewrite['feeds'] && $wp_rewrite->feeds ) {
+				if($this->rewrite['feeds'] && $wp_rewrite->feeds ){
 					$feeds = '(' . trim(implode('|', $wp_rewrite->feeds ) ) . ')';
 					add_rewrite_rule("{$archive_slug}/feed/$feeds/?$", "index.php?post_type=$this->name" . '&feed=$matches[1]', 'top' );
 					add_rewrite_rule("{$archive_slug}/$feeds/?$", "index.php?post_type=$this->name" . '&feed=$matches[1]', 'top' );
 				}
-				if($this->rewrite['pages'] ) {
+				if($this->rewrite['pages'] ){
 					add_rewrite_rule("{$archive_slug}/{$wp_rewrite->pagination_base}/([0-9]{1,})/?$", "index.php?post_type=$this->name" . '&paged=$matches[1]', 'top' );
 				}
 			}
@@ -560,8 +560,8 @@ final class WP_Post_Type {
 	 *
 	 * @since 4.6.0
 	 */
-	public function register_meta_boxes() {
-		if($this->register_meta_box_cb ) {
+	public function register_meta_boxes(){
+		if($this->register_meta_box_cb ){
 			add_action('add_meta_boxes_' . $this->name, $this->register_meta_box_cb, 10, 1 );
 		}
 	}
@@ -571,7 +571,7 @@ final class WP_Post_Type {
 	 *
 	 * @since 4.6.0
 	 */
-	public function add_hooks() {
+	public function add_hooks(){
 		add_action('future_' . $this->name, '_future_post_hook', 5, 2 );
 	}
 
@@ -580,8 +580,8 @@ final class WP_Post_Type {
 	 *
 	 * @since 4.6.0
 	 */
-	public function register_taxonomies() {
-		foreach ($this->taxonomies as $taxonomy ) {
+	public function register_taxonomies(){
+		foreach($this->taxonomies as $taxonomy ){
 			register_taxonomy_for_object_type($taxonomy, $this->name );
 		}
 	}
@@ -593,7 +593,7 @@ final class WP_Post_Type {
 	 *
 	 * @global array $_wp_post_type_features Post type features.
 	 */
-	public function remove_supports() {
+	public function remove_supports(){
 		global $_wp_post_type_features;
 
 		unset($_wp_post_type_features[ $this->name ] );
@@ -608,27 +608,27 @@ final class WP_Post_Type {
 	 * @global WP         $wp                  Current WordPress environment instance.
 	 * @global array      $post_type_meta_caps Used to remove meta capabilities.
 	 */
-	public function remove_rewrite_rules() {
+	public function remove_rewrite_rules(){
 		global $wp, $wp_rewrite, $post_type_meta_caps;
 
 		// Remove query var.
-		if(false !== $this->query_var ) {
+		if(false !== $this->query_var ){
 			$wp->remove_query_var($this->query_var );
 		}
 
 		// Remove any rewrite rules, permastructs, and rules.
-		if(false !== $this->rewrite ) {
+		if(false !== $this->rewrite ){
 			remove_rewrite_tag("%$this->name%" );
 			remove_permastruct($this->name );
-			foreach ($wp_rewrite->extra_rules_top as $regex => $query ) {
-				if(false !== strpos($query, "index.php?post_type=$this->name" ) ) {
+			foreach($wp_rewrite->extra_rules_top as $regex => $query ){
+				if(false !== strpos($query, "index.php?post_type=$this->name" ) ){
 					unset($wp_rewrite->extra_rules_top[ $regex ] );
 				}
 			}
 		}
 
 		// Remove registered custom meta capabilities.
-		foreach ($this->cap as $cap ) {
+		foreach($this->cap as $cap ){
 			unset($post_type_meta_caps[ $cap ] );
 		}
 	}
@@ -638,8 +638,8 @@ final class WP_Post_Type {
 	 *
 	 * @since 4.6.0
 	 */
-	public function unregister_meta_boxes() {
-		if($this->register_meta_box_cb ) {
+	public function unregister_meta_boxes(){
+		if($this->register_meta_box_cb ){
 			remove_action('add_meta_boxes_' . $this->name, $this->register_meta_box_cb, 10 );
 		}
 	}
@@ -649,8 +649,8 @@ final class WP_Post_Type {
 	 *
 	 * @since 4.6.0
 	 */
-	public function unregister_taxonomies() {
-		foreach (get_object_taxonomies($this->name ) as $taxonomy ) {
+	public function unregister_taxonomies(){
+		foreach(get_object_taxonomies($this->name ) as $taxonomy ){
 			unregister_taxonomy_for_object_type($taxonomy, $this->name );
 		}
 	}
@@ -660,7 +660,7 @@ final class WP_Post_Type {
 	 *
 	 * @since 4.6.0
 	 */
-	public function remove_hooks() {
+	public function remove_hooks(){
 		remove_action('future_' . $this->name, '_future_post_hook', 5 );
 	}
 }

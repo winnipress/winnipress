@@ -33,7 +33,7 @@
  * @link http://www.openwall.com/phpass/
  * @since 2.5.0
  */
-class PasswordHash {
+class PasswordHash{
 	var $itoa64;
 	var $iteration_count_log2;
 	var $portable_hashes;
@@ -58,7 +58,7 @@ class PasswordHash {
 	/**
 	 * PHP4 constructor.
 	 */
-	public function PasswordHash($iteration_count_log2, $portable_hashes) {
+	public function PasswordHash($iteration_count_log2, $portable_hashes){
 		self::__construct($iteration_count_log2, $portable_hashes);
 	}
 
@@ -66,14 +66,14 @@ class PasswordHash {
 	{
 		$output = '';
 		if(@is_readable('/dev/urandom') &&
-		    ($fh = @fopen('/dev/urandom', 'rb'))) {
+		    ($fh = @fopen('/dev/urandom', 'rb'))){
 			$output = fread($fh, $count);
 			fclose($fh);
 		}
 
-		if(strlen($output) < $count) {
+		if(strlen($output) < $count){
 			$output = '';
-			for ($i = 0; $i < $count; $i += 16) {
+			for ($i = 0; $i < $count; $i += 16){
 				$this->random_state =
 				    md5(microtime() . $this->random_state);
 				$output .=
@@ -89,7 +89,7 @@ class PasswordHash {
 	{
 		$output = '';
 		$i = 0;
-		do {
+		do{
 			$value = ord($input[$i++]);
 			$output .= $this->itoa64[$value & 0x3f];
 			if($i < $count)
@@ -145,14 +145,14 @@ class PasswordHash {
 		# in PHP would result in much worse performance and
 		# consequently in lower iteration counts and hashes that are
 		# quicker to crack (by non-PHP code).
-		if(PHP_VERSION >= '5') {
+		if(PHP_VERSION >= '5'){
 			$hash = md5($salt . $password, TRUE);
-			do {
+			do{
 				$hash = md5($hash . $password, TRUE);
 			} while (--$count);
-		} else {
+		} else{
 			$hash = pack('H*', md5($salt . $password));
-			do {
+			do{
 				$hash = pack('H*', md5($hash . $password));
 			} while (--$count);
 		}
@@ -199,11 +199,11 @@ class PasswordHash {
 		$output .= '$';
 
 		$i = 0;
-		do {
+		do{
 			$c1 = ord($input[$i++]);
 			$output .= $itoa64[$c1 >> 2];
 			$c1 = ($c1 & 0x03) << 4;
-			if($i >= 16) {
+			if($i >= 16){
 				$output .= $itoa64[$c1];
 				break;
 			}
@@ -224,13 +224,13 @@ class PasswordHash {
 
 	function HashPassword($password)
 	{
-		if(strlen($password) > 4096) {
+		if(strlen($password) > 4096){
 			return '*';
 		}
 
 		$random = '';
 
-		if(CRYPT_BLOWFISH == 1 && !$this->portable_hashes) {
+		if(CRYPT_BLOWFISH == 1 && !$this->portable_hashes){
 			$random = $this->get_random_bytes(16);
 			$hash =
 			    crypt($password, $this->gensalt_blowfish($random));
@@ -238,7 +238,7 @@ class PasswordHash {
 				return $hash;
 		}
 
-		if(CRYPT_EXT_DES == 1 && !$this->portable_hashes) {
+		if(CRYPT_EXT_DES == 1 && !$this->portable_hashes){
 			if(strlen($random) < 3)
 				$random = $this->get_random_bytes(3);
 			$hash =
@@ -263,7 +263,7 @@ class PasswordHash {
 
 	function CheckPassword($password, $stored_hash)
 	{
-		if(strlen($password) > 4096) {
+		if(strlen($password) > 4096){
 			return false;
 		}
 

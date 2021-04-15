@@ -26,17 +26,17 @@
  * SOFTWARE.
  */
 
-if (!class_exists('Error', false)){
+if(!class_exists('Error', false)){
     // We can't really avoid making this extend Exception in PHP 5.
     class Error extends Exception
-    {
+   {
         
     }
 }
 
-if (!class_exists('TypeError', false)){
+if(!class_exists('TypeError', false)){
     class TypeError extends Error
-    {
+   {
         
     }
 }

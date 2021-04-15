@@ -285,7 +285,7 @@ function wp_install_maybe_enable_pretty_permalinks(){
 		'/index.php/%year%/%monthnum%/%day%/%postname%/'
 	);
 
-	foreach ((array) $permalink_structures as $permalink_structure){
+	foreach((array) $permalink_structures as $permalink_structure){
 		$wp_rewrite->set_permalink_structure($permalink_structure);
 
 		/*
@@ -528,7 +528,7 @@ function add_clean_index($table, $index){
  */
 function maybe_add_column($table_name, $column_name, $create_ddl){
 	global $wpdb;
-	foreach ($wpdb->get_col("DESC $table_name", 0) as $column){
+	foreach($wpdb->get_col("DESC $table_name", 0) as $column){
 		if($column == $column_name){
 			return true;
 		}
@@ -538,7 +538,7 @@ function maybe_add_column($table_name, $column_name, $create_ddl){
 	$wpdb->query($create_ddl);
 
 	// We cannot directly tell that whether this succeeded!
-	foreach ($wpdb->get_col("DESC $table_name", 0) as $column){
+	foreach($wpdb->get_col("DESC $table_name", 0) as $column){
 		if($column == $column_name){
 			return true;
 		}
@@ -564,7 +564,7 @@ function maybe_convert_table_to_utf8mb4($table){
 		return false;
 	}
 
-	foreach ($results as $column){
+	foreach($results as $column){
 		if($column->Collation){
 			list($charset) = explode('_', $column->Collation);
 			$charset = strtolower($charset);
@@ -602,7 +602,7 @@ function get_alloptions_110(){
 	global $wpdb;
 	$all_options = new stdClass;
 	if($options = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb->options")){
-		foreach ($options as $option){
+		foreach($options as $option){
 			if('siteurl' == $option->option_name || 'home' == $option->option_name || 'category_base' == $option->option_name)
 				$option->option_value = untrailingslashit($option->option_value);
 			$all_options->{$option->option_name} = stripslashes($option->option_value);
@@ -714,7 +714,7 @@ function dbDelta($queries = '', $execute = true){
 	$for_update = array();
 
 	// Create a tablename index for an array ($cqueries) of queries
-	foreach ($queries as $qry){
+	foreach($queries as $qry){
 		if(preg_match("|CREATE TABLE ([^ ]*)|", $qry, $matches)){
 			$cqueries[ trim($matches[1], '`') ] = $qry;
 			$for_update[$matches[1]] = 'Created table '.$matches[1];
@@ -755,7 +755,7 @@ function dbDelta($queries = '', $execute = true){
 	$blob_fields = array('tinyblob', 'blob', 'mediumblob', 'longblob');
 
 	$global_tables = $wpdb->tables('global');
-	foreach ($cqueries as $table => $qry){
+	foreach($cqueries as $table => $qry){
 		// Upgrade global tables only for the main site. Don't upgrade at all if conditions are not optimal.
 		if(in_array($table, $global_tables) && !wp_should_upgrade_global_tables()){
 			unset($cqueries[ $table ], $for_update[ $table ]);
@@ -781,7 +781,7 @@ function dbDelta($queries = '', $execute = true){
 		$flds = explode("\n", $qryline);
 
 		// For every field line specified in the query.
-		foreach ($flds as $fld){
+		foreach($flds as $fld){
 			$fld = trim($fld, " \t\n\r\0\x0B,"); // Default trim characters, plus ','.
 
 			// Extract the field name.
@@ -847,7 +847,7 @@ function dbDelta($queries = '', $execute = true){
 					$index_columns = $index_columns_without_subparts = array_map('trim', explode(',', $index_matches['index_columns']));
 
 					// Normalize columns.
-					foreach ($index_columns as $id => &$index_column){
+					foreach($index_columns as $id => &$index_column){
 						// Extract column name and number of indexed characters (sub_part).
 						preg_match(
 							  '/'
@@ -900,7 +900,7 @@ function dbDelta($queries = '', $execute = true){
 		}
 
 		// For every field in the table.
-		foreach ($tablefields as $tablefield){
+		foreach($tablefields as $tablefield){
 			$tablefield_field_lowercased = strtolower($tablefield->Field);
 			$tablefield_type_lowercased = strtolower($tablefield->Type);
 
@@ -952,7 +952,7 @@ function dbDelta($queries = '', $execute = true){
 		}
 
 		// For every remaining field specified for the table.
-		foreach ($cfields as $fieldname => $fielddef){
+		foreach($cfields as $fieldname => $fielddef){
 			// Push a query line into $cqueries that adds the field to that table.
 			$cqueries[] = "ALTER TABLE {$table} ADD COLUMN $fielddef";
 			$for_update[$table.'.'.$fieldname] = 'Added column '.$table.'.'.$fieldname;
@@ -966,7 +966,7 @@ function dbDelta($queries = '', $execute = true){
 			$index_ary = array();
 
 			// For every index in the table.
-			foreach ($tableindices as $tableindex){
+			foreach($tableindices as $tableindex){
 
 				// Add the index to the index data array.
 				$keyname = strtolower($tableindex->Key_name);
@@ -976,7 +976,7 @@ function dbDelta($queries = '', $execute = true){
 			}
 
 			// For each actual index in the index array.
-			foreach ($index_ary as $index_name => $index_data){
+			foreach($index_ary as $index_name => $index_data){
 
 				// Build a create string to compare to the query.
 				$index_string = '';
@@ -998,7 +998,7 @@ function dbDelta($queries = '', $execute = true){
 				$index_columns = '';
 
 				// For each column in the index.
-				foreach ($index_data['columns'] as $column_data){
+				foreach($index_data['columns'] as $column_data){
 					if($index_columns != ''){
 						$index_columns .= ',';
 					}
@@ -1020,7 +1020,7 @@ function dbDelta($queries = '', $execute = true){
 		}
 
 		// For every remaining index specified for the table.
-		foreach ((array) $indices as $index){
+		foreach((array) $indices as $index){
 			// Push a query line into $cqueries that adds the index to that table.
 			$cqueries[] = "ALTER TABLE {$table} ADD $index";
 			$for_update[] = 'Added index ' . $table . ' ' . $index;
@@ -1032,7 +1032,7 @@ function dbDelta($queries = '', $execute = true){
 
 	$allqueries = array_merge($cqueries, $iqueries);
 	if($execute){
-		foreach ($allqueries as $query){
+		foreach($allqueries as $query){
 			$wpdb->query($query);
 		}
 	}
@@ -1055,7 +1055,7 @@ function dbDelta($queries = '', $execute = true){
 function make_db_current($tables = 'all'){
 	$alterations = dbDelta($tables);
 	echo "<ol>\n";
-	foreach ($alterations as $alteration) echo "<li>$alteration</li>\n";
+	foreach($alterations as $alteration) echo "<li>$alteration</li>\n";
 	echo "</ol>\n";
 }
 
@@ -1112,7 +1112,7 @@ function make_site_theme_from_default($theme_name, $template){
 	if($stylelines){
 		$f = fopen("$site_dir/style.css", 'w');
 
-		foreach ($stylelines as $line){
+		foreach($stylelines as $line){
 			if(strpos($line, 'Theme Name:') !== false) $line = 'Theme Name: ' . $theme_name;
 			elseif(strpos($line, 'Theme URI:') !== false) $line = 'Theme URI: ' . __get_option('url');
 			elseif(strpos($line, 'Description:') !== false) $line = 'Description: Your theme.';
@@ -1243,7 +1243,7 @@ function wp_check_mysql_version(){
 function maybe_disable_automattic_widgets(){
 	$plugins = __get_option('active_plugins');
 
-	foreach ((array) $plugins as $plugin){
+	foreach((array) $plugins as $plugin){
 		if(basename($plugin) == 'widgets.php'){
 			array_splice($plugins, array_search($plugin, $plugins), 1);
 			update_option('active_plugins', $plugins);

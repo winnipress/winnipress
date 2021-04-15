@@ -13,31 +13,31 @@ wp_reset_vars(array('action', 'user_id', 'wp_http_referer' ) );
 
 $user_id = (int) $user_id;
 $current_user = wp_get_current_user();
-if (!defined('IS_PROFILE_PAGE' ) )
+if(!defined('IS_PROFILE_PAGE' ) )
 	define('IS_PROFILE_PAGE', ($user_id == $current_user->ID ) );
 
-if (!$user_id && IS_PROFILE_PAGE )
+if(!$user_id && IS_PROFILE_PAGE )
 	$user_id = $current_user->ID;
-elseif (!$user_id && !IS_PROFILE_PAGE )
+elseif(!$user_id && !IS_PROFILE_PAGE )
 	wp_die(__('Invalid user ID.' ) );
-elseif (!get_userdata($user_id ) )
+elseif(!get_userdata($user_id ) )
 	wp_die(__('Invalid user ID.') );
 
 wp_enqueue_script('user-profile');
 
-if (IS_PROFILE_PAGE ) {
+if(IS_PROFILE_PAGE ) {
 	$title = __('Profile' );
 } else {
 	/* translators: %s: user's display name */
 	$title = __('Edit User %s' );
 }
 
-if (current_user_can('edit_users') && !IS_PROFILE_PAGE )
+if(current_user_can('edit_users') && !IS_PROFILE_PAGE )
 	$submenu_file = 'users.php';
 else
 	$submenu_file = 'profile.php';
 
-if (current_user_can('edit_users') && !is_user_admin() )
+if(current_user_can('edit_users') && !is_user_admin() )
 	$parent_file = 'users.php';
 else
 	$parent_file = 'profile.php';
@@ -82,9 +82,9 @@ $user_can_edit = current_user_can('edit_posts' ) || current_user_can('edit_pages
 
 
 // Execute confirmed email change. See send_confirmation_on_profile_email().
-if (IS_PROFILE_PAGE && isset($_GET[ 'newuseremail' ] ) && $current_user->ID ) {
+if(IS_PROFILE_PAGE && isset($_GET[ 'newuseremail' ] ) && $current_user->ID ) {
 	$new_email = get_user_meta($current_user->ID, '_new_email', true );
-	if ($new_email && hash_equals($new_email[ 'hash' ], $_GET[ 'newuseremail' ] ) ) {
+	if($new_email && hash_equals($new_email[ 'hash' ], $_GET[ 'newuseremail' ] ) ) {
 		$user = new stdClass;
 		$user->ID = $current_user->ID;
 		$user->user_email = esc_html(trim($new_email[ 'newemail' ] ) );
@@ -96,7 +96,7 @@ if (IS_PROFILE_PAGE && isset($_GET[ 'newuseremail' ] ) && $current_user->ID ) {
 	} else {
 		wp_redirect(add_query_arg(array('error' => 'new-email' ), self_admin_url('profile.php' ) ) );
 	}
-} elseif (IS_PROFILE_PAGE && !empty($_GET['dismiss'] ) && $current_user->ID . '_new_email' === $_GET['dismiss'] ) {
+} elseif(IS_PROFILE_PAGE && !empty($_GET['dismiss'] ) && $current_user->ID . '_new_email' === $_GET['dismiss'] ) {
 	check_admin_referer('dismiss-' . $current_user->ID . '_new_email' );
 	delete_user_meta($current_user->ID, '_new_email' );
 	wp_redirect(add_query_arg(array('updated' => 'true'), self_admin_url('profile.php' ) ) );
@@ -108,10 +108,10 @@ case 'update':
 
 check_admin_referer('update-user_' . $user_id);
 
-if (!current_user_can('edit_user', $user_id) )
+if(!current_user_can('edit_user', $user_id) )
 	wp_die(__('Sorry, you are not allowed to edit this user.'));
 
-if (IS_PROFILE_PAGE ) {
+if(IS_PROFILE_PAGE ) {
 	/**
 	 * Fires before the page loads on the 'Your Profile' editing screen.
 	 *
@@ -140,9 +140,9 @@ $errors = edit_user($user_id );
 
 
 
-if (!is_wp_error($errors ) ) {
+if(!is_wp_error($errors ) ) {
 	$redirect = add_query_arg('updated', true, get_edit_user_link($user_id ) );
-	if ($wp_http_referer )
+	if($wp_http_referer )
 		$redirect = add_query_arg('wp_http_referer', urlencode($wp_http_referer), $redirect);
 	wp_redirect($redirect);
 	exit;
@@ -151,7 +151,7 @@ if (!is_wp_error($errors ) ) {
 default:
 $profileuser = get_user_to_edit($user_id);
 
-if (!current_user_can('edit_user', $user_id) )
+if(!current_user_can('edit_user', $user_id) )
 	wp_die(__('Sorry, you are not allowed to edit this user.'));
 
 $title = sprintf($title, $profileuser->display_name );
@@ -160,29 +160,29 @@ $sessions = WP_Session_Tokens::get_instance($profileuser->ID );
 include(ABSPATH . 'wp-admin/admin-header.php');
 ?>
 
-<?php if (!IS_PROFILE_PAGE && is_super_admin($profileuser->ID ) && current_user_can('manage_network_options' ) ) { ?>
+<?php if(!IS_PROFILE_PAGE && is_super_admin($profileuser->ID ) && current_user_can('manage_network_options' ) ) { ?>
 	<div class="notice notice-info"><p><strong><?php _e('Important:'); ?></strong> <?php _e('This user has super admin privileges.'); ?></p></div>
 <?php } ?>
-<?php if (isset($_GET['updated']) ) : ?>
+<?php if(isset($_GET['updated']) ) : ?>
 <div id="message" class="updated notice is-dismissible">
-	<?php if (IS_PROFILE_PAGE ) : ?>
+	<?php if(IS_PROFILE_PAGE ) : ?>
 	<p><strong><?php _e('Profile updated.') ?></strong></p>
 	<?php else: ?>
 	<p><strong><?php _e('User updated.') ?></strong></p>
 	<?php endif; ?>
-	<?php if ($wp_http_referer && false === strpos($wp_http_referer, 'user-new.php' ) && !IS_PROFILE_PAGE ) : ?>
+	<?php if($wp_http_referer && false === strpos($wp_http_referer, 'user-new.php' ) && !IS_PROFILE_PAGE ) : ?>
 	<p><a href="<?php echo esc_url(wp_validate_redirect(esc_url_raw($wp_http_referer ), self_admin_url('users.php' ) ) ); ?>"><?php _e('&larr; Back to Users'); ?></a></p>
 	<?php endif; ?>
 </div>
 <?php endif; ?>
-<?php if (isset($_GET['error'] ) ) : ?>
+<?php if(isset($_GET['error'] ) ) : ?>
 <div class="notice notice-error">
-	<?php if ('new-email' == $_GET['error'] ) : ?>
+	<?php if('new-email' == $_GET['error'] ) : ?>
 	<p><?php _e('Error while saving the new email address. Please try again.' ); ?></p>
 	<?php endif; ?>
 </div>
 <?php endif; ?>
-<?php if (isset($errors ) && is_wp_error($errors ) ) : ?>
+<?php if(isset($errors ) && is_wp_error($errors ) ) : ?>
 <div class="error"><p><?php echo implode("</p>\n<p>", $errors->get_error_messages() ); ?></p></div>
 <?php endif; ?>
 
@@ -192,8 +192,8 @@ echo esc_html($title );
 ?></h1>
 
 <?php
-if (!IS_PROFILE_PAGE ) {
-	if (current_user_can('create_users' ) ) { ?>
+if(!IS_PROFILE_PAGE ) {
+	if(current_user_can('create_users' ) ) { ?>
 		<a href="user-new.php" class="page-title-action"><?php echo esc_html_x('Add New', 'user' ); ?></a>
 	<?php }
 }
@@ -210,7 +210,7 @@ if (!IS_PROFILE_PAGE ) {
 	do_action('user_edit_form_tag' );
 ?>>
 <?php wp_nonce_field('update-user_' . $user_id) ?>
-<?php if ($wp_http_referer ) : ?>
+<?php if($wp_http_referer ) : ?>
 	<input type="hidden" name="wp_http_referer" value="<?php echo esc_url($wp_http_referer); ?>" />
 <?php endif; ?>
 <p>
@@ -221,10 +221,10 @@ if (!IS_PROFILE_PAGE ) {
 <h2><?php _e('Personal Options' ); ?></h2>
 
 <table class="form-table">
-<?php if (!(IS_PROFILE_PAGE && !$user_can_edit ) ) : ?>
+<?php if(!(IS_PROFILE_PAGE && !$user_can_edit ) ) : ?>
 	<tr class="user-rich-editing-wrap">
 		<th scope="row"><?php _e('Visual Editor' ); ?></th>
-		<td><label for="rich_editing"><input name="rich_editing" type="checkbox" id="rich_editing" value="false" <?php if (!empty($profileuser->rich_editing ) ) checked('false', $profileuser->rich_editing ); ?> /> <?php _e('Disable the visual editor when writing' ); ?></label></td>
+		<td><label for="rich_editing"><input name="rich_editing" type="checkbox" id="rich_editing" value="false" <?php if(!empty($profileuser->rich_editing ) ) checked('false', $profileuser->rich_editing ); ?> /> <?php _e('Disable the visual editor when writing' ); ?></label></td>
 	</tr>
 <?php endif; ?>
 <?php
@@ -239,18 +239,18 @@ $show_syntax_highlighting_preference = (
 	user_can($profileuser, 'edit_themes' )
 );
 ?>
-<?php if ($show_syntax_highlighting_preference ) : ?>
+<?php if($show_syntax_highlighting_preference ) : ?>
 	<tr class="user-syntax-highlighting-wrap">
 		<th scope="row"><?php _e('Syntax Highlighting' ); ?></th>
 		<td>
-			<label for="syntax_highlighting"><input name="syntax_highlighting" type="checkbox" id="syntax_highlighting" value="false" <?php if (!empty($profileuser->syntax_highlighting ) ) checked('false', $profileuser->syntax_highlighting ); ?> /> <?php _e('Disable syntax highlighting when editing code' ); ?></label>
+			<label for="syntax_highlighting"><input name="syntax_highlighting" type="checkbox" id="syntax_highlighting" value="false" <?php if(!empty($profileuser->syntax_highlighting ) ) checked('false', $profileuser->syntax_highlighting ); ?> /> <?php _e('Disable syntax highlighting when editing code' ); ?></label>
 		</td>
 	</tr>
 <?php endif; ?>
 
 <?php
 $languages = get_available_languages();
-if ($languages ) : ?>
+if($languages ) : ?>
 <tr class="user-language-wrap">
 	<th scope="row">
 		<?php /* translators: The user language selection field label */ ?>
@@ -260,9 +260,9 @@ if ($languages ) : ?>
 		<?php
 		$user_locale = $profileuser->locale;
 
-		if ('en_US' === $user_locale ) {
+		if('en_US' === $user_locale ) {
 			$user_locale = '';
-		} elseif ('' === $user_locale || !in_array($user_locale, $languages, true ) ) {
+		} elseif('' === $user_locale || !in_array($user_locale, $languages, true ) ) {
 			$user_locale = 'site-default';
 		}
 
@@ -294,7 +294,7 @@ do_action('personal_options', $profileuser );
 
 </table>
 <?php
-	if (IS_PROFILE_PAGE ) {
+	if(IS_PROFILE_PAGE ) {
 		/**
 		 * Fires after the 'Personal Options' settings table on the 'Your Profile' editing screen.
 		 *
@@ -316,7 +316,7 @@ do_action('personal_options', $profileuser );
 		<td><input type="text" name="user_login" id="user_login" value="<?php echo esc_attr($profileuser->user_login); ?>" disabled="disabled" class="regular-text" /> <span class="description"><?php _e('Usernames cannot be changed.'); ?></span></td>
 	</tr>
 
-<?php if (!IS_PROFILE_PAGE && !is_network_admin() ) : ?>
+<?php if(!IS_PROFILE_PAGE && !is_network_admin() ) : ?>
 <tr class="user-role-wrap"><th><label for="role"><?php _e('Role') ?></label></th>
 <td><select name="role" id="role">
 <?php
@@ -328,7 +328,7 @@ $user_role  = reset($user_roles );
 wp_dropdown_roles($user_role);
 
 // print the 'no role' option. Make it selected if the user has no role yet.
-if ($user_role )
+if($user_role )
 	echo '<option value="">' . __('&mdash; No role for this site &mdash;') . '</option>';
 else
 	echo '<option value="" selected="selected">' . __('&mdash; No role for this site &mdash;') . '</option>';
@@ -362,24 +362,24 @@ else
 			$public_display['display_nickname']  = $profileuser->nickname;
 			$public_display['display_username']  = $profileuser->user_login;
 
-			if (!empty($profileuser->first_name) )
+			if(!empty($profileuser->first_name) )
 				$public_display['display_firstname'] = $profileuser->first_name;
 
-			if (!empty($profileuser->last_name) )
+			if(!empty($profileuser->last_name) )
 				$public_display['display_lastname'] = $profileuser->last_name;
 
-			if (!empty($profileuser->first_name) && !empty($profileuser->last_name) ) {
+			if(!empty($profileuser->first_name) && !empty($profileuser->last_name) ) {
 				$public_display['display_firstlast'] = $profileuser->first_name . ' ' . $profileuser->last_name;
 				$public_display['display_lastfirst'] = $profileuser->last_name . ' ' . $profileuser->first_name;
 			}
 
-			if (!in_array($profileuser->display_name, $public_display ) ) // Only add this if it isn't duplicated elsewhere
+			if(!in_array($profileuser->display_name, $public_display ) ) // Only add this if it isn't duplicated elsewhere
 				$public_display = array('display_displayname' => $profileuser->display_name ) + $public_display;
 
 			$public_display = array_map('trim', $public_display );
 			$public_display = array_unique($public_display );
 
-			foreach ($public_display as $id => $item ) {
+			foreach($public_display as $id => $item ) {
 		?>
 			<option <?php selected($profileuser->display_name, $item ); ?>><?php echo $item; ?></option>
 		<?php
@@ -398,7 +398,7 @@ else
 	<td><input type="email" name="email" id="email" value="<?php echo esc_attr($profileuser->user_email ) ?>" class="regular-text ltr" />
 	<?php
 	$new_email = get_user_meta($current_user->ID, '_new_email', true );
-	if ($new_email && $new_email['newemail'] != $current_user->user_email && $profileuser->ID == $current_user->ID ) : ?>
+	if($new_email && $new_email['newemail'] != $current_user->user_email && $profileuser->ID == $current_user->ID ) : ?>
 	<div class="updated inline">
 	<p><?php
 		printf(
@@ -423,7 +423,7 @@ else
 </tr>
 
 <?php
-	foreach (wp_get_user_contact_methods($profileuser ) as $name => $desc ) {
+	foreach(wp_get_user_contact_methods($profileuser ) as $name => $desc ) {
 ?>
 <tr class="user-<?php echo $name; ?>-wrap">
 	<th><label for="<?php echo $name; ?>">
@@ -457,13 +457,13 @@ else
 	<p class="description"><?php _e('Share a little biographical information to fill out your profile. This may be shown publicly.'); ?></p></td>
 </tr>
 
-<?php if (get_option('show_avatars' ) ) : ?>
+<?php if(get_option('show_avatars' ) ) : ?>
 <tr class="user-profile-picture">
 	<th><?php _e('Profile Picture' ); ?></th>
 	<td>
 		<?php echo get_avatar($user_id ); ?>
 		<p class="description"><?php
-			if (IS_PROFILE_PAGE ) {
+			if(IS_PROFILE_PAGE ) {
 				/* translators: %s: Gravatar URL */
 				$description = sprintf(__('You can change your profile picture on <a href="%s">Gravatar</a>.' ),
 					__('https://en.gravatar.com/' )
@@ -498,7 +498,7 @@ else
  * @param bool    $show        Whether to show the password fields. Default true.
  * @param WP_User $profileuser User object for the current user to edit.
  */
-if ($show_password_fields = apply_filters('show_password_fields', true, $profileuser ) ) :
+if($show_password_fields = apply_filters('show_password_fields', true, $profileuser ) ) :
 ?>
 </table>
 
@@ -543,7 +543,7 @@ if ($show_password_fields = apply_filters('show_password_fields', true, $profile
 <?php endif; ?>
 
 <?php
-if (IS_PROFILE_PAGE && count($sessions->get_all() ) === 1 ) : ?>
+if(IS_PROFILE_PAGE && count($sessions->get_all() ) === 1 ) : ?>
 	<tr class="user-sessions-wrap hide-if-no-js">
 		<th><?php _e('Sessions' ); ?></th>
 		<td aria-live="assertive">
@@ -553,7 +553,7 @@ if (IS_PROFILE_PAGE && count($sessions->get_all() ) === 1 ) : ?>
 			</p>
 		</td>
 	</tr>
-<?php elseif (IS_PROFILE_PAGE && count($sessions->get_all() ) > 1 ) : ?>
+<?php elseif(IS_PROFILE_PAGE && count($sessions->get_all() ) > 1 ) : ?>
 	<tr class="user-sessions-wrap hide-if-no-js">
 		<th><?php _e('Sessions' ); ?></th>
 		<td aria-live="assertive">
@@ -563,7 +563,7 @@ if (IS_PROFILE_PAGE && count($sessions->get_all() ) === 1 ) : ?>
 			</p>
 		</td>
 	</tr>
-<?php elseif (!IS_PROFILE_PAGE && $sessions->get_all() ) : ?>
+<?php elseif(!IS_PROFILE_PAGE && $sessions->get_all() ) : ?>
 	<tr class="user-sessions-wrap hide-if-no-js">
 		<th><?php _e('Sessions' ); ?></th>
 		<td>
@@ -581,7 +581,7 @@ if (IS_PROFILE_PAGE && count($sessions->get_all() ) === 1 ) : ?>
 </table>
 
 <?php
-	if (IS_PROFILE_PAGE ) {
+	if(IS_PROFILE_PAGE ) {
 		/**
 		 * Fires after the 'About Yourself' settings table on the 'Your Profile' editing screen.
 		 *
@@ -617,7 +617,7 @@ if (IS_PROFILE_PAGE && count($sessions->get_all() ) === 1 ) : ?>
  * @param bool    $enable      Whether to display the capabilities. Default true.
  * @param WP_User $profileuser The current WP_User object.
  */
-if (count($profileuser->caps ) > count($profileuser->roles )
+if(count($profileuser->caps ) > count($profileuser->roles )
 	&& apply_filters('additional_capabilities_display', true, $profileuser )
 ) : ?>
 <h2><?php _e('Additional Capabilities' ); ?></h2>
@@ -627,9 +627,9 @@ if (count($profileuser->caps ) > count($profileuser->roles )
 	<td>
 <?php
 	$output = '';
-	foreach ($profileuser->caps as $cap => $value ) {
-		if (!$wp_roles->is_role($cap ) ) {
-			if ('' != $output )
+	foreach($profileuser->caps as $cap => $value ) {
+		if(!$wp_roles->is_role($cap ) ) {
+			if('' != $output )
 				$output .= ', ';
 			$output .= $value ? $cap : sprintf(__('Denied: %s' ), $cap );
 		}

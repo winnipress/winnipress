@@ -28,13 +28,13 @@ function _get_list_table( $class, $args = array()) {
 		'WP_Plugins_List_Table' => 'plugins',
 	);
 
-	if ( isset( $core_classes[ $class ])) {
-		foreach ( (array) $core_classes[ $class ] as $required)
+	if( isset( $core_classes[ $class ])) {
+		foreach( (array) $core_classes[ $class ] as $required)
 			require_once( ABSPATH . 'wp-admin/includes/class-wp-' . $required . '-list-table.php');
 
-		if ( isset( $args['screen']))
+		if( isset( $args['screen']))
 			$args['screen'] = convert_to_screen( $args['screen']);
-		elseif ( isset( $GLOBALS['hook_suffix']))
+		elseif( isset( $GLOBALS['hook_suffix']))
 			$args['screen'] = get_current_screen();
 		else
 			$args['screen'] = null;

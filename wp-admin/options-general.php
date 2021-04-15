@@ -10,7 +10,7 @@
 require_once(dirname(__FILE__ ) . '/admin.php' );
 
 
-if (!current_user_can('manage_options' ) )
+if(!current_user_can('manage_options' ) )
 	wp_die(__('Sorry, you are not allowed to manage options for this site.' ) );
 
 $title = __('General Settings');
@@ -52,13 +52,13 @@ include(ABSPATH . 'wp-admin/admin-header.php' );
 
 <tr>
 <th scope="row"><label for="siteurl"><?php _e('WordPress Address (URL)') ?></label></th>
-<td><input name="siteurl" type="url" id="siteurl" value="<?php form_option('siteurl' ); ?>"<?php disabled(defined('WP_SITEURL' ) ); ?> class="regular-text code<?php if (defined('WP_SITEURL' ) ) echo ' disabled' ?>" /></td>
+<td><input name="siteurl" type="url" id="siteurl" value="<?php form_option('siteurl' ); ?>"<?php disabled(defined('WP_SITEURL' ) ); ?> class="regular-text code<?php if(defined('WP_SITEURL' ) ) echo ' disabled' ?>" /></td>
 </tr>
 
 <tr>
 <th scope="row"><label for="home"><?php _e('Site Address (URL)') ?></label></th>
-<td><input name="home" type="url" id="home" aria-describedby="home-description" value="<?php form_option('home' ); ?>"<?php disabled(defined('WP_HOME' ) ); ?> class="regular-text code<?php if (defined('WP_HOME' ) ) echo ' disabled' ?>" />
-<?php if (!defined('WP_HOME' ) ) : ?>
+<td><input name="home" type="url" id="home" aria-describedby="home-description" value="<?php form_option('home' ); ?>"<?php disabled(defined('WP_HOME' ) ); ?> class="regular-text code<?php if(defined('WP_HOME' ) ) echo ' disabled' ?>" />
+<?php if(!defined('WP_HOME' ) ) : ?>
 <p class="description" id="home-description"><?php
 	printf(
 		/* translators: %s: Codex URL */
@@ -77,7 +77,7 @@ include(ABSPATH . 'wp-admin/admin-header.php' );
 <p class="description" id="new-admin-email-description"><?php _e('This address is used for admin purposes. If you change this we will send you an email at your new address to confirm it. <strong>The new address will not become active until confirmed.</strong>' ); ?></p>
 <?php
 $new_admin_email = get_option('new_admin_email' );
-if ($new_admin_email && $new_admin_email != get_option('admin_email' ) ) : ?>
+if($new_admin_email && $new_admin_email != get_option('admin_email' ) ) : ?>
 	<div class="updated inline">
 	<p><?php
 		printf(
@@ -121,14 +121,14 @@ $tzstring = get_option('timezone_string');
 $check_zone_info = true;
 
 // Remove old Etc mappings. Fallback to gmt_offset.
-if (false !== strpos($tzstring,'Etc/GMT') )
+if(false !== strpos($tzstring,'Etc/GMT') )
 	$tzstring = '';
 
-if (empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
+if(empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
 	$check_zone_info = false;
-	if (0 == $current_offset )
+	if(0 == $current_offset )
 		$tzstring = 'UTC+0';
-	elseif ($current_offset < 0)
+	elseif($current_offset < 0)
 		$tzstring = 'UTC' . $current_offset;
 	else
 		$tzstring = 'UTC+' . $current_offset;
@@ -152,7 +152,7 @@ if (empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
 			'<code>' . date_i18n($timezone_format, false, true ) . '</code>'
 		);
 	?></span>
-<?php if (get_option('timezone_string' ) || !empty($current_offset ) ) : ?>
+<?php if(get_option('timezone_string' ) || !empty($current_offset ) ) : ?>
 	<span id="local-time"><?php
 		/* translators: %s: local time */
 		printf(__('Local time is %s.' ),
@@ -162,14 +162,14 @@ if (empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
 <?php endif; ?>
 </p>
 
-<?php if ($check_zone_info && $tzstring ) : ?>
+<?php if($check_zone_info && $tzstring ) : ?>
 <p class="timezone-info">
 <span>
 	<?php
 	// Set TZ so localtime works.
 	date_default_timezone_set($tzstring);
 	$now = localtime(time(), true);
-	if ($now['tm_isdst'] )
+	if($now['tm_isdst'] )
 		_e('This timezone is currently in daylight saving time.');
 	else
 		_e('This timezone is currently in standard time.');
@@ -178,19 +178,19 @@ if (empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
 	<?php
 	$allowed_zones = timezone_identifiers_list();
 
-	if (in_array($tzstring, $allowed_zones) ) {
+	if(in_array($tzstring, $allowed_zones) ) {
 		$found = false;
 		$date_time_zone_selected = new DateTimeZone($tzstring);
 		$tz_offset = timezone_offset_get($date_time_zone_selected, date_create());
 		$right_now = time();
-		foreach (timezone_transitions_get($date_time_zone_selected) as $tr) {
-			if ($tr['ts'] > $right_now ) {
+		foreach(timezone_transitions_get($date_time_zone_selected) as $tr) {
+			if($tr['ts'] > $right_now ) {
 			    $found = true;
 				break;
 			}
 		}
 
-		if ($found ) {
+		if($found ) {
 			echo ' ';
 			$message = $tr['isdst'] ?
 				/* translators: %s: date and time  */
@@ -234,9 +234,9 @@ if (empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
 
 	$custom = true;
 
-	foreach ($date_formats as $format ) {
+	foreach($date_formats as $format ) {
 		echo "\t<label><input type='radio' name='date_format' value='" . esc_attr($format ) . "'";
-		if (get_option('date_format') === $format ) { // checked() uses "==" rather than "==="
+		if(get_option('date_format') === $format ) { // checked() uses "==" rather than "==="
 			echo " checked='checked'";
 			$custom = false;
 		}
@@ -271,9 +271,9 @@ if (empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
 
 	$custom = true;
 
-	foreach ($time_formats as $format ) {
+	foreach($time_formats as $format ) {
 		echo "\t<label><input type='radio' name='time_format' value='" . esc_attr($format ) . "'";
-		if (get_option('time_format') === $format ) { // checked() uses "==" rather than "==="
+		if(get_option('time_format') === $format ) { // checked() uses "==" rather than "==="
 			echo " checked='checked'";
 			$custom = false;
 		}

@@ -258,7 +258,7 @@ function wp_cache_add_non_persistent_groups($groups){
  *
  * @since 2.0.0
  */
-class WP_Object_Cache {
+class WP_Object_Cache{
 
 	/**
 	 * Holds the cached objects.
@@ -372,17 +372,17 @@ class WP_Object_Cache {
 	 * @return bool False if cache key and group already exist, true on success
 	 */
 	public function add($key, $data, $group = 'default', $expire = 0){
-		if (wp_suspend_cache_addition())
+		if(wp_suspend_cache_addition())
 			return false;
 
-		if (empty($group))
+		if(empty($group))
 			$group = 'default';
 
 		$id = $key;
-		if ($this->multisite && !isset($this->global_groups[ $group ]))
+		if($this->multisite && !isset($this->global_groups[ $group ]))
 			$id = $this->blog_prefix . $key;
 
-		if ($this->_exists($id, $group))
+		if($this->_exists($id, $group))
 			return false;
 
 		return $this->set($key, $data, $group, (int) $expire);
@@ -413,23 +413,23 @@ class WP_Object_Cache {
 	 * @return false|int False on failure, the item's new value on success.
 	 */
 	public function decr($key, $offset = 1, $group = 'default'){
-		if (empty($group))
+		if(empty($group))
 			$group = 'default';
 
-		if ($this->multisite && !isset($this->global_groups[ $group ]))
+		if($this->multisite && !isset($this->global_groups[ $group ]))
 			$key = $this->blog_prefix . $key;
 
-		if (!$this->_exists($key, $group))
+		if(!$this->_exists($key, $group))
 			return false;
 
-		if (!is_numeric($this->cache[ $group ][ $key ]))
+		if(!is_numeric($this->cache[ $group ][ $key ]))
 			$this->cache[ $group ][ $key ] = 0;
 
 		$offset = (int) $offset;
 
 		$this->cache[ $group ][ $key ] -= $offset;
 
-		if ($this->cache[ $group ][ $key ] < 0)
+		if($this->cache[ $group ][ $key ] < 0)
 			$this->cache[ $group ][ $key ] = 0;
 
 		return $this->cache[ $group ][ $key ];
@@ -448,13 +448,13 @@ class WP_Object_Cache {
 	 * @return bool False if the contents weren't deleted and true on success.
 	 */
 	public function delete($key, $group = 'default', $deprecated = false){
-		if (empty($group))
+		if(empty($group))
 			$group = 'default';
 
-		if ($this->multisite && !isset($this->global_groups[ $group ]))
+		if($this->multisite && !isset($this->global_groups[ $group ]))
 			$key = $this->blog_prefix . $key;
 
-		if (!$this->_exists($key, $group))
+		if(!$this->_exists($key, $group))
 			return false;
 
 		unset($this->cache[$group][$key]);
@@ -494,16 +494,16 @@ class WP_Object_Cache {
 	 * @return false|mixed False on failure to retrieve contents or the cache contents on success.
 	 */
 	public function get($key, $group = 'default', $force = false, &$found = null){
-		if (empty($group))
+		if(empty($group))
 			$group = 'default';
 
-		if ($this->multisite && !isset($this->global_groups[ $group ]))
+		if($this->multisite && !isset($this->global_groups[ $group ]))
 			$key = $this->blog_prefix . $key;
 
-		if ($this->_exists($key, $group)){
+		if($this->_exists($key, $group)){
 			$found = true;
 			$this->cache_hits += 1;
-			if (is_object($this->cache[$group][$key]))
+			if(is_object($this->cache[$group][$key]))
 				return clone $this->cache[$group][$key];
 			else
 				return $this->cache[$group][$key];
@@ -525,23 +525,23 @@ class WP_Object_Cache {
 	 * @return false|int False on failure, the item's new value on success.
 	 */
 	public function incr($key, $offset = 1, $group = 'default'){
-		if (empty($group))
+		if(empty($group))
 			$group = 'default';
 
-		if ($this->multisite && !isset($this->global_groups[ $group ]))
+		if($this->multisite && !isset($this->global_groups[ $group ]))
 			$key = $this->blog_prefix . $key;
 
-		if (!$this->_exists($key, $group))
+		if(!$this->_exists($key, $group))
 			return false;
 
-		if (!is_numeric($this->cache[ $group ][ $key ]))
+		if(!is_numeric($this->cache[ $group ][ $key ]))
 			$this->cache[ $group ][ $key ] = 0;
 
 		$offset = (int) $offset;
 
 		$this->cache[ $group ][ $key ] += $offset;
 
-		if ($this->cache[ $group ][ $key ] < 0)
+		if($this->cache[ $group ][ $key ] < 0)
 			$this->cache[ $group ][ $key ] = 0;
 
 		return $this->cache[ $group ][ $key ];
@@ -561,14 +561,14 @@ class WP_Object_Cache {
 	 * @return bool False if not exists, true if contents were replaced.
 	 */
 	public function replace($key, $data, $group = 'default', $expire = 0){
-		if (empty($group))
+		if(empty($group))
 			$group = 'default';
 
 		$id = $key;
-		if ($this->multisite && !isset($this->global_groups[ $group ]))
+		if($this->multisite && !isset($this->global_groups[ $group ]))
 			$id = $this->blog_prefix . $key;
 
-		if (!$this->_exists($id, $group))
+		if(!$this->_exists($id, $group))
 			return false;
 
 		return $this->set($key, $data, $group, (int) $expire);
@@ -595,13 +595,13 @@ class WP_Object_Cache {
 	 * @return true Always returns true.
 	 */
 	public function set($key, $data, $group = 'default', $expire = 0){
-		if (empty($group))
+		if(empty($group))
 			$group = 'default';
 
-		if ($this->multisite && !isset($this->global_groups[ $group ]))
+		if($this->multisite && !isset($this->global_groups[ $group ]))
 			$key = $this->blog_prefix . $key;
 
-		if (is_object($data))
+		if(is_object($data))
 			$data = clone $data;
 
 		$this->cache[$group][$key] = $data;
@@ -618,11 +618,11 @@ class WP_Object_Cache {
 	 */
 	public function stats(){
 		echo "<p>";
-		echo "<strong>Cache Hits:</strong> {$this->cache_hits}<br />";
-		echo "<strong>Cache Misses:</strong> {$this->cache_misses}<br />";
+		echo "<strong>Cache Hits:</strong>{$this->cache_hits}<br />";
+		echo "<strong>Cache Misses:</strong>{$this->cache_misses}<br />";
 		echo "</p>";
 		echo '<ul>';
-		foreach ($this->cache as $group => $cache){
+		foreach($this->cache as $group => $cache){
 			echo '<li><strong>Group:</strong> ' . esc_html($group) . ' - (' . number_format(strlen(serialize($cache)) / KB_IN_BYTES, 2) . 'k)</li>';
 		}
 		echo '</ul>';

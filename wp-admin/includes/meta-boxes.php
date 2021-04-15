@@ -37,19 +37,19 @@ function post_submit_meta_box( $post, $args = array()) {
 
 <div id="minor-publishing-actions">
 <div id="save-action">
-<?php if ( 'publish' != $post->post_status && 'future' != $post->post_status && 'pending' != $post->post_status) { ?>
-<input <?php if ( 'private' == $post->post_status) { ?>style="display:none"<?php } ?> type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save Draft'); ?>" class="button" />
+<?php if( 'publish' != $post->post_status && 'future' != $post->post_status && 'pending' != $post->post_status) { ?>
+<input <?php if( 'private' == $post->post_status) { ?>style="display:none"<?php } ?> type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save Draft'); ?>" class="button" />
 <span class="spinner"></span>
-<?php } elseif ( 'pending' == $post->post_status && $can_publish) { ?>
+<?php } elseif( 'pending' == $post->post_status && $can_publish) { ?>
 <input type="submit" name="save" id="save-post" value="<?php esc_attr_e('Save as Pending'); ?>" class="button" />
 <span class="spinner"></span>
 <?php } ?>
 </div>
-<?php if ( is_post_type_viewable( $post_type_object)) : ?>
+<?php if( is_post_type_viewable( $post_type_object)) : ?>
 <div id="preview-action">
 <?php
 $preview_link = esc_url( get_preview_post_link( $post));
-if ( 'publish' == $post->post_status) {
+if( 'publish' == $post->post_status) {
 	$preview_button_text = __( 'Preview Changes');
 } else {
 	$preview_button_text = __( 'Preview');
@@ -103,22 +103,22 @@ switch ( $post->post_status) {
 }
 ?>
 </span>
-<?php if ( 'publish' == $post->post_status || 'private' == $post->post_status || $can_publish) { ?>
-<a href="#post_status" <?php if ( 'private' == $post->post_status) { ?>style="display:none;" <?php } ?>class="edit-post-status hide-if-no-js" role="button"><span aria-hidden="true"><?php _e( 'Edit'); ?></span> <span class="screen-reader-text"><?php _e( 'Edit status'); ?></span></a>
+<?php if( 'publish' == $post->post_status || 'private' == $post->post_status || $can_publish) { ?>
+<a href="#post_status" <?php if( 'private' == $post->post_status) { ?>style="display:none;" <?php } ?>class="edit-post-status hide-if-no-js" role="button"><span aria-hidden="true"><?php _e( 'Edit'); ?></span> <span class="screen-reader-text"><?php _e( 'Edit status'); ?></span></a>
 
 <div id="post-status-select" class="hide-if-js">
 <input type="hidden" name="hidden_post_status" id="hidden_post_status" value="<?php echo esc_attr( ('auto-draft' == $post->post_status) ? 'draft' : $post->post_status); ?>" />
 <label for="post_status" class="screen-reader-text"><?php _e( 'Set status') ?></label>
 <select name="post_status" id="post_status">
-<?php if ( 'publish' == $post->post_status) : ?>
+<?php if( 'publish' == $post->post_status) : ?>
 <option<?php selected( $post->post_status, 'publish'); ?> value='publish'><?php _e('Published') ?></option>
-<?php elseif ( 'private' == $post->post_status) : ?>
+<?php elseif( 'private' == $post->post_status) : ?>
 <option<?php selected( $post->post_status, 'private'); ?> value='publish'><?php _e('Privately Published') ?></option>
-<?php elseif ( 'future' == $post->post_status) : ?>
+<?php elseif( 'future' == $post->post_status) : ?>
 <option<?php selected( $post->post_status, 'future'); ?> value='future'><?php _e('Scheduled') ?></option>
 <?php endif; ?>
 <option<?php selected( $post->post_status, 'pending'); ?> value='pending'><?php _e('Pending Review') ?></option>
-<?php if ( 'auto-draft' == $post->post_status) : ?>
+<?php if( 'auto-draft' == $post->post_status) : ?>
 <option<?php selected( $post->post_status, 'auto-draft'); ?> value='draft'><?php _e('Draft') ?></option>
 <?php else : ?>
 <option<?php selected( $post->post_status, 'draft'); ?> value='draft'><?php _e('Draft') ?></option>
@@ -134,14 +134,14 @@ switch ( $post->post_status) {
 <div class="misc-pub-section misc-pub-visibility" id="visibility">
 <?php _e('Visibility:'); ?> <span id="post-visibility-display"><?php
 
-if ( 'private' == $post->post_status) {
+if( 'private' == $post->post_status) {
 	$post->post_password = '';
 	$visibility = 'private';
 	$visibility_trans = __('Private');
-} elseif ( !empty( $post->post_password)) {
+} elseif( !empty( $post->post_password)) {
 	$visibility = 'password';
 	$visibility_trans = __('Password protected');
-} elseif ( $post_type == 'post' && is_sticky( $post->ID)) {
+} elseif( $post_type == 'post' && is_sticky( $post->ID)) {
 	$visibility = 'public';
 	$visibility_trans = __('Public, Sticky');
 } else {
@@ -150,17 +150,17 @@ if ( 'private' == $post->post_status) {
 }
 
 echo esc_html( $visibility_trans); ?></span>
-<?php if ( $can_publish) { ?>
+<?php if( $can_publish) { ?>
 <a href="#visibility" class="edit-visibility hide-if-no-js" role="button"><span aria-hidden="true"><?php _e( 'Edit'); ?></span> <span class="screen-reader-text"><?php _e( 'Edit visibility'); ?></span></a>
 
 <div id="post-visibility-select" class="hide-if-js">
 <input type="hidden" name="hidden_post_password" id="hidden-post-password" value="<?php echo esc_attr($post->post_password); ?>" />
-<?php if ($post_type == 'post'): ?>
+<?php if($post_type == 'post'): ?>
 <input type="checkbox" style="display:none" name="hidden_post_sticky" id="hidden-post-sticky" value="sticky" <?php checked(is_sticky($post->ID)); ?> />
 <?php endif; ?>
 <input type="hidden" name="hidden_post_visibility" id="hidden-post-visibility" value="<?php echo esc_attr( $visibility); ?>" />
 <input type="radio" name="visibility" id="visibility-radio-public" value="public" <?php checked( $visibility, 'public'); ?> /> <label for="visibility-radio-public" class="selectit"><?php _e('Public'); ?></label><br />
-<?php if ( $post_type == 'post' && current_user_can( 'edit_others_posts')) : ?>
+<?php if( $post_type == 'post' && current_user_can( 'edit_others_posts')) : ?>
 <span id="sticky-span"><input id="sticky" name="sticky" type="checkbox" value="sticky" <?php checked( is_sticky( $post->ID)); ?> /> <label for="sticky" class="selectit"><?php _e( 'Stick this post to the front page'); ?></label><br /></span>
 <?php endif; ?>
 <input type="radio" name="visibility" id="visibility-radio-password" value="password" <?php checked( $visibility, 'password'); ?> /> <label for="visibility-radio-password" class="selectit"><?php _e('Password protected'); ?></label><br />
@@ -179,16 +179,16 @@ echo esc_html( $visibility_trans); ?></span>
 <?php
 /* translators: Publish box date format, see https://secure.php.net/date */
 $datef = __( 'M j, Y @ H:i');
-if ( 0 != $post->ID) {
-	if ( 'future' == $post->post_status) { // scheduled for publishing at a future date
+if( 0 != $post->ID) {
+	if( 'future' == $post->post_status) { // scheduled for publishing at a future date
 		/* translators: Post date information. 1: Date on which the post is currently scheduled to be published */
 		$stamp = __('Scheduled for: <b>%1$s</b>');
-	} elseif ( 'publish' == $post->post_status || 'private' == $post->post_status) { // already published
+	} elseif( 'publish' == $post->post_status || 'private' == $post->post_status) { // already published
 		/* translators: Post date information. 1: Date on which the post was published */
 		$stamp = __('Published on: <b>%1$s</b>');
-	} elseif ( '0000-00-00 00:00:00' == $post->post_date_gmt) { // draft, 1 or more saves, no date specified
+	} elseif( '0000-00-00 00:00:00' == $post->post_date_gmt) { // draft, 1 or more saves, no date specified
 		$stamp = __('Publish <b>immediately</b>');
-	} elseif ( time() < strtotime( $post->post_date_gmt . ' +0000')) { // draft, 1 or more saves, future date specified
+	} elseif( time() < strtotime( $post->post_date_gmt . ' +0000')) { // draft, 1 or more saves, future date specified
 		/* translators: Post date information. 1: Date on which the post is to be published */
 		$stamp = __('Schedule for: <b>%1$s</b>');
 	} else { // draft, 1 or more saves, date specified
@@ -203,7 +203,7 @@ if ( 0 != $post->ID) {
 
 
 
-if ( $can_publish) : // Contributors don't get to choose the date of publish ?>
+if( $can_publish) : // Contributors don't get to choose the date of publish ?>
 <div class="misc-pub-section curtime misc-pub-curtime">
 	<span id="timestamp">
 	<?php printf($stamp, $date); ?></span>
@@ -215,7 +215,7 @@ if ( $can_publish) : // Contributors don't get to choose the date of publish ?>
 </div><?php // /misc-pub-section ?>
 <?php endif; ?>
 
-<?php if ( 'draft' === $post->post_status && get_post_meta( $post->ID, '_customize_changeset_uuid', true)) : ?>
+<?php if( 'draft' === $post->post_status && get_post_meta( $post->ID, '_customize_changeset_uuid', true)) : ?>
 	<div class="notice notice-info notice-alt inline">
 		<p>
 			<?php
@@ -265,8 +265,8 @@ do_action( 'post_submitbox_start', $post);
 ?>
 <div id="delete-action">
 <?php
-if ( current_user_can( "delete_post", $post->ID)) {
-	if ( !EMPTY_TRASH_DAYS)
+if( current_user_can( "delete_post", $post->ID)) {
+	if( !EMPTY_TRASH_DAYS)
 		$delete_text = __('Delete Permanently');
 	else
 		$delete_text = __('Move to Trash');
@@ -278,9 +278,9 @@ if ( current_user_can( "delete_post", $post->ID)) {
 <div id="publishing-action">
 <span class="spinner"></span>
 <?php
-if ( !in_array( $post->post_status, array('publish', 'future', 'private')) || 0 == $post->ID) {
-	if ( $can_publish) :
-		if ( !empty($post->post_date_gmt) && time() < strtotime( $post->post_date_gmt . ' +0000')) : ?>
+if( !in_array( $post->post_status, array('publish', 'future', 'private')) || 0 == $post->ID) {
+	if( $can_publish) :
+		if( !empty($post->post_date_gmt) && time() < strtotime( $post->post_date_gmt . ' +0000')) : ?>
 		<input name="original_publish" type="hidden" id="original_publish" value="<?php echo esc_attr_x( 'Schedule', 'post action/button label'); ?>" />
 		<?php submit_button( _x( 'Schedule', 'post action/button label'), 'primary large', 'publish', false); ?>
 <?php	else : ?>
@@ -359,8 +359,8 @@ function attachment_submit_meta_box( $post) {
 <div id="major-publishing-actions">
 	<div id="delete-action">
 	<?php
-	if ( current_user_can( 'delete_post', $post->ID))
-		if ( EMPTY_TRASH_DAYS && MEDIA_TRASH) {
+	if( current_user_can( 'delete_post', $post->ID))
+		if( EMPTY_TRASH_DAYS && MEDIA_TRASH) {
 			echo "<a class='submitdelete deletion' href='" . get_delete_post_link( $post->ID) . "'>" . _x( 'Trash', 'verb') . "</a>";
 		} else {
 			$delete_ays = !MEDIA_TRASH ? " onclick='return showNotice.warn();'" : '';
@@ -398,22 +398,22 @@ function attachment_submit_meta_box( $post) {
  * }
  */
 function post_format_meta_box( $post, $box) {
-	if ( current_theme_supports( 'post-formats') && post_type_supports( $post->post_type, 'post-formats')) :
+	if( current_theme_supports( 'post-formats') && post_type_supports( $post->post_type, 'post-formats')) :
 	$post_formats = get_theme_support( 'post-formats');
 
-	if ( is_array( $post_formats[0])) :
+	if( is_array( $post_formats[0])) :
 		$post_format = get_post_format( $post->ID);
-		if ( !$post_format)
+		if( !$post_format)
 			$post_format = '0';
 		// Add in the current one if it isn't there yet, in case the current theme doesn't support it
-		if ( $post_format && !in_array( $post_format, $post_formats[0]))
+		if( $post_format && !in_array( $post_format, $post_formats[0]))
 			$post_formats[0][] = $post_format;
 	?>
 	<div id="post-formats-select">
 		<fieldset>
 			<legend class="screen-reader-text"><?php _e( 'Post Formats'); ?></legend>
 			<input type="radio" name="post_format" class="post-format" id="post-format-0" value="0" <?php checked( $post_format, '0'); ?> /> <label for="post-format-0" class="post-format-icon post-format-standard"><?php echo get_post_format_string( 'standard'); ?></label>
-			<?php foreach ( $post_formats[0] as $format) : ?>
+			<?php foreach( $post_formats[0] as $format) : ?>
 			<br /><input type="radio" name="post_format" class="post-format" id="post-format-<?php echo esc_attr( $format); ?>" value="<?php echo esc_attr( $format); ?>" <?php checked( $post_format, $format); ?> /> <label for="post-format-<?php echo esc_attr( $format); ?>" class="post-format-icon post-format-<?php echo esc_attr( $format); ?>"><?php echo esc_html( get_post_format_string( $format)); ?></label>
 			<?php endforeach; ?>
 		</fieldset>
@@ -444,7 +444,7 @@ function post_format_meta_box( $post, $box) {
  */
 function post_tags_meta_box( $post, $box) {
 	$defaults = array( 'taxonomy' => 'post_tag');
-	if ( !isset( $box['args']) || !is_array( $box['args'])) {
+	if( !isset( $box['args']) || !is_array( $box['args'])) {
 		$args = array();
 	} else {
 		$args = $box['args'];
@@ -455,7 +455,7 @@ function post_tags_meta_box( $post, $box) {
 	$user_can_assign_terms = current_user_can( $taxonomy->cap->assign_terms);
 	$comma = _x( ',', 'tag delimiter');
 	$terms_to_edit = get_terms_to_edit( $post->ID, $tax_name);
-	if ( !is_string( $terms_to_edit)) {
+	if( !is_string( $terms_to_edit)) {
 		$terms_to_edit = '';
 	}
 ?>
@@ -465,20 +465,20 @@ function post_tags_meta_box( $post, $box) {
 		<label for="tax-input-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_or_remove_items; ?></label>
 		<p><textarea name="<?php echo "tax_input[$tax_name]"; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled( !$user_can_assign_terms); ?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace( ',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr() ?></textarea></p>
 	</div>
- 	<?php if ( $user_can_assign_terms) : ?>
+ 	<?php if( $user_can_assign_terms) : ?>
 	<div class="ajaxtag hide-if-no-js">
 		<label class="screen-reader-text" for="new-tag-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_new_item; ?></label>
 		<p><input data-wp-taxonomy="<?php echo $tax_name; ?>" type="text" id="new-tag-<?php echo $tax_name; ?>" name="newtag[<?php echo $tax_name; ?>]" class="newtag form-input-tip" size="16" autocomplete="off" aria-describedby="new-tag-<?php echo $tax_name; ?>-desc" value="" />
 		<input type="button" class="button tagadd" value="<?php esc_attr_e('Add'); ?>" /></p>
 	</div>
 	<p class="howto" id="new-tag-<?php echo $tax_name; ?>-desc"><?php echo $taxonomy->labels->separate_items_with_commas; ?></p>
-	<?php elseif ( empty( $terms_to_edit)): ?>
+	<?php elseif( empty( $terms_to_edit)): ?>
 		<p><?php echo $taxonomy->labels->no_terms; ?></p>
 	<?php endif; ?>
 	</div>
 	<ul class="tagchecklist" role="list"></ul>
 </div>
-<?php if ( $user_can_assign_terms) : ?>
+<?php if( $user_can_assign_terms) : ?>
 <p class="hide-if-no-js"><button type="button" class="button-link tagcloud-link" id="link-<?php echo $tax_name; ?>" aria-expanded="false"><?php echo $taxonomy->labels->choose_from_most_used; ?></button></p>
 <?php endif; ?>
 <?php
@@ -507,7 +507,7 @@ function post_tags_meta_box( $post, $box) {
  */
 function post_categories_meta_box( $post, $box) {
 	$defaults = array( 'taxonomy' => 'category');
-	if ( !isset( $box['args']) || !is_array( $box['args'])) {
+	if( !isset( $box['args']) || !is_array( $box['args'])) {
 		$args = array();
 	} else {
 		$args = $box['args'];
@@ -537,7 +537,7 @@ function post_categories_meta_box( $post, $box) {
 				<?php wp_terms_checklist( $post->ID, array( 'taxonomy' => $tax_name, 'popular_cats' => $popular_ids)); ?>
 			</ul>
 		</div>
-	<?php if ( current_user_can( $taxonomy->cap->edit_terms)) : ?>
+	<?php if( current_user_can( $taxonomy->cap->edit_terms)) : ?>
 			<div id="<?php echo $tax_name; ?>-adder" class="wp-hidden-children">
 				<a id="<?php echo $tax_name; ?>-add-toggle" href="#<?php echo $tax_name; ?>-add" class="hide-if-no-js taxonomy-add-new">
 					<?php
@@ -633,8 +633,8 @@ function post_custom_meta_box($post) {
 <div id="ajax-response"></div>
 <?php
 $metadata = has_meta($post->ID);
-foreach ( $metadata as $key => $value) {
-	if ( is_protected_meta( $metadata[ $key ][ 'meta_key' ], 'post') || !current_user_can( 'edit_post_meta', $post->ID, $metadata[ $key ][ 'meta_key' ]))
+foreach( $metadata as $key => $value) {
+	if( is_protected_meta( $metadata[ $key ][ 'meta_key' ], 'post') || !current_user_can( 'edit_post_meta', $post->ID, $metadata[ $key ][ 'meta_key' ]))
 		unset( $metadata[ $key ]);
 }
 list_meta( $metadata);
@@ -701,7 +701,7 @@ function post_author_meta_box($post) {
  * @param object $post
  */
 function page_attributes_meta_box($post) {
-	if ( is_post_type_hierarchical( $post->post_type)) :
+	if( is_post_type_hierarchical( $post->post_type)) :
 		$dropdown_args = array(
 			'post_type'        => $post->post_type,
 			'exclude_tree'     => $post->ID,
@@ -724,7 +724,7 @@ function page_attributes_meta_box($post) {
 		 */
 		$dropdown_args = apply_filters( 'page_attributes_dropdown_pages_args', $dropdown_args, $post);
 		$pages = wp_dropdown_pages( $dropdown_args);
-		if ( !empty($pages)) :
+		if( !empty($pages)) :
 ?>
 <p class="post-attributes-label-wrapper"><label class="post-attributes-label" for="parent_id"><?php _e( 'Parent'); ?></label></p>
 <?php echo $pages; ?>
@@ -732,7 +732,7 @@ function page_attributes_meta_box($post) {
 		endif; // end empty pages check
 	endif;  // end hierarchical check.
 
-	if ( count( get_page_templates( $post)) > 0 && get_option( 'page_for_posts') != $post->ID) :
+	if( count( get_page_templates( $post)) > 0 && get_option( 'page_for_posts') != $post->ID) :
 		$template = !empty( $post->page_template) ? $post->page_template : false;
 		?>
 <p class="post-attributes-label-wrapper"><label class="post-attributes-label" for="page_template"><?php _e( 'Template'); ?></label><?php
@@ -764,7 +764,7 @@ $default_title = apply_filters( 'default_page_template_title',  __( 'Default Tem
 <?php page_template_dropdown( $template, $post->post_type); ?>
 </select>
 <?php endif; ?>
-<?php if ( post_type_supports( $post->post_type, 'page-attributes')) : ?>
+<?php if( post_type_supports( $post->post_type, 'page-attributes')) : ?>
 <p class="post-attributes-label-wrapper"><label class="post-attributes-label" for="menu_order"><?php _e( 'Order'); ?></label></p>
 <input name="menu_order" type="text" size="4" id="menu_order" value="<?php echo esc_attr( $post->menu_order); ?>" />
 <?php
@@ -777,7 +777,7 @@ $default_title = apply_filters( 'default_page_template_title',  __( 'Default Tem
  */
 do_action( 'page_attributes_misc_attributes', $post);
 ?>
-<?php if ( 'page' == $post->post_type && get_current_screen()->get_help_tabs()) : ?>
+<?php if( 'page' == $post->post_type && get_current_screen()->get_help_tabs()) : ?>
 <p><?php _e( 'Need help? Use the Help tab above the screen title.'); ?></p>
 <?php endif;
 	endif;
@@ -805,7 +805,7 @@ function link_submit_meta_box($link) {
 
 <div id="minor-publishing-actions">
 <div id="preview-action">
-<?php if ( !empty($link->link_id)) { ?>
+<?php if( !empty($link->link_id)) { ?>
 	<a class="preview button" href="<?php echo $link->link_url; ?>" target="_blank"><?php _e('Visit Link'); ?></a>
 <?php } ?>
 </div>
@@ -827,13 +827,13 @@ do_action( 'post_submitbox_start', null);
 ?>
 <div id="delete-action">
 <?php
-if ( !empty($_GET['action']) && 'edit' == $_GET['action'] && current_user_can('manage_links')) { ?>
-	<a class="submitdelete deletion" href="<?php echo wp_nonce_url("link.php?action=delete&amp;link_id=$link->link_id", 'delete-bookmark_' . $link->link_id); ?>" onclick="if ( confirm('<?php echo esc_js(sprintf(__("You are about to delete this link '%s'\n  'Cancel' to stop, 'OK' to delete."), $link->link_name)); ?>')) {return true;}return false;"><?php _e('Delete'); ?></a>
+if( !empty($_GET['action']) && 'edit' == $_GET['action'] && current_user_can('manage_links')) { ?>
+	<a class="submitdelete deletion" href="<?php echo wp_nonce_url("link.php?action=delete&amp;link_id=$link->link_id", 'delete-bookmark_' . $link->link_id); ?>" onclick="if( confirm('<?php echo esc_js(sprintf(__("You are about to delete this link '%s'\n  'Cancel' to stop, 'OK' to delete."), $link->link_name)); ?>')) {return true;}return false;"><?php _e('Delete'); ?></a>
 <?php } ?>
 </div>
 
 <div id="publishing-action">
-<?php if ( !empty($link->link_id)) { ?>
+<?php if( !empty($link->link_id)) { ?>
 	<input name="save" type="submit" class="button button-primary button-large" id="publish" value="<?php esc_attr_e( 'Update Link') ?>" />
 <?php } else { ?>
 	<input name="save" type="submit" class="button button-primary button-large" id="publish" value="<?php esc_attr_e( 'Add Link') ?>" />
@@ -872,7 +872,7 @@ function link_categories_meta_box($link) {
 	<div id="categories-all" class="tabs-panel">
 		<ul id="categorychecklist" data-wp-lists="list:category" class="categorychecklist form-no-clear">
 			<?php
-			if ( isset($link->link_id))
+			if( isset($link->link_id))
 				wp_link_category_checklist($link->link_id);
 			else
 				wp_link_category_checklist();
@@ -937,22 +937,22 @@ function link_target_meta_box($link) { ?>
 function xfn_check( $class, $value = '', $deprecated = '') {
 	global $link;
 
-	if ( !empty( $deprecated)) {
+	if( !empty( $deprecated)) {
 		_deprecated_argument( __FUNCTION__, '2.5.0'); // Never implemented
 	}
 
 	$link_rel = isset( $link->link_rel) ? $link->link_rel : ''; // In PHP 5.3: $link_rel = $link->link_rel ?: '';
 	$rels = preg_split('/\s+/', $link_rel);
 
-	if ('' != $value && in_array($value, $rels)) {
+	if('' != $value && in_array($value, $rels)) {
 		echo ' checked="checked"';
 	}
 
-	if ('' == $value) {
-		if ('family' == $class && strpos($link_rel, 'child') === false && strpos($link_rel, 'parent') === false && strpos($link_rel, 'sibling') === false && strpos($link_rel, 'spouse') === false && strpos($link_rel, 'kin') === false) echo ' checked="checked"';
-		if ('friendship' == $class && strpos($link_rel, 'friend') === false && strpos($link_rel, 'acquaintance') === false && strpos($link_rel, 'contact') === false) echo ' checked="checked"';
-		if ('geographical' == $class && strpos($link_rel, 'co-resident') === false && strpos($link_rel, 'neighbor') === false) echo ' checked="checked"';
-		if ('identity' == $class && in_array('me', $rels)) echo ' checked="checked"';
+	if('' == $value) {
+		if('family' == $class && strpos($link_rel, 'child') === false && strpos($link_rel, 'parent') === false && strpos($link_rel, 'sibling') === false && strpos($link_rel, 'spouse') === false && strpos($link_rel, 'kin') === false) echo ' checked="checked"';
+		if('friendship' == $class && strpos($link_rel, 'friend') === false && strpos($link_rel, 'acquaintance') === false && strpos($link_rel, 'contact') === false) echo ' checked="checked"';
+		if('geographical' == $class && strpos($link_rel, 'co-resident') === false && strpos($link_rel, 'neighbor') === false) echo ' checked="checked"';
+		if('identity' == $class && in_array('me', $rels)) echo ' checked="checked"';
 	}
 }
 
@@ -1102,7 +1102,7 @@ function link_advanced_meta_box($link) {
 		<?php
 			for ( $r = 0; $r <= 10; $r++) {
 				echo '<option value="' . $r . '"';
-				if ( isset($link->link_rating) && $link->link_rating == $r)
+				if( isset($link->link_rating) && $link->link_rating == $r)
 					echo ' selected="selected"';
 				echo('>' . $r . '</option>');
 			}
@@ -1134,15 +1134,15 @@ function post_thumbnail_meta_box( $post) {
  */
 function attachment_id3_data_meta_box( $post) {
 	$meta = array();
-	if ( !empty( $post->ID)) {
+	if( !empty( $post->ID)) {
 		$meta = wp_get_attachment_metadata( $post->ID);
 	}
 
-	foreach ( wp_get_attachment_id3_keys( $post, 'edit') as $key => $label) : ?>
+	foreach( wp_get_attachment_id3_keys( $post, 'edit') as $key => $label) : ?>
 	<p>
 		<label for="title"><?php echo $label ?></label><br />
 		<input type="text" name="id3_<?php echo esc_attr( $key) ?>" id="id3_<?php echo esc_attr( $key) ?>" class="large-text" value="<?php
-			if ( !empty( $meta[ $key ])) {
+			if( !empty( $meta[ $key ])) {
 				echo esc_attr( $meta[ $key ]);
 			}
 		?>" />

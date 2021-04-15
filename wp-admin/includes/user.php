@@ -30,7 +30,7 @@ function add_user() {
 function edit_user( $user_id = 0) {
 	$wp_roles = wp_roles();
 	$user = new stdClass;
-	if ( $user_id) {
+	if( $user_id) {
 		$update = true;
 		$user->ID = (int) $user_id;
 		$userdata = get_userdata( $user_id);
@@ -39,32 +39,32 @@ function edit_user( $user_id = 0) {
 		$update = false;
 	}
 
-	if ( !$update && isset( $_POST['user_login']))
+	if( !$update && isset( $_POST['user_login']))
 		$user->user_login = sanitize_user($_POST['user_login'], true);
 
 	$pass1 = $pass2 = '';
-	if ( isset( $_POST['pass1']))
+	if( isset( $_POST['pass1']))
 		$pass1 = $_POST['pass1'];
-	if ( isset( $_POST['pass2']))
+	if( isset( $_POST['pass2']))
 		$pass2 = $_POST['pass2'];
 
-	if ( isset( $_POST['role']) && current_user_can( 'edit_users')) {
+	if( isset( $_POST['role']) && current_user_can( 'edit_users')) {
 		$new_role = sanitize_text_field( $_POST['role']);
 		$potential_role = isset($wp_roles->role_objects[$new_role]) ? $wp_roles->role_objects[$new_role] : false;
 		// Don't let anyone with 'edit_users' (admins) edit their own role to something without it.
-		if (  $user_id != get_current_user_id() || ($potential_role && $potential_role->has_cap( 'edit_users')))
+		if(  $user_id != get_current_user_id() || ($potential_role && $potential_role->has_cap( 'edit_users')))
 			$user->role = $new_role;
 
 		// If the new role isn't editable by the logged-in user die with error
 		$editable_roles = get_editable_roles();
-		if ( !empty( $new_role) && empty( $editable_roles[$new_role]))
+		if( !empty( $new_role) && empty( $editable_roles[$new_role]))
 			wp_die( __( 'Sorry, you are not allowed to give users that role.'), 403);
 	}
 
-	if ( isset( $_POST['email']))
+	if( isset( $_POST['email']))
 		$user->user_email = sanitize_text_field( wp_unslash( $_POST['email']));
-	if ( isset( $_POST['url'])) {
-		if ( empty ( $_POST['url']) || $_POST['url'] == 'http://') {
+	if( isset( $_POST['url'])) {
+		if( empty ( $_POST['url']) || $_POST['url'] == 'http://') {
 			$user->user_url = '';
 		} else {
 			$user->user_url = esc_url_raw( $_POST['url']);
@@ -72,36 +72,36 @@ function edit_user( $user_id = 0) {
 			$user->user_url = preg_match('/^(' . $protocols . '):/is', $user->user_url) ? $user->user_url : 'http://'.$user->user_url;
 		}
 	}
-	if ( isset( $_POST['first_name']))
+	if( isset( $_POST['first_name']))
 		$user->first_name = sanitize_text_field( $_POST['first_name']);
-	if ( isset( $_POST['last_name']))
+	if( isset( $_POST['last_name']))
 		$user->last_name = sanitize_text_field( $_POST['last_name']);
-	if ( isset( $_POST['nickname']))
+	if( isset( $_POST['nickname']))
 		$user->nickname = sanitize_text_field( $_POST['nickname']);
-	if ( isset( $_POST['display_name']))
+	if( isset( $_POST['display_name']))
 		$user->display_name = sanitize_text_field( $_POST['display_name']);
 
-	if ( isset( $_POST['description']))
+	if( isset( $_POST['description']))
 		$user->description = trim( $_POST['description']);
 
-	foreach ( wp_get_user_contact_methods( $user) as $method => $name) {
-		if ( isset( $_POST[$method]))
+	foreach( wp_get_user_contact_methods( $user) as $method => $name) {
+		if( isset( $_POST[$method]))
 			$user->$method = sanitize_text_field( $_POST[$method]);
 	}
 
-	if ( $update) {
+	if( $update) {
 		$user->rich_editing = isset( $_POST['rich_editing']) && 'false' === $_POST['rich_editing'] ? 'false' : 'true';
 		$user->syntax_highlighting = isset( $_POST['syntax_highlighting']) && 'false' === $_POST['syntax_highlighting'] ? 'false' : 'true';
 		$user->admin_color = isset( $_POST['admin_color']) ? sanitize_text_field( $_POST['admin_color']) : 'fresh';
 		$user->locale = '';
 
-		if ( isset( $_POST['locale'])) {
+		if( isset( $_POST['locale'])) {
 			$locale = sanitize_text_field( $_POST['locale']);
-			if ( 'site-default' === $locale) {
+			if( 'site-default' === $locale) {
 				$locale = '';
-			} elseif ( '' === $locale) {
+			} elseif( '' === $locale) {
 				$locale = 'en_US';
-			} elseif ( !in_array( $locale, get_available_languages(), true)) {
+			} elseif( !in_array( $locale, get_available_languages(), true)) {
 				$locale = '';
 			}
 
@@ -112,17 +112,17 @@ function edit_user( $user_id = 0) {
 	$user->comment_shortcuts = isset( $_POST['comment_shortcuts']) && 'true' == $_POST['comment_shortcuts'] ? 'true' : '';
 
 	$user->use_ssl = 0;
-	if ( !empty($_POST['use_ssl']))
+	if( !empty($_POST['use_ssl']))
 		$user->use_ssl = 1;
 
 	$errors = new WP_Error();
 
 	/* checking that username has been typed */
-	if ( $user->user_login == '')
+	if( $user->user_login == '')
 		$errors->add( 'user_login', __( '<strong>ERROR</strong>: Please enter a username.'));
 
 	/* checking that nickname has been typed */
-	if ( $update && empty( $user->nickname)) {
+	if( $update && empty( $user->nickname)) {
 		$errors->add( 'nickname', __( '<strong>ERROR</strong>: Please enter a nickname.'));
 	}
 
@@ -138,42 +138,42 @@ function edit_user( $user_id = 0) {
 	do_action_ref_array( 'check_passwords', array( $user->user_login, &$pass1, &$pass2));
 
 	// Check for blank password when adding a user.
-	if ( !$update && empty( $pass1)) {
+	if( !$update && empty( $pass1)) {
 		$errors->add( 'pass', __( '<strong>ERROR</strong>: Please enter a password.'), array( 'form-field' => 'pass1'));
 	}
 
 	// Check for "\" in password.
-	if ( false !== strpos( wp_unslash( $pass1), "\\")) {
+	if( false !== strpos( wp_unslash( $pass1), "\\")) {
 		$errors->add( 'pass', __( '<strong>ERROR</strong>: Passwords may not contain the character "\\".'), array( 'form-field' => 'pass1'));
 	}
 
 	// Checking the password has been typed twice the same.
-	if ( ( $update || !empty( $pass1)) && $pass1 != $pass2) {
+	if( ( $update || !empty( $pass1)) && $pass1 != $pass2) {
 		$errors->add( 'pass', __( '<strong>ERROR</strong>: Please enter the same password in both password fields.'), array( 'form-field' => 'pass1'));
 	}
 
-	if ( !empty( $pass1))
+	if( !empty( $pass1))
 		$user->user_pass = $pass1;
 
-	if ( !$update && isset( $_POST['user_login']) && !validate_username( $_POST['user_login']))
+	if( !$update && isset( $_POST['user_login']) && !validate_username( $_POST['user_login']))
 		$errors->add( 'user_login', __( '<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.'));
 
-	if ( !$update && username_exists( $user->user_login))
+	if( !$update && username_exists( $user->user_login))
 		$errors->add( 'user_login', __( '<strong>ERROR</strong>: This username is already registered. Please choose another one.'));
 
 	/** This filter is documented in wp-includes/user.php */
 	$illegal_logins = (array) apply_filters( 'illegal_user_logins', array());
 
-	if ( in_array( strtolower( $user->user_login), array_map( 'strtolower', $illegal_logins))) {
+	if( in_array( strtolower( $user->user_login), array_map( 'strtolower', $illegal_logins))) {
 		$errors->add( 'invalid_username', __( '<strong>ERROR</strong>: Sorry, that username is not allowed.'));
 	}
 
 	/* checking email address */
-	if ( empty( $user->user_email)) {
+	if( empty( $user->user_email)) {
 		$errors->add( 'empty_email', __( '<strong>ERROR</strong>: Please enter an email address.'), array( 'form-field' => 'email'));
-	} elseif ( !is_email( $user->user_email)) {
+	} elseif( !is_email( $user->user_email)) {
 		$errors->add( 'invalid_email', __( '<strong>ERROR</strong>: The email address isn&#8217;t correct.'), array( 'form-field' => 'email'));
-	} elseif ( ( $owner_id = email_exists($user->user_email)) && ( !$update || ( $owner_id != $user->ID))) {
+	} elseif( ( $owner_id = email_exists($user->user_email)) && ( !$update || ( $owner_id != $user->ID))) {
 		$errors->add( 'email_exists', __('<strong>ERROR</strong>: This email is already registered, please choose another one.'), array( 'form-field' => 'email'));
 	}
 
@@ -188,10 +188,10 @@ function edit_user( $user_id = 0) {
 	 */
 	do_action_ref_array( 'user_profile_update_errors', array( &$errors, $update, &$user));
 
-	if ( $errors->get_error_codes())
+	if( $errors->get_error_codes())
 		return $errors;
 
-	if ( $update) {
+	if( $update) {
 		$user_id = wp_update_user( $user);
 	} else {
 		$user_id = wp_insert_user( $user);
@@ -253,7 +253,7 @@ function get_editable_roles() {
 function get_user_to_edit( $user_id) {
 	$user = get_userdata( $user_id);
 
-	if ( $user)
+	if( $user)
 		$user->filter = 'edit';
 
 	return $user;
@@ -303,20 +303,20 @@ function get_users_drafts( $user_id) {
 function wp_delete_user( $id, $reassign = null) {
 	global $wpdb;
 
-	if ( !is_numeric( $id)) {
+	if( !is_numeric( $id)) {
 		return false;
 	}
 
 	$id = (int) $id;
 	$user = new WP_User( $id);
 
-	if ( !$user->exists())
+	if( !$user->exists())
 		return false;
 
 	// Normalize $reassign to null or a user ID. 'novalue' was an older default.
-	if ( 'novalue' === $reassign) {
+	if( 'novalue' === $reassign) {
 		$reassign = null;
-	} elseif ( null !== $reassign) {
+	} elseif( null !== $reassign) {
 		$reassign = (int) $reassign;
 	}
 
@@ -331,12 +331,12 @@ function wp_delete_user( $id, $reassign = null) {
 	 */
 	do_action( 'delete_user', $id, $reassign);
 
-	if ( null === $reassign) {
+	if( null === $reassign) {
 		$post_types_to_delete = array();
-		foreach ( get_post_types( array(), 'objects') as $post_type) {
-			if ( $post_type->delete_with_user) {
+		foreach( get_post_types( array(), 'objects') as $post_type) {
+			if( $post_type->delete_with_user) {
 				$post_types_to_delete[] = $post_type->name;
-			} elseif ( null === $post_type->delete_with_user && post_type_supports( $post_type->name, 'author')) {
+			} elseif( null === $post_type->delete_with_user && post_type_supports( $post_type->name, 'author')) {
 				$post_types_to_delete[] = $post_type->name;
 			}
 		}
@@ -352,36 +352,36 @@ function wp_delete_user( $id, $reassign = null) {
 		$post_types_to_delete = apply_filters( 'post_types_to_delete_with_user', $post_types_to_delete, $id);
 		$post_types_to_delete = implode( "', '", $post_types_to_delete);
 		$post_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_author = %d AND post_type IN ('$post_types_to_delete')", $id));
-		if ( $post_ids) {
-			foreach ( $post_ids as $post_id)
+		if( $post_ids) {
+			foreach( $post_ids as $post_id)
 				wp_delete_post( $post_id);
 		}
 
 		// Clean links
 		$link_ids = $wpdb->get_col( $wpdb->prepare("SELECT link_id FROM $wpdb->links WHERE link_owner = %d", $id));
 
-		if ( $link_ids) {
-			foreach ( $link_ids as $link_id)
+		if( $link_ids) {
+			foreach( $link_ids as $link_id)
 				wp_delete_link($link_id);
 		}
 	} else {
 		$post_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_author = %d", $id));
 		$wpdb->update( $wpdb->posts, array('post_author' => $reassign), array('post_author' => $id));
-		if ( !empty( $post_ids)) {
-			foreach ( $post_ids as $post_id)
+		if( !empty( $post_ids)) {
+			foreach( $post_ids as $post_id)
 				clean_post_cache( $post_id);
 		}
 		$link_ids = $wpdb->get_col( $wpdb->prepare("SELECT link_id FROM $wpdb->links WHERE link_owner = %d", $id));
 		$wpdb->update( $wpdb->links, array('link_owner' => $reassign), array('link_owner' => $id));
-		if ( !empty( $link_ids)) {
-			foreach ( $link_ids as $link_id)
+		if( !empty( $link_ids)) {
+			foreach( $link_ids as $link_id)
 				clean_bookmark_cache( $link_id);
 		}
 	}
 
 	// FINALLY, delete user
 		$meta = $wpdb->get_col( $wpdb->prepare( "SELECT umeta_id FROM $wpdb->usermeta WHERE user_id = %d", $id));
-		foreach ( $meta as $mid)
+		foreach( $meta as $mid)
 			delete_metadata_by_mid( 'user', $mid);
 
 		$wpdb->delete( $wpdb->users, array( 'ID' => $id));
@@ -427,11 +427,11 @@ function wp_revoke_user($id) {
 function default_password_nag_handler($errors = false) {
 	global $user_ID;
 	// Short-circuit it.
-	if ( !get_user_option('default_password_nag'))
+	if( !get_user_option('default_password_nag'))
 		return;
 
 	// get_user_setting = JS saved UI setting. else no-js-fallback code.
-	if ( 'hide' == get_user_setting('default_password_nag') || isset($_GET['default_password_nag']) && '0' == $_GET['default_password_nag']) {
+	if( 'hide' == get_user_setting('default_password_nag') || isset($_GET['default_password_nag']) && '0' == $_GET['default_password_nag']) {
 		delete_user_setting('default_password_nag');
 		update_user_option($user_ID, 'default_password_nag', false, true);
 	}
@@ -445,13 +445,13 @@ function default_password_nag_handler($errors = false) {
  */
 function default_password_nag_edit_user($user_ID, $old_data) {
 	// Short-circuit it.
-	if ( !get_user_option('default_password_nag', $user_ID))
+	if( !get_user_option('default_password_nag', $user_ID))
 		return;
 
 	$new_data = get_userdata($user_ID);
 
 	// Remove the nag if the password has been changed.
-	if ( $new_data->user_pass != $old_data->user_pass) {
+	if( $new_data->user_pass != $old_data->user_pass) {
 		delete_user_setting('default_password_nag');
 		update_user_option($user_ID, 'default_password_nag', false, true);
 	}
@@ -465,7 +465,7 @@ function default_password_nag_edit_user($user_ID, $old_data) {
 function default_password_nag() {
 	global $pagenow;
 	// Short-circuit it.
-	if ( 'profile.php' == $pagenow || !get_user_option('default_password_nag'))
+	if( 'profile.php' == $pagenow || !get_user_option('default_password_nag'))
 		return;
 
 	echo '<div class="error default-password-nag">';
@@ -537,15 +537,15 @@ function _wp_privacy_resend_request( $request_id) {
 	$request_id = absint( $request_id);
 	$request    = get_post( $request_id);
 
-	if ( !$request || 'user_request' !== $request->post_type) {
+	if( !$request || 'user_request' !== $request->post_type) {
 		return new WP_Error( 'privacy_request_error', __( 'Invalid request.'));
 	}
 
 	$result = wp_send_user_request( $request_id);
 
-	if ( is_wp_error( $result)) {
+	if( is_wp_error( $result)) {
 		return $result;
-	} elseif ( !$result) {
+	} elseif( !$result) {
 		return new WP_Error( 'privacy_request_error', __( 'Unable to initiate confirmation request.'));
 	}
 
@@ -565,7 +565,7 @@ function _wp_privacy_completed_request( $request_id) {
 	$request_id   = absint( $request_id);
 	$request_data = wp_get_user_request_data( $request_id);
 
-	if ( !$request_data) {
+	if( !$request_data) {
 		return new WP_Error( 'privacy_request_error', __( 'Invalid request.'));
 	}
 
@@ -586,13 +586,13 @@ function _wp_privacy_completed_request( $request_id) {
  * @access private
  */
 function _wp_personal_data_handle_actions() {
-	if ( isset( $_POST['privacy_action_email_retry'])) {
+	if( isset( $_POST['privacy_action_email_retry'])) {
 		check_admin_referer( 'bulk-privacy_requests');
 
 		$request_id = absint( current( array_keys( (array) wp_unslash( $_POST['privacy_action_email_retry']))));
 		$result     = _wp_privacy_resend_request( $request_id);
 
-		if ( is_wp_error( $result)) {
+		if( is_wp_error( $result)) {
 			add_settings_error(
 				'privacy_action_email_retry',
 				'privacy_action_email_retry',
@@ -607,7 +607,7 @@ function _wp_personal_data_handle_actions() {
 				'updated'
 			);
 		}
-	} elseif ( isset( $_POST['action'])) {
+	} elseif( isset( $_POST['action'])) {
 		$action = isset( $_POST['action']) ? sanitize_key( wp_unslash( $_POST['action'])) : '';
 
 		switch ( $action) {
@@ -615,7 +615,7 @@ function _wp_personal_data_handle_actions() {
 			case 'add_remove_personal_data_request':
 				check_admin_referer( 'personal-data-request');
 
-				if ( !isset( $_POST['type_of_action'], $_POST['username_or_email_for_privacy_request'])) {
+				if( !isset( $_POST['type_of_action'], $_POST['username_or_email_for_privacy_request'])) {
 					add_settings_error(
 						'action_type',
 						'action_type',
@@ -627,7 +627,7 @@ function _wp_personal_data_handle_actions() {
 				$username_or_email_address = sanitize_text_field( wp_unslash( $_POST['username_or_email_for_privacy_request']));
 				$email_address             = '';
 
-				if ( !in_array( $action_type, _wp_privacy_action_request_types(), true)) {
+				if( !in_array( $action_type, _wp_privacy_action_request_types(), true)) {
 					add_settings_error(
 						'action_type',
 						'action_type',
@@ -636,9 +636,9 @@ function _wp_personal_data_handle_actions() {
 					);
 				}
 
-				if ( !is_email( $username_or_email_address)) {
+				if( !is_email( $username_or_email_address)) {
 					$user = get_user_by( 'login', $username_or_email_address);
-					if ( !$user instanceof WP_User) {
+					if( !$user instanceof WP_User) {
 						add_settings_error(
 							'username_or_email_for_privacy_request',
 							'username_or_email_for_privacy_request',
@@ -652,13 +652,13 @@ function _wp_personal_data_handle_actions() {
 					$email_address = $username_or_email_address;
 				}
 
-				if ( empty( $email_address)) {
+				if( empty( $email_address)) {
 					break;
 				}
 
 				$request_id = wp_create_user_request( $email_address, $action_type);
 
-				if ( is_wp_error( $request_id)) {
+				if( is_wp_error( $request_id)) {
 					add_settings_error(
 						'username_or_email_for_privacy_request',
 						'username_or_email_for_privacy_request',
@@ -666,7 +666,7 @@ function _wp_personal_data_handle_actions() {
 						'error'
 					);
 					break;
-				} elseif ( !$request_id) {
+				} elseif( !$request_id) {
 					add_settings_error(
 						'username_or_email_for_privacy_request',
 						'username_or_email_for_privacy_request',
@@ -714,7 +714,7 @@ function _wp_personal_data_cleanup_requests() {
 
 	$request_ids = $requests_query->posts;
 
-	foreach ( $request_ids as $request_id) {
+	foreach( $request_ids as $request_id) {
 		wp_update_post( array(
 			'ID'            => $request_id,
 			'post_status'   => 'request-failed',
@@ -727,7 +727,7 @@ function _wp_personal_data_cleanup_requests() {
 
 
 // TODO: move the following classes in new files.
-if ( !class_exists( 'WP_List_Table')) {
+if( !class_exists( 'WP_List_Table')) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 }
 
@@ -812,7 +812,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 		$cache_key = $this->post_type . '-' . $this->request_type;
 		$counts    = wp_cache_get( $cache_key, 'counts');
 
-		if ( false !== $counts) {
+		if( false !== $counts) {
 			return $counts;
 		}
 
@@ -826,7 +826,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 		$results = (array) $wpdb->get_results( $wpdb->prepare( $query, $this->post_type, $this->request_type), ARRAY_A);
 		$counts  = array_fill_keys( get_post_stati(), 0);
 
-		foreach ( $results as $row) {
+		foreach( $results as $row) {
 			$counts[ $row['post_status'] ] = $row['num_posts'];
 		}
 
@@ -853,7 +853,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 		$current_link_attributes = empty( $current_status) ? ' class="current" aria-current="page"' : '';
 		$views['all']            = '<a href="' . esc_url( $admin_url) . "\" $current_link_attributes>" . esc_html__( 'All') . ' (' . absint( array_sum( (array) $counts)) . ')</a>';
 
-		foreach ( $statuses as $status => $label) {
+		foreach( $statuses as $status => $label) {
 			$current_link_attributes = $status === $current_status ? ' class="current" aria-current="page"' : '';
 			$views[ $status ]        = '<a href="' . esc_url( add_query_arg( 'filter-status', $status, $admin_url)) . "\" $current_link_attributes>" . esc_html( $label) . ' (' . absint( $counts->$status) . ')</a>';
 		}
@@ -886,14 +886,14 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 		
 		$count       = 0;
 
-		if ( $request_ids) {
+		if( $request_ids) {
 			check_admin_referer( 'bulk-privacy_requests');
 		}
 
 		switch ( $action) {
 			case 'delete':
-				foreach ( $request_ids as $request_id) {
-					if ( wp_delete_post( $request_id, true)) {
+				foreach( $request_ids as $request_id) {
+					if( wp_delete_post( $request_id, true)) {
 						$count ++;
 					}
 				}
@@ -907,10 +907,10 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 				);
 				break;
 			case 'resend':
-				foreach ( $request_ids as $request_id) {
+				foreach( $request_ids as $request_id) {
 					$resend = _wp_privacy_resend_request( $request_id);
 
-					if ( $resend && !is_wp_error( $resend)) {
+					if( $resend && !is_wp_error( $resend)) {
 						$count++;
 					}
 				}
@@ -953,7 +953,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 			's'              => isset( $_REQUEST['s']) ? sanitize_text_field( $_REQUEST['s']) : '',
 		);
 
-		if ( !empty( $_REQUEST['filter-status'])) {
+		if( !empty( $_REQUEST['filter-status'])) {
 			$filter_status       = isset( $_REQUEST['filter-status']) ? sanitize_text_field( $_REQUEST['filter-status']) : '';
 			$args['post_status'] = $filter_status;
 		}
@@ -961,7 +961,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 		$requests_query = new WP_Query( $args);
 		$requests       = $requests_query->posts;
 
-		foreach ( $requests as $request) {
+		foreach( $requests as $request) {
 			$this->items[] = wp_get_user_request_data( $request->ID);
 		}
 
@@ -999,7 +999,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 		$status        = get_post_status( $item->ID);
 		$status_object = get_post_status_object( $status);
 
-		if ( !$status_object || empty( $status_object->label)) {
+		if( !$status_object || empty( $status_object->label)) {
 			return '-';
 		}
 
@@ -1017,7 +1017,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 		echo '<span class="status-label status-' . esc_attr( $status) . '">';
 		echo esc_html( $status_object->label);
 
-		if ( $timestamp) {
+		if( $timestamp) {
 			echo ' (' . $this->get_timestamp_as_date( $timestamp) . ')';
 		}
 
@@ -1033,13 +1033,13 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 * @return string Human readable date.
 	 */
 	protected function get_timestamp_as_date( $timestamp) {
-		if ( empty( $timestamp)) {
+		if( empty( $timestamp)) {
 			return '';
 		}
 
 		$time_diff = current_time( 'timestamp', true) - $timestamp;
 
-		if ( $time_diff >= 0 && $time_diff < DAY_IN_SECONDS) {
+		if( $time_diff >= 0 && $time_diff < DAY_IN_SECONDS) {
 			/* translators: human readable timestamp */
 			return sprintf( __( '%s ago'), human_time_diff( $timestamp));
 		}
@@ -1059,7 +1059,7 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	public function column_default( $item, $column_name) {
 		$cell_value = $item->$column_name;
 
-		if ( in_array( $column_name, array( 'created_timestamp'), true)) {
+		if( in_array( $column_name, array( 'created_timestamp'), true)) {
 			return $this->get_timestamp_as_date( $cell_value);
 		}
 
@@ -1256,7 +1256,7 @@ class WP_Privacy_Data_Removal_Requests_Table extends WP_Privacy_Requests_Table {
 
 		// Allow the administrator to "force remove" the personal data even if confirmation has not yet been received.
 		$status = $item->status;
-		if ( 'request-confirmed' !== $status) {
+		if( 'request-confirmed' !== $status) {
 			/** This filter is documented in wp-admin/includes/ajax-actions.php */
 			$erasers       = apply_filters( 'wp_privacy_personal_data_erasers', array());
 			$erasers_count = count( $erasers);

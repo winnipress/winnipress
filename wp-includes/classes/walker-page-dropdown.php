@@ -14,7 +14,7 @@
  *
  * @see Walker
  */
-class Walker_PageDropdown extends Walker {
+class Walker_PageDropdown extends Walker{
 
 	/**
 	 * What the class handles.
@@ -56,17 +56,17 @@ class Walker_PageDropdown extends Walker {
 	public function start_el(&$output, $page, $depth = 0, $args = array(), $id = 0){
 		$pad = str_repeat('&nbsp;', $depth * 3);
 
-		if (!isset($args['value_field']) || !isset($page->{$args['value_field']})){
+		if(!isset($args['value_field']) || !isset($page->{$args['value_field']})){
 			$args['value_field'] = 'ID';
 		}
 
 		$output .= "\t<option class=\"level-$depth\" value=\"" . esc_attr($page->{$args['value_field']}) . "\"";
-		if ($page->ID == $args['selected'])
+		if($page->ID == $args['selected'])
 			$output .= ' selected="selected"';
 		$output .= '>';
 
 		$title = $page->post_title;
-		if ('' === $title){
+		if('' === $title){
 			/* translators: %d: ID of a post */
 			$title = sprintf(__('#%d (no title)'), $page->ID);
 		}

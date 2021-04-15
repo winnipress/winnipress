@@ -66,13 +66,13 @@ class Walker_Category_Checklist extends Walker {
 	 * @param int    $id       ID of the current term.
 	 */
 	public function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
-		if ( empty( $args['taxonomy'] ) ) {
+		if( empty( $args['taxonomy'] ) ) {
 			$taxonomy = 'category';
 		} else {
 			$taxonomy = $args['taxonomy'];
 		}
 
-		if ( $taxonomy == 'category' ) {
+		if( $taxonomy == 'category' ) {
 			$name = 'post_category';
 		} else {
 			$name = 'tax_input[' . $taxonomy . ']';
@@ -83,11 +83,11 @@ class Walker_Category_Checklist extends Walker {
 
 		$args['selected_cats'] = empty( $args['selected_cats'] ) ? array() : $args['selected_cats'];
 
-		if ( !empty( $args['list_only'] ) ) {
+		if( !empty( $args['list_only'] ) ) {
 			$aria_checked = 'false';
 			$inner_class = 'category';
 
-			if ( in_array( $category->term_id, $args['selected_cats'] ) ) {
+			if( in_array( $category->term_id, $args['selected_cats'] ) ) {
 				$inner_class .= ' selected';
 				$aria_checked = 'true';
 			}

@@ -14,7 +14,7 @@
  *
  * @see Walker
  */
-class Walker_Page extends Walker {
+class Walker_Page extends Walker{
 
 	/**
 	 * What the class handles.
@@ -50,10 +50,10 @@ class Walker_Page extends Walker {
 	 *                       Default empty array.
 	 */
 	public function start_lvl(&$output, $depth = 0, $args = array()){
-		if (isset($args['item_spacing']) && 'preserve' === $args['item_spacing']){
+		if(isset($args['item_spacing']) && 'preserve' === $args['item_spacing']){
 			$t = "\t";
 			$n = "\n";
-		} else {
+		} else{
 			$t = '';
 			$n = '';
 		}
@@ -74,10 +74,10 @@ class Walker_Page extends Walker {
 	 *                       Default empty array.
 	 */
 	public function end_lvl(&$output, $depth = 0, $args = array()){
-		if (isset($args['item_spacing']) && 'preserve' === $args['item_spacing']){
+		if(isset($args['item_spacing']) && 'preserve' === $args['item_spacing']){
 			$t = "\t";
 			$n = "\n";
-		} else {
+		} else{
 			$t = '';
 			$n = '';
 		}
@@ -98,36 +98,36 @@ class Walker_Page extends Walker {
 	 * @param int     $current_page Optional. Page ID. Default 0.
 	 */
 	public function start_el(&$output, $page, $depth = 0, $args = array(), $current_page = 0){
-		if (isset($args['item_spacing']) && 'preserve' === $args['item_spacing']){
+		if(isset($args['item_spacing']) && 'preserve' === $args['item_spacing']){
 			$t = "\t";
 			$n = "\n";
-		} else {
+		} else{
 			$t = '';
 			$n = '';
 		}
-		if ($depth){
+		if($depth){
 			$indent = str_repeat($t, $depth);
-		} else {
+		} else{
 			$indent = '';
 		}
 
 		$css_class = array('page_item', 'page-item-' . $page->ID);
 
-		if (isset($args['pages_with_children'][ $page->ID ])){
+		if(isset($args['pages_with_children'][ $page->ID ])){
 			$css_class[] = 'page_item_has_children';
 		}
 
-		if (!empty($current_page)){
+		if(!empty($current_page)){
 			$_current_page = get_post($current_page);
-			if ($_current_page && in_array($page->ID, $_current_page->ancestors)){
+			if($_current_page && in_array($page->ID, $_current_page->ancestors)){
 				$css_class[] = 'current_page_ancestor';
 			}
-			if ($page->ID == $current_page){
+			if($page->ID == $current_page){
 				$css_class[] = 'current_page_item';
-			} elseif ($_current_page && $page->ID == $_current_page->post_parent){
+			} elseif($_current_page && $page->ID == $_current_page->post_parent){
 				$css_class[] = 'current_page_parent';
 			}
-		} elseif ($page->ID == get_option('page_for_posts')){
+		} elseif($page->ID == get_option('page_for_posts')){
 			$css_class[] = 'current_page_parent';
 		}
 
@@ -147,7 +147,7 @@ class Walker_Page extends Walker {
 		 */
 		$css_classes = implode(' ', apply_filters('page_css_class', $css_class, $page, $depth, $args, $current_page));
 
-		if ('' === $page->post_title){
+		if('' === $page->post_title){
 			/* translators: %d: ID of a post */
 			$page->post_title = sprintf(__('#%d (no title)'), $page->ID);
 		}
@@ -163,7 +163,7 @@ class Walker_Page extends Walker {
 		 *
 		 * @since 4.8.0
 		 *
-		 * @param array $atts {
+		 * @param array $atts{
 		 *     The HTML attributes applied to the menu item's `<a>` element, empty strings are ignored.
 		 *
 		 *     @type string $href The href attribute.
@@ -176,8 +176,8 @@ class Walker_Page extends Walker {
 		$atts = apply_filters('page_menu_link_attributes', $atts, $page, $depth, $args, $current_page);
 
 		$attributes = '';
-		foreach ($atts as $attr => $value){
-			if (!empty($value)){
+		foreach($atts as $attr => $value){
+			if(!empty($value)){
 				$value = esc_attr($value);
 				$attributes .= ' ' . $attr . '="' . $value . '"';
 			}
@@ -193,10 +193,10 @@ class Walker_Page extends Walker {
 			$args['link_after']
 		);
 
-		if (!empty($args['show_date'])){
-			if ('modified' == $args['show_date']){
+		if(!empty($args['show_date'])){
+			if('modified' == $args['show_date']){
 				$time = $page->post_modified;
-			} else {
+			} else{
 				$time = $page->post_date;
 			}
 
@@ -218,10 +218,10 @@ class Walker_Page extends Walker {
 	 * @param array   $args   Optional. Array of arguments. Default empty array.
 	 */
 	public function end_el(&$output, $page, $depth = 0, $args = array()){
-		if (isset($args['item_spacing']) && 'preserve' === $args['item_spacing']){
+		if(isset($args['item_spacing']) && 'preserve' === $args['item_spacing']){
 			$t = "\t";
 			$n = "\n";
-		} else {
+		} else{
 			$t = '';
 			$n = '';
 		}

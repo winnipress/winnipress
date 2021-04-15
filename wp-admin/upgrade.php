@@ -24,13 +24,13 @@ require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 delete_site_transient('update_core');
 
-if ( isset( $_GET['step'] ) )
+if( isset( $_GET['step'] ) )
 	$step = $_GET['step'];
 else
 	$step = 0;
 
 // Do it. No output.
-if ( 'upgrade_db' === $step ) {
+if( 'upgrade_db' === $step ) {
 	wp_upgrade();
 	die( '0' );
 }
@@ -48,7 +48,7 @@ $step = (int) $step;
 $php_version    = phpversion();
 $mysql_version  = $wpdb->db_version();
 $php_compat     = version_compare( $php_version, $required_php_version, '>=' );
-if ( file_exists( WP_CONTENT_DIR . '/db.php' ) && empty( $wpdb->is_mysql ) )
+if( file_exists( WP_CONTENT_DIR . '/db.php' ) && empty( $wpdb->is_mysql ) )
 	$mysql_compat = true;
 else
 	$mysql_compat = version_compare( $mysql_version, $required_mysql_version, '>=' );
@@ -70,25 +70,25 @@ else
 <body class="wp-core-ui">
 <p id="logo"><a href="<?php echo esc_url( __( 'https://wordpress.org/' ) ); ?>" tabindex="-1"><?php _e( 'WordPress' ); ?></a></p>
 
-<?php if ( get_option( 'db_version' ) == $wp_db_version || !is_wp_installed() ) : ?>
+<?php if( get_option( 'db_version' ) == $wp_db_version || !is_wp_installed() ) : ?>
 
 <h1><?php _e( 'No Update Required' ); ?></h1>
 <p><?php _e( 'Your WordPress database is already up-to-date!' ); ?></p>
 <p class="step"><a class="button button-large" href="<?php echo get_option( 'home' ); ?>/"><?php _e( 'Continue' ); ?></a></p>
 
-<?php elseif ( !$php_compat || !$mysql_compat ) :
-	if ( !$mysql_compat && !$php_compat )
+<?php elseif( !$php_compat || !$mysql_compat ) :
+	if( !$mysql_compat && !$php_compat )
 		printf( __('You cannot update because <a href="https://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> requires PHP version %2$s or higher and MySQL version %3$s or higher. You are running PHP version %4$s and MySQL version %5$s.'), $wp_version, $required_php_version, $required_mysql_version, $php_version, $mysql_version );
-	elseif ( !$php_compat )
+	elseif( !$php_compat )
 		printf( __('You cannot update because <a href="https://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> requires PHP version %2$s or higher. You are running version %3$s.'), $wp_version, $required_php_version, $php_version );
-	elseif ( !$mysql_compat )
+	elseif( !$mysql_compat )
 		printf( __('You cannot update because <a href="https://codex.wordpress.org/Version_%1$s">WordPress %1$s</a> requires MySQL version %2$s or higher. You are running version %3$s.'), $wp_version, $required_mysql_version, $mysql_version );
 ?>
 <?php else :
 switch ( $step ) :
 	case 0:
 		$goback = wp_get_referer();
-		if ( $goback ) {
+		if( $goback ) {
 			$goback = esc_url_raw( $goback );
 			$goback = urlencode( $goback );
 		}

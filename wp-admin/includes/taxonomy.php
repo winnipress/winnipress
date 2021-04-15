@@ -23,7 +23,7 @@
  */
 function category_exists( $cat_name, $parent = null) {
 	$id = term_exists($cat_name, 'category', $parent);
-	if ( is_array($id))
+	if( is_array($id))
 		$id = $id['term_id'];
 	return $id;
 }
@@ -52,7 +52,7 @@ function get_category_to_edit( $id) {
  * @return int|WP_Error
  */
 function wp_create_category( $cat_name, $parent = 0) {
-	if ( $id = category_exists($cat_name, $parent))
+	if( $id = category_exists($cat_name, $parent))
 		return $id;
 
 	return wp_insert_category( array('cat_name' => $cat_name, 'category_parent' => $parent));
@@ -69,15 +69,15 @@ function wp_create_category( $cat_name, $parent = 0) {
  */
 function wp_create_categories( $categories, $post_id = '') {
 	$cat_ids = array ();
-	foreach ( $categories as $category) {
-		if ( $id = category_exists( $category)) {
+	foreach( $categories as $category) {
+		if( $id = category_exists( $category)) {
 			$cat_ids[] = $id;
-		} elseif ( $id = wp_create_category( $category)) {
+		} elseif( $id = wp_create_category( $category)) {
 			$cat_ids[] = $id;
 		}
 	}
 
-	if ( $post_id)
+	if( $post_id)
 		wp_set_post_categories($post_id, $cat_ids);
 
 	return $cat_ids;
@@ -109,8 +109,8 @@ function wp_insert_category( $catarr, $wp_error = false) {
 	$cat_defaults = array( 'cat_ID' => 0, 'taxonomy' => 'category', 'cat_name' => '', 'category_description' => '', 'category_nicename' => '', 'category_parent' => '');
 	$catarr = wp_parse_args( $catarr, $cat_defaults);
 
-	if ( trim( $catarr['cat_name']) == '') {
-		if ( !$wp_error) {
+	if( trim( $catarr['cat_name']) == '') {
+		if( !$wp_error) {
 			return 0;
 		} else {
 			return new WP_Error( 'cat_name', __( 'You did not enter a category name.'));
@@ -126,11 +126,11 @@ function wp_insert_category( $catarr, $wp_error = false) {
 	$description = $catarr['category_description'];
 	$slug = $catarr['category_nicename'];
 	$parent = (int) $catarr['category_parent'];
-	if ( $parent < 0) {
+	if( $parent < 0) {
 		$parent = 0;
 	}
 
-	if ( empty( $parent)
+	if( empty( $parent)
 		|| !term_exists( $parent, $catarr['taxonomy'])
 		|| ( $catarr['cat_ID'] && term_is_ancestor_of( $catarr['cat_ID'], $parent, $catarr['taxonomy']))) {
 		$parent = 0;
@@ -138,14 +138,14 @@ function wp_insert_category( $catarr, $wp_error = false) {
 
 	$args = compact('name', 'slug', 'parent', 'description');
 
-	if ( $update) {
+	if( $update) {
 		$catarr['cat_ID'] = wp_update_term( $catarr['cat_ID'], $catarr['taxonomy'], $args);
 	} else {
 		$catarr['cat_ID'] = wp_insert_term( $catarr['cat_name'], $catarr['taxonomy'], $args);
 	}
 
-	if ( is_wp_error( $catarr['cat_ID'])) {
-		if ( $wp_error) {
+	if( is_wp_error( $catarr['cat_ID'])) {
+		if( $wp_error) {
 			return $catarr['cat_ID'];
 		} else {
 			return 0;
@@ -168,7 +168,7 @@ function wp_insert_category( $catarr, $wp_error = false) {
 function wp_update_category($catarr) {
 	$cat_ID = (int) $catarr['cat_ID'];
 
-	if ( isset($catarr['category_parent']) && ($cat_ID == $catarr['category_parent']))
+	if( isset($catarr['category_parent']) && ($cat_ID == $catarr['category_parent']))
 		return false;
 
 	// First, get all of the original fields
@@ -236,23 +236,23 @@ function get_tags_to_edit( $post_id, $taxonomy = 'post_tag') {
  */
 function get_terms_to_edit( $post_id, $taxonomy = 'post_tag') {
 	$post_id = (int) $post_id;
-	if ( !$post_id)
+	if( !$post_id)
 		return false;
 
 	$terms = get_object_term_cache( $post_id, $taxonomy);
-	if ( false === $terms) {
+	if( false === $terms) {
 		$terms = wp_get_object_terms( $post_id, $taxonomy);
 		wp_cache_add( $post_id, wp_list_pluck( $terms, 'term_id'), $taxonomy . '_relationships');
 	}
 
-	if ( !$terms) {
+	if( !$terms) {
 		return false;
 	}
-	if ( is_wp_error( $terms)) {
+	if( is_wp_error( $terms)) {
 		return $terms;
 	}
 	$term_names = array();
-	foreach ( $terms as $term) {
+	foreach( $terms as $term) {
 		$term_names[] = $term->name;
 	}
 
@@ -283,7 +283,7 @@ function get_terms_to_edit( $post_id, $taxonomy = 'post_tag') {
  * @return array|WP_Error
  */
 function wp_create_term($tag_name, $taxonomy = 'post_tag') {
-	if ( $id = term_exists($tag_name, $taxonomy))
+	if( $id = term_exists($tag_name, $taxonomy))
 		return $id;
 
 	return wp_insert_term($tag_name, $taxonomy);

@@ -12,7 +12,7 @@
  *
  * @since 4.7.0
  */
-final class WP_Taxonomy {
+final class WP_Taxonomy{
 	/**
 	 * Taxonomy key.
 	 *
@@ -216,7 +216,7 @@ final class WP_Taxonomy {
 	 * @param array|string $args        Optional. Array or query string of arguments for registering a taxonomy.
 	 *                                  Default empty array.
 	 */
-	public function __construct($taxonomy, $object_type, $args = array() ) {
+	public function __construct($taxonomy, $object_type, $args = array() ){
 		$this->name = $taxonomy;
 
 		$this->set_props($object_type, $args );
@@ -230,7 +230,7 @@ final class WP_Taxonomy {
 	 * @param array|string $object_type Name of the object type for the taxonomy object.
 	 * @param array|string $args        Array or query string of arguments for registering a taxonomy.
 	 */
-	public function set_props($object_type, $args ) {
+	public function set_props($object_type, $args ){
 		$args = wp_parse_args($args );
 
 		/**
@@ -270,55 +270,55 @@ final class WP_Taxonomy {
 		$args = array_merge($defaults, $args );
 
 		// If not set, default to the setting for public.
-		if (null === $args['publicly_queryable'] ) {
+		if(null === $args['publicly_queryable'] ){
 			$args['publicly_queryable'] = $args['public'];
 		}
 
-		if (false !== $args['query_var'] && (is_admin() || false !== $args['publicly_queryable'] ) ) {
-			if (true === $args['query_var'] ) {
+		if(false !== $args['query_var'] && (is_admin() || false !== $args['publicly_queryable'] ) ){
+			if(true === $args['query_var'] ){
 				$args['query_var'] = $this->name;
-			} else {
+			} else{
 				$args['query_var'] = sanitize_title_with_dashes($args['query_var'] );
 			}
-		} else {
+		} else{
 			// Force query_var to false for non-public taxonomies.
 			$args['query_var'] = false;
 		}
 
-		if (false !== $args['rewrite'] && (is_admin() || '' != get_option('permalink_structure' ) ) ) {
+		if(false !== $args['rewrite'] && (is_admin() || '' != get_option('permalink_structure' ) ) ){
 			$args['rewrite'] = wp_parse_args($args['rewrite'], array(
 				'with_front'   => true,
 				'hierarchical' => false,
 				'ep_mask'      => EP_NONE,
 			) );
 
-			if (empty($args['rewrite']['slug'] ) ) {
+			if(empty($args['rewrite']['slug'] ) ){
 				$args['rewrite']['slug'] = sanitize_title_with_dashes($this->name );
 			}
 		}
 
 		// If not set, default to the setting for public.
-		if (null === $args['show_ui'] ) {
+		if(null === $args['show_ui'] ){
 			$args['show_ui'] = $args['public'];
 		}
 
 		// If not set, default to the setting for show_ui.
-		if (null === $args['show_in_menu'] || !$args['show_ui'] ) {
+		if(null === $args['show_in_menu'] || !$args['show_ui'] ){
 			$args['show_in_menu'] = $args['show_ui'];
 		}
 
 		// If not set, default to the setting for public.
-		if (null === $args['show_in_nav_menus'] ) {
+		if(null === $args['show_in_nav_menus'] ){
 			$args['show_in_nav_menus'] = $args['public'];
 		}
 
 		// If not set, default to the setting for show_ui.
-		if (null === $args['show_tagcloud'] ) {
+		if(null === $args['show_tagcloud'] ){
 			$args['show_tagcloud'] = $args['show_ui'];
 		}
 
 		// If not set, default to the setting for show_ui.
-		if (null === $args['show_in_quick_edit'] ) {
+		if(null === $args['show_in_quick_edit'] ){
 			$args['show_in_quick_edit'] = $args['show_ui'];
 		}
 
@@ -335,17 +335,17 @@ final class WP_Taxonomy {
 		$args['object_type'] = array_unique((array) $object_type );
 
 		// If not set, use the default meta box
-		if (null === $args['meta_box_cb'] ) {
-			if ($args['hierarchical'] ) {
+		if(null === $args['meta_box_cb'] ){
+			if($args['hierarchical'] ){
 				$args['meta_box_cb'] = 'post_categories_meta_box';
-			} else {
+			} else{
 				$args['meta_box_cb'] = 'post_tags_meta_box';
 			}
 		}
 
 		$args['name'] = $this->name;
 
-		foreach ($args as $property_name => $property_value ) {
+		foreach($args as $property_name => $property_value ){
 			$this->$property_name = $property_value;
 		}
 
@@ -360,19 +360,19 @@ final class WP_Taxonomy {
 	 *
 	 * @global WP $wp Current WordPress environment instance.
 	 */
-	public function add_rewrite_rules() {
+	public function add_rewrite_rules(){
 		/* @var WP $wp */
 		global $wp;
 
 		// Non-publicly queryable taxonomies should not register query vars, except in the admin.
-		if (false !== $this->query_var && $wp ) {
+		if(false !== $this->query_var && $wp ){
 			$wp->add_query_var($this->query_var );
 		}
 
-		if (false !== $this->rewrite && (is_admin() || '' != get_option('permalink_structure' ) ) ) {
-			if ($this->hierarchical && $this->rewrite['hierarchical'] ) {
+		if(false !== $this->rewrite && (is_admin() || '' != get_option('permalink_structure' ) ) ){
+			if($this->hierarchical && $this->rewrite['hierarchical'] ){
 				$tag = '(.+?)';
-			} else {
+			} else{
 				$tag = '([^/]+)';
 			}
 
@@ -388,17 +388,17 @@ final class WP_Taxonomy {
 	 *
 	 * @global WP $wp Current WordPress environment instance.
 	 */
-	public function remove_rewrite_rules() {
+	public function remove_rewrite_rules(){
 		/* @var WP $wp */
 		global $wp;
 
 		// Remove query var.
-		if (false !== $this->query_var ) {
+		if(false !== $this->query_var ){
 			$wp->remove_query_var($this->query_var );
 		}
 
 		// Remove rewrite tags and permastructs.
-		if (false !== $this->rewrite ) {
+		if(false !== $this->rewrite ){
 			remove_rewrite_tag("%$this->name%" );
 			remove_permastruct($this->name );
 		}
@@ -409,7 +409,7 @@ final class WP_Taxonomy {
 	 *
 	 * @since 4.7.0
 	 */
-	public function add_hooks() {
+	public function add_hooks(){
 		add_filter('wp_ajax_add-' . $this->name, '_wp_ajax_add_hierarchical_term' );
 	}
 
@@ -418,7 +418,7 @@ final class WP_Taxonomy {
 	 *
 	 * @since 4.7.0
 	 */
-	public function remove_hooks() {
+	public function remove_hooks(){
 		remove_filter('wp_ajax_add-' . $this->name, '_wp_ajax_add_hierarchical_term' );
 	}
 }

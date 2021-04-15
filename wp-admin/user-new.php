@@ -9,7 +9,7 @@
 /** WordPress Administration Bootstrap */
 require_once(dirname(__FILE__ ) . '/admin.php' );
 
-if (!current_user_can('create_users' ) ) {
+if(!current_user_can('create_users' ) ) {
 	wp_die(
 		'<h1>' . __('You need a higher level of permission.' ) . '</h1>' .
 		'<p>' . __('Sorry, you are not allowed to create users.' ) . '</p>',
@@ -18,15 +18,15 @@ if (!current_user_can('create_users' ) ) {
 }
 
 
-if (isset($_REQUEST['action']) && 'adduser' == $_REQUEST['action'] ) {
+if(isset($_REQUEST['action']) && 'adduser' == $_REQUEST['action'] ) {
 	check_admin_referer('add-user', '_wpnonce_add-user' );
 
 	$user_details = null;
 	$user_email = wp_unslash($_REQUEST['email'] );
-	if (false !== strpos($user_email, '@' ) ) {
+	if(false !== strpos($user_email, '@' ) ) {
 		$user_details = get_user_by('email', $user_email );
 	} else {
-		if (current_user_can('manage_network_users' ) ) {
+		if(current_user_can('manage_network_users' ) ) {
 			$user_details = get_user_by('login', $user_email );
 		} else {
 			wp_redirect(add_query_arg(array('update' => 'enter_email'), 'user-new.php' ) );
@@ -34,12 +34,12 @@ if (isset($_REQUEST['action']) && 'adduser' == $_REQUEST['action'] ) {
 		}
 	}
 
-	if (!$user_details ) {
+	if(!$user_details ) {
 		wp_redirect(add_query_arg(array('update' => 'does_not_exist'), 'user-new.php' ) );
 		die();
 	}
 
-	if (!current_user_can('promote_user', $user_details->ID ) ) {
+	if(!current_user_can('promote_user', $user_details->ID ) ) {
 		wp_die(
 			'<h1>' . __('You need a higher level of permission.' ) . '</h1>' .
 			'<p>' . __('Sorry, you are not allowed to add users to this network.' ) . '</p>',
@@ -52,13 +52,13 @@ if (isset($_REQUEST['action']) && 'adduser' == $_REQUEST['action'] ) {
 	$redirect = 'user-new.php';
 	$username = $user_details->user_login;
 	$user_id = $user_details->ID;
-	if ($username != null && array_key_exists($blog_id, get_blogs_of_user($user_id ) ) ) {
+	if($username != null && array_key_exists($blog_id, get_blogs_of_user($user_id ) ) ) {
 		$redirect = add_query_arg(array('update' => 'addexisting'), 'user-new.php' );
 	} else {
-		if (isset($_POST[ 'noconfirmation' ] ) && current_user_can('manage_network_users' ) ) {
+		if(isset($_POST[ 'noconfirmation' ] ) && current_user_can('manage_network_users' ) ) {
 			$result = add_existing_user_to_blog(array('user_id' => $user_id, 'role' => $_REQUEST[ 'role' ] ) );
 
-			if (!is_wp_error($result ) ) {
+			if(!is_wp_error($result ) ) {
 				$redirect = add_query_arg(array('update' => 'addnoconfirmation', 'user_id' => $user_id ), 'user-new.php' );
 			} else {
 				$redirect = add_query_arg(array('update' => 'could_not_add' ), 'user-new.php' );
@@ -93,7 +93,7 @@ Please click the following link to confirm the invite:
 %4$s' );
 			wp_mail($new_user_email, sprintf(__('[%s] Joining confirmation' ), wp_specialchars_decode(get_option('blogname' ) ) ), sprintf($message, get_option('blogname' ), home_url(), wp_specialchars_decode(translate_user_role($role['name'] ) ), home_url("/newbloguser/$newuser_key/" ) ) );
 
-			if ($switched_locale ) {
+			if($switched_locale ) {
 				restore_previous_locale();
 			}
 
@@ -102,10 +102,10 @@ Please click the following link to confirm the invite:
 	}
 	wp_redirect($redirect );
 	die();
-} elseif (isset($_REQUEST['action']) && 'createuser' == $_REQUEST['action'] ) {
+} elseif(isset($_REQUEST['action']) && 'createuser' == $_REQUEST['action'] ) {
 	check_admin_referer('create-user', '_wpnonce_create-user' );
 
-	if (!current_user_can('create_users' ) ) {
+	if(!current_user_can('create_users' ) ) {
 		wp_die(
 			'<h1>' . __('You need a higher level of permission.' ) . '</h1>' .
 			'<p>' . __('Sorry, you are not allowed to create users.' ) . '</p>',
@@ -116,10 +116,10 @@ Please click the following link to confirm the invite:
 
 		$user_id = edit_user();
 
-		if (is_wp_error($user_id ) ) {
+		if(is_wp_error($user_id ) ) {
 			$add_user_errors = $user_id;
 		} else {
-			if (current_user_can('list_users' ) )
+			if(current_user_can('list_users' ) )
 				$redirect = 'users.php?update=add&id=' . $user_id;
 			else
 				$redirect = add_query_arg('update', 'add', 'user-new.php' );
@@ -141,9 +141,9 @@ wp_enqueue_script('user-profile' );
 
 require_once(ABSPATH . 'wp-admin/admin-header.php' );
 
-if (isset($_GET['update']) ) {
+if(isset($_GET['update']) ) {
 	$messages = array();
-		if ('add' == $_GET['update'] ){
+		if('add' == $_GET['update'] ){
 			$messages[] = __('User added.');
 		}
 	
@@ -151,33 +151,33 @@ if (isset($_GET['update']) ) {
 ?>
 <div class="wrap">
 <h1 id="add-new-user"><?php
-if (current_user_can('create_users' ) ) {
+if(current_user_can('create_users' ) ) {
 	_e('Add New User' );
-} elseif (current_user_can('promote_users' ) ) {
+} elseif(current_user_can('promote_users' ) ) {
 	_e('Add Existing User' );
 } ?>
 </h1>
 
-<?php if (isset($errors) && is_wp_error($errors ) ) : ?>
+<?php if(isset($errors) && is_wp_error($errors ) ) : ?>
 	<div class="error">
 		<ul>
 		<?php
-			foreach ($errors->get_error_messages() as $err )
+			foreach($errors->get_error_messages() as $err )
 				echo "<li>$err</li>\n";
 		?>
 		</ul>
 	</div>
 <?php endif;
 
-if (!empty($messages ) ) {
-	foreach ($messages as $msg )
+if(!empty($messages ) ) {
+	foreach($messages as $msg )
 		echo '<div id="message" class="updated notice is-dismissible"><p>' . $msg . '</p></div>';
 } ?>
 
-<?php if (isset($add_user_errors) && is_wp_error($add_user_errors ) ) : ?>
+<?php if(isset($add_user_errors) && is_wp_error($add_user_errors ) ) : ?>
 	<div class="error">
 		<?php
-			foreach ($add_user_errors->get_error_messages() as $message )
+			foreach($add_user_errors->get_error_messages() as $message )
 				echo "<p>$message</p>";
 		?>
 	</div>
@@ -185,8 +185,8 @@ if (!empty($messages ) ) {
 <div id="ajax-response"></div>
 
 <?php
-if (current_user_can('create_users') ) {
-	if ($do_both )
+if(current_user_can('create_users') ) {
+	if($do_both )
 		echo '<h2 id="create-new-user">' . __('Add New User' ) . '</h2>';
 ?>
 <p><?php _e('Create a brand new user and add them to this site.'); ?></p>
@@ -283,7 +283,7 @@ $new_user_ignore_pass = $creating && isset($_POST['noconfirmation'] ) ? wp_unsla
 		<th scope="row"><label for="role"><?php _e('Role'); ?></label></th>
 		<td><select name="role" id="role">
 			<?php
-			if (!$new_user_role )
+			if(!$new_user_role )
 				$new_user_role = !empty($current_role) ? $current_role : get_option('default_role');
 			wp_dropdown_roles($new_user_role);
 			?>

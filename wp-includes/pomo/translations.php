@@ -10,8 +10,8 @@
 require_once dirname(__FILE__) . '/plural-forms.php';
 require_once dirname(__FILE__) . '/entry.php';
 
-if (!class_exists('Translations', false ) ):
-class Translations {
+if(!class_exists('Translations', false)):
+class Translations{
 	var $entries = array();
 	var $headers = array();
 
@@ -22,11 +22,11 @@ class Translations {
 	 * @return bool true on success, false if the entry doesn't have a key
 	 */
 	function add_entry($entry){
-		if (is_array($entry)){
+		if(is_array($entry)){
 			$entry = new Translation_Entry($entry);
 		}
 		$key = $entry->key();
-		if (false === $key) return false;
+		if(false === $key) return false;
 		$this->entries[$key] = &$entry;
 		return true;
 	}
@@ -36,12 +36,12 @@ class Translations {
 	 * @return bool
 	 */
 	function add_entry_or_merge($entry){
-		if (is_array($entry)){
+		if(is_array($entry)){
 			$entry = new Translation_Entry($entry);
 		}
 		$key = $entry->key();
-		if (false === $key) return false;
-		if (isset($this->entries[$key]))
+		if(false === $key) return false;
+		if(isset($this->entries[$key]))
 			$this->entries[$key]->merge_with($entry);
 		else
 			$this->entries[$key] = &$entry;
@@ -130,7 +130,7 @@ class Translations {
 		$translated = $this->translate_entry($entry);
 		$index = $this->select_plural_form($count);
 		$total_plural_forms = $this->get_plural_forms_count();
-		if ($translated && 0 <= $index && $index < $total_plural_forms &&
+		if($translated && 0 <= $index && $index < $total_plural_forms &&
 				is_array($translated->translations) &&
 				isset($translated->translations[$index]))
 			return $translated->translations[$index];
@@ -145,7 +145,7 @@ class Translations {
 	 * @return void
 	 **/
 	function merge_with(&$other){
-		foreach($other->entries as $entry ){
+		foreach($other->entries as $entry){
 			$this->entries[$entry->key()] = $entry;
 		}
 	}
@@ -154,8 +154,8 @@ class Translations {
 	 * @param object $other
 	 */
 	function merge_originals_with(&$other){
-		foreach($other->entries as $entry ){
-			if (!isset($this->entries[$entry->key()] ) )
+		foreach($other->entries as $entry){
+			if(!isset($this->entries[$entry->key()]))
 				$this->entries[$entry->key()] = $entry;
 			else
 				$this->entries[$entry->key()]->merge_with($entry);
@@ -163,7 +163,7 @@ class Translations {
 	}
 }
 
-class Gettext_Translations extends Translations {
+class Gettext_Translations extends Translations{
 	/**
 	 * The gettext implementation of select_plural_form.
 	 *
@@ -173,8 +173,8 @@ class Gettext_Translations extends Translations {
 	 * @param int $count
 	 */
 	function gettext_select_plural_form($count){
-		if (!isset($this->_gettext_select_plural_form) || is_null($this->_gettext_select_plural_form)){
-			list($nplurals, $expression ) = $this->nplurals_and_expression_from_header($this->get_header('Plural-Forms'));
+		if(!isset($this->_gettext_select_plural_form) || is_null($this->_gettext_select_plural_form)){
+			list($nplurals, $expression) = $this->nplurals_and_expression_from_header($this->get_header('Plural-Forms'));
 			$this->_nplurals = $nplurals;
 			$this->_gettext_select_plural_form = $this->make_plural_form_function($nplurals, $expression);
 		}
@@ -186,11 +186,11 @@ class Gettext_Translations extends Translations {
 	 * @return array
 	 */
 	function nplurals_and_expression_from_header($header){
-		if (preg_match('/^\s*nplurals\s*=\s*(\d+)\s*;\s+plural\s*=\s*(.+)$/', $header, $matches)){
+		if(preg_match('/^\s*nplurals\s*=\s*(\d+)\s*;\s+plural\s*=\s*(.+)$/', $header, $matches)){
 			$nplurals = (int)$matches[1];
-			$expression = trim($matches[2] );
+			$expression = trim($matches[2]);
 			return array($nplurals, $expression);
-		} else {
+		} else{
 			return array(2, 'n != 1');
 		}
 	}
@@ -202,12 +202,12 @@ class Gettext_Translations extends Translations {
 	 * @param string $expression
 	 */
 	function make_plural_form_function($nplurals, $expression){
-		try {
-			$handler = new Plural_Forms(rtrim($expression, ';' ) );
-			return array($handler, 'get' );
-		} catch (Exception $e ){
+		try{
+			$handler = new Plural_Forms(rtrim($expression, ';'));
+			return array($handler, 'get');
+		} catch (Exception $e){
 			// Fall back to default plural-form function.
-			return $this->make_plural_form_function(2, 'n != 1' );
+			return $this->make_plural_form_function(2, 'n != 1');
 		}
 	}
 
@@ -254,7 +254,7 @@ class Gettext_Translations extends Translations {
 		$lines = explode("\n", $translation);
 		foreach($lines as $line){
 			$parts = explode(':', $line, 2);
-			if (!isset($parts[1])) continue;
+			if(!isset($parts[1])) continue;
 			$headers[trim($parts[0])] = trim($parts[1]);
 		}
 		return $headers;
@@ -266,8 +266,8 @@ class Gettext_Translations extends Translations {
 	 */
 	function set_header($header, $value){
 		parent::set_header($header, $value);
-		if ('Plural-Forms' == $header){
-			list($nplurals, $expression ) = $this->nplurals_and_expression_from_header($this->get_header('Plural-Forms'));
+		if('Plural-Forms' == $header){
+			list($nplurals, $expression) = $this->nplurals_and_expression_from_header($this->get_header('Plural-Forms'));
 			$this->_nplurals = $nplurals;
 			$this->_gettext_select_plural_form = $this->make_plural_form_function($nplurals, $expression);
 		}
@@ -275,11 +275,11 @@ class Gettext_Translations extends Translations {
 }
 endif;
 
-if (!class_exists('NOOP_Translations', false ) ):
+if(!class_exists('NOOP_Translations', false)):
 /**
  * Provides the same interface as Translations, but doesn't do anything
  */
-class NOOP_Translations {
+class NOOP_Translations{
 	var $entries = array();
 	var $headers = array();
 

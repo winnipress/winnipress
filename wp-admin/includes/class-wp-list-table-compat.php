@@ -17,12 +17,12 @@ class _WP_List_Table_Compat extends WP_List_Table {
 	public $_columns;
 
 	public function __construct( $screen, $columns = array() ) {
-		if ( is_string( $screen ) )
+		if( is_string( $screen ) )
 			$screen = convert_to_screen( $screen );
 
 		$this->_screen = $screen;
 
-		if ( !empty( $columns ) ) {
+		if( !empty( $columns ) ) {
 			$this->_columns = $columns;
 			add_filter( 'manage_' . $screen->id . '_columns', array( $this, 'get_columns' ), 0 );
 		}

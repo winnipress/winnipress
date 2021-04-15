@@ -27,7 +27,7 @@ wp_reset_vars(array('action', 'option_page'));
 $capability = 'manage_options';
 
 // This is for back compat and will eventually be removed.
-if ( empty($option_page) ) {
+if( empty($option_page) ) {
 	$option_page = 'options';
 } else {
 
@@ -44,7 +44,7 @@ if ( empty($option_page) ) {
 	$capability = apply_filters( "option_page_capability_{$option_page}", $capability );
 }
 
-if ( !current_user_can( $capability ) ) {
+if( !current_user_can( $capability ) ) {
 	wp_die(
 		'<h1>' . __( 'You need a higher level of permission.' ) . '</h1>' .
 		'<p>' . __( 'Sorry, you are not allowed to manage these options.' ) . '</p>',
@@ -53,10 +53,10 @@ if ( !current_user_can( $capability ) ) {
 }
 
 // Handle admin email change requests
-if ( !empty( $_GET[ 'adminhash' ] ) ) {
+if( !empty( $_GET[ 'adminhash' ] ) ) {
 	$new_admin_details = get_option( 'adminhash' );
 	$redirect = 'options-general.php?updated=false';
-	if ( is_array( $new_admin_details ) && hash_equals( $new_admin_details[ 'hash' ], $_GET[ 'adminhash' ] ) && !empty( $new_admin_details[ 'newemail' ] ) ) {
+	if( is_array( $new_admin_details ) && hash_equals( $new_admin_details[ 'hash' ], $_GET[ 'adminhash' ] ) && !empty( $new_admin_details[ 'newemail' ] ) ) {
 		update_option( 'admin_email', $new_admin_details[ 'newemail' ] );
 		delete_option( 'adminhash' );
 		delete_option( 'new_admin_email' );
@@ -64,7 +64,7 @@ if ( !empty( $_GET[ 'adminhash' ] ) ) {
 	}
 	wp_redirect( admin_url( $redirect ) );
 	exit;
-} elseif ( !empty( $_GET['dismiss'] ) && 'new_admin_email' == $_GET['dismiss'] ) {
+} elseif( !empty( $_GET['dismiss'] ) && 'new_admin_email' == $_GET['dismiss'] ) {
 	check_admin_referer( 'dismiss-' . get_current_blog_id() . '-new_admin_email' );
 	delete_option( 'adminhash' );
 	delete_option( 'new_admin_email' );
@@ -117,18 +117,18 @@ $whitelist_options['misc'] = $whitelist_options['options'] = $whitelist_options[
 
 $mail_options = array('mailserver_url', 'mailserver_port', 'mailserver_login', 'mailserver_pass');
 
-if ( !in_array( get_option( 'blog_charset' ), array( 'utf8', 'utf-8', 'UTF8', 'UTF-8' ) ) )
+if( !in_array( get_option( 'blog_charset' ), array( 'utf8', 'utf-8', 'UTF8', 'UTF-8' ) ) )
 	$whitelist_options['reading'][] = 'blog_charset';
 
-if ( get_site_option( 'initial_db_version' ) < 32453 ) {
+if( get_site_option( 'initial_db_version' ) < 32453 ) {
 	$whitelist_options['writing'][] = 'use_smilies';
 	$whitelist_options['writing'][] = 'use_balanceTags';
 }
 
 
-	if ( !defined( 'WP_SITEURL' ) )
+	if( !defined( 'WP_SITEURL' ) )
 		$whitelist_options['general'][] = 'siteurl';
-	if ( !defined( 'WP_HOME' ) )
+	if( !defined( 'WP_HOME' ) )
 		$whitelist_options['general'][] = 'home';
 
 	$whitelist_options['general'][] = 'users_can_register';
@@ -140,7 +140,7 @@ if ( get_site_option( 'initial_db_version' ) < 32453 ) {
 	$whitelist_options['media'][] = 'uploads_use_yearmonth_folders';
 
 	// If upload_url_path and upload_path are both default values, they're locked.
-	if ( get_option( 'upload_url_path' ) || ( get_option('upload_path') != 'wp-content/uploads' && get_option('upload_path') ) ) {
+	if( get_option( 'upload_url_path' ) || ( get_option('upload_path') != 'wp-content/uploads' && get_option('upload_path') ) ) {
 		$whitelist_options['media'][] = 'upload_path';
 		$whitelist_options['media'][] = 'upload_url_path';
 	}
@@ -158,27 +158,27 @@ $whitelist_options = apply_filters( 'whitelist_options', $whitelist_options );
 /*
  * If $_GET['action'] == 'update' we are saving settings sent from a settings page
  */
-if ( 'update' == $action ) {
+if( 'update' == $action ) {
 	
 	check_admin_referer( $option_page . '-options' );
 	
-	if ( !isset( $whitelist_options[ $option_page ] ) )
+	if( !isset( $whitelist_options[ $option_page ] ) )
 		wp_die( __( '<strong>ERROR</strong>: options page not found.' ) );
 
-	if ( 'options' == $option_page ) {
+	if( 'options' == $option_page ) {
 		$options = explode( ',', wp_unslash( $_POST[ 'page_options' ] ) );
 	} else {
 		$options = $whitelist_options[ $option_page ];
 	}
 
-	if ( 'general' == $option_page ) {
+	if( 'general' == $option_page ) {
 		// Handle custom date/time formats.
-		if ( !empty($_POST['date_format']) && isset($_POST['date_format_custom']) && '\c\u\s\t\o\m' == wp_unslash( $_POST['date_format'] ) )
+		if( !empty($_POST['date_format']) && isset($_POST['date_format_custom']) && '\c\u\s\t\o\m' == wp_unslash( $_POST['date_format'] ) )
 			$_POST['date_format'] = $_POST['date_format_custom'];
-		if ( !empty($_POST['time_format']) && isset($_POST['time_format_custom']) && '\c\u\s\t\o\m' == wp_unslash( $_POST['time_format'] ) )
+		if( !empty($_POST['time_format']) && isset($_POST['time_format_custom']) && '\c\u\s\t\o\m' == wp_unslash( $_POST['time_format'] ) )
 			$_POST['time_format'] = $_POST['time_format_custom'];
 		// Map UTC+- timezones to gmt_offsets and set timezone_string to empty.
-		if ( !empty($_POST['timezone_string']) && preg_match('/^UTC[+-]/', $_POST['timezone_string']) ) {
+		if( !empty($_POST['timezone_string']) && preg_match('/^UTC[+-]/', $_POST['timezone_string']) ) {
 			$_POST['gmt_offset'] = $_POST['timezone_string'];
 			$_POST['gmt_offset'] = preg_replace('/UTC\+?/', '', $_POST['gmt_offset']);
 			$_POST['timezone_string'] = '';
@@ -187,16 +187,16 @@ if ( 'update' == $action ) {
 
 	}
 
-	if ( $options ) {
+	if( $options ) {
 		$user_language_old = get_user_locale();
 
-		foreach ( $options as $option ) {
+		foreach( $options as $option ) {
 
 			$option = trim( $option );
 			$value = null;
-			if ( isset( $_POST[ $option ] ) ) {
+			if( isset( $_POST[ $option ] ) ) {
 				$value = $_POST[ $option ];
-				if ( !is_array( $value ) ) {
+				if( !is_array( $value ) ) {
 					$value = trim( $value );
 				}
 				$value = wp_unslash( $value );
@@ -211,7 +211,7 @@ if ( 'update' == $action ) {
 		 */
 		unset( $GLOBALS['locale'] );
 		$user_language_new = get_user_locale();
-		if ( $user_language_old !== $user_language_new  ) {
+		if( $user_language_old !== $user_language_new  ) {
 			load_default_textdomain( $user_language_new );
 		}
 	}
@@ -220,7 +220,7 @@ if ( 'update' == $action ) {
 	 * Handle settings errors and return to options page
 	 */
 	// If no settings errors were registered add a general 'updated' message.
-	if ( !count( get_settings_errors() ) )
+	if( !count( get_settings_errors() ) )
 		add_settings_error('general', 'settings_updated', __('Settings saved.'), 'updated');
 	set_transient('settings_errors', get_settings_errors(), 30);
 
@@ -244,12 +244,12 @@ include( ABSPATH . 'wp-admin/admin-header.php' ); ?>
 <?php
 $options = $wpdb->get_results( "SELECT * FROM $wpdb->options ORDER BY option_name" );
 
-foreach ( (array) $options as $option ) :
+foreach( (array) $options as $option ) :
 	$disabled = false;
-	if ( $option->option_name == '' )
+	if( $option->option_name == '' )
 		continue;
-	if ( is_serialized( $option->option_value ) ) {
-		if ( is_serialized_string( $option->option_value ) ) {
+	if( is_serialized( $option->option_value ) ) {
+		if( is_serialized_string( $option->option_value ) ) {
 			// This is a serialized string, so we should display it.
 			$value = maybe_unserialize( $option->option_value );
 			$options_to_update[] = $option->option_name;
@@ -269,7 +269,7 @@ foreach ( (array) $options as $option ) :
 <tr>
 	<th scope="row"><label for="<?php echo $name ?>"><?php echo esc_html( $option->option_name ); ?></label></th>
 <td>
-<?php if ( strpos( $value, "\n" ) !== false ) : ?>
+<?php if( strpos( $value, "\n" ) !== false ) : ?>
 	<textarea class="<?php echo $class ?>" name="<?php echo $name ?>" id="<?php echo $name ?>" cols="30" rows="5"><?php
 		echo esc_textarea( $value );
 	?></textarea>

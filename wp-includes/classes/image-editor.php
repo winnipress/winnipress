@@ -11,7 +11,7 @@
  *
  * @since 3.5.0
  */
-abstract class WP_Image_Editor {
+abstract class WP_Image_Editor{
 	protected $file = null;
 	protected $size = null;
 	protected $mime_type = null;
@@ -24,7 +24,7 @@ abstract class WP_Image_Editor {
 	 *
 	 * @param string $file Path to the file to load.
 	 */
-	public function __construct($file ) {
+	public function __construct($file ){
 		$this->file = $file;
 	}
 
@@ -40,7 +40,7 @@ abstract class WP_Image_Editor {
 	 * @param array $args
 	 * @return bool
 	 */
-	public static function test($args = array() ) {
+	public static function test($args = array() ){
 		return false;
 	}
 
@@ -56,7 +56,7 @@ abstract class WP_Image_Editor {
 	 * @param string $mime_type
 	 * @return bool
 	 */
-	public static function supports_mime_type($mime_type ) {
+	public static function supports_mime_type($mime_type ){
 		return false;
 	}
 
@@ -78,7 +78,7 @@ abstract class WP_Image_Editor {
 	 *
 	 * @param string $destfilename
 	 * @param string $mime_type
-	 * @return array|WP_Error {'path'=>string, 'file'=>string, 'width'=>int, 'height'=>int, 'mime-type'=>string}
+	 * @return array|WP_Error{'path'=>string, 'file'=>string, 'width'=>int, 'height'=>int, 'mime-type'=>string}
 	 */
 	abstract public function save($destfilename = null, $mime_type = null );
 
@@ -105,10 +105,10 @@ abstract class WP_Image_Editor {
 	 * @since 3.5.0
 	 * @abstract
 	 *
-	 * @param array $sizes {
+	 * @param array $sizes{
 	 *     An array of image size arrays. Default sizes are 'small', 'medium', 'large'.
 	 *
-	 *     @type array $size {
+	 *     @type array $size{
 	 *         @type int  $width  Image width.
 	 *         @type int  $height Image height.
 	 *         @type bool $crop   Optional. Whether to crop the image. Default false.
@@ -174,9 +174,9 @@ abstract class WP_Image_Editor {
 	 *
 	 * @since 3.5.0
 	 *
-	 * @return array {'width'=>int, 'height'=>int}
+	 * @return array{'width'=>int, 'height'=>int}
 	 */
-	public function get_size() {
+	public function get_size(){
 		return $this->size;
 	}
 
@@ -189,7 +189,7 @@ abstract class WP_Image_Editor {
 	 * @param int $height
 	 * @return true
 	 */
-	protected function update_size($width = null, $height = null ) {
+	protected function update_size($width = null, $height = null ){
 		$this->size = array(
 			'width' => (int) $width,
 			'height' => (int) $height
@@ -204,8 +204,8 @@ abstract class WP_Image_Editor {
 	 *
 	 * @return int $quality Compression Quality. Range: [1,100]
 	 */
-	public function get_quality() {
-		if(!$this->quality ) {
+	public function get_quality(){
+		if(!$this->quality ){
 			$this->set_quality();
 		}
 
@@ -220,8 +220,8 @@ abstract class WP_Image_Editor {
 	 * @param int $quality Compression Quality. Range: [1,100]
 	 * @return true|WP_Error True if set successfully; WP_Error on failure.
 	 */
-	public function set_quality($quality = null ) {
-		if(null === $quality ) {
+	public function set_quality($quality = null ){
+		if(null === $quality ){
 			/**
 			 * Filters the default image compression quality setting.
 			 *
@@ -237,7 +237,7 @@ abstract class WP_Image_Editor {
 			 */
 			$quality = apply_filters('wp_editor_set_quality', $this->default_quality, $this->mime_type );
 
-			if('image/jpeg' == $this->mime_type ) {
+			if('image/jpeg' == $this->mime_type ){
 				/**
 				 * Filters the JPEG compression quality for backward-compatibility.
 				 *
@@ -257,20 +257,20 @@ abstract class WP_Image_Editor {
 				$quality = apply_filters('jpeg_quality', $quality, 'image_resize' );
 			}
 
-			if($quality < 0 || $quality > 100 ) {
+			if($quality < 0 || $quality > 100 ){
 				$quality = $this->default_quality;
 			}
 		}
 
 		// Allow 0, but squash to 1 due to identical images in GD, and for backward compatibility.
-		if(0 === $quality ) {
+		if(0 === $quality ){
 			$quality = 1;
 		}
 
-		if(($quality >= 1 ) && ($quality <= 100 ) ) {
+		if(($quality >= 1 ) && ($quality <= 100 ) ){
 			$this->quality = $quality;
 			return true;
-		} else {
+		} else{
 			return new WP_Error('invalid_image_quality', __('Attempted to set image quality outside of the range [1,100].') );
 		}
 	}
@@ -287,21 +287,21 @@ abstract class WP_Image_Editor {
 	 *
 	 * @param string $filename
 	 * @param string $mime_type
-	 * @return array { filename|null, extension, mime-type }
+	 * @return array{ filename|null, extension, mime-type }
 	 */
-	protected function get_output_format($filename = null, $mime_type = null ) {
+	protected function get_output_format($filename = null, $mime_type = null ){
 		$new_ext = null;
 
 		// By default, assume specified type takes priority
-		if($mime_type ) {
+		if($mime_type ){
 			$new_ext = $this->get_extension($mime_type );
 		}
 
-		if($filename ) {
+		if($filename ){
 			$file_ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION ) );
 			$file_mime = $this->get_mime_type($file_ext );
 		}
-		else {
+		else{
 			// If no file specified, grab editor's current extension and mime-type.
 			$file_ext = strtolower(pathinfo($this->file, PATHINFO_EXTENSION ) );
 			$file_mime = $this->mime_type;
@@ -309,14 +309,14 @@ abstract class WP_Image_Editor {
 
 		// Check to see if specified mime-type is the same as type implied by
 		// file extension.  If so, prefer extension from file.
-		if(!$mime_type || ($file_mime == $mime_type ) ) {
+		if(!$mime_type || ($file_mime == $mime_type ) ){
 			$mime_type = $file_mime;
 			$new_ext = $file_ext;
 		}
 
 		// Double-check that the mime-type selected is supported by the editor.
 		// If not, choose a default instead.
-		if(!$this->supports_mime_type($mime_type ) ) {
+		if(!$this->supports_mime_type($mime_type ) ){
 			/**
 			 * Filters default mime type prior to getting the file extension.
 			 *
@@ -330,7 +330,7 @@ abstract class WP_Image_Editor {
 			$new_ext = $this->get_extension($mime_type );
 		}
 
-		if($filename ) {
+		if($filename ){
 			$dir = pathinfo($filename, PATHINFO_DIRNAME );
 			$ext = pathinfo($filename, PATHINFO_EXTENSION );
 
@@ -350,7 +350,7 @@ abstract class WP_Image_Editor {
 	 * @param string $extension
 	 * @return string filename
 	 */
-	public function generate_filename($suffix = null, $dest_path = null, $extension = null ) {
+	public function generate_filename($suffix = null, $dest_path = null, $extension = null ){
 		// $suffix will be appended to the destination filename, just before the extension
 		if(!$suffix )
 			$suffix = $this->get_suffix();
@@ -374,7 +374,7 @@ abstract class WP_Image_Editor {
 	 *
 	 * @return false|string suffix
 	 */
-	public function get_suffix() {
+	public function get_suffix(){
 		if(!$this->get_size() )
 			return false;
 
@@ -391,22 +391,22 @@ abstract class WP_Image_Editor {
 	 * @param array $arguments
 	 * @return bool
 	 */
-	protected function make_image($filename, $function, $arguments ) {
-		if($stream = wp_is_stream($filename ) ) {
+	protected function make_image($filename, $function, $arguments ){
+		if($stream = wp_is_stream($filename ) ){
 			ob_start();
-		} else {
+		} else{
 			// The directory containing the original file may no longer exist when using a replication plugin.
 			wp_mkdir_p(dirname($filename ) );
 		}
 
 		$result = call_user_func_array($function, $arguments );
 
-		if($result && $stream ) {
+		if($result && $stream ){
 			$contents = ob_get_contents();
 
 			$fp = fopen($filename, 'w' );
 
-			if(!$fp ) {
+			if(!$fp ){
 				ob_end_clean();
 				return false;
 			}
@@ -415,7 +415,7 @@ abstract class WP_Image_Editor {
 			fclose($fp );
 		}
 
-		if($stream ) {
+		if($stream ){
 			ob_end_clean();
 		}
 
@@ -433,15 +433,15 @@ abstract class WP_Image_Editor {
 	 * @param string $extension
 	 * @return string|false
 	 */
-	protected static function get_mime_type($extension = null ) {
+	protected static function get_mime_type($extension = null ){
 		if(!$extension )
 			return false;
 
 		$mime_types = wp_get_mime_types();
 		$extensions = array_keys($mime_types );
 
-		foreach ($extensions as $_extension ) {
-			if(preg_match("/{$extension}/i", $_extension ) ) {
+		foreach($extensions as $_extension ){
+			if(preg_match("/{$extension}/i", $_extension ) ){
 				return $mime_types[$_extension];
 			}
 		}
@@ -460,7 +460,7 @@ abstract class WP_Image_Editor {
 	 * @param string $mime_type
 	 * @return string|false
 	 */
-	protected static function get_extension($mime_type = null ) {
+	protected static function get_extension($mime_type = null ){
 		$extensions = explode('|', array_search($mime_type, wp_get_mime_types() ) );
 
 		if(empty($extensions[0] ) )

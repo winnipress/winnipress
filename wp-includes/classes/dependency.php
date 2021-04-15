@@ -16,7 +16,7 @@
  * @access private
  * @since 2.6.0
  */
-class _WP_Dependency {
+class _WP_Dependency{
 	/**
 	 * The handle name.
 	 *
@@ -72,9 +72,9 @@ class _WP_Dependency {
 	 *
 	 * @since 2.6.0
 	 */
-	public function __construct() {
+	public function __construct(){
 		@list($this->handle, $this->src, $this->deps, $this->ver, $this->args ) = func_get_args();
-		if (!is_array($this->deps) )
+		if(!is_array($this->deps) )
 			$this->deps = array();
 	}
 
@@ -87,8 +87,8 @@ class _WP_Dependency {
 	 * @param mixed  $data The data value to add.
 	 * @return bool False if not scalar, true otherwise.
 	 */
-	public function add_data($name, $data ) {
-		if (!is_scalar($name) )
+	public function add_data($name, $data ){
+		if(!is_scalar($name) )
 			return false;
 		$this->extra[$name] = $data;
 		return true;

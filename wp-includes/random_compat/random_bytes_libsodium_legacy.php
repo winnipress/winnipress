@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-if (!is_callable('random_bytes' ) ):
+if(!is_callable('random_bytes')):
 /**
  * If the libsodium PHP extension is loaded, we'll use it above any other
  * solution.
@@ -42,25 +42,25 @@ if (!is_callable('random_bytes' ) ):
  */
 function random_bytes($bytes)
 {
-    try {
+    try{
         $bytes = RandomCompat_intval($bytes);
     } catch (TypeError $ex){
         throw new TypeError(
             'random_bytes(): $bytes must be an integer'
-        );
+       );
     }
 
-    if ($bytes < 1){
+    if($bytes < 1){
         throw new Error(
             'Length must be greater than 0'
-        );
+       );
     }
 
     /**
      * \Sodium\randombytes_buf() doesn't allow more than 2147483647 bytes to be
      * generated in one invocation.
      */
-    if ($bytes > 2147483647){
+    if($bytes > 2147483647){
         $buf = '';
         for ($i = 0; $i < $bytes; $i += 1073741824){
             $n = ($bytes - $i) > 1073741824
@@ -68,12 +68,12 @@ function random_bytes($bytes)
                 : $bytes - $i;
             $buf .= Sodium::randombytes_buf($n);
         }
-    } else {
+    } else{
         $buf = Sodium::randombytes_buf($bytes);
     }
 
-    if ($buf !== false){
-        if (RandomCompat_strlen($buf) === $bytes){
+    if($buf !== false){
+        if(RandomCompat_strlen($buf) === $bytes){
             return $buf;
         }
     }
@@ -83,6 +83,6 @@ function random_bytes($bytes)
      */
     throw new Exception(
         'Could not gather sufficient random data'
-    );
+   );
 }
 endif;

@@ -7,11 +7,11 @@
  * @subpackage entry
  */
 
-if (!class_exists('Translation_Entry', false ) ):
+if(!class_exists('Translation_Entry', false)):
 /**
  * Translation_Entry class encapsulates a translatable string
  */
-class Translation_Entry {
+class Translation_Entry{
 
 	/**
 	 * Whether the entry contains a string and its plural form, default is false
@@ -32,7 +32,7 @@ class Translation_Entry {
 	/**
 	 * @param array $args associative array, support following keys:
 	 * 	- singular (string) -- the string to translate, if omitted and empty entry will be created
-	 * 	- plural (string) -- the plural form of the string, setting this will set {@link $is_plural} to true
+	 * 	- plural (string) -- the plural form of the string, setting this will set{@link $is_plural} to true
 	 * 	- translations (array) -- translations of the string and possibly -- its plural forms
 	 * 	- context (string) -- a string differentiating two equal strings used in different contexts
 	 * 	- translator_comments (string) -- comments left by translators
@@ -40,26 +40,26 @@ class Translation_Entry {
 	 * 	- references (array) -- places in the code this strings is used, in relative_to_root_path/file.php:linenum form
 	 * 	- flags (array) -- flags like php-format
 	 */
-	function __construct($args = array() ){
+	function __construct($args = array()){
 		// if no singular -- empty object
-		if (!isset($args['singular'])){
+		if(!isset($args['singular'])){
 			return;
 		}
 		// get member variable values from args hash
-		foreach ($args as $varname => $value){
+		foreach($args as $varname => $value){
 			$this->$varname = $value;
 		}
-		if (isset($args['plural']) && $args['plural']) $this->is_plural = true;
-		if (!is_array($this->translations)) $this->translations = array();
-		if (!is_array($this->references)) $this->references = array();
-		if (!is_array($this->flags)) $this->flags = array();
+		if(isset($args['plural']) && $args['plural']) $this->is_plural = true;
+		if(!is_array($this->translations)) $this->translations = array();
+		if(!is_array($this->references)) $this->references = array();
+		if(!is_array($this->flags)) $this->flags = array();
 	}
 
 	/**
 	 * PHP4 constructor.
 	 */
-	public function Translation_Entry($args = array() ){
-		self::__construct($args );
+	public function Translation_Entry($args = array()){
+		self::__construct($args);
 	}
 
 	/**
@@ -68,12 +68,12 @@ class Translation_Entry {
 	 * @return string|bool the key or false if the entry is empty
 	 */
 	function key(){
-		if (null === $this->singular || '' === $this->singular ) return false;
+		if(null === $this->singular || '' === $this->singular) return false;
 
 		// Prepend context and EOT, like in MO files
 		$key = !$this->context? $this->singular : $this->context.chr(4).$this->singular;
 		// Standardize on \n line endings
-		$key = str_replace(array("\r\n", "\r" ), "\n", $key );
+		$key = str_replace(array("\r\n", "\r"), "\n", $key);
 
 		return $key;
 	}
@@ -82,9 +82,9 @@ class Translation_Entry {
 	 * @param object $other
 	 */
 	function merge_with(&$other){
-		$this->flags = array_unique(array_merge($this->flags, $other->flags ) );
-		$this->references = array_unique(array_merge($this->references, $other->references ) );
-		if ($this->extracted_comments != $other->extracted_comments ){
+		$this->flags = array_unique(array_merge($this->flags, $other->flags));
+		$this->references = array_unique(array_merge($this->references, $other->references));
+		if($this->extracted_comments != $other->extracted_comments){
 			$this->extracted_comments .= $other->extracted_comments;
 		}
 

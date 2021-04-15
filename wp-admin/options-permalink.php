@@ -9,7 +9,7 @@
 /** WordPress Administration Bootstrap */
 require_once(dirname(__FILE__ ) . '/admin.php' );
 
-if (!current_user_can('manage_options' ) )
+if(!current_user_can('manage_options' ) )
 	wp_die(__('Sorry, you are not allowed to manage options for this site.' ) );
 
 $title = __('Permalink Settings');
@@ -51,7 +51,7 @@ $iis7_permalinks = iis7_supports_permalinks();
 $permalink_structure = get_option('permalink_structure' );
 
 $prefix = $blog_prefix = '';
-if (!got_url_rewrite() )
+if(!got_url_rewrite() )
 	$prefix = '/index.php';
 
 
@@ -60,15 +60,15 @@ $category_base       = get_option('category_base' );
 $tag_base            = get_option('tag_base' );
 $update_required     = false;
 
-if ($iis7_permalinks ) {
-	if ((!file_exists($home_path . 'web.config') && win_is_writable($home_path) ) || win_is_writable($home_path . 'web.config') )
+if($iis7_permalinks ) {
+	if((!file_exists($home_path . 'web.config') && win_is_writable($home_path) ) || win_is_writable($home_path . 'web.config') )
 		$writable = true;
 	else
 		$writable = false;
-} elseif ($is_nginx ) {
+} elseif($is_nginx ) {
 	$writable = false;
 } else {
-	if ((!file_exists($home_path . '.htaccess' ) && is_writable($home_path ) ) || is_writable($home_path . '.htaccess' ) ) {
+	if((!file_exists($home_path . '.htaccess' ) && is_writable($home_path ) ) || is_writable($home_path . '.htaccess' ) ) {
 		$writable = true;
 	} else {
 		$writable = false;
@@ -80,18 +80,18 @@ if ($iis7_permalinks ) {
 
 $using_index_permalinks = $wp_rewrite->using_index_permalinks();
 
-if (isset($_POST['permalink_structure']) || isset($_POST['category_base']) ) {
+if(isset($_POST['permalink_structure']) || isset($_POST['category_base']) ) {
 	check_admin_referer('update-permalink');
 
-	if (isset($_POST['permalink_structure'] ) ) {
-		if (isset($_POST['selection'] ) && 'custom' != $_POST['selection'] )
+	if(isset($_POST['permalink_structure'] ) ) {
+		if(isset($_POST['selection'] ) && 'custom' != $_POST['selection'] )
 			$permalink_structure = $_POST['selection'];
 		else
 			$permalink_structure = $_POST['permalink_structure'];
 
-		if (!empty($permalink_structure ) ) {
+		if(!empty($permalink_structure ) ) {
 			$permalink_structure = preg_replace('#/+#', '/', '/' . str_replace('#', '', $permalink_structure ) );
-			if ($prefix && $blog_prefix )
+			if($prefix && $blog_prefix )
 				$permalink_structure = $prefix . preg_replace('#^/?index\.php#', '', $permalink_structure );
 			else
 				$permalink_structure = $blog_prefix . $permalink_structure;
@@ -102,33 +102,33 @@ if (isset($_POST['permalink_structure']) || isset($_POST['category_base']) ) {
 		$wp_rewrite->set_permalink_structure($permalink_structure );
 	}
 
-	if (isset($_POST['category_base'] ) ) {
+	if(isset($_POST['category_base'] ) ) {
 		$category_base = $_POST['category_base'];
-		if (!empty($category_base ) )
+		if(!empty($category_base ) )
 			$category_base = $blog_prefix . preg_replace('#/+#', '/', '/' . str_replace('#', '', $category_base ) );
 		$wp_rewrite->set_category_base($category_base );
 	}
 
-	if (isset($_POST['tag_base'] ) ) {
+	if(isset($_POST['tag_base'] ) ) {
 		$tag_base = $_POST['tag_base'];
-		if (!empty($tag_base ) )
+		if(!empty($tag_base ) )
 			$tag_base = $blog_prefix . preg_replace('#/+#', '/', '/' . str_replace('#', '', $tag_base ) );
 		$wp_rewrite->set_tag_base($tag_base );
 	}
 
 	$message = __('Permalink structure updated.' );
 
-	if ($iis7_permalinks ) {
-		if ($permalink_structure && !$using_index_permalinks && !$writable ) {
+	if($iis7_permalinks ) {
+		if($permalink_structure && !$using_index_permalinks && !$writable ) {
 			$message = __('You should update your web.config now.' );
-		} elseif ($permalink_structure && !$using_index_permalinks && $writable ) {
+		} elseif($permalink_structure && !$using_index_permalinks && $writable ) {
 			$message = __('Permalink structure updated. Remove write access on web.config file now!' );
 		}
-	} elseif (!$is_nginx && $permalink_structure && !$using_index_permalinks && !$writable && $update_required ) {
+	} elseif(!$is_nginx && $permalink_structure && !$using_index_permalinks && !$writable && $update_required ) {
 		$message = __('You should update your .htaccess now.' );
 	}
 
-	if (!get_settings_errors() ) {
+	if(!get_settings_errors() ) {
 		add_settings_error('general', 'settings_updated', $message, 'updated' );
 	}
 
@@ -229,12 +229,12 @@ $structures = array(
 				/* translators: %s: permalink structure tag */
 				$structure_tag_already_used = __('%s (already used in permalink structure)' );
 
-				if (!empty($available_tags ) ) :
+				if(!empty($available_tags ) ) :
 					?>
 					<p><?php _e('Available tags:' ); ?></p>
 					<ul role="list">
 						<?php
-						foreach ($available_tags as $tag => $explanation ) {
+						foreach($available_tags as $tag => $explanation ) {
 							?>
 							<li>
 								<button type="button"
@@ -276,9 +276,9 @@ printf(__('If you like, you may enter custom structures for your category and ta
 
 <?php submit_button(); ?>
   </form>
-<?php if ($iis7_permalinks ) :
-	if (isset($_POST['submit']) && $permalink_structure && !$using_index_permalinks && !$writable ) :
-		if (file_exists($home_path . 'web.config') ) : ?>
+<?php if($iis7_permalinks ) :
+	if(isset($_POST['submit']) && $permalink_structure && !$using_index_permalinks && !$writable ) :
+		if(file_exists($home_path . 'web.config') ) : ?>
 <p><?php
 	printf(
 		/* translators: 1: web.config, 2: Codex URL, 3: CTRL + a, 4: element code */
@@ -323,10 +323,10 @@ printf(__('If you like, you may enter custom structures for your category and ta
 ?></p>
 		<?php endif; ?>
 	<?php endif; ?>
-<?php elseif ($is_nginx ) : ?>
+<?php elseif($is_nginx ) : ?>
 	<p><?php _e('<a href="https://codex.wordpress.org/Nginx">Documentation on Nginx configuration</a>.' ); ?></p>
 <?php else:
-	if ($permalink_structure && !$using_index_permalinks && !$writable && $update_required ) : ?>
+	if($permalink_structure && !$using_index_permalinks && !$writable && $update_required ) : ?>
 <p><?php
 	printf(
 		/* translators: 1: .htaccess, 2: Codex URL, 3: CTRL + a */

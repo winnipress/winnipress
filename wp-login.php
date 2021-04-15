@@ -16,7 +16,7 @@ if(force_ssl_admin() && !is_ssl()){
 	if(0 === strpos($_SERVER['REQUEST_URI'], 'http')){
 		wp_safe_redirect(set_url_scheme($_SERVER['REQUEST_URI'], 'https'));
 		exit();
-	} else {
+	} else{
 		wp_safe_redirect('https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 		exit();
 	}
@@ -188,9 +188,9 @@ function login_header($title = 'Log In', $message = '', $wp_error = null){
 	if($wp_error->get_error_code()){
 		$errors = '';
 		$messages = '';
-		foreach ($wp_error->get_error_codes() as $code){
+		foreach($wp_error->get_error_codes() as $code){
 			$severity = $wp_error->get_error_data($code);
-			foreach ($wp_error->get_error_messages($code) as $error_message){
+			foreach($wp_error->get_error_messages($code) as $error_message){
 				if('message' == $severity)
 					$messages .= '	' . $error_message . "<br />\n";
 				else
@@ -279,7 +279,7 @@ function retrieve_password(){
 		$user_data = get_user_by('email', trim(wp_unslash($_POST['user_login'])));
 		if(empty($user_data))
 			$errors->add('invalid_email', __('<strong>ERROR</strong>: There is no user registered with that email address.'));
-	} else {
+	} else{
 		$login = trim($_POST['user_login']);
 		$user_data = get_user_by('login', $login);
 	}
@@ -453,7 +453,7 @@ case 'postpass' :
 	$referer = wp_get_referer();
 	if($referer){
 		$secure = ('https' === parse_url($referer, PHP_URL_SCHEME));
-	} else {
+	} else{
 		$secure = false;
 	}
 	setcookie('wp-postpass_' . COOKIEHASH, $hasher->HashPassword(wp_unslash($_POST['post_password'])), $expire, COOKIEPATH, COOKIE_DOMAIN, $secure);
@@ -474,7 +474,7 @@ case 'logout' :
 
 	if(!empty($_REQUEST['redirect_to'])){
 		$redirect_to = $requested_redirect_to = $_REQUEST['redirect_to'];
-	} else {
+	} else{
 		$redirect_to = '/wp-login.php?loggedout=true';
 		$requested_redirect_to = '';
 	}
@@ -599,7 +599,7 @@ case 'rp' :
 		if(isset($_POST['pass1']) && !hash_equals($rp_key, $_POST['rp_key'])){
 			$user = false;
 		}
-	} else {
+	} else{
 		$user = false;
 	}
 
@@ -797,7 +797,7 @@ case 'confirmaction' :
 	if(isset($_GET['confirm_key'])){
 		$key    = sanitize_text_field(wp_unslash($_GET['confirm_key']));
 		$result = wp_validate_user_request_key($request_id, $key);
-	} else {
+	} else{
 		$result = new WP_Error('invalid_key', __('Invalid key'));
 	}
 
@@ -853,7 +853,7 @@ default:
 		// Redirect to https if user wants ssl
 		if($secure_cookie && false !== strpos($redirect_to, 'wp-admin'))
 			$redirect_to = preg_replace('|^http://|', 'https://', $redirect_to);
-	} else {
+	} else{
 		$redirect_to = admin_url();
 	}
 
@@ -924,7 +924,7 @@ default:
 	if($interim_login){
 		if(!$errors->get_error_code())
 			$errors->add('expired', __('Your session has expired. Please log in to continue where you left off.'), 'message');
-	} else {
+	} else{
 		// Some parts of this script use the main login form to display a message
 		if		(isset($_GET['loggedout']) && true == $_GET['loggedout'])
 			$errors->add('loggedout', __('You are now logged out.'), 'message');
@@ -962,7 +962,7 @@ default:
 
 	if(!empty($errors->errors)){
 		$aria_describedby_error = ' aria-describedby="login_error"';
-	} else {
+	} else{
 		$aria_describedby_error = '';
 	}
 ?>
@@ -989,7 +989,7 @@ default:
 		<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php esc_attr_e('Log In'); ?>" />
 <?php	if($interim_login){ ?>
 		<input type="hidden" name="interim-login" value="1" />
-<?php	} else { ?>
+<?php	} else{ ?>
 		<input type="hidden" name="redirect_to" value="<?php echo esc_attr($redirect_to); ?>" />
 <?php 	} ?>
 <?php   if($customize_login) : ?>

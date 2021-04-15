@@ -18,7 +18,7 @@
  *
  * @package Requests
  */
-class Requests {
+class Requests{
 	/**
 	 * POST method
 	 *
@@ -100,7 +100,7 @@ class Requests {
 	/**
 	 * Selected transport name
 	 *
-	 * Use {@see get_transport()} instead
+	 * Use{@see get_transport()} instead
 	 *
 	 * @var array
 	 */
@@ -121,12 +121,12 @@ class Requests {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	private function __construct() {}
+	private function __construct(){}
 
 	/**
 	 * Autoloader for Requests
 	 *
-	 * Register this with {@see register_autoloader()} if you'd like to avoid
+	 * Register this with{@see register_autoloader()} if you'd like to avoid
 	 * having to create your own.
 	 *
 	 * (You can also use `spl_autoload_register` directly if you'd prefer.)
@@ -135,14 +135,14 @@ class Requests {
 	 *
 	 * @param string $class Class name to load
 	 */
-	public static function autoloader($class) {
+	public static function autoloader($class){
 		// Check that the class starts with "Requests"
-		if(strpos($class, 'Requests') !== 0) {
+		if(strpos($class, 'Requests') !== 0){
 			return;
 		}
 
 		$file = str_replace('_', '/', $class);
-		if(file_exists(dirname(__FILE__) . '/' . $file . '.php')) {
+		if(file_exists(dirname(__FILE__) . '/' . $file . '.php')){
 			require_once(dirname(__FILE__) . '/' . $file . '.php');
 		}
 	}
@@ -152,7 +152,7 @@ class Requests {
 	 *
 	 * @codeCoverageIgnore
 	 */
-	public static function register_autoloader() {
+	public static function register_autoloader(){
 		spl_autoload_register(array('Requests', 'autoloader'));
 	}
 
@@ -161,8 +161,8 @@ class Requests {
 	 *
 	 * @param string $transport Transport class to add, must support the Requests_Transport interface
 	 */
-	public static function add_transport($transport) {
-		if(empty(self::$transports)) {
+	public static function add_transport($transport){
+		if(empty(self::$transports)){
 			self::$transports = array(
 				'Requests_Transport_cURL',
 				'Requests_Transport_fsockopen',
@@ -178,7 +178,7 @@ class Requests {
 	 * @throws Requests_Exception If no valid transport is found (`notransport`)
 	 * @return Requests_Transport
 	 */
-	protected static function get_transport($capabilities = array()) {
+	protected static function get_transport($capabilities = array()){
 		// Caching code, don't bother testing coverage
 		// @codeCoverageIgnoreStart
 		// array of capabilities as a string to be used as an array key
@@ -186,12 +186,12 @@ class Requests {
 		$cap_string = serialize($capabilities);
 
 		// Don't search for a transport if it's already been done for these $capabilities
-		if(isset(self::$transport[$cap_string]) && self::$transport[$cap_string] !== null) {
+		if(isset(self::$transport[$cap_string]) && self::$transport[$cap_string] !== null){
 			return new self::$transport[$cap_string]();
 		}
 		// @codeCoverageIgnoreEnd
 
-		if(empty(self::$transports)) {
+		if(empty(self::$transports)){
 			self::$transports = array(
 				'Requests_Transport_cURL',
 				'Requests_Transport_fsockopen',
@@ -199,18 +199,18 @@ class Requests {
 		}
 
 		// Find us a working transport
-		foreach (self::$transports as $class) {
-			if(!class_exists($class)) {
+		foreach(self::$transports as $class){
+			if(!class_exists($class)){
 				continue;
 			}
 
 			$result = call_user_func(array($class, 'test'), $capabilities);
-			if($result) {
+			if($result){
 				self::$transport[$cap_string] = $class;
 				break;
 			}
 		}
-		if(self::$transport[$cap_string] === null) {
+		if(self::$transport[$cap_string] === null){
 			throw new Requests_Exception('No working transports found', 'notransport', self::$transports);
 		}
 
@@ -227,28 +227,28 @@ class Requests {
 	/**
 	 * Send a GET request
 	 */
-	public static function get($url, $headers = array(), $options = array()) {
+	public static function get($url, $headers = array(), $options = array()){
 		return self::request($url, $headers, null, self::GET, $options);
 	}
 
 	/**
 	 * Send a HEAD request
 	 */
-	public static function head($url, $headers = array(), $options = array()) {
+	public static function head($url, $headers = array(), $options = array()){
 		return self::request($url, $headers, null, self::HEAD, $options);
 	}
 
 	/**
 	 * Send a DELETE request
 	 */
-	public static function delete($url, $headers = array(), $options = array()) {
+	public static function delete($url, $headers = array(), $options = array()){
 		return self::request($url, $headers, null, self::DELETE, $options);
 	}
 
 	/**
 	 * Send a TRACE request
 	 */
-	public static function trace($url, $headers = array(), $options = array()) {
+	public static function trace($url, $headers = array(), $options = array()){
 		return self::request($url, $headers, null, self::TRACE, $options);
 	}
 	/**#@-*/
@@ -264,32 +264,32 @@ class Requests {
 	/**
 	 * Send a POST request
 	 */
-	public static function post($url, $headers = array(), $data = array(), $options = array()) {
+	public static function post($url, $headers = array(), $data = array(), $options = array()){
 		return self::request($url, $headers, $data, self::POST, $options);
 	}
 	/**
 	 * Send a PUT request
 	 */
-	public static function put($url, $headers = array(), $data = array(), $options = array()) {
+	public static function put($url, $headers = array(), $data = array(), $options = array()){
 		return self::request($url, $headers, $data, self::PUT, $options);
 	}
 
 	/**
 	 * Send an OPTIONS request
 	 */
-	public static function options($url, $headers = array(), $data = array(), $options = array()) {
+	public static function options($url, $headers = array(), $data = array(), $options = array()){
 		return self::request($url, $headers, $data, self::OPTIONS, $options);
 	}
 
 	/**
 	 * Send a PATCH request
 	 *
-	 * Note: Unlike {@see post} and {@see put}, `$headers` is required, as the
+	 * Note: Unlike{@see post} and{@see put}, `$headers` is required, as the
 	 * specification recommends that should send an ETag
 	 *
 	 * @link https://tools.ietf.org/html/rfc5789
 	 */
-	public static function patch($url, $headers, $data = array(), $options = array()) {
+	public static function patch($url, $headers, $data = array(), $options = array()){
 		return self::request($url, $headers, $data, self::PATCH, $options);
 	}
 	/**#@-*/
@@ -330,8 +330,8 @@ class Requests {
 	 *    (boolean, default: true)
 	 * - `transport`: Custom transport. Either a class name, or a
 	 *    transport object. Defaults to the first working transport from
-	 *    {@see getTransport()}
-	 *    (string|Requests_Transport, default: {@see getTransport()})
+	 *   {@see getTransport()}
+	 *    (string|Requests_Transport, default:{@see getTransport()})
 	 * - `hooks`: Hooks handler.
 	 *    (Requests_Hooker, default: new Requests_Hooks())
 	 * - `verify`: Should we verify SSL certificates? Allows passing in a custom
@@ -354,8 +354,8 @@ class Requests {
 	 * @param array $options Options for the request (see description for more information)
 	 * @return Requests_Response
 	 */
-	public static function request($url, $headers = array(), $data = array(), $type = self::GET, $options = array()) {
-		if(empty($options['type'])) {
+	public static function request($url, $headers = array(), $data = array(), $type = self::GET, $options = array()){
+		if(empty($options['type'])){
 			$options['type'] = $type;
 		}
 		$options = array_merge(self::get_default_options(), $options);
@@ -364,14 +364,14 @@ class Requests {
 
 		$options['hooks']->dispatch('requests.before_request', array(&$url, &$headers, &$data, &$type, &$options));
 
-		if(!empty($options['transport'])) {
+		if(!empty($options['transport'])){
 			$transport = $options['transport'];
 
-			if(is_string($options['transport'])) {
+			if(is_string($options['transport'])){
 				$transport = new $transport();
 			}
 		}
-		else {
+		else{
 			$need_ssl = (0 === stripos($url, 'https://'));
 			$capabilities = array('ssl' => $need_ssl);
 			$transport = self::get_transport($capabilities);
@@ -394,16 +394,16 @@ class Requests {
 	 * The request fields value is an associative array with the following keys:
 	 *
 	 * - `url`: Request URL Same as the `$url` parameter to
-	 *    {@see Requests::request}
+	 *   {@see Requests::request}
 	 *    (string, required)
 	 * - `headers`: Associative array of header fields. Same as the `$headers`
-	 *    parameter to {@see Requests::request}
+	 *    parameter to{@see Requests::request}
 	 *    (array, default: `array()`)
 	 * - `data`: Associative array of data fields or a string. Same as the
-	 *    `$data` parameter to {@see Requests::request}
+	 *    `$data` parameter to{@see Requests::request}
 	 *    (array|string, default: `array()`)
 	 * - `type`: HTTP request type (use Requests constants). Same as the `$type`
-	 *    parameter to {@see Requests::request}
+	 *    parameter to{@see Requests::request}
 	 *    (string, default: `Requests::GET`)
 	 * - `cookies`: Associative array of cookie name to value, or cookie jar.
 	 *    (array|Requests_Cookie_Jar)
@@ -421,35 +421,35 @@ class Requests {
 	 *    (callback)
 	 *
 	 * @param array $requests Requests data (see description for more information)
-	 * @param array $options Global and default options (see {@see Requests::request})
+	 * @param array $options Global and default options (see{@see Requests::request})
 	 * @return array Responses (either Requests_Response or a Requests_Exception object)
 	 */
-	public static function request_multiple($requests, $options = array()) {
+	public static function request_multiple($requests, $options = array()){
 		$options = array_merge(self::get_default_options(true), $options);
 
-		if(!empty($options['hooks'])) {
+		if(!empty($options['hooks'])){
 			$options['hooks']->register('transport.internal.parse_response', array('Requests', 'parse_multiple'));
-			if(!empty($options['complete'])) {
+			if(!empty($options['complete'])){
 				$options['hooks']->register('multiple.request.complete', $options['complete']);
 			}
 		}
 
-		foreach ($requests as $id => &$request) {
-			if(!isset($request['headers'])) {
+		foreach($requests as $id => &$request){
+			if(!isset($request['headers'])){
 				$request['headers'] = array();
 			}
-			if(!isset($request['data'])) {
+			if(!isset($request['data'])){
 				$request['data'] = array();
 			}
-			if(!isset($request['type'])) {
+			if(!isset($request['type'])){
 				$request['type'] = self::GET;
 			}
-			if(!isset($request['options'])) {
+			if(!isset($request['options'])){
 				$request['options'] = $options;
 				$request['options']['type'] = $request['type'];
 			}
-			else {
-				if(empty($request['options']['type'])) {
+			else{
+				if(empty($request['options']['type'])){
 					$request['options']['type'] = $request['type'];
 				}
 				$request['options'] = array_merge($options, $request['options']);
@@ -458,31 +458,31 @@ class Requests {
 			self::set_defaults($request['url'], $request['headers'], $request['data'], $request['type'], $request['options']);
 
 			// Ensure we only hook in once
-			if($request['options']['hooks'] !== $options['hooks']) {
+			if($request['options']['hooks'] !== $options['hooks']){
 				$request['options']['hooks']->register('transport.internal.parse_response', array('Requests', 'parse_multiple'));
-				if(!empty($request['options']['complete'])) {
+				if(!empty($request['options']['complete'])){
 					$request['options']['hooks']->register('multiple.request.complete', $request['options']['complete']);
 				}
 			}
 		}
 		unset($request);
 
-		if(!empty($options['transport'])) {
+		if(!empty($options['transport'])){
 			$transport = $options['transport'];
 
-			if(is_string($options['transport'])) {
+			if(is_string($options['transport'])){
 				$transport = new $transport();
 			}
 		}
-		else {
+		else{
 			$transport = self::get_transport();
 		}
 		$responses = $transport->request_multiple($requests, $options);
 
-		foreach ($responses as $id => &$response) {
+		foreach($responses as $id => &$response){
 			// If our hook got messed with somehow, ensure we end up with the
 			// correct response
-			if(is_string($response)) {
+			if(is_string($response)){
 				$request = $requests[$id];
 				self::parse_multiple($response, $request);
 				$request['options']['hooks']->dispatch('multiple.request.complete', array(&$response, $id));
@@ -499,7 +499,7 @@ class Requests {
 	 * @param boolean $multirequest Is this a multirequest?
 	 * @return array Default option values
 	 */
-	protected static function get_default_options($multirequest = false) {
+	protected static function get_default_options($multirequest = false){
 		$defaults = array(
 			'timeout' => 10,
 			'connect_timeout' => 10,
@@ -521,7 +521,7 @@ class Requests {
 			'verify' => Requests::get_certificate_path(),
 			'verifyname' => true,
 		);
-		if($multirequest !== false) {
+		if($multirequest !== false){
 			$defaults['complete'] = null;
 		}
 		return $defaults;
@@ -532,8 +532,8 @@ class Requests {
 	 *
 	 * @return string Default certificate path.
 	 */
-	public static function get_certificate_path() {
-		if(!empty(Requests::$certificate_path)) {
+	public static function get_certificate_path(){
+		if(!empty(Requests::$certificate_path)){
 			return Requests::$certificate_path;
 		}
 
@@ -545,7 +545,7 @@ class Requests {
 	 *
 	 * @param string $path Certificate path, pointing to a PEM file.
 	 */
-	public static function set_certificate_path($path) {
+	public static function set_certificate_path($path){
 		Requests::$certificate_path = $path;
 	}
 
@@ -559,40 +559,40 @@ class Requests {
 	 * @param array $options Options for the request
 	 * @return array $options
 	 */
-	protected static function set_defaults(&$url, &$headers, &$data, &$type, &$options) {
-		if(!preg_match('/^http(s)?:\/\//i', $url, $matches)) {
+	protected static function set_defaults(&$url, &$headers, &$data, &$type, &$options){
+		if(!preg_match('/^http(s)?:\/\//i', $url, $matches)){
 			throw new Requests_Exception('Only HTTP(S) requests are handled.', 'nonhttp', $url);
 		}
 
-		if(empty($options['hooks'])) {
+		if(empty($options['hooks'])){
 			$options['hooks'] = new Requests_Hooks();
 		}
 
-		if(is_array($options['auth'])) {
+		if(is_array($options['auth'])){
 			$options['auth'] = new Requests_Auth_Basic($options['auth']);
 		}
-		if($options['auth'] !== false) {
+		if($options['auth'] !== false){
 			$options['auth']->register($options['hooks']);
 		}
 
-		if(is_string($options['proxy']) || is_array($options['proxy'])) {
+		if(is_string($options['proxy']) || is_array($options['proxy'])){
 			$options['proxy'] = new Requests_Proxy_HTTP($options['proxy']);
 		}
-		if($options['proxy'] !== false) {
+		if($options['proxy'] !== false){
 			$options['proxy']->register($options['hooks']);
 		}
 
-		if(is_array($options['cookies'])) {
+		if(is_array($options['cookies'])){
 			$options['cookies'] = new Requests_Cookie_Jar($options['cookies']);
 		}
-		elseif(empty($options['cookies'])) {
+		elseif(empty($options['cookies'])){
 			$options['cookies'] = new Requests_Cookie_Jar();
 		}
-		if($options['cookies'] !== false) {
+		if($options['cookies'] !== false){
 			$options['cookies']->register($options['hooks']);
 		}
 
-		if($options['idn'] !== false) {
+		if($options['idn'] !== false){
 			$iri = new Requests_IRI($url);
 			$iri->host = Requests_IDNAEncoder::encode($iri->ihost);
 			$url = $iri->uri;
@@ -601,11 +601,11 @@ class Requests {
 		// Massage the type to ensure we support it.
 		$type = strtoupper($type);
 
-		if(!isset($options['data_format'])) {
-			if(in_array($type, array(self::HEAD, self::GET, self::DELETE))) {
+		if(!isset($options['data_format'])){
+			if(in_array($type, array(self::HEAD, self::GET, self::DELETE))){
 				$options['data_format'] = 'query';
 			}
-			else {
+			else{
 				$options['data_format'] = 'body';
 			}
 		}
@@ -620,22 +620,22 @@ class Requests {
 	 *
 	 * @param string $headers Full response text including headers and body
 	 * @param string $url Original request URL
-	 * @param array $req_headers Original $headers array passed to {@link request()}, in case we need to follow redirects
-	 * @param array $req_data Original $data array passed to {@link request()}, in case we need to follow redirects
-	 * @param array $options Original $options array passed to {@link request()}, in case we need to follow redirects
+	 * @param array $req_headers Original $headers array passed to{@link request()}, in case we need to follow redirects
+	 * @param array $req_data Original $data array passed to{@link request()}, in case we need to follow redirects
+	 * @param array $options Original $options array passed to{@link request()}, in case we need to follow redirects
 	 * @return Requests_Response
 	 */
-	protected static function parse_response($headers, $url, $req_headers, $req_data, $options) {
+	protected static function parse_response($headers, $url, $req_headers, $req_data, $options){
 		$return = new Requests_Response();
-		if(!$options['blocking']) {
+		if(!$options['blocking']){
 			return $return;
 		}
 
 		$return->raw = $headers;
 		$return->url = $url;
 
-		if(!$options['filename']) {
-			if(($pos = strpos($headers, "\r\n\r\n")) === false) {
+		if(!$options['filename']){
+			if(($pos = strpos($headers, "\r\n\r\n")) === false){
 				// Crap!
 				throw new Requests_Exception('Missing header/body separator', 'requests.no_crlf_separator');
 			}
@@ -643,7 +643,7 @@ class Requests {
 			$headers = substr($return->raw, 0, $pos);
 			$return->body = substr($return->raw, $pos + strlen("\n\r\n\r"));
 		}
-		else {
+		else{
 			$return->body = '';
 		}
 		// Pretend CRLF = LF for compatibility (RFC 2616, section 19.3)
@@ -652,44 +652,44 @@ class Requests {
 		$headers = preg_replace('/\n[ \t]/', ' ', $headers);
 		$headers = explode("\n", $headers);
 		preg_match('#^HTTP/(1\.\d)[ \t]+(\d+)#i', array_shift($headers), $matches);
-		if(empty($matches)) {
+		if(empty($matches)){
 			throw new Requests_Exception('Response could not be parsed', 'noversion', $headers);
 		}
 		$return->protocol_version = (float) $matches[1];
 		$return->status_code = (int) $matches[2];
-		if($return->status_code >= 200 && $return->status_code < 300) {
+		if($return->status_code >= 200 && $return->status_code < 300){
 			$return->success = true;
 		}
 
-		foreach ($headers as $header) {
+		foreach($headers as $header){
 			list($key, $value) = explode(':', $header, 2);
 			$value = trim($value);
 			preg_replace('#(\s+)#i', ' ', $value);
 			$return->headers[$key] = $value;
 		}
-		if(isset($return->headers['transfer-encoding'])) {
+		if(isset($return->headers['transfer-encoding'])){
 			$return->body = self::decode_chunked($return->body);
 			unset($return->headers['transfer-encoding']);
 		}
-		if(isset($return->headers['content-encoding'])) {
+		if(isset($return->headers['content-encoding'])){
 			$return->body = self::decompress($return->body);
 		}
 
 		//fsockopen and cURL compatibility
-		if(isset($return->headers['connection'])) {
+		if(isset($return->headers['connection'])){
 			unset($return->headers['connection']);
 		}
 
 		$options['hooks']->dispatch('requests.before_redirect_check', array(&$return, $req_headers, $req_data, $options));
 
-		if($return->is_redirect() && $options['follow_redirects'] === true) {
-			if(isset($return->headers['location']) && $options['redirected'] < $options['redirects']) {
-				if($return->status_code === 303) {
+		if($return->is_redirect() && $options['follow_redirects'] === true){
+			if(isset($return->headers['location']) && $options['redirected'] < $options['redirects']){
+				if($return->status_code === 303){
 					$options['type'] = self::GET;
 				}
 				$options['redirected']++;
 				$location = $return->headers['location'];
-				if(strpos($location, 'http://') !== 0 && strpos($location, 'https://') !== 0) {
+				if(strpos($location, 'http://') !== 0 && strpos($location, 'https://') !== 0){
 					// relative redirect, for compatibility make it absolute
 					$location = Requests_IRI::absolutize($url, $location);
 					$location = $location->uri;
@@ -707,7 +707,7 @@ class Requests {
 				$redirected->history[] = $return;
 				return $redirected;
 			}
-			elseif($options['redirected'] >= $options['redirects']) {
+			elseif($options['redirected'] >= $options['redirects']){
 				throw new Requests_Exception('Too many redirects', 'toomanyredirects', $return);
 			}
 		}
@@ -725,18 +725,18 @@ class Requests {
 	 * while still executing a multiple request.
 	 *
 	 * @param string $response Full response text including headers and body (will be overwritten with Response instance)
-	 * @param array $request Request data as passed into {@see Requests::request_multiple()}
+	 * @param array $request Request data as passed into{@see Requests::request_multiple()}
 	 * @return null `$response` is either set to a Requests_Response instance, or a Requests_Exception object
 	 */
-	public static function parse_multiple(&$response, $request) {
-		try {
+	public static function parse_multiple(&$response, $request){
+		try{
 			$url = $request['url'];
 			$headers = $request['headers'];
 			$data = $request['data'];
 			$options = $request['options'];
 			$response = self::parse_response($response, $url, $headers, $data, $options);
 		}
-		catch (Requests_Exception $e) {
+		catch (Requests_Exception $e){
 			$response = $e;
 		}
 	}
@@ -748,8 +748,8 @@ class Requests {
 	 * @param string $data Chunked body
 	 * @return string Decoded body
 	 */
-	protected static function decode_chunked($data) {
-		if(!preg_match('/^([0-9a-f]+)(?:;(?:[\w-]*)(?:=(?:(?:[\w-]*)*|"(?:[^\r\n])*"))?)*\r\n/i', trim($data))) {
+	protected static function decode_chunked($data){
+		if(!preg_match('/^([0-9a-f]+)(?:;(?:[\w-]*)(?:=(?:(?:[\w-]*)*|"(?:[^\r\n])*"))?)*\r\n/i', trim($data))){
 			return $data;
 		}
 
@@ -758,15 +758,15 @@ class Requests {
 		$decoded = '';
 		$encoded = $data;
 
-		while (true) {
+		while (true){
 			$is_chunked = (bool) preg_match('/^([0-9a-f]+)(?:;(?:[\w-]*)(?:=(?:(?:[\w-]*)*|"(?:[^\r\n])*"))?)*\r\n/i', $encoded, $matches);
-			if(!$is_chunked) {
+			if(!$is_chunked){
 				// Looks like it's not chunked after all
 				return $data;
 			}
 
 			$length = hexdec(trim($matches[1]));
-			if($length === 0) {
+			if($length === 0){
 				// Ignore trailer headers
 				return $decoded;
 			}
@@ -775,7 +775,7 @@ class Requests {
 			$decoded .= substr($encoded, $chunk_length, $length);
 			$encoded = substr($encoded, $chunk_length + $length + 2);
 
-			if(trim($encoded) === '0' || empty($encoded)) {
+			if(trim($encoded) === '0' || empty($encoded)){
 				return $decoded;
 			}
 		}
@@ -791,9 +791,9 @@ class Requests {
 	 * @param array $array Dictionary of header values
 	 * @return array List of headers
 	 */
-	public static function flatten($array) {
+	public static function flatten($array){
 		$return = array();
-		foreach ($array as $key => $value) {
+		foreach($array as $key => $value){
 			$return[] = sprintf('%s: %s', $key, $value);
 		}
 		return $return;
@@ -803,11 +803,11 @@ class Requests {
 	 * Convert a key => value array to a 'key: value' array for headers
 	 *
 	 * @codeCoverageIgnore
-	 * @deprecated Misspelling of {@see Requests::flatten}
+	 * @deprecated Misspelling of{@see Requests::flatten}
 	 * @param array $array Dictionary of header values
 	 * @return array List of headers
 	 */
-	public static function flattern($array) {
+	public static function flattern($array){
 		return self::flatten($array);
 	}
 
@@ -820,22 +820,22 @@ class Requests {
 	 * @param string $data Compressed data in one of the above formats
 	 * @return string Decompressed string
 	 */
-	public static function decompress($data) {
-		if(substr($data, 0, 2) !== "\x1f\x8b" && substr($data, 0, 2) !== "\x78\x9c") {
+	public static function decompress($data){
+		if(substr($data, 0, 2) !== "\x1f\x8b" && substr($data, 0, 2) !== "\x78\x9c"){
 			// Not actually compressed. Probably cURL ruining this for us.
 			return $data;
 		}
 
-		if(function_exists('gzdecode') && ($decoded = @gzdecode($data)) !== false) { 
+		if(function_exists('gzdecode') && ($decoded = @gzdecode($data)) !== false){ 
 			return $decoded;
 		}
-		elseif(function_exists('gzinflate') && ($decoded = @gzinflate($data)) !== false) { 
+		elseif(function_exists('gzinflate') && ($decoded = @gzinflate($data)) !== false){ 
 			return $decoded;
 		}
-		elseif(($decoded = self::compatible_gzinflate($data)) !== false) {
+		elseif(($decoded = self::compatible_gzinflate($data)) !== false){
 			return $decoded;
 		}
-		elseif(function_exists('gzuncompress') && ($decoded = @gzuncompress($data)) !== false) { 
+		elseif(function_exists('gzuncompress') && ($decoded = @gzuncompress($data)) !== false){ 
 			return $decoded;
 		}
 
@@ -862,29 +862,29 @@ class Requests {
 	 * @param string $gzData String to decompress.
 	 * @return string|bool False on failure.
 	 */
-	public static function compatible_gzinflate($gzData) {
+	public static function compatible_gzinflate($gzData){
 		// Compressed data might contain a full zlib header, if so strip it for
 		// gzinflate()
-		if(substr($gzData, 0, 3) == "\x1f\x8b\x08") {
+		if(substr($gzData, 0, 3) == "\x1f\x8b\x08"){
 			$i = 10;
 			$flg = ord(substr($gzData, 3, 1));
-			if($flg > 0) {
-				if($flg & 4) {
+			if($flg > 0){
+				if($flg & 4){
 					list($xlen) = unpack('v', substr($gzData, $i, 2));
 					$i = $i + 2 + $xlen;
 				}
-				if($flg & 8) {
+				if($flg & 8){
 					$i = strpos($gzData, "\0", $i) + 1;
 				}
-				if($flg & 16) {
+				if($flg & 16){
 					$i = strpos($gzData, "\0", $i) + 1;
 				}
-				if($flg & 2) {
+				if($flg & 2){
 					$i = $i + 2;
 				}
 			}
 			$decompressed = self::compatible_gzinflate(substr($gzData, $i));
-			if(false !== $decompressed) {
+			if(false !== $decompressed){
 				return $decompressed;
 			}
 		}
@@ -905,17 +905,17 @@ class Requests {
 		// First 2 bytes should be divisible by 0x1F
 		list(, $first_two_bytes) = unpack('n', $gzData);
 
-		if(0x08 == $first_nibble && 0 == ($first_two_bytes % 0x1F)) {
+		if(0x08 == $first_nibble && 0 == ($first_two_bytes % 0x1F)){
 			$huffman_encoded = true;
 		}
 
-		if($huffman_encoded) {
-			if(false !== ($decompressed = @gzinflate(substr($gzData, 2)))) {
+		if($huffman_encoded){
+			if(false !== ($decompressed = @gzinflate(substr($gzData, 2)))){
 				return $decompressed;
 			}
 		}
 
-		if("\x50\x4b\x03\x04" == substr($gzData, 0, 4)) {
+		if("\x50\x4b\x03\x04" == substr($gzData, 0, 4)){
 			// ZIP file format header
 			// Offset 6: 2 bytes, General-purpose field
 			// Offset 26: 2 bytes, filename length
@@ -929,7 +929,7 @@ class Requests {
 			// between a compressed document, and a ZIP file
 			$zip_compressed_on_the_fly = (0x08 == (0x08 & $general_purpose_flag));
 
-			if(!$zip_compressed_on_the_fly) {
+			if(!$zip_compressed_on_the_fly){
 				// Don't attempt to decode a compressed zip file
 				return $gzData;
 			}
@@ -937,29 +937,29 @@ class Requests {
 			// Determine the first byte of data, based on the above ZIP header
 			// offsets:
 			$first_file_start = array_sum(unpack('v2', substr($gzData, 26, 4)));
-			if(false !== ($decompressed = @gzinflate(substr($gzData, 30 + $first_file_start)))) {
+			if(false !== ($decompressed = @gzinflate(substr($gzData, 30 + $first_file_start)))){
 				return $decompressed;
 			}
 			return false;
 		}
 
 		// Finally fall back to straight gzinflate
-		if(false !== ($decompressed = @gzinflate($gzData))) {
+		if(false !== ($decompressed = @gzinflate($gzData))){
 			return $decompressed;
 		}
 
 		// Fallback for all above failing, not expected, but included for
 		// debugging and preventing regressions and to track stats
-		if(false !== ($decompressed = @gzinflate(substr($gzData, 2)))) {
+		if(false !== ($decompressed = @gzinflate(substr($gzData, 2)))){
 			return $decompressed;
 		}
 
 		return false;
 	}
 
-	public static function match_domain($host, $reference) {
+	public static function match_domain($host, $reference){
 		// Check for a direct match
-		if($host === $reference) {
+		if($host === $reference){
 			return true;
 		}
 
@@ -967,10 +967,10 @@ class Requests {
 		// Also validates that the host has 3 parts or more, as per Firefox's
 		// ruleset.
 		$parts = explode('.', $host);
-		if(ip2long($host) === false && count($parts) >= 3) {
+		if(ip2long($host) === false && count($parts) >= 3){
 			$parts[0] = '*';
 			$wildcard = implode('.', $parts);
-			if($wildcard === $reference) {
+			if($wildcard === $reference){
 				return true;
 			}
 		}

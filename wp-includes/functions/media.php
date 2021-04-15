@@ -22,7 +22,7 @@ function wp_underscore_audio_template(){
 	width="{{ _.isUndefined(data.model.width ) ? 400 : data.model.width }}"
 	preload="{{ _.isUndefined(data.model.preload ) ? 'none' : data.model.preload }}"
 	<#
-	<?php foreach (array('autoplay', 'loop' ) as $attr ):
+	<?php foreach(array('autoplay', 'loop' ) as $attr ):
 	?>if(!_.isUndefined(data.model.<?php echo $attr ?> ) && data.model.<?php echo $attr ?> ){
 		#> <?php echo $attr ?><#
 	}
@@ -32,7 +32,7 @@ function wp_underscore_audio_template(){
 	<source src="{{ data.model.src }}" type="{{ wp.media.view.settings.embedMimes[ data.model.src.split('.').pop() ] }}" />
 	<# } #>
 
-	<?php foreach ($audio_types as $type ):
+	<?php foreach($audio_types as $type ):
 	?><# if(!_.isEmpty(data.model.<?php echo $type ?> ) ){ #>
 	<source src="{{ data.model.<?php echo $type ?> }}" type="{{ wp.media.view.settings.embedMimes[ '<?php echo $type ?>' ] }}" />
 	<# } #>
@@ -61,13 +61,13 @@ function wp_underscore_video_template(){
 
 	if(settings.contentWidth && data.model.width >= settings.contentWidth ){
 		w = settings.contentWidth;
-	} else {
+	} else{
 		w = data.model.width;
 	}
 
 	if(w !== data.model.width ){
 		h = Math.ceil((data.model.height * w ) / data.model.width );
-	} else {
+	} else{
 		h = data.model.height;
  	}
 
@@ -86,23 +86,23 @@ function wp_underscore_video_template(){
 #>
 <div style="{{ w_rule }}" class="wp-video">
 <video controls
-	class="wp-video-shortcode {{ classes.join(' ' ) }}"
+	class="wp-video-shortcode{{ classes.join(' ' ) }}"
 	<# if(w ){ #>width="{{ w }}"<# } #>
 	<# if(h ){ #>height="{{ h }}"<# } #>
 	<?php
 	$props = array('poster' => '', 'preload' => 'metadata' );
-	foreach ($props as $key => $value ):
+	foreach($props as $key => $value ):
 		if(empty($value ) ){
 		?><#
 		if(!_.isUndefined(data.model.<?php echo $key ?> ) && data.model.<?php echo $key ?> ){
 			#> <?php echo $key ?>="{{ data.model.<?php echo $key ?> }}"<#
 		} #>
-		<?php } else {
+		<?php } else{
 			echo $key ?>="{{ _.isUndefined(data.model.<?php echo $key ?> ) ? '<?php echo $value ?>' : data.model.<?php echo $key ?> }}"<?php
 		}
 	endforeach;
 	?><#
-	<?php foreach (array('autoplay', 'loop' ) as $attr ):
+	<?php foreach(array('autoplay', 'loop' ) as $attr ):
 	?> if(!_.isUndefined(data.model.<?php echo $attr ?> ) && data.model.<?php echo $attr ?> ){
 		#> <?php echo $attr ?><#
 	}
@@ -113,12 +113,12 @@ function wp_underscore_video_template(){
 		<source src="{{ data.model.src }}" type="video/youtube" />
 		<# } else if(isVimeo ){ #>
 		<source src="{{ data.model.src }}" type="video/vimeo" />
-		<# } else { #>
+		<# } else{ #>
 		<source src="{{ data.model.src }}" type="{{ settings.embedMimes[ data.model.src.split('.').pop() ] }}" />
 		<# }
 	} #>
 
-	<?php foreach ($video_types as $type ):
+	<?php foreach($video_types as $type ):
 	?><# if(data.model.<?php echo $type ?> ){ #>
 	<source src="{{ data.model.<?php echo $type ?> }}" type="{{ settings.embedMimes[ '<?php echo $type ?>' ] }}" />
 	<# } #>
@@ -144,10 +144,10 @@ function wp_print_media_templates(){
 	?>
 	<!--[if lte IE 8]>
 	<style>
-		.attachment:focus {
+		.attachment:focus{
 			outline: #1e8cbe solid;
 		}
-		.selected.attachment {
+		.selected.attachment{
 			outline: #1e8cbe solid;
 		}
 	</style>

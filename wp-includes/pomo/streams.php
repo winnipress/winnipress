@@ -8,8 +8,8 @@
  * @subpackage streams
  */
 
-if (!class_exists('POMO_Reader', false ) ):
-class POMO_Reader {
+if(!class_exists('POMO_Reader', false)):
+class POMO_Reader{
 
 	var $endian = 'little';
 	var $_post = '';
@@ -46,11 +46,11 @@ class POMO_Reader {
 	 */
 	function readint32(){
 		$bytes = $this->read(4);
-		if (4 != $this->strlen($bytes))
+		if(4 != $this->strlen($bytes))
 			return false;
 		$endian_letter = ('big' == $this->endian)? 'N' : 'V';
 		$int = unpack($endian_letter, $bytes);
-		return reset($int );
+		return reset($int);
 	}
 
 	/**
@@ -62,7 +62,7 @@ class POMO_Reader {
 	 */
 	function readint32array($count){
 		$bytes = $this->read(4 * $count);
-		if (4*$count != $this->strlen($bytes))
+		if(4*$count != $this->strlen($bytes))
 			return false;
 		$endian_letter = ('big' == $this->endian)? 'N' : 'V';
 		return unpack($endian_letter.$count, $bytes);
@@ -75,9 +75,9 @@ class POMO_Reader {
 	 * @return string
 	 */
 	function substr($string, $start, $length){
-		if ($this->is_overloaded){
+		if($this->is_overloaded){
 			return mb_substr($string, $start, $length, 'ascii');
-		} else {
+		} else{
 			return substr($string, $start, $length);
 		}
 	}
@@ -87,9 +87,9 @@ class POMO_Reader {
 	 * @return int
 	 */
 	function strlen($string){
-		if ($this->is_overloaded){
+		if($this->is_overloaded){
 			return mb_strlen($string, 'ascii');
-		} else {
+		} else{
 			return strlen($string);
 		}
 	}
@@ -100,14 +100,14 @@ class POMO_Reader {
 	 * @return array
 	 */
 	function str_split($string, $chunk_size){
-		if (!function_exists('str_split')){ 
+		if(!function_exists('str_split')){ 
 			$length = $this->strlen($string);
 			$out = array();
 			for ($i = 0; $i < $length; $i += $chunk_size)
 				$out[] = $this->substr($string, $i, $chunk_size);
 			return $out;
-		} else {
-			return str_split($string, $chunk_size );
+		} else{
+			return str_split($string, $chunk_size);
 		}
 	}
 
@@ -134,13 +134,13 @@ class POMO_Reader {
 }
 endif;
 
-if (!class_exists('POMO_FileReader', false ) ):
-class POMO_FileReader extends POMO_Reader {
+if(!class_exists('POMO_FileReader', false)):
+class POMO_FileReader extends POMO_Reader{
 
 	/**
 	 * @param string $filename
 	 */
-	function __construct($filename ){
+	function __construct($filename){
 		parent::POMO_Reader();
 		$this->_f = fopen($filename, 'rb');
 	}
@@ -148,8 +148,8 @@ class POMO_FileReader extends POMO_Reader {
 	/**
 	 * PHP4 constructor.
 	 */
-	public function POMO_FileReader($filename ){
-		self::__construct($filename );
+	public function POMO_FileReader($filename){
+		self::__construct($filename);
 	}
 
 	/**
@@ -164,7 +164,7 @@ class POMO_FileReader extends POMO_Reader {
 	 * @return boolean
 	 */
 	function seekto($pos){
-		if (-1 == fseek($this->_f, $pos, SEEK_SET)){
+		if(-1 == fseek($this->_f, $pos, SEEK_SET)){
 			return false;
 		}
 		$this->_pos = $pos;
@@ -197,26 +197,26 @@ class POMO_FileReader extends POMO_Reader {
 	 */
 	function read_all(){
 		$all = '';
-		while (!$this->feof() )
+		while (!$this->feof())
 			$all .= $this->read(4096);
 		return $all;
 	}
 }
 endif;
 
-if (!class_exists('POMO_StringReader', false ) ):
+if(!class_exists('POMO_StringReader', false)):
 /**
  * Provides file-like methods for manipulating a string instead
  * of a physical file.
  */
-class POMO_StringReader extends POMO_Reader {
+class POMO_StringReader extends POMO_Reader{
 
 	var $_str = '';
 
 	/**
 	 * PHP5 constructor.
 	 */
-	function __construct($str = '' ){
+	function __construct($str = ''){
 		parent::POMO_Reader();
 		$this->_str = $str;
 		$this->_pos = 0;
@@ -225,8 +225,8 @@ class POMO_StringReader extends POMO_Reader {
 	/**
 	 * PHP4 constructor.
 	 */
-	public function POMO_StringReader($str = '' ){
-		self::__construct($str );
+	public function POMO_StringReader($str = ''){
+		self::__construct($str);
 	}
 
 	/**
@@ -236,7 +236,7 @@ class POMO_StringReader extends POMO_Reader {
 	function read($bytes){
 		$data = $this->substr($this->_str, $this->_pos, $bytes);
 		$this->_pos += $bytes;
-		if ($this->strlen($this->_str) < $this->_pos) $this->_pos = $this->strlen($this->_str);
+		if($this->strlen($this->_str) < $this->_pos) $this->_pos = $this->strlen($this->_str);
 		return $data;
 	}
 
@@ -246,7 +246,7 @@ class POMO_StringReader extends POMO_Reader {
 	 */
 	function seekto($pos){
 		$this->_pos = $pos;
-		if ($this->strlen($this->_str) < $this->_pos) $this->_pos = $this->strlen($this->_str);
+		if($this->strlen($this->_str) < $this->_pos) $this->_pos = $this->strlen($this->_str);
 		return $this->_pos;
 	}
 
@@ -267,18 +267,18 @@ class POMO_StringReader extends POMO_Reader {
 }
 endif;
 
-if (!class_exists('POMO_CachedFileReader', false ) ):
+if(!class_exists('POMO_CachedFileReader', false)):
 /**
  * Reads the contents of the file in the beginning.
  */
-class POMO_CachedFileReader extends POMO_StringReader {
+class POMO_CachedFileReader extends POMO_StringReader{
 	/**
 	 * PHP5 constructor.
 	 */
-	function __construct($filename ){
+	function __construct($filename){
 		parent::POMO_StringReader();
 		$this->_str = file_get_contents($filename);
-		if (false === $this->_str)
+		if(false === $this->_str)
 			return false;
 		$this->_pos = 0;
 	}
@@ -286,29 +286,29 @@ class POMO_CachedFileReader extends POMO_StringReader {
 	/**
 	 * PHP4 constructor.
 	 */
-	public function POMO_CachedFileReader($filename ){
-		self::__construct($filename );
+	public function POMO_CachedFileReader($filename){
+		self::__construct($filename);
 	}
 }
 endif;
 
-if (!class_exists('POMO_CachedIntFileReader', false ) ):
+if(!class_exists('POMO_CachedIntFileReader', false)):
 /**
  * Reads the contents of the file in the beginning.
  */
-class POMO_CachedIntFileReader extends POMO_CachedFileReader {
+class POMO_CachedIntFileReader extends POMO_CachedFileReader{
 	/**
 	 * PHP5 constructor.
 	 */
-	public function __construct($filename ){
+	public function __construct($filename){
 		parent::POMO_CachedFileReader($filename);
 	}
 
 	/**
 	 * PHP4 constructor.
 	 */
-	function POMO_CachedIntFileReader($filename ){
-		self::__construct($filename );
+	function POMO_CachedIntFileReader($filename){
+		self::__construct($filename);
 	}
 }
 endif;

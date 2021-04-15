@@ -17,8 +17,8 @@ $menu[10] = array(__('Media'), 'upload_files', 'upload.php', '', 'menu-top menu-
 	/* translators: add new file */
 	$submenu['upload.php'][10] = array(_x('Add New', 'file'), 'upload_files', 'media-new.php');
 	$i = 15;
-	foreach (get_taxonomies_for_attachments('objects') as $tax) {
-		if (!$tax->show_ui || !$tax->show_in_menu)
+	foreach(get_taxonomies_for_attachments('objects') as $tax) {
+		if(!$tax->show_ui || !$tax->show_in_menu)
 			continue;
 
 		$submenu['upload.php'][$i++] = array(esc_attr($tax->labels->menu_name), $tax->cap->manage_terms, 'edit-tags.php?taxonomy=' . $tax->name . '&amp;post_type=attachment');
@@ -31,10 +31,10 @@ $_wp_last_object_menu = 25; // The index of the last top-level menu in the objec
 
 $types = (array) get_post_types(array('show_ui' => true, '_builtin' => false, 'show_in_menu' => true));
 $builtin = array('post', 'page');
-foreach (array_merge($builtin, $types) as $ptype) {
+foreach(array_merge($builtin, $types) as $ptype) {
 	$ptype_obj = get_post_type_object($ptype);
 	// Check if it should be a submenu.
-	if ($ptype_obj->show_in_menu !== true)
+	if($ptype_obj->show_in_menu !== true)
 		continue;
 	$ptype_menu_position = is_int($ptype_obj->menu_position) ? $ptype_obj->menu_position : ++$_wp_last_object_menu; // If we're to use $_wp_last_object_menu, increment it first.
 	$ptype_for_id = sanitize_html_class($ptype);
@@ -46,7 +46,7 @@ foreach (array_merge($builtin, $types) as $ptype) {
 
 	$menu_class = 'menu-top menu-icon-' . $ptype_for_id;
 	// 'post' special case
-	if ('post' === $ptype) {
+	if('post' === $ptype) {
 		$menu_class .= ' open-if-no-js';
 		$ptype_file = "edit.php";
 		$post_new_file = "post-new.php";
@@ -57,7 +57,7 @@ foreach (array_merge($builtin, $types) as $ptype) {
 		$edit_tags_file = "edit-tags.php?taxonomy=%s&amp;post_type=$ptype";
 	}
 
-	if (in_array($ptype, $builtin)) {
+	if(in_array($ptype, $builtin)) {
 		$ptype_menu_id = 'menu-' . $ptype_for_id . 's';
 	} else {
 		$ptype_menu_id = 'menu-posts-' . $ptype_for_id;
@@ -75,8 +75,8 @@ foreach (array_merge($builtin, $types) as $ptype) {
 	$submenu[ $ptype_file ][10]  = array($ptype_obj->labels->add_new, $ptype_obj->cap->create_posts, $post_new_file);
 
 	$i = 15;
-	foreach (get_taxonomies(array(), 'objects') as $tax) {
-		if (!$tax->show_ui || !$tax->show_in_menu || !in_array($ptype, (array) $tax->object_type, true))
+	foreach(get_taxonomies(array(), 'objects') as $tax) {
+		if(!$tax->show_ui || !$tax->show_in_menu || !in_array($ptype, (array) $tax->object_type, true))
 			continue;
 
 		$submenu[ $ptype_file ][$i++] = array(esc_attr($tax->labels->menu_name), $tax->cap->manage_terms, sprintf($edit_tags_file, $tax->name));
@@ -97,15 +97,15 @@ $menu[65] = array(sprintf(__('Plugins %s'), $count), 'activate_plugins', 'plugin
 
 
 
-if (current_user_can('list_users'))
+if(current_user_can('list_users'))
 	$menu[70] = array(__('Users'), 'list_users', 'users.php', '', 'menu-top menu-icon-users', 'menu-users', 'la-users');
 else
 	$menu[70] = array(__('Profile'), 'read', 'profile.php', '', 'menu-top menu-icon-users', 'menu-users', 'la-users');
 
-if (current_user_can('list_users')) {
+if(current_user_can('list_users')) {
 	$_wp_real_parent_file['profile.php'] = 'users.php'; // Back-compat for plugins adding submenus to profile.php.
 	$submenu['users.php'][5] = array(__('All Users'), 'list_users', 'users.php');
-	if (current_user_can('create_users')) {
+	if(current_user_can('create_users')) {
 		$submenu['users.php'][10] = array(_x('Add New', 'user'), 'create_users', 'user-new.php');
 	}
 
@@ -113,7 +113,7 @@ if (current_user_can('list_users')) {
 } else {
 	$_wp_real_parent_file['users.php'] = 'profile.php';
 	$submenu['profile.php'][5] = array(__('Your Profile'), 'read', 'profile.php');
-	if (current_user_can('create_users')) {
+	if(current_user_can('create_users')) {
 		$submenu['profile.php'][10] = array(__('Add New User'), 'create_users', 'user-new.php');
 	}
 }

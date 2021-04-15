@@ -49,10 +49,10 @@ $messages['post_tag'] = array(
 $messages = apply_filters( 'term_updated_messages', $messages);
 
 $message = false;
-if ( isset( $_REQUEST['message']) && ( $msg = (int) $_REQUEST['message'])) {
-	if ( isset( $messages[ $taxonomy ][ $msg ])) {
+if( isset( $_REQUEST['message']) && ( $msg = (int) $_REQUEST['message'])) {
+	if( isset( $messages[ $taxonomy ][ $msg ])) {
 		$message = $messages[ $taxonomy ][ $msg ];
-	} elseif ( !isset( $messages[ $taxonomy ]) && isset( $messages['_item'][ $msg ])) {
+	} elseif( !isset( $messages[ $taxonomy ]) && isset( $messages['_item'][ $msg ])) {
 		$message = $messages['_item'][ $msg ];
 	}
 }

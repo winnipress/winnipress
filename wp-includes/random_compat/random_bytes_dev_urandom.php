@@ -26,11 +26,11 @@
  * SOFTWARE.
  */
 
-if (!defined('RANDOM_COMPAT_READ_BUFFER')){
+if(!defined('RANDOM_COMPAT_READ_BUFFER')){
     define('RANDOM_COMPAT_READ_BUFFER', 8);
 }
 
-if (!is_callable('random_bytes' ) ):
+if(!is_callable('random_bytes')):
 /**
  * Unless open_basedir is enabled, use /dev/urandom for
  * random numbers in accordance with best practices
@@ -50,21 +50,21 @@ function random_bytes($bytes)
     /**
      * This block should only be run once
      */
-    if (empty($fp)){
+    if(empty($fp)){
         /**
          * We use /dev/urandom if it is a char device.
          * We never fall back to /dev/random
          */
         $fp = fopen('/dev/urandom', 'rb');
-        if (!empty($fp)){
+        if(!empty($fp)){
             $st = fstat($fp);
-            if (($st['mode'] & 0170000) !== 020000){
+            if(($st['mode'] & 0170000) !== 020000){
                 fclose($fp);
                 $fp = false;
             }
         }
 
-        if (!empty($fp)){
+        if(!empty($fp)){
             /**
              * stream_set_read_buffer() does not exist in HHVM
              * 
@@ -73,46 +73,46 @@ function random_bytes($bytes)
              * 
              * stream_set_read_buffer returns 0 on success
              */
-            if (function_exists('stream_set_read_buffer')){ 
+            if(function_exists('stream_set_read_buffer')){ 
                 stream_set_read_buffer($fp, RANDOM_COMPAT_READ_BUFFER);
             }
-            if (function_exists('stream_set_chunk_size')){ 
+            if(function_exists('stream_set_chunk_size')){ 
                 stream_set_chunk_size($fp, RANDOM_COMPAT_READ_BUFFER);
             }
         }
     }
 
-    try {
+    try{
         $bytes = RandomCompat_intval($bytes);
     } catch (TypeError $ex){
         throw new TypeError(
             'random_bytes(): $bytes must be an integer'
-        );
+       );
     }
 
-    if ($bytes < 1){
+    if($bytes < 1){
         throw new Error(
             'Length must be greater than 0'
-        );
+       );
     }
 
     /**
      * This if() block only runs if we managed to open a file handle
      * 
-     * It does not belong in an else {} block, because the above 
-     * if (empty($fp)) line is logic that should only be run once per
+     * It does not belong in an else{} block, because the above 
+     * if(empty($fp)) line is logic that should only be run once per
      * page load.
      */
-    if (!empty($fp)){
+    if(!empty($fp)){
         $remaining = $bytes;
         $buf = '';
 
         /**
          * We use fread() in a loop to protect against partial reads
          */
-        do {
+        do{
             $read = fread($fp, $remaining); 
-            if ($read === false){
+            if($read === false){
                 /**
                  * We cannot safely read from the file. Exit the
                  * do-while loop and trigger the exception condition
@@ -130,8 +130,8 @@ function random_bytes($bytes)
         /**
          * Is our result valid?
          */
-        if ($buf !== false){
-            if (RandomCompat_strlen($buf) === $bytes){
+        if($buf !== false){
+            if(RandomCompat_strlen($buf) === $bytes){
                 /**
                  * Return our random entropy buffer here:
                  */
@@ -145,6 +145,6 @@ function random_bytes($bytes)
      */
     throw new Exception(
         'Error reading from source device'
-    );
+   );
 }
 endif;

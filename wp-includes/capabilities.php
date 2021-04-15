@@ -33,9 +33,9 @@ function map_meta_cap($cap, $user_id){
 	switch ($cap){
 	case 'remove_user':
 		// In multisite the user must be a super admin to remove themselves.
-		if (isset($args[0]) && $user_id == $args[0] && !is_super_admin($user_id)){
+		if(isset($args[0]) && $user_id == $args[0] && !is_super_admin($user_id)){
 			$caps[] = 'do_not_allow';
-		} else {
+		} else{
 			$caps[] = 'remove_users';
 		}
 		break;
@@ -46,7 +46,7 @@ function map_meta_cap($cap, $user_id){
 	case 'edit_user':
 	case 'edit_users':
 		// Allow user to edit itself
-		if ('edit_user' == $cap && isset($args[0]) && $user_id == $args[0])
+		if('edit_user' == $cap && isset($args[0]) && $user_id == $args[0])
 			break;
 
 		
@@ -56,57 +56,57 @@ function map_meta_cap($cap, $user_id){
 	case 'delete_post':
 	case 'delete_page':
 		$post = get_post($args[0]);
-		if (!$post){
+		if(!$post){
 			$caps[] = 'do_not_allow';
 			break;
 		}
 
 
 
-		if ((get_option('page_for_posts') == $post->ID) || (get_option('page_on_front') == $post->ID)){
+		if((get_option('page_for_posts') == $post->ID) || (get_option('page_on_front') == $post->ID)){
 			$caps[] = 'manage_options';
 			break;
 		}
 
 		$post_type = get_post_type_object($post->post_type);
-		if (!$post_type){
+		if(!$post_type){
 			/* translators: 1: post type, 2: capability name */
 			_doing_it_wrong(__FUNCTION__, sprintf(__('The post type %1$s is not registered, so it may not be reliable to check the capability "%2$s" against a post of that type.'), $post->post_type, $cap), '4.4.0');
 			$caps[] = 'edit_others_posts';
 			break;
 		}
 
-		if (!$post_type->map_meta_cap){
+		if(!$post_type->map_meta_cap){
 			$caps[] = $post_type->cap->$cap;
 			// Prior to 3.1 we would re-call map_meta_cap here.
-			if ('delete_post' == $cap)
+			if('delete_post' == $cap)
 				$cap = $post_type->cap->$cap;
 			break;
 		}
 
 		// If the post author is set and the user is the author...
-		if ($post->post_author && $user_id == $post->post_author){
+		if($post->post_author && $user_id == $post->post_author){
 			// If the post is published or scheduled...
-			if (in_array($post->post_status, array('publish', 'future'), true)){
+			if(in_array($post->post_status, array('publish', 'future'), true)){
 				$caps[] = $post_type->cap->delete_published_posts;
-			} elseif ('trash' == $post->post_status){
+			} elseif('trash' == $post->post_status){
 				$status = get_post_meta($post->ID, '_wp_trash_meta_status', true);
-				if (in_array($status, array('publish', 'future'), true)){
+				if(in_array($status, array('publish', 'future'), true)){
 					$caps[] = $post_type->cap->delete_published_posts;
-				} else {
+				} else{
 					$caps[] = $post_type->cap->delete_posts;
 				}
-			} else {
+			} else{
 				// If the post is draft...
 				$caps[] = $post_type->cap->delete_posts;
 			}
-		} else {
+		} else{
 			// The user is trying to edit someone else's post.
 			$caps[] = $post_type->cap->delete_others_posts;
 			// The post is published or scheduled, extra cap required.
-			if (in_array($post->post_status, array('publish', 'future'), true)){
+			if(in_array($post->post_status, array('publish', 'future'), true)){
 				$caps[] = $post_type->cap->delete_published_posts;
-			} elseif ('private' == $post->post_status){
+			} elseif('private' == $post->post_status){
 				$caps[] = $post_type->cap->delete_private_posts;
 			}
 		}
@@ -115,7 +115,7 @@ function map_meta_cap($cap, $user_id){
 		 * Setting the privacy policy page requires `manage_privacy_options`,
 		 * so deleting it should require that too.
 		 */
-		if ((int) get_option('wp_page_for_privacy_policy') === $post->ID){
+		if((int) get_option('wp_page_for_privacy_policy') === $post->ID){
 			$caps = array_merge($caps, map_meta_cap('manage_privacy_options', $user_id));
 		}
 
@@ -125,7 +125,7 @@ function map_meta_cap($cap, $user_id){
 	case 'edit_post':
 	case 'edit_page':
 		$post = get_post($args[0]);
-		if (!$post){
+		if(!$post){
 			$caps[] = 'do_not_allow';
 			break;
 		}
@@ -133,44 +133,44 @@ function map_meta_cap($cap, $user_id){
 
 
 		$post_type = get_post_type_object($post->post_type);
-		if (!$post_type){
+		if(!$post_type){
 			/* translators: 1: post type, 2: capability name */
 			_doing_it_wrong(__FUNCTION__, sprintf(__('The post type %1$s is not registered, so it may not be reliable to check the capability "%2$s" against a post of that type.'), $post->post_type, $cap), '4.4.0');
 			$caps[] = 'edit_others_posts';
 			break;
 		}
 
-		if (!$post_type->map_meta_cap){
+		if(!$post_type->map_meta_cap){
 			$caps[] = $post_type->cap->$cap;
 			// Prior to 3.1 we would re-call map_meta_cap here.
-			if ('edit_post' == $cap)
+			if('edit_post' == $cap)
 				$cap = $post_type->cap->$cap;
 			break;
 		}
 
 		// If the post author is set and the user is the author...
-		if ($post->post_author && $user_id == $post->post_author){
+		if($post->post_author && $user_id == $post->post_author){
 			// If the post is published or scheduled...
-			if (in_array($post->post_status, array('publish', 'future'), true)){
+			if(in_array($post->post_status, array('publish', 'future'), true)){
 				$caps[] = $post_type->cap->edit_published_posts;
-			} elseif ('trash' == $post->post_status){
+			} elseif('trash' == $post->post_status){
 				$status = get_post_meta($post->ID, '_wp_trash_meta_status', true);
-				if (in_array($status, array('publish', 'future'), true)){
+				if(in_array($status, array('publish', 'future'), true)){
 					$caps[] = $post_type->cap->edit_published_posts;
-				} else {
+				} else{
 					$caps[] = $post_type->cap->edit_posts;
 				}
-			} else {
+			} else{
 				// If the post is draft...
 				$caps[] = $post_type->cap->edit_posts;
 			}
-		} else {
+		} else{
 			// The user is trying to edit someone else's post.
 			$caps[] = $post_type->cap->edit_others_posts;
 			// The post is published or scheduled, extra cap required.
-			if (in_array($post->post_status, array('publish', 'future'), true)){
+			if(in_array($post->post_status, array('publish', 'future'), true)){
 				$caps[] = $post_type->cap->edit_published_posts;
-			} elseif ('private' == $post->post_status){
+			} elseif('private' == $post->post_status){
 				$caps[] = $post_type->cap->edit_private_posts;
 			}
 		}
@@ -179,7 +179,7 @@ function map_meta_cap($cap, $user_id){
 		 * Setting the privacy policy page requires `manage_privacy_options`,
 		 * so editing it should require that too.
 		 */
-		if ((int) get_option('wp_page_for_privacy_policy') === $post->ID){
+		if((int) get_option('wp_page_for_privacy_policy') === $post->ID){
 			$caps = array_merge($caps, map_meta_cap('manage_privacy_options', $user_id));
 		}
 
@@ -187,7 +187,7 @@ function map_meta_cap($cap, $user_id){
 	case 'read_post':
 	case 'read_page':
 		$post = get_post($args[0]);
-		if (!$post){
+		if(!$post){
 			$caps[] = 'do_not_allow';
 			break;
 		}
@@ -195,44 +195,44 @@ function map_meta_cap($cap, $user_id){
 
 
 		$post_type = get_post_type_object($post->post_type);
-		if (!$post_type){
+		if(!$post_type){
 			/* translators: 1: post type, 2: capability name */
 			_doing_it_wrong(__FUNCTION__, sprintf(__('The post type %1$s is not registered, so it may not be reliable to check the capability "%2$s" against a post of that type.'), $post->post_type, $cap), '4.4.0');
 			$caps[] = 'edit_others_posts';
 			break;
 		}
 
-		if (!$post_type->map_meta_cap){
+		if(!$post_type->map_meta_cap){
 			$caps[] = $post_type->cap->$cap;
 			// Prior to 3.1 we would re-call map_meta_cap here.
-			if ('read_post' == $cap)
+			if('read_post' == $cap)
 				$cap = $post_type->cap->$cap;
 			break;
 		}
 
 		$status_obj = get_post_status_object($post->post_status);
-		if ($status_obj->public){
+		if($status_obj->public){
 			$caps[] = $post_type->cap->read;
 			break;
 		}
 
-		if ($post->post_author && $user_id == $post->post_author){
+		if($post->post_author && $user_id == $post->post_author){
 			$caps[] = $post_type->cap->read;
-		} elseif ($status_obj->private){
+		} elseif($status_obj->private){
 			$caps[] = $post_type->cap->read_private_posts;
-		} else {
+		} else{
 			$caps = map_meta_cap('edit_post', $user_id, $post->ID);
 		}
 		break;
 	case 'publish_post':
 		$post = get_post($args[0]);
-		if (!$post){
+		if(!$post){
 			$caps[] = 'do_not_allow';
 			break;
 		}
 
 		$post_type = get_post_type_object($post->post_type);
-		if (!$post_type){
+		if(!$post_type){
 			/* translators: 1: post type, 2: capability name */
 			_doing_it_wrong(__FUNCTION__, sprintf(__('The post type %1$s is not registered, so it may not be reliable to check the capability "%2$s" against a post of that type.'), $post->post_type, $cap), '4.4.0');
 			$caps[] = 'edit_others_posts';
@@ -257,7 +257,7 @@ function map_meta_cap($cap, $user_id){
 		$object_id = (int) $args[0];
 		$object_subtype = get_object_subtype($object_type, $object_id);
 
-		if (empty($object_subtype)){
+		if(empty($object_subtype)){
 			$caps[] = 'do_not_allow';
 			break;
 		}
@@ -266,10 +266,10 @@ function map_meta_cap($cap, $user_id){
 
 		$meta_key = isset($args[1]) ? $args[1] : false;
 
-		if ($meta_key){
+		if($meta_key){
 			$allowed = !is_protected_meta($meta_key, $object_type);
 
-			if (!empty($object_subtype) && has_filter("auth_{$object_type}_meta_{$meta_key}_for_{$object_subtype}")){
+			if(!empty($object_subtype) && has_filter("auth_{$object_type}_meta_{$meta_key}_for_{$object_subtype}")){
 
 				/**
 				 * Filters whether the user is allowed to edit a specific meta key of a specific object type and subtype.
@@ -288,7 +288,7 @@ function map_meta_cap($cap, $user_id){
 				 * @param string[] $caps      Array of the user's capabilities.
 				 */
 				$allowed = apply_filters("auth_{$object_type}_meta_{$meta_key}_for_{$object_subtype}", $allowed, $meta_key, $object_id, $user_id, $cap, $caps);
-			} else {
+			} else{
 
 				/**
 				 * Filters whether the user is allowed to edit a specific meta key of a specific object type.
@@ -311,7 +311,7 @@ function map_meta_cap($cap, $user_id){
 				$allowed = apply_filters("auth_{$object_type}_meta_{$meta_key}", $allowed, $meta_key, $object_id, $user_id, $cap, $caps);
 			}
 
-			if (!empty($object_subtype)){
+			if(!empty($object_subtype)){
 
 				/**
 				 * Filters whether the user is allowed to edit meta for specific object types/subtypes.
@@ -336,14 +336,14 @@ function map_meta_cap($cap, $user_id){
 				$allowed = apply_filters_deprecated("auth_{$object_type}_{$object_subtype}_meta_{$meta_key}", array($allowed, $meta_key, $object_id, $user_id, $cap, $caps), '4.9.8', "auth_{$object_type}_meta_{$meta_key}_for_{$object_subtype}");
 			}
 
-			if (!$allowed){
+			if(!$allowed){
 				$caps[] = $cap;
 			}
 		}
 		break;
 	case 'edit_comment':
 		$comment = get_comment($args[0]);
-		if (!$comment){
+		if(!$comment){
 			$caps[] = 'do_not_allow';
 			break;
 		}
@@ -354,14 +354,14 @@ function map_meta_cap($cap, $user_id){
 		 * If the post doesn't exist, we have an orphaned comment.
 		 * Fall back to the edit_posts capability, instead.
 		 */
-		if ($post){
+		if($post){
 			$caps = map_meta_cap('edit_post', $user_id, $post->ID);
-		} else {
+		} else{
 			$caps = map_meta_cap('edit_posts', $user_id);
 		}
 		break;
 	case 'unfiltered_upload':
-		if (defined('ALLOW_UNFILTERED_UPLOADS') && ALLOW_UNFILTERED_UPLOADS && ( is_super_admin($user_id)))
+		if(defined('ALLOW_UNFILTERED_UPLOADS') && ALLOW_UNFILTERED_UPLOADS && ( is_super_admin($user_id)))
 			$caps[] = $cap;
 		else
 			$caps[] = 'do_not_allow';
@@ -369,7 +369,7 @@ function map_meta_cap($cap, $user_id){
 	case 'edit_css' :
 	case 'unfiltered_html' :
 		// Disallow unfiltered_html for all users, even admins and super admins.
-		if (defined('DISALLOW_UNFILTERED_HTML') && DISALLOW_UNFILTERED_HTML){
+		if(defined('DISALLOW_UNFILTERED_HTML') && DISALLOW_UNFILTERED_HTML){
 			$caps[] = 'do_not_allow';
 		}else{
 			$caps[] = 'unfiltered_html';
@@ -387,9 +387,9 @@ function map_meta_cap($cap, $user_id){
 	case 'upload_themes':
 	case 'install_languages':
 	case 'update_languages':
-		if (!wp_is_file_mod_allowed('can_install_language_pack')){
+		if(!wp_is_file_mod_allowed('can_install_language_pack')){
 			$caps[] = 'do_not_allow';
-		} else {
+		} else{
 			$caps[] = 'install_languages';
 		}
 		break;
@@ -407,7 +407,7 @@ function map_meta_cap($cap, $user_id){
 			$caps[] = $cap;
 		break;
 	case 'manage_links' :
-		if (get_option('link_manager_enabled'))
+		if(get_option('link_manager_enabled'))
 			$caps[] = $cap;
 		else
 			$caps[] = 'do_not_allow';
@@ -420,18 +420,18 @@ function map_meta_cap($cap, $user_id){
 	case 'assign_term':
 		$term_id = (int) $args[0];
 		$term = get_term($term_id);
-		if (!$term || is_wp_error($term)){
+		if(!$term || is_wp_error($term)){
 			$caps[] = 'do_not_allow';
 			break;
 		}
 
 		$tax = get_taxonomy($term->taxonomy);
-		if (!$tax){
+		if(!$tax){
 			$caps[] = 'do_not_allow';
 			break;
 		}
 
-		if ('delete_term' === $cap && ($term->term_id == get_option('default_' . $term->taxonomy))){
+		if('delete_term' === $cap && ($term->term_id == get_option('default_' . $term->taxonomy))){
 			$caps[] = 'do_not_allow';
 			break;
 		}
@@ -471,7 +471,7 @@ function map_meta_cap($cap, $user_id){
 	default:
 		// Handle meta capabilities for custom post types.
 		global $post_type_meta_caps;
-		if (isset($post_type_meta_caps[ $cap ])){
+		if(isset($post_type_meta_caps[ $cap ])){
 			$args = array_merge(array($post_type_meta_caps[ $cap ], $user_id), $args);
 			return call_user_func_array('map_meta_cap', $args);
 		}
@@ -518,7 +518,7 @@ function map_meta_cap($cap, $user_id){
 function current_user_can($capability){
 	$current_user = wp_get_current_user();
 
-	if (empty($current_user))
+	if(empty($current_user))
 		return false;
 
 	$args = array_slice(func_get_args(), 1);
@@ -541,7 +541,7 @@ function current_user_can_for_blog($blog_id, $capability){
 
 	$current_user = wp_get_current_user();
 
-	if (empty($current_user)){
+	if(empty($current_user)){
 		return false;
 	}
 
@@ -565,12 +565,12 @@ function current_user_can_for_blog($blog_id, $capability){
  * @return bool Whether the post author has the given capability.
  */
 function author_can($post, $capability){
-	if (!$post = get_post($post))
+	if(!$post = get_post($post))
 		return false;
 
 	$author = get_userdata($post->post_author);
 
-	if (!$author)
+	if(!$author)
 		return false;
 
 	$args = array_slice(func_get_args(), 2);
@@ -589,10 +589,10 @@ function author_can($post, $capability){
  * @return bool Whether the user has the given capability.
  */
 function user_can($user, $capability){
-	if (!is_object($user))
+	if(!is_object($user))
 		$user = get_userdata($user);
 
-	if (!$user || !$user->exists())
+	if(!$user || !$user->exists())
 		return false;
 
 	$args = array_slice(func_get_args(), 2);
@@ -613,7 +613,7 @@ function user_can($user, $capability){
 function wp_roles(){
 	global $wp_roles;
 
-	if (!isset($wp_roles)){
+	if(!isset($wp_roles)){
 		$wp_roles = new WP_Roles();
 	}
 	return $wp_roles;
@@ -642,7 +642,7 @@ function get_role($role){
  * @return WP_Role|null WP_Role object if role is added, null if already exists.
  */
 function add_role($role, $display_name, $capabilities = array()){
-	if (empty($role)){
+	if(empty($role)){
 		return;
 	}
 	return wp_roles()->add_role($role, $display_name, $capabilities);
@@ -671,7 +671,7 @@ function remove_role($role){
 function get_super_admins(){
 	global $super_admins;
 
-	if (isset($super_admins))
+	if(isset($super_admins))
 		return $super_admins;
 	else
 		return get_site_option('site_admins', array('admin'));
@@ -686,16 +686,16 @@ function get_super_admins(){
  * @return bool True if the user is a site admin.
  */
 function is_super_admin($user_id = false){
-	if (!$user_id || $user_id == get_current_user_id())
+	if(!$user_id || $user_id == get_current_user_id())
 		$user = wp_get_current_user();
 	else
 		$user = get_userdata($user_id);
 
-	if (!$user || !$user->exists())
+	if(!$user || !$user->exists())
 		return false;
 
 	
-		if ($user->has_cap('delete_users')){
+		if($user->has_cap('delete_users')){
 			return true;
 		}
 	
@@ -747,7 +747,7 @@ function revoke_super_admin($user_id){
  * @return array Filtered array of the user's capabilities.
  */
 function wp_maybe_grant_install_languages_cap($allcaps){
-	if (!empty($allcaps['update_core']) || !empty($allcaps['install_plugins']) || !empty($allcaps['install_themes'])){
+	if(!empty($allcaps['update_core']) || !empty($allcaps['install_plugins']) || !empty($allcaps['install_themes'])){
 		$allcaps['install_languages'] = true;
 	}
 

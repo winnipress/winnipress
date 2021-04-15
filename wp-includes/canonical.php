@@ -160,7 +160,7 @@ function redirect_canonical($requested_url = null, $do_redirect = true){
 				if($redirect_url){
 					$redirect['query'] = remove_query_arg('attachment_id', $redirect['query']);
 				}
-			} else {
+			} else{
 				$redirect_url = get_attachment_link();
 			}
 		} elseif(is_single() && !empty($_GET['p']) && !$redirect_url){
@@ -211,7 +211,7 @@ function redirect_canonical($requested_url = null, $do_redirect = true){
 		} elseif(is_category() || is_tag() || is_tax()){ // Terms (Tags/categories)
 
 			$term_count = 0;
-			foreach ($wp_query->tax_query->queried_terms as $tax_query)
+			foreach($wp_query->tax_query->queried_terms as $tax_query)
 				$term_count += count($tax_query['terms']);
 
 			$obj = $wp_query->get_queried_object();
@@ -225,7 +225,7 @@ function redirect_canonical($requested_url = null, $do_redirect = true){
 					} elseif(is_tag()){
 						$qv_remove[] = 'tag';
 						$qv_remove[] = 'tag_id';
-					} else { // Custom taxonomies will have a custom query var, remove those too:
+					} else{ // Custom taxonomies will have a custom query var, remove those too:
 						$tax_obj = get_taxonomy($obj->taxonomy);
 						if(false !== $tax_obj->query_var)
 							$qv_remove[] = $tax_obj->query_var;
@@ -241,12 +241,12 @@ function redirect_canonical($requested_url = null, $do_redirect = true){
 						if(!empty($tax_url['query'])){ // Taxonomy accessible via ?taxonomy=..&term=.. or any custom qv..
 							parse_str($tax_url['query'], $query_vars);
 							$redirect['query'] = add_query_arg($query_vars, $redirect['query']);
-						} else { // Taxonomy is accessible via a "pretty-URL"
+						} else{ // Taxonomy is accessible via a "pretty-URL"
 							$redirect['path'] = $tax_url['path'];
 						}
 
-					} else { // Some query vars are set via $_GET. Unset those from $_GET that exist via the rewrite
-						foreach ($qv_remove as $_qv){
+					} else{ // Some query vars are set via $_GET. Unset those from $_GET that exist via the rewrite
+						foreach($qv_remove as $_qv){
 							if(isset($rewrite_vars[$_qv]))
 								$redirect['query'] = remove_query_arg($_qv, $redirect['query']);
 						}
@@ -270,7 +270,7 @@ function redirect_canonical($requested_url = null, $do_redirect = true){
 			if($page > 1){
 				if(is_front_page()){
 					$redirect_url = trailingslashit($redirect_url) . user_trailingslashit("$wp_rewrite->pagination_base/$page", 'paged');
-				} else {
+				} else{
 					$redirect_url = trailingslashit($redirect_url) . user_trailingslashit($page, 'single_paged');
 				}
 			}
@@ -401,8 +401,8 @@ function redirect_canonical($requested_url = null, $do_redirect = true){
 		$user_ts_type = '';
 		if(get_query_var('paged') > 0){
 			$user_ts_type = 'paged';
-		} else {
-			foreach (array('single', 'category', 'page', 'day', 'month', 'year', 'home') as $type){
+		} else{
+			foreach(array('single', 'category', 'page', 'day', 'month', 'year', 'home') as $type){
 				$func = 'is_' . $type;
 				if(call_user_func($func)){
 					$user_ts_type = $type;
@@ -499,12 +499,12 @@ function redirect_canonical($requested_url = null, $do_redirect = true){
 		if(!redirect_canonical($redirect_url, false)){
 			wp_redirect($redirect_url, 301);
 			exit();
-		} else {
+		} else{
 			// Debug
 			// die("1: $redirect_url<br />2: " . redirect_canonical($redirect_url, false));
 			return;
 		}
-	} else {
+	} else{
 		return $redirect_url;
 	}
 }
@@ -525,11 +525,11 @@ function _remove_qs_args_if_not_in_url($query_string, Array $args_to_check, $url
 	$parsed_url = @parse_url($url);
 	if(!empty($parsed_url['query'])){
 		parse_str($parsed_url['query'], $parsed_query);
-		foreach ($args_to_check as $qv){
+		foreach($args_to_check as $qv){
 			if(!isset($parsed_query[$qv]))
 				$query_string = remove_query_arg($qv, $query_string);
 		}
-	} else {
+	} else{
 		$query_string = remove_query_arg($args_to_check, $query_string);
 	}
 	return $query_string;

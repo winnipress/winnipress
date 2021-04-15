@@ -9,7 +9,7 @@
 /** WordPress Administration Bootstrap */
 require_once(dirname(__FILE__ ) . '/admin.php' );
 
-if (!current_user_can('manage_options' ) )
+if(!current_user_can('manage_options' ) )
 	wp_die(__('Sorry, you are not allowed to manage options for this site.' ) );
 
 $title = __('Media Settings');
@@ -74,7 +74,7 @@ include(ABSPATH . 'wp-admin/admin-header.php' );
 /**
  * @global array $wp_settings
  */
-if (isset($GLOBALS['wp_settings']['media']['embeds'] ) ) : ?>
+if(isset($GLOBALS['wp_settings']['media']['embeds'] ) ) : ?>
 <h2 class="title"><?php _e('Embeds') ?></h2>
 <table class="form-table">
 <?php do_settings_fields('media', 'embeds' ); ?>
@@ -86,7 +86,7 @@ if (isset($GLOBALS['wp_settings']['media']['embeds'] ) ) : ?>
 <table class="form-table">
 <?php
 // If upload_url_path is not the default (empty), and upload_path is not the default ('wp-content/uploads' or empty)
-if (get_option('upload_url_path') || (get_option('upload_path') != 'wp-content/uploads' && get_option('upload_path') ) ) :
+if(get_option('upload_url_path') || (get_option('upload_path') != 'wp-content/uploads' && get_option('upload_path') ) ) :
 ?>
 <tr>
 <th scope="row"><label for="upload_path"><?php _e('Store uploads in this folder'); ?></label></th>

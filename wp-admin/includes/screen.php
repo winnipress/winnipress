@@ -17,12 +17,12 @@
  * @return array Containing the headers in the format id => UI String
  */
 function get_column_headers( $screen) {
-	if ( is_string( $screen))
+	if( is_string( $screen))
 		$screen = convert_to_screen( $screen);
 
 	static $column_headers = array();
 
-	if ( !isset( $column_headers[ $screen->id ])) {
+	if( !isset( $column_headers[ $screen->id ])) {
 
 		/**
 		 * Filters the column headers for a list table on a specific screen.
@@ -51,7 +51,7 @@ function get_column_headers( $screen) {
  * @return array
  */
 function get_hidden_columns( $screen) {
-	if ( is_string( $screen)) {
+	if( is_string( $screen)) {
 		$screen = convert_to_screen( $screen);
 	}
 
@@ -59,7 +59,7 @@ function get_hidden_columns( $screen) {
 
 	$use_defaults = !is_array( $hidden);
 
-	if ( $use_defaults) {
+	if( $use_defaults) {
 		$hidden = array();
 
 		/**
@@ -98,29 +98,29 @@ function get_hidden_columns( $screen) {
 function meta_box_prefs( $screen) {
 	global $wp_meta_boxes;
 
-	if ( is_string( $screen))
+	if( is_string( $screen))
 		$screen = convert_to_screen( $screen);
 
-	if ( empty($wp_meta_boxes[$screen->id]))
+	if( empty($wp_meta_boxes[$screen->id]))
 		return;
 
 	$hidden = get_hidden_meta_boxes($screen);
 
-	foreach ( array_keys( $wp_meta_boxes[ $screen->id ]) as $context) {
-		foreach ( array( 'high', 'core', 'default', 'low') as $priority) {
-			if ( !isset( $wp_meta_boxes[ $screen->id ][ $context ][ $priority ])) {
+	foreach( array_keys( $wp_meta_boxes[ $screen->id ]) as $context) {
+		foreach( array( 'high', 'core', 'default', 'low') as $priority) {
+			if( !isset( $wp_meta_boxes[ $screen->id ][ $context ][ $priority ])) {
 				continue;
 			}
-			foreach ( $wp_meta_boxes[ $screen->id ][ $context ][ $priority ] as $box) {
-				if ( false == $box || !$box['title'])
+			foreach( $wp_meta_boxes[ $screen->id ][ $context ][ $priority ] as $box) {
+				if( false == $box || !$box['title'])
 					continue;
 				// Submit box cannot be hidden
-				if ( 'submitdiv' == $box['id'] || 'linksubmitdiv' == $box['id'])
+				if( 'submitdiv' == $box['id'] || 'linksubmitdiv' == $box['id'])
 					continue;
 
 				$widget_title = $box['title'];
 
-				if ( is_array( $box['args']) && isset( $box['args']['__widget_basename'])) {
+				if( is_array( $box['args']) && isset( $box['args']['__widget_basename'])) {
 					$widget_title = $box['args']['__widget_basename'];
 				}
 
@@ -144,7 +144,7 @@ function meta_box_prefs( $screen) {
  * @return array Hidden Meta Boxes
  */
 function get_hidden_meta_boxes( $screen) {
-	if ( is_string( $screen))
+	if( is_string( $screen))
 		$screen = convert_to_screen( $screen);
 
 	$hidden = get_user_option( "metaboxhidden_{$screen->id}");
@@ -152,10 +152,10 @@ function get_hidden_meta_boxes( $screen) {
 	$use_defaults = !is_array( $hidden);
 
 	// Hide slug boxes by default
-	if ( $use_defaults) {
+	if( $use_defaults) {
 		$hidden = array();
-		if ( 'post' == $screen->base) {
-			if ( 'post' == $screen->post_type || 'page' == $screen->post_type || 'attachment' == $screen->post_type)
+		if( 'post' == $screen->base) {
+			if( 'post' == $screen->post_type || 'page' == $screen->post_type || 'attachment' == $screen->post_type)
 				$hidden = array('slugdiv', 'postcustom', 'postexcerpt', 'authordiv');
 			else
 				$hidden = array( 'slugdiv');
@@ -196,7 +196,7 @@ function get_hidden_meta_boxes( $screen) {
 function add_screen_option( $option, $args = array()) {
 	$current_screen = get_current_screen();
 
-	if ( !$current_screen)
+	if( !$current_screen)
 		return;
 
 	$current_screen->add_option( $option, $args);
@@ -214,7 +214,7 @@ function add_screen_option( $option, $args = array()) {
 function get_current_screen() {
 	global $current_screen;
 
-	if ( !isset( $current_screen))
+	if( !isset( $current_screen))
 		return null;
 
 	return $current_screen;

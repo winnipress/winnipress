@@ -14,7 +14,7 @@
  *
  * @see WP_Dependencies
  */
-class WP_Scripts extends WP_Dependencies {
+class WP_Scripts extends WP_Dependencies{
 	/**
 	 * Base URL for scripts.
 	 *
@@ -126,7 +126,7 @@ class WP_Scripts extends WP_Dependencies {
 	 *
 	 * @since 2.6.0
 	 */
-	public function __construct() {
+	public function __construct(){
 		$this->init();
 		add_action( 'init', array( $this, 'init' ), 0 );
 	}
@@ -136,7 +136,7 @@ class WP_Scripts extends WP_Dependencies {
 	 *
 	 * @since 3.4.0
 	 */
-	public function init() {
+	public function init(){
 
 	}
 
@@ -154,7 +154,7 @@ class WP_Scripts extends WP_Dependencies {
 	 *                       Default false.
 	 * @return array Scripts that have been printed.
 	 */
-	public function print_scripts( $handles = false, $group = false ) {
+	public function print_scripts( $handles = false, $group = false ){
 		return $this->do_items( $handles, $group );
 	}
 
@@ -169,11 +169,11 @@ class WP_Scripts extends WP_Dependencies {
 	 *                       Default true.
 	 * @return bool|string|void Void if no data exists, extra scripts if `$echo` is true, true otherwise.
 	 */
-	public function print_extra_script( $handle, $echo = true ) {
-		if ( !$output = $this->get_data( $handle, 'data' ) )
+	public function print_extra_script( $handle, $echo = true ){
+		if( !$output = $this->get_data( $handle, 'data' ) )
 			return;
 
-		if ( !$echo )
+		if( !$echo )
 			return $output;
 
 		echo "<script type='text/javascript'>\n"; // CDATA and type='text/javascript' is not needed for HTML 5
@@ -197,50 +197,50 @@ class WP_Scripts extends WP_Dependencies {
 	 * @param int|false $group  Optional. Group level: (int) level, (false) no groups. Default false.
 	 * @return bool True on success, false on failure.
 	 */
-	public function do_item( $handle, $group = false ) {
-		if ( !parent::do_item($handle) )
+	public function do_item( $handle, $group = false ){
+		if( !parent::do_item($handle) )
 			return false;
 
-		if ( 0 === $group && $this->groups[$handle] > 0 ) {
+		if( 0 === $group && $this->groups[$handle] > 0 ){
 			$this->in_footer[] = $handle;
 			return false;
 		}
 
-		if ( false === $group && in_array($handle, $this->in_footer, true) )
+		if( false === $group && in_array($handle, $this->in_footer, true) )
 			$this->in_footer = array_diff( $this->in_footer, (array) $handle );
 
 		$obj = $this->registered[$handle];
 
-		if ( null === $obj->ver ) {
+		if( null === $obj->ver ){
 			$ver = '';
-		} else {
+		} else{
 			$ver = $obj->ver ? $obj->ver : $this->default_version;
 		}
 
-		if ( isset($this->args[$handle]) )
+		if( isset($this->args[$handle]) )
 			$ver = $ver ? $ver . '&amp;' . $this->args[$handle] : $this->args[$handle];
 
 		$src = $obj->src;
 		$cond_before = $cond_after = '';
 		$conditional = isset( $obj->extra['conditional'] ) ? $obj->extra['conditional'] : '';
 
-		if ( $conditional ) {
-			$cond_before = "<!--[if {$conditional}]>\n";
+		if( $conditional ){
+			$cond_before = "<!--[if{$conditional}]>\n";
 			$cond_after = "<![endif]-->\n";
 		}
 
 		$before_handle = $this->print_inline_script( $handle, 'before', false );
 		$after_handle = $this->print_inline_script( $handle, 'after', false );
 
-		if ( $before_handle ) {
+		if( $before_handle ){
 			$before_handle = sprintf( "<script type='text/javascript'>\n%s\n</script>\n", $before_handle );
 		}
 
-		if ( $after_handle ) {
+		if( $after_handle ){
 			$after_handle = sprintf( "<script type='text/javascript'>\n%s\n</script>\n", $after_handle );
 		}
 
-		if ( $this->do_concat ) {
+		if( $this->do_concat ){
 			/**
 			 * Filters the script loader source.
 			 *
@@ -251,18 +251,18 @@ class WP_Scripts extends WP_Dependencies {
 			 */
 			$srce = apply_filters( 'script_loader_src', $src, $handle );
 
-			if ( $this->in_default_dir( $srce ) && ( $before_handle || $after_handle ) ) {
+			if( $this->in_default_dir( $srce ) && ( $before_handle || $after_handle ) ){
 				$this->do_concat = false;
 
 				// Have to print the so-far concatenated scripts right away to maintain the right order.
 				_print_scripts();
 				$this->reset();
-			} elseif ( $this->in_default_dir( $srce ) && !$conditional ) {
+			} elseif( $this->in_default_dir( $srce ) && !$conditional ){
 				$this->print_code .= $this->print_extra_script( $handle, false );
 				$this->concat .= "$handle,";
 				$this->concat_version .= "$handle$ver";
 				return true;
-			} else {
+			} else{
 				$this->ext_handles .= "$handle,";
 				$this->ext_version .= "$handle$ver";
 			}
@@ -270,32 +270,32 @@ class WP_Scripts extends WP_Dependencies {
 
 		$has_conditional_data = $conditional && $this->get_data( $handle, 'data' );
 
-		if ( $has_conditional_data ) {
+		if( $has_conditional_data ){
 			echo $cond_before;
 		}
 
 		$this->print_extra_script( $handle );
 
-		if ( $has_conditional_data ) {
+		if( $has_conditional_data ){
 			echo $cond_after;
 		}
 
 		// A single item may alias a set of items, by having dependencies, but no source.
-		if ( !$obj->src ) {
+		if( !$obj->src ){
 			return true;
 		}
 
-		if ( !preg_match( '|^(https?:)?//|', $src ) && !( $this->content_url && 0 === strpos( $src, $this->content_url ) ) ) {
+		if( !preg_match( '|^(https?:)?//|', $src ) && !( $this->content_url && 0 === strpos( $src, $this->content_url ) ) ){
 			$src = $this->base_url . $src;
 		}
 
-		if ( !empty( $ver ) )
+		if( !empty( $ver ) )
 			$src = add_query_arg( 'ver', $ver, $src );
 
 		/** This filter is documented in wp-includes/class.wp-scripts.php */
 		$src = esc_url( apply_filters( 'script_loader_src', $src, $handle ) );
 
-		if ( !$src )
+		if( !$src )
 			return true;
 
 		$tag = "{$cond_before}{$before_handle}<script type='text/javascript' src='$src'></script>\n{$after_handle}{$cond_after}";
@@ -311,9 +311,9 @@ class WP_Scripts extends WP_Dependencies {
 		 */
 		$tag = apply_filters( 'script_loader_tag', $tag, $handle, $src );
 
-		if ( $this->do_concat ) {
+		if( $this->do_concat ){
 			$this->print_html .= $tag;
-		} else {
+		} else{
 			echo $tag;
 		}
 
@@ -331,12 +331,12 @@ class WP_Scripts extends WP_Dependencies {
 	 *                         or after. Default 'after'.
 	 * @return bool True on success, false on failure.
 	 */
-	public function add_inline_script( $handle, $data, $position = 'after' ) {
-		if ( !$data ) {
+	public function add_inline_script( $handle, $data, $position = 'after' ){
+		if( !$data ){
 			return false;
 		}
 
-		if ( 'after' !== $position ) {
+		if( 'after' !== $position ){
 			$position = 'before';
 		}
 
@@ -358,16 +358,16 @@ class WP_Scripts extends WP_Dependencies {
 	 *                         Default true.
 	 * @return string|false Script on success, false otherwise.
 	 */
-	public function print_inline_script( $handle, $position = 'after', $echo = true ) {
+	public function print_inline_script( $handle, $position = 'after', $echo = true ){
 		$output = $this->get_data( $handle, $position );
 
-		if ( empty( $output ) ) {
+		if( empty( $output ) ){
 			return false;
 		}
 
 		$output = trim( implode( "\n", $output ), "\n" );
 
-		if ( $echo ) {
+		if( $echo ){
 			printf( "<script type='text/javascript'>\n%s\n</script>\n", $output );
 		}
 
@@ -384,17 +384,17 @@ class WP_Scripts extends WP_Dependencies {
 	 * @param array $l10n
 	 * @return bool
 	 */
-	public function localize( $handle, $object_name, $l10n ) {
-		if ( $handle === 'jquery' )
+	public function localize( $handle, $object_name, $l10n ){
+		if( $handle === 'jquery' )
 			$handle = 'jquery-core';
 
-		if ( is_array($l10n) && isset($l10n['l10n_print_after']) ) { // back compat, preserve the code in 'l10n_print_after' if present
+		if( is_array($l10n) && isset($l10n['l10n_print_after']) ){ // back compat, preserve the code in 'l10n_print_after' if present
 			$after = $l10n['l10n_print_after'];
 			unset($l10n['l10n_print_after']);
 		}
 
-		foreach ( (array) $l10n as $key => $value ) {
-			if ( !is_scalar($value) )
+		foreach( (array) $l10n as $key => $value ){
+			if( !is_scalar($value) )
 				continue;
 
 			$l10n[$key] = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8');
@@ -402,12 +402,12 @@ class WP_Scripts extends WP_Dependencies {
 
 		$script = "var $object_name = " . wp_json_encode( $l10n ) . ';';
 
-		if ( !empty($after) )
+		if( !empty($after) )
 			$script .= "\n$after;";
 
 		$data = $this->get_data( $handle, 'data' );
 
-		if ( !empty( $data ) )
+		if( !empty( $data ) )
 			$script = "$data\n$script";
 
 		return $this->add_data( $handle, 'data', $script );
@@ -425,13 +425,13 @@ class WP_Scripts extends WP_Dependencies {
 	 * @param int|false $group     Optional. Group level: (int) level, (false) no groups. Default false.
 	 * @return bool Not already in the group or a lower group
 	 */
-	public function set_group( $handle, $recursion, $group = false ) {
-		if ( isset( $this->registered[$handle]->args ) && $this->registered[$handle]->args === 1 )
+	public function set_group( $handle, $recursion, $group = false ){
+		if( isset( $this->registered[$handle]->args ) && $this->registered[$handle]->args === 1 )
 			$grp = 1;
 		else
 			$grp = (int) $this->get_data( $handle, 'group' );
 
-		if ( false !== $group && $grp > $group )
+		if( false !== $group && $grp > $group )
 			$grp = $group;
 
 		return parent::set_group( $handle, $recursion, $grp );
@@ -449,9 +449,9 @@ class WP_Scripts extends WP_Dependencies {
 	 * @param int|false $group     Optional. Group level: (int) level, (false) no groups. Default false.
 	 * @return bool True on success, false on failure.
 	 */
-	public function all_deps( $handles, $recursion = false, $group = false ) {
+	public function all_deps( $handles, $recursion = false, $group = false ){
 		$r = parent::all_deps( $handles, $recursion, $group );
-		if ( !$recursion ) {
+		if( !$recursion ){
 			/**
 			 * Filters the list of script dependencies left to print.
 			 *
@@ -473,7 +473,7 @@ class WP_Scripts extends WP_Dependencies {
 	 *
 	 * @return array Handles of items that have been processed.
 	 */
-	public function do_head_items() {
+	public function do_head_items(){
 		$this->do_items(false, 0);
 		return $this->done;
 	}
@@ -487,7 +487,7 @@ class WP_Scripts extends WP_Dependencies {
 	 *
 	 * @return array Handles of items that have been processed.
 	 */
-	public function do_footer_items() {
+	public function do_footer_items(){
 		$this->do_items(false, 1);
 		return $this->done;
 	}
@@ -500,17 +500,17 @@ class WP_Scripts extends WP_Dependencies {
 	 * @param string $src The source of the enqueued script.
 	 * @return bool True if found, false if not.
 	 */
-	public function in_default_dir( $src ) {
-		if ( !$this->default_dirs ) {
+	public function in_default_dir( $src ){
+		if( !$this->default_dirs ){
 			return true;
 		}
 
-		if ( 0 === strpos( $src, '/' . WPINC . '/js/l10n' ) ) {
+		if( 0 === strpos( $src, '/' . WPINC . '/js/l10n' ) ){
 			return false;
 		}
 
-		foreach ( (array) $this->default_dirs as $test ) {
-			if ( 0 === strpos( $src, $test ) ) {
+		foreach( (array) $this->default_dirs as $test ){
+			if( 0 === strpos( $src, $test ) ){
 				return true;
 			}
 		}
@@ -522,7 +522,7 @@ class WP_Scripts extends WP_Dependencies {
 	 *
 	 * @since 2.8.0
 	 */
-	public function reset() {
+	public function reset(){
 		$this->do_concat = false;
 		$this->print_code = '';
 		$this->concat = '';

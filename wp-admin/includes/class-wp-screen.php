@@ -195,7 +195,7 @@ final class WP_Screen {
 	 * @return WP_Screen Screen object.
 	 */
 	public static function get( $hook_name = '') {
-		if ( $hook_name instanceof WP_Screen) {
+		if( $hook_name instanceof WP_Screen) {
 			return $hook_name;
 		}
 
@@ -203,86 +203,86 @@ final class WP_Screen {
 		$in_admin = false;
 		$action = '';
 
-		if ( $hook_name)
+		if( $hook_name)
 			$id = $hook_name;
 		else
 			$id = $GLOBALS['hook_suffix'];
 
 		// For those pesky meta boxes.
-		if ( $hook_name && post_type_exists( $hook_name)) {
+		if( $hook_name && post_type_exists( $hook_name)) {
 			$post_type = $id;
 			$id = 'post'; // changes later. ends up being $base.
 		} else {
-			if ( '.php' == substr( $id, -4))
+			if( '.php' == substr( $id, -4))
 				$id = substr( $id, 0, -4);
 
-			if ( 'post-new' == $id || 'link-add' == $id || 'media-new' == $id || 'user-new' == $id) {
+			if( 'post-new' == $id || 'link-add' == $id || 'media-new' == $id || 'user-new' == $id) {
 				$id = substr( $id, 0, -4);
 				$action = 'add';
 			}
 		}
 
-		if ( !$post_type && $hook_name) {
-			if ( '-network' == substr( $id, -8)) {
+		if( !$post_type && $hook_name) {
+			if( '-network' == substr( $id, -8)) {
 				$id = substr( $id, 0, -8);
 				$in_admin = 'network';
-			} elseif ( '-user' == substr( $id, -5)) {
+			} elseif( '-user' == substr( $id, -5)) {
 				$id = substr( $id, 0, -5);
 				$in_admin = 'user';
 			}
 
 			$id = sanitize_key( $id);
-			if ( 'edit-tags' != $id && 'edit-' == substr( $id, 0, 5)) {
+			if( 'edit-tags' != $id && 'edit-' == substr( $id, 0, 5)) {
 				$maybe = substr( $id, 5);
-				if ( taxonomy_exists( $maybe)) {
+				if( taxonomy_exists( $maybe)) {
 					$id = 'edit-tags';
 					$taxonomy = $maybe;
-				} elseif ( post_type_exists( $maybe)) {
+				} elseif( post_type_exists( $maybe)) {
 					$id = 'edit';
 					$post_type = $maybe;
 				}
 			}
 
-			if ( !$in_admin)
+			if( !$in_admin)
 				$in_admin = 'site';
 		} else {
 				$in_admin = 'site';
 		}
 
-		if ( 'index' == $id)
+		if( 'index' == $id)
 			$id = 'dashboard';
-		elseif ( 'front' == $id)
+		elseif( 'front' == $id)
 			$in_admin = false;
 
 		$base = $id;
 
 		// If this is the current screen, see if we can be more accurate for post types and taxonomies.
-		if ( !$hook_name) {
-			if ( isset( $_REQUEST['post_type']))
+		if( !$hook_name) {
+			if( isset( $_REQUEST['post_type']))
 				$post_type = post_type_exists( $_REQUEST['post_type']) ? $_REQUEST['post_type'] : false;
-			if ( isset( $_REQUEST['taxonomy']))
+			if( isset( $_REQUEST['taxonomy']))
 				$taxonomy = taxonomy_exists( $_REQUEST['taxonomy']) ? $_REQUEST['taxonomy'] : false;
 
 			switch ( $base) {
 				case 'post' :
-					if ( isset( $_GET['post']) && isset( $_POST['post_ID']) && (int) $_GET['post'] !== (int) $_POST['post_ID'])
+					if( isset( $_GET['post']) && isset( $_POST['post_ID']) && (int) $_GET['post'] !== (int) $_POST['post_ID'])
 						wp_die( __( 'A post ID mismatch has been detected.'), __( 'Sorry, you are not allowed to edit this item.'), 400);
-					elseif ( isset( $_GET['post']))
+					elseif( isset( $_GET['post']))
 						$post_id = (int) $_GET['post'];
-					elseif ( isset( $_POST['post_ID']))
+					elseif( isset( $_POST['post_ID']))
 						$post_id = (int) $_POST['post_ID'];
 					else
 						$post_id = 0;
 
-					if ( $post_id) {
+					if( $post_id) {
 						$post = get_post( $post_id);
-						if ( $post)
+						if( $post)
 							$post_type = $post->post_type;
 					}
 					break;
 				case 'edit-tags' :
 				case 'term' :
-					if ( null === $post_type && is_object_in_taxonomy( 'post', $taxonomy ? $taxonomy : 'post_tag'))
+					if( null === $post_type && is_object_in_taxonomy( 'post', $taxonomy ? $taxonomy : 'post_tag'))
 						$post_type = 'post';
 					break;
 				case 'upload':
@@ -293,23 +293,23 @@ final class WP_Screen {
 
 		switch ( $base) {
 			case 'post' :
-				if ( null === $post_type)
+				if( null === $post_type)
 					$post_type = 'post';
 				$id = $post_type;
 				break;
 			case 'edit' :
-				if ( null === $post_type)
+				if( null === $post_type)
 					$post_type = 'post';
 				$id .= '-' . $post_type;
 				break;
 			case 'edit-tags' :
 			case 'term' :
-				if ( null === $taxonomy)
+				if( null === $taxonomy)
 					$taxonomy = 'post_tag';
 				// The edit-tags ID does not contain the post type. Look for it in the request.
-				if ( null === $post_type) {
+				if( null === $post_type) {
 					$post_type = 'post';
-					if ( isset( $_REQUEST['post_type']) && post_type_exists( $_REQUEST['post_type']))
+					if( isset( $_REQUEST['post_type']) && post_type_exists( $_REQUEST['post_type']))
 						$post_type = $_REQUEST['post_type'];
 				}
 
@@ -317,17 +317,17 @@ final class WP_Screen {
 				break;
 		}
 
-		if ( 'network' == $in_admin) {
+		if( 'network' == $in_admin) {
 			$id   .= '-network';
 			$base .= '-network';
-		} elseif ( 'user' == $in_admin) {
+		} elseif( 'user' == $in_admin) {
 			$id   .= '-user';
 			$base .= '-user';
 		}
 
-		if ( isset( self::$_registry[ $id ])) {
+		if( isset( self::$_registry[ $id ])) {
 			$screen = self::$_registry[ $id ];
-			if ( $screen === get_current_screen())
+			if( $screen === get_current_screen())
 				return $screen;
 		} else {
 			$screen = new WP_Screen();
@@ -390,7 +390,7 @@ final class WP_Screen {
 	 * @return bool True if the screen is in the indicated admin, false otherwise.
 	 */
 	public function in_admin( $admin = null) {
-		if ( empty( $admin))
+		if( empty( $admin))
 			return (bool) $this->in_admin;
 
 		return ( $admin == $this->in_admin);
@@ -479,10 +479,10 @@ final class WP_Screen {
 	 * @return string The option value if set, null otherwise.
 	 */
 	public function get_option( $option, $key = false) {
-		if ( !isset( $this->_options[ $option ]))
+		if( !isset( $this->_options[ $option ]))
 			return null;
-		if ( $key) {
-			if ( isset( $this->_options[ $option ][ $key ]))
+		if( $key) {
+			if( isset( $this->_options[ $option ][ $key ]))
 				return $this->_options[ $option ][ $key ];
 			return null;
 		}
@@ -501,8 +501,8 @@ final class WP_Screen {
 		$help_tabs = $this->_help_tabs;
 
 		$priorities = array();
-		foreach ( $help_tabs as $help_tab) {
-			if ( isset( $priorities[ $help_tab['priority'] ])) {
+		foreach( $help_tabs as $help_tab) {
+			if( isset( $priorities[ $help_tab['priority'] ])) {
 				$priorities[ $help_tab['priority'] ][] = $help_tab;
 			} else {
 				$priorities[ $help_tab['priority'] ] = array( $help_tab);
@@ -512,8 +512,8 @@ final class WP_Screen {
 		ksort( $priorities);
 
 		$sorted = array();
-		foreach ( $priorities as $list) {
-			foreach ( $list as $tab) {
+		foreach( $priorities as $list) {
+			foreach( $list as $tab) {
 				$sorted[ $tab['id'] ] = $tab;
 			}
 		}
@@ -530,7 +530,7 @@ final class WP_Screen {
 	 * @return array Help tab arguments.
 	 */
 	public function get_help_tab( $id) {
-		if ( !isset( $this->_help_tabs[ $id ]))
+		if( !isset( $this->_help_tabs[ $id ]))
 			return null;
 		return $this->_help_tabs[ $id ];
 	}
@@ -565,7 +565,7 @@ final class WP_Screen {
 		$args['id'] = sanitize_html_class( $args['id']);
 
 		// Ensure we have an ID and title.
-		if ( !$args['id'] || !$args['title'])
+		if( !$args['id'] || !$args['title'])
 			return;
 
 		// Allows for overriding an existing tab with that ID.
@@ -654,7 +654,7 @@ final class WP_Screen {
 	 * @return string Screen reader text string.
 	 */
 	public function get_screen_reader_text( $key) {
-		if ( !isset( $this->_screen_reader_content[ $key ])) {
+		if( !isset( $this->_screen_reader_content[ $key ])) {
 			return null;
 		}
 		return $this->_screen_reader_content[ $key ];
@@ -736,7 +736,7 @@ final class WP_Screen {
 		$old_help = apply_filters( 'contextual_help', $old_help, $this->id, $this);
 
 		// Default help only if there is no old-style block of text and no new-style help tabs.
-		if ( empty( $old_help) && !$this->get_help_tabs()) {
+		if( empty( $old_help) && !$this->get_help_tabs()) {
 
 			/**
 			 * Filters the default legacy contextual help text.
@@ -748,11 +748,11 @@ final class WP_Screen {
 			 * @param string $old_help_default Default contextual help text.
 			 */
 			$default_help = apply_filters( 'default_contextual_help', '');
-			if ( $default_help)
+			if( $default_help)
 				$old_help = '<p>' . $default_help . '</p>';
 		}
 
-		if ( $old_help) {
+		if( $old_help) {
 			$this->add_help_tab( array(
 				'id'      => 'old-contextual-help',
 				'title'   => __('Overview'),
@@ -763,7 +763,7 @@ final class WP_Screen {
 		$help_sidebar = $this->get_help_sidebar();
 
 		$help_class = 'hidden';
-		if ( !$help_sidebar)
+		if( !$help_sidebar)
 			$help_class .= ' no-sidebar';
 
 		// Time to render!
@@ -777,7 +777,7 @@ final class WP_Screen {
 						<ul>
 						<?php
 						$class = ' class="active"';
-						foreach ( $this->get_help_tabs() as $tab) :
+						foreach( $this->get_help_tabs() as $tab) :
 							$link_id  = "tab-link-{$tab['id']}";
 							$panel_id = "tab-panel-{$tab['id']}";
 							?>
@@ -794,7 +794,7 @@ final class WP_Screen {
 						</ul>
 					</div>
 
-					<?php if ( $help_sidebar) : ?>
+					<?php if( $help_sidebar) : ?>
 					<div class="contextual-help-sidebar">
 						<?php echo $help_sidebar; ?>
 					</div>
@@ -803,7 +803,7 @@ final class WP_Screen {
 					<div class="contextual-help-tabs-wrap">
 						<?php
 						$classes = 'help-tab-content active';
-						foreach ( $this->get_help_tabs() as $tab):
+						foreach( $this->get_help_tabs() as $tab):
 							$panel_id = "tab-panel-{$tab['id']}";
 							?>
 
@@ -813,7 +813,7 @@ final class WP_Screen {
 								echo $tab['content'];
 
 								// If it exists, fire tab callback.
-								if ( !empty( $tab['callback']))
+								if( !empty( $tab['callback']))
 									call_user_func_array( $tab['callback'], array( $this, $tab));
 								?>
 							</div>
@@ -841,19 +841,19 @@ final class WP_Screen {
 		 */
 		$columns = apply_filters( 'screen_layout_columns', array(), $this->id, $this);
 
-		if ( !empty( $columns) && isset( $columns[ $this->id ]))
+		if( !empty( $columns) && isset( $columns[ $this->id ]))
 			$this->add_option( 'layout_columns', array('max' => $columns[ $this->id ]));
 
-		if ( $this->get_option( 'layout_columns')) {
+		if( $this->get_option( 'layout_columns')) {
 			$this->columns = (int) get_user_option("screen_layout_$this->id");
 
-			if ( !$this->columns && $this->get_option( 'layout_columns', 'default'))
+			if( !$this->columns && $this->get_option( 'layout_columns', 'default'))
 				$this->columns = $this->get_option( 'layout_columns', 'default');
 		}
 		$GLOBALS[ 'screen_layout_columns' ] = $this->columns; // Set the global for back-compat.
 
 		// Add screen options
-		if ( $this->show_screen_options())
+		if( $this->show_screen_options())
 			$this->render_screen_options();
 		?>
 		</div>
@@ -869,7 +869,7 @@ final class WP_Screen {
 	public function show_screen_options() {
 		global $wp_meta_boxes;
 
-		if ( is_bool( $this->_show_screen_options))
+		if( is_bool( $this->_show_screen_options))
 			return $this->_show_screen_options;
 
 		$columns = get_column_headers( $this);
@@ -905,7 +905,7 @@ final class WP_Screen {
 		 */
 		$this->_screen_settings = apply_filters( 'screen_settings', $this->_screen_settings, $this);
 
-		if ( $this->_screen_settings || $this->_options)
+		if( $this->_screen_settings || $this->_options)
 			$show_screen = true;
 
 		/**
@@ -938,13 +938,13 @@ final class WP_Screen {
 		$wrapper_start = $wrapper_end = $form_start = $form_end = '';
 
 		// Output optional wrapper.
-		if ( $options['wrap']) {
+		if( $options['wrap']) {
 			$wrapper_start = '<div id="screen-options-wrap" class="hidden" tabindex="-1" aria-label="' . esc_attr__( 'Screen Options Tab') . '">';
 			$wrapper_end = '</div>';
 		}
 
 		// Don't output the form and nonce for the widgets accessibility mode links.
-		if ( 'widgets' !== $this->base) {
+		if( 'widgets' !== $this->base) {
 			$form_start = "\n<form id='adv-settings' method='post'>\n";
 			$form_end = "\n" . wp_nonce_field( 'screen-options-nonce', 'screenoptionnonce', false, false) . "\n</form>\n";
 		}
@@ -969,7 +969,7 @@ final class WP_Screen {
 		 */
 		$show_button = apply_filters( 'screen_options_show_submit', false, $this);
 
-		if ( $show_button) {
+		if( $show_button) {
 			submit_button( __( 'Apply'), 'primary', 'screen-options-apply', true);
 		}
 
@@ -986,7 +986,7 @@ final class WP_Screen {
 	public function render_meta_boxes_preferences() {
 		global $wp_meta_boxes;
 
-		if ( !isset( $wp_meta_boxes[ $this->id ])) {
+		if( !isset( $wp_meta_boxes[ $this->id ])) {
 			return;
 		}
 		?>
@@ -995,16 +995,16 @@ final class WP_Screen {
 		<?php
 			meta_box_prefs( $this);
 
-			if ( 'dashboard' === $this->id && has_action( 'welcome_panel') && current_user_can( 'edit_theme_options')) {
-				if ( isset( $_GET['welcome'])) {
+			if( 'dashboard' === $this->id && has_action( 'welcome_panel') && current_user_can( 'edit_theme_options')) {
+				if( isset( $_GET['welcome'])) {
 					$welcome_checked = empty( $_GET['welcome']) ? 0 : 1;
 					update_user_meta( get_current_user_id(), 'show_welcome_panel', $welcome_checked);
 				} else {
 					$welcome_checked = get_user_meta( get_current_user_id(), 'show_welcome_panel', true);
-					if ( '' === $welcome_checked) {
+					if( '' === $welcome_checked) {
 						$welcome_checked = '1';
 					}
-					if ( '2' === $welcome_checked && wp_get_current_user()->user_email != get_option( 'admin_email')) {
+					if( '2' === $welcome_checked && wp_get_current_user()->user_email != get_option( 'admin_email')) {
 						$welcome_checked = false;
 					}
 				}
@@ -1025,7 +1025,7 @@ final class WP_Screen {
 		$columns = get_column_headers( $this);
 		$hidden  = get_hidden_columns( $this);
 
-		if ( !$columns) {
+		if( !$columns) {
 			return;
 		}
 
@@ -1036,13 +1036,13 @@ final class WP_Screen {
 		<?php
 		$special = array( '_title', 'cb', 'media', 'name', 'title', 'username', 'blogname');
 
-		foreach ( $columns as $column => $title) {
+		foreach( $columns as $column => $title) {
 			// Can't hide these for they are special
-			if ( in_array( $column, $special)) {
+			if( in_array( $column, $special)) {
 				continue;
 			}
 
-			if ( empty( $title)) {
+			if( empty( $title)) {
 				continue;
 			}
 
@@ -1069,7 +1069,7 @@ final class WP_Screen {
 	 * @since 3.3.0
 	 */
 	public function render_screen_layout() {
-		if ( !$this->get_option( 'layout_columns' ) ) {
+		if( !$this->get_option( 'layout_columns' ) ) {
 			return;
 		}
 
@@ -1098,29 +1098,29 @@ final class WP_Screen {
 	 * @since 3.3.0
 	 */
 	public function render_per_page_options() {
-		if ( null === $this->get_option( 'per_page' ) ) {
+		if( null === $this->get_option( 'per_page' ) ) {
 			return;
 		}
 
 		$per_page_label = $this->get_option( 'per_page', 'label' );
-		if ( null === $per_page_label ) {
+		if( null === $per_page_label ) {
 			$per_page_label = __( 'Number of items per page:' );
 		}
 
 		$option = $this->get_option( 'per_page', 'option' );
-		if ( !$option ) {
+		if( !$option ) {
 			$option = str_replace( '-', '_', "{$this->id}_per_page" );
 		}
 
 		$per_page = (int) get_user_option( $option );
-		if ( empty( $per_page ) || $per_page < 1 ) {
+		if( empty( $per_page ) || $per_page < 1 ) {
 			$per_page = $this->get_option( 'per_page', 'default' );
-			if ( !$per_page ) {
+			if( !$per_page ) {
 				$per_page = 20;
 			}
 		}
 
-		if ( 'categories_per_page' == $option ) {
+		if( 'categories_per_page' == $option ) {
 			/** This filter is documented in wp-admin/includes/class-wp-terms-list-table.php */
 			$per_page = apply_filters( 'edit_categories_per_page', $per_page );
 		} else {
@@ -1129,7 +1129,7 @@ final class WP_Screen {
 		}
 
 		// Back compat
-		if ( isset( $this->post_type ) ) {
+		if( isset( $this->post_type ) ) {
 			/** This filter is documented in wp-admin/includes/post.php */
 			$per_page = apply_filters( 'edit_posts_per_page', $per_page, $this->post_type );
 		}
@@ -1140,7 +1140,7 @@ final class WP_Screen {
 		?>
 		<fieldset class="screen-options">
 		<legend><?php _e( 'Pagination' ); ?></legend>
-			<?php if ( $per_page_label ) : ?>
+			<?php if( $per_page_label ) : ?>
 				<label for="<?php echo esc_attr( $option ); ?>"><?php echo $per_page_label; ?></label>
 				<input type="number" step="1" min="1" max="999" class="screen-per-page" name="wp_screen_options[value]"
 					id="<?php echo esc_attr( $option ); ?>" maxlength="3"
@@ -1162,7 +1162,7 @@ final class WP_Screen {
 		$screen = get_current_screen();
 
 		// Currently only enabled for posts lists
-		if ( 'edit' !== $screen->base ) {
+		if( 'edit' !== $screen->base ) {
 			return;
 		}
 
@@ -1178,7 +1178,7 @@ final class WP_Screen {
 		 */
 		$view_mode_post_types = apply_filters( 'view_mode_post_types', $view_mode_post_types );
 
-		if ( !in_array( $this->post_type, $view_mode_post_types ) ) {
+		if( !in_array( $this->post_type, $view_mode_post_types ) ) {
 			return;
 		}
 
@@ -1211,7 +1211,7 @@ final class WP_Screen {
 	 */
 	public function render_screen_reader_content( $key = '', $tag = 'h2' ) {
 
-		if ( !isset( $this->_screen_reader_content[ $key ] ) ) {
+		if( !isset( $this->_screen_reader_content[ $key ] ) ) {
 			return;
 		}
 		echo "<$tag class='screen-reader-text'>" . $this->_screen_reader_content[ $key ] . "</$tag>";

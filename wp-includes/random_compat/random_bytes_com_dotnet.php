@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-if (!is_callable('random_bytes' ) ):
+if(!is_callable('random_bytes')):
 /**
  * Windows with PHP < 5.3.0 will not have the function
  * openssl_random_pseudo_bytes() available, so let's use
@@ -40,18 +40,18 @@ if (!is_callable('random_bytes' ) ):
  */
 function random_bytes($bytes)
 {
-    try {
+    try{
         $bytes = RandomCompat_intval($bytes);
     } catch (TypeError $ex){
         throw new TypeError(
             'random_bytes(): $bytes must be an integer'
-        );
+       );
     }
 
-    if ($bytes < 1){
+    if($bytes < 1){
         throw new Error(
             'Length must be greater than 0'
-        );
+       );
     }
 
     $buf = '';
@@ -62,9 +62,9 @@ function random_bytes($bytes)
      * Let's not let it loop forever. If we run N times and fail to
      * get N bytes of random data, then CAPICOM has failed us.
      */
-    do {
+    do{
         $buf .= base64_decode($util->GetRandom($bytes, 0));
-        if (RandomCompat_strlen($buf) >= $bytes){
+        if(RandomCompat_strlen($buf) >= $bytes){
             /**
              * Return our random entropy buffer here:
              */
@@ -78,6 +78,6 @@ function random_bytes($bytes)
      */
     throw new Exception(
         'Could not gather sufficient random data'
-    );
+   );
 }
 endif;

@@ -55,7 +55,7 @@ function _get_cron_lock(){
 		 * in case another process altered the cache.
 		 */
 		$value = wp_cache_get('doing_cron', 'transient', true);
-	} else {
+	} else{
 		$row = $wpdb->get_row($wpdb->prepare("SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1", '_transient_doing_cron'));
 		if(is_object($row))
 			$value = $row->option_value;
@@ -85,7 +85,7 @@ if(empty($doing_wp_cron)){
 			return;
 		$doing_cron_transient = $doing_wp_cron = sprintf('%.22F', microtime(true));
 		set_transient('doing_cron', $doing_wp_cron);
-	} else {
+	} else{
 		$doing_wp_cron = $_GET[ 'doing_wp_cron' ];
 	}
 }
@@ -97,13 +97,13 @@ if(empty($doing_wp_cron)){
 if($doing_cron_transient != $doing_wp_cron)
 	return;
 
-foreach ($crons as $timestamp => $cronhooks){
+foreach($crons as $timestamp => $cronhooks){
 	if($timestamp > $gmt_time)
 		break;
 
-	foreach ($cronhooks as $hook => $keys){
+	foreach($cronhooks as $hook => $keys){
 
-		foreach ($keys as $k => $v){
+		foreach($keys as $k => $v){
 
 			$schedule = $v['schedule'];
 

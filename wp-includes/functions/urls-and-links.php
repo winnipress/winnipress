@@ -32,7 +32,7 @@ function the_permalink($post = 0 ){
  *
  * Conditionally adds a trailing slash if the permalink structure has a trailing
  * slash, strips the trailing slash if not. The string is passed through the
- * {@see 'user_trailingslashit'} filter. Will remove trailing slash from string, if
+ *{@see 'user_trailingslashit'} filter. Will remove trailing slash from string, if
  * site is not set to have them.
  *
  * @since 2.2.0
@@ -132,7 +132,7 @@ function get_permalink($post = 0, $leavename = false ){
 
 	if(is_object($post ) && isset($post->filter ) && 'sample' == $post->filter ){
 		$sample = true;
-	} else {
+	} else{
 		$post = get_post($post );
 		$sample = false;
 	}
@@ -222,7 +222,7 @@ function get_permalink($post = 0, $leavename = false ){
 		);
 		$permalink = home_url(str_replace($rewritecode, $rewritereplace, $permalink) );
 		$permalink = user_trailingslashit($permalink, 'single');
-	} else { // if they're not using the fancy permalink option
+	} else{ // if they're not using the fancy permalink option
 		$permalink = home_url('?p=' . $post->ID);
 	}
 
@@ -277,7 +277,7 @@ function get_post_permalink($id = 0, $leavename = false, $sample = false ){
 			$post_link = str_replace("%$post->post_type%", $slug, $post_link);
 		}
 		$post_link = home_url(user_trailingslashit($post_link) );
-	} else {
+	} else{
 		if($post_type->query_var && (isset($post->post_status) && !$draft_or_pending ) )
 			$post_link = add_query_arg($post_type->query_var, $slug, '');
 		else
@@ -363,7 +363,7 @@ function _get_page_link($post = false, $leavename = false, $sample = false ){
 
 		$link = home_url($link);
 		$link = user_trailingslashit($link, 'page');
-	} else {
+	} else{
 		$link = home_url('?page_id=' . $post->ID );
 	}
 
@@ -454,7 +454,7 @@ function get_year_link($year ){
 	if(!empty($yearlink) ){
 		$yearlink = str_replace('%year%', $year, $yearlink);
 		$yearlink = home_url(user_trailingslashit($yearlink, 'year' ) );
-	} else {
+	} else{
 		$yearlink = home_url('?m=' . $year );
 	}
 
@@ -491,7 +491,7 @@ function get_month_link($year, $month){
 		$monthlink = str_replace('%year%', $year, $monthlink);
 		$monthlink = str_replace('%monthnum%', zeroise(intval($month), 2), $monthlink);
 		$monthlink = home_url(user_trailingslashit($monthlink, 'month' ) );
-	} else {
+	} else{
 		$monthlink = home_url('?m=' . $year . zeroise($month, 2 ) );
 	}
 
@@ -534,7 +534,7 @@ function get_day_link($year, $month, $day){
 		$daylink = str_replace('%monthnum%', zeroise(intval($month), 2), $daylink);
 		$daylink = str_replace('%day%', zeroise(intval($day), 2), $daylink);
 		$daylink = home_url(user_trailingslashit($daylink, 'day' ) );
-	} else {
+	} else{
 		$daylink = home_url('?m=' . $year . zeroise($month, 2 ) . zeroise($day, 2 ) );
 	}
 
@@ -600,7 +600,7 @@ function get_feed_link($feed = '' ){
 		$permalink = str_replace('%feed%', $feed, $permalink);
 		$permalink = preg_replace('#/+#', '/', "/$permalink");
 		$output =  home_url(user_trailingslashit($permalink, 'feed') );
-	} else {
+	} else{
 		if(empty($feed) )
 			$feed = get_default_feed();
 
@@ -654,18 +654,18 @@ function get_post_comments_feed_link($post_id = 0, $feed = '' ){
 				$url .= "$feed/";
 			}
 			$url = add_query_arg('attachment_id', $post_id, $url );
-		} else {
+		} else{
 			$url = trailingslashit($url) . 'feed';
 			if($feed != get_default_feed() )
 				$url .= "/$feed";
 			$url = user_trailingslashit($url, 'single_feed');
 		}
-	} else {
+	} else{
 		if($unattached ){
 			$url = add_query_arg(array('feed' => $feed, 'attachment_id' => $post_id ), home_url('/' ) );
 		} elseif('page' == $post->post_type ){
 			$url = add_query_arg(array('feed' => $feed, 'page_id' => $post_id ), home_url('/' ) );
-		} else {
+		} else{
 			$url = add_query_arg(array('feed' => $feed, 'p' => $post_id ), home_url('/' ) );
 		}
 	}
@@ -733,7 +733,7 @@ function get_author_feed_link($author_id, $feed = '' ){
 
 	if('' == $permalink_structure ){
 		$link = home_url("?feed=$feed&amp;author=" . $author_id);
-	} else {
+	} else{
 		$link = get_author_posts_url($author_id);
 		if($feed == get_default_feed() )
 			$feed_link = 'feed';
@@ -804,11 +804,11 @@ function get_term_feed_link($term_id, $taxonomy = 'category', $feed = '' ){
 		}
 		elseif('post_tag' == $taxonomy ){
 			$link = home_url("?feed=$feed&amp;tag=$term->slug");
-		} else {
+		} else{
 			$t = get_taxonomy($taxonomy );
 			$link = home_url("?feed=$feed&amp;$t->query_var=$term->slug");
 		}
-	} else {
+	} else{
 		$link = get_term_link($term_id, $term->taxonomy );
 		if($feed == get_default_feed() )
 			$feed_link = 'feed';
@@ -838,7 +838,7 @@ function get_term_feed_link($term_id, $taxonomy = 'category', $feed = '' ){
 		 * @param string $feed Feed type.
 		 */
 		$link = apply_filters('tag_feed_link', $link, $feed );
-	} else {
+	} else{
 		/**
 		 * Filters the feed link for a taxonomy other than 'category' or 'post_tag'.
 		 *
@@ -949,7 +949,7 @@ function get_edit_term_link($term_id, $taxonomy = '', $object_type = '' ){
 
 	if($tax->show_ui ){
 		$location = add_query_arg($args, admin_url('term.php' ) );
-	} else {
+	} else{
 		$location = '';
 	}
 
@@ -1033,7 +1033,7 @@ function get_search_link($query = '' ){
 
 	if(empty($permastruct ) ){
 		$link = home_url('?s=' . urlencode($search) );
-	} else {
+	} else{
 		$search = urlencode($search);
 		$search = str_replace('%2F', '/', $search); // %2F(/) is not valid within a URL, send it un-encoded.
 		$link = str_replace('%search%', $search, $permastruct );
@@ -1073,7 +1073,7 @@ function get_search_feed_link($search_query = '', $feed = ''){
 
 	if(empty($permastruct) ){
 		$link = add_query_arg('feed', $feed, $link);
-	} else {
+	} else{
 		$link = trailingslashit($link);
 		$link .= "feed/$feed/";
 	}
@@ -1142,7 +1142,7 @@ function get_post_type_archive_link($post_type ){
 
 		if('page' == $show_on_front && $page_for_posts ){
 			$link = get_permalink($page_for_posts );
-		} else {
+		} else{
 			$link = get_home_url();
 		}
 		/** This filter is documented in wp-includes/link-template.php */
@@ -1159,7 +1159,7 @@ function get_post_type_archive_link($post_type ){
 		else
 			$struct = $wp_rewrite->root . $struct;
 		$link = home_url(user_trailingslashit($struct, 'post_type_archive' ) );
-	} else {
+	} else{
 		$link = home_url('?post_type=' . $post_type );
 	}
 
@@ -1197,7 +1197,7 @@ function get_post_type_archive_feed_link($post_type, $feed = '' ){
 		$link .= 'feed/';
 		if($feed != $default_feed )
 			$link .= "$feed/";
-	} else {
+	} else{
 		$link = add_query_arg('feed', $feed, $link );
 	}
 
@@ -1285,7 +1285,7 @@ function get_edit_post_link($id = 0, $context = 'display' ){
 
 	if($post_type_object->_edit_link ){
 		$link = admin_url(sprintf($post_type_object->_edit_link . $action, $post->ID ) );
-	} else {
+	} else{
 		$link = '';
 	}
 
@@ -1604,7 +1604,7 @@ function get_adjacent_post($in_same_term = false, $excluded_terms = '', $previou
 			if(false !== strpos($excluded_terms, ' and ' ) ){
 				_deprecated_argument(__FUNCTION__, '3.3.0', sprintf(__('Use commas instead of %s to separate excluded terms.' ), "'and'" ) );
 				$excluded_terms = explode(' and ', $excluded_terms );
-			} else {
+			} else{
 				$excluded_terms = explode(',', $excluded_terms );
 			}
 
@@ -1654,7 +1654,7 @@ function get_adjacent_post($in_same_term = false, $excluded_terms = '', $previou
 		if(empty($post_type_object ) ){
 			$post_type_cap    = $post->post_type;
 			$read_private_cap = 'read_private_' . $post_type_cap . 's';
-		} else {
+		} else{
 			$read_private_cap = $post_type_object->cap->read_private_posts;
 		}
 
@@ -1664,15 +1664,15 @@ function get_adjacent_post($in_same_term = false, $excluded_terms = '', $previou
 		 */
 		$private_states = get_post_stati(array('private' => true ) );
 		$where .= " AND (p.post_status = 'publish'";
-		foreach ((array) $private_states as $state ){
+		foreach((array) $private_states as $state ){
 			if(current_user_can($read_private_cap ) ){
 				$where .= $wpdb->prepare(" OR p.post_status = %s", $state );
-			} else {
+			} else{
 				$where .= $wpdb->prepare(" OR (p.post_author = %d AND p.post_status = %s)", $user_id, $state );
 			}
 		}
 		$where .= " )";
-	} else {
+	} else{
 		$where .= " AND p.post_status = 'publish'";
 	}
 
@@ -1912,7 +1912,7 @@ function get_boundary_post($in_same_term = false, $excluded_terms = '', $start =
 			$excluded_terms = array_diff($excluded_terms, $term_array );
 
 			$inverse_terms = array();
-			foreach ($excluded_terms as $excluded_term )
+			foreach($excluded_terms as $excluded_term )
 				$inverse_terms[] = $excluded_term * -1;
 			$excluded_terms = $inverse_terms;
 		}
@@ -2014,7 +2014,7 @@ function get_adjacent_post_link($format, $link, $in_same_term = false, $excluded
 
 	if(!$post ){
 		$output = '';
-	} else {
+	} else{
 		$title = $post->post_title;
 
 		if(empty($post->post_title ) )
@@ -2103,17 +2103,17 @@ function get_pagenum_link($pagenum = 1, $escape = true ){
 
 		if($pagenum > 1 ){
 			$result = add_query_arg('paged', $pagenum, $base . $request );
-		} else {
+		} else{
 			$result = $base . $request;
 		}
-	} else {
+	} else{
 		$qs_regex = '|\?.*?$|';
 		preg_match($qs_regex, $request, $qs_match );
 
 		if(!empty($qs_match[0] ) ){
 			$query_string = $qs_match[0];
 			$request = preg_replace($qs_regex, '', $request );
-		} else {
+		} else{
 			$query_string = '';
 		}
 
@@ -2330,7 +2330,7 @@ function previous_posts_link($label = null ){
  *
  * @global WP_Query $wp_query
  *
- * @param string|array $args {
+ * @param string|array $args{
  *     Optional. Arguments to build the post pages link navigation.
  *
  *     @type string $sep      Separator character. Default '&#8212;'.
@@ -2392,7 +2392,7 @@ function posts_nav_link($sep = '', $prelabel = '', $nxtlabel = '' ){
  * @since 4.1.0
  * @since 4.4.0 Introduced the `in_same_term`, `excluded_terms`, and `taxonomy` arguments.
  *
- * @param array $args {
+ * @param array $args{
  *     Optional. Default post navigation arguments. Default empty array.
  *
  *     @type string       $prev_text          Anchor text to display in the previous post link. Default '%title'.
@@ -2459,7 +2459,7 @@ function the_post_navigation($args = array() ){
  *
  * @global WP_Query $wp_query WordPress Query object.
  *
- * @param array $args {
+ * @param array $args{
  *     Optional. Default posts navigation arguments. Default empty array.
  *
  *     @type string $prev_text          Anchor text to display in the previous posts link.
@@ -2516,7 +2516,7 @@ function the_posts_navigation($args = array() ){
  *
  * @since 4.1.0
  *
- * @param array $args {
+ * @param array $args{
  *     Optional. Default pagination arguments, see paginate_links().
  *
  *     @type string $screen_reader_text Screen reader text for navigation element.
@@ -2801,7 +2801,7 @@ function paginate_comments_links($args = array() ){
  *
  * @since 4.4.0
  *
- * @param array $args {
+ * @param array $args{
  *     Optional. Default comments navigation arguments.
  *
  *     @type string $prev_text          Anchor text to display in the previous comments link.
@@ -2858,7 +2858,7 @@ function the_comments_navigation($args = array() ){
  *
  * @see paginate_comments_links()
  *
- * @param array $args {
+ * @param array $args{
  *     Optional. Default pagination arguments.
  *
  *     @type string $screen_reader_text Screen reader text for nav element. Default 'Comments navigation'.
@@ -3278,7 +3278,7 @@ function self_admin_url($path = '', $scheme = 'admin' ){
 		$url = network_admin_url($path, $scheme );
 	} elseif(is_user_admin() ){
 		$url = user_admin_url($path, $scheme );
-	} else {
+	} else{
 		$url = admin_url($path, $scheme );
 	}
 
@@ -3324,7 +3324,7 @@ function set_url_scheme($url, $scheme = null ){
 		$url = ltrim(preg_replace('#^\w+://[^/]*#', '', $url ) );
 		if($url !== '' && $url[0] === '/' )
 			$url = '/' . ltrim($url , "/ \t\n\r\0\x0B" );
-	} else {
+	} else{
 		$url = preg_replace('#^\w+://#', $scheme . '://', $url );
 	}
 
@@ -3443,7 +3443,7 @@ function wp_get_canonical_url($post = null ){
 		if($page >= 2 ){
 			if('' == get_option('permalink_structure' ) ){
 				$canonical_url = add_query_arg('page', $page, $canonical_url );
-			} else {
+			} else{
 				$canonical_url = trailingslashit($canonical_url ) . user_trailingslashit($page, 'single_paged' );
 			}
 		}
@@ -3495,7 +3495,7 @@ function rel_canonical(){
  * This function exists to provide a shortlink tag that all themes and plugins can target.
  * A plugin must hook in to provide the actual shortlinks. Default shortlink support is
  * limited to providing ?p= style links for posts. Plugins can short-circuit this function
- * via the {@see 'pre_get_shortlink'} filter or filter the output via the {@see 'get_shortlink'}
+ * via the{@see 'pre_get_shortlink'} filter or filter the output via the{@see 'get_shortlink'}
  * filter.
  *
  * @since 3.0.0.
@@ -3568,7 +3568,7 @@ function wp_get_shortlink($id = 0, $context = 'post', $allow_slugs = true ){
 /**
  * Injects rel=shortlink into the head if a shortlink is defined for the current page.
  *
- * Attached to the {@see 'wp_head'} action.
+ * Attached to the{@see 'wp_head'} action.
  *
  * @since 3.0.0
  */
@@ -3584,7 +3584,7 @@ function wp_shortlink_wp_head(){
 /**
  * Sends a Link: rel=shortlink header if a shortlink is defined for the current page.
  *
- * Attached to the {@see 'wp'} action.
+ * Attached to the{@see 'wp'} action.
  *
  * @since 3.0.0
  */
@@ -3651,7 +3651,7 @@ function the_shortlink($text = '', $title = '', $before = '', $after = '' ){
  *
  * @param mixed $id_or_email The Gravatar to retrieve a URL for. Accepts a user_id, gravatar md5 hash,
  *                           user email, WP_User object, WP_Post object, or WP_Comment object.
- * @param array $args {
+ * @param array $args{
  *     Optional. Arguments to return instead of the default arguments.
  *
  *     @type int    $size           Height and width of the avatar in pixels. Default 96.
@@ -3683,7 +3683,7 @@ function get_avatar_url($id_or_email, $args = null ){
  *
  * @param mixed $id_or_email The Gravatar to retrieve. Accepts a user_id, gravatar md5 hash,
  *                            user email, WP_User object, WP_Post object, or WP_Comment object.
- * @param array $args {
+ * @param array $args{
  *     Optional. Arguments to return instead of the default arguments.
  *
  *     @type int    $size           Height and width of the avatar image file in pixels. Default 96.
@@ -3704,7 +3704,7 @@ function get_avatar_url($id_or_email, $args = null ){
  *                                  plus a "found_avatar" guess. Pass as a reference. Default null.
  *     @type string $extra_attr     HTML attributes to insert in the IMG element. Is not sanitized. Default empty.
  * }
- * @return array $processed_args {
+ * @return array $processed_args{
  *     Along with the arguments passed in `$args`, this will contain a couple of extra arguments.
  *
  *     @type bool   $found_avatar True if we were able to find an avatar for this user,
@@ -3730,7 +3730,7 @@ function get_avatar_data($id_or_email, $args = null ){
 		if(!$args['size'] ){
 			$args['size'] = 96;
 		}
-	} else {
+	} else{
 		$args['size'] = 96;
 	}
 
@@ -3739,7 +3739,7 @@ function get_avatar_data($id_or_email, $args = null ){
 		if(!$args['height'] ){
 			$args['height'] = $args['size'];
 		}
-	} else {
+	} else{
 		$args['height'] = $args['size'];
 	}
 
@@ -3748,7 +3748,7 @@ function get_avatar_data($id_or_email, $args = null ){
 		if(!$args['width'] ){
 			$args['width'] = $args['size'];
 		}
-	} else {
+	} else{
 		$args['width'] = $args['size'];
 	}
 
@@ -3778,7 +3778,7 @@ function get_avatar_data($id_or_email, $args = null ){
 	 *
 	 * Passing a non-null value in the 'url' member of the return array will
 	 * effectively short circuit get_avatar_data(), passing the value through
-	 * the {@see 'get_avatar_data'} filter and returning early.
+	 * the{@see 'get_avatar_data'} filter and returning early.
 	 *
 	 * @since 4.2.0
 	 *
@@ -3807,7 +3807,7 @@ function get_avatar_data($id_or_email, $args = null ){
 		if(strpos($id_or_email, '@md5.gravatar.com' ) ){
 			// md5 hash
 			list($email_hash ) = explode('@', $id_or_email );
-		} else {
+		} else{
 			// email address
 			$email = $id_or_email;
 		}
@@ -3853,7 +3853,7 @@ function get_avatar_data($id_or_email, $args = null ){
 	if($email_hash ){
 		$args['found_avatar'] = true;
 		$gravatar_server = hexdec($email_hash[0] ) % 3;
-	} else {
+	} else{
 		$gravatar_server = rand(0, 2 );
 	}
 
@@ -3866,7 +3866,7 @@ function get_avatar_data($id_or_email, $args = null ){
 
 	if(is_ssl() ){
 		$url = 'https://secure.gravatar.com/avatar/' . $email_hash;
-	} else {
+	} else{
 		$url = sprintf('http://%d.gravatar.com/avatar/%s', $gravatar_server, $email_hash );
 	}
 
@@ -3917,7 +3917,7 @@ function get_theme_file_uri($file = '' ){
 		$url = get_stylesheet_directory_uri();
 	} elseif(file_exists(get_stylesheet_directory() . '/' . $file ) ){
 		$url = get_stylesheet_directory_uri() . '/' . $file;
-	} else {
+	} else{
 		$url = get_template_directory_uri() . '/' . $file;
 	}
 
@@ -3945,7 +3945,7 @@ function get_parent_theme_file_uri($file = '' ){
 
 	if(empty($file ) ){
 		$url = get_template_directory_uri();
-	} else {
+	} else{
 		$url = get_template_directory_uri() . '/' . $file;
 	}
 
@@ -3978,7 +3978,7 @@ function get_theme_file_path($file = '' ){
 		$path = get_stylesheet_directory();
 	} elseif(file_exists(get_stylesheet_directory() . '/' . $file ) ){
 		$path = get_stylesheet_directory() . '/' . $file;
-	} else {
+	} else{
 		$path = get_template_directory() . '/' . $file;
 	}
 
@@ -4006,7 +4006,7 @@ function get_parent_theme_file_path($file = '' ){
 
 	if(empty($file ) ){
 		$path = get_template_directory();
-	} else {
+	} else{
 		$path = get_template_directory() . '/' . $file;
 	}
 

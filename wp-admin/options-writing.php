@@ -9,7 +9,7 @@
 /** WordPress Administration Bootstrap */
 require_once(dirname(__FILE__ ) . '/admin.php' );
 
-if (!current_user_can('manage_options' ) )
+if(!current_user_can('manage_options' ) )
 	wp_die(__('Sorry, you are not allowed to manage options for this site.' ) );
 
 $title = __('Writing Settings');
@@ -23,7 +23,7 @@ get_current_screen()->add_help_tab(array(
 ) );
 
 /** This filter is documented in wp-admin/options.php */
-if (apply_filters('enable_post_by_email_configuration', true ) ) {
+if(apply_filters('enable_post_by_email_configuration', true ) ) {
 	get_current_screen()->add_help_tab(array(
 		'id'      => 'options-postemail',
 		'title'   => __('Post Via Email' ),
@@ -32,7 +32,7 @@ if (apply_filters('enable_post_by_email_configuration', true ) ) {
 }
 
 /** This filter is documented in wp-admin/options-writing.php */
-if (apply_filters('enable_update_services_configuration', true ) ) {
+if(apply_filters('enable_update_services_configuration', true ) ) {
 	get_current_screen()->add_help_tab(array(
 		'id'      => 'options-services',
 		'title'   => __('Update Services' ),
@@ -56,7 +56,7 @@ include(ABSPATH . 'wp-admin/admin-header.php' );
 <?php settings_fields('writing'); ?>
 
 <table class="form-table">
-<?php if (get_site_option('initial_db_version' ) < 32453 ) : ?>
+<?php if(get_site_option('initial_db_version' ) < 32453 ) : ?>
 <tr>
 <th scope="row"><?php _e('Formatting') ?></th>
 <td><fieldset><legend class="screen-reader-text"><span><?php _e('Formatting') ?></span></legend>
@@ -84,14 +84,14 @@ unset($post_formats['standard'] );
 <td>
 	<select name="default_post_format" id="default_post_format">
 		<option value="0"><?php echo get_post_format_string('standard' ); ?></option>
-<?php foreach ($post_formats as $format_slug => $format_name ): ?>
+<?php foreach($post_formats as $format_slug => $format_name ): ?>
 		<option<?php selected(get_option('default_post_format' ), $format_slug ); ?> value="<?php echo esc_attr($format_slug ); ?>"><?php echo esc_html($format_name ); ?></option>
 <?php endforeach; ?>
 	</select>
 </td>
 </tr>
 <?php
-if (get_option('link_manager_enabled' ) ) :
+if(get_option('link_manager_enabled' ) ) :
 ?>
 <tr>
 <th scope="row"><label for="default_link_category"><?php _e('Default Link Category') ?></label></th>

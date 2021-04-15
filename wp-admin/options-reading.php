@@ -9,7 +9,7 @@
 /** WordPress Administration Bootstrap */
 require_once(dirname(__FILE__ ) . '/admin.php' );
 
-if (!current_user_can('manage_options' ) )
+if(!current_user_can('manage_options' ) )
 	wp_die(__('Sorry, you are not allowed to manage options for this site.' ) );
 
 $title = __('Reading Settings' );
@@ -49,20 +49,20 @@ include(ABSPATH . 'wp-admin/admin-header.php' );
 <?php
 settings_fields('reading' );
 
-if (!in_array(get_option('blog_charset' ), array('utf8', 'utf-8', 'UTF8', 'UTF-8' ) ) )
+if(!in_array(get_option('blog_charset' ), array('utf8', 'utf-8', 'UTF8', 'UTF-8' ) ) )
 	add_settings_field('blog_charset', __('Encoding for pages and feeds' ), 'options_reading_blog_charset', 'reading', 'default', array('label_for' => 'blog_charset' ) );
 ?>
 
-<?php if (!get_pages() ) : ?>
+<?php if(!get_pages() ) : ?>
 <input name="show_on_front" type="hidden" value="posts" />
 <table class="form-table">
 <?php
-	if ('posts' != get_option('show_on_front' ) ) :
+	if('posts' != get_option('show_on_front' ) ) :
 		update_option('show_on_front', 'posts' );
 	endif;
 
 else :
-	if ('page' == get_option('show_on_front' ) && !get_option('page_on_front' ) && !get_option('page_for_posts' ) )
+	if('page' == get_option('show_on_front' ) && !get_option('page_on_front' ) && !get_option('page_for_posts' ) )
 		update_option('show_on_front', 'posts' );
 ?>
 <table class="form-table">
@@ -83,7 +83,7 @@ else :
 	<li><label for="page_on_front"><?php printf(__('Homepage: %s' ), wp_dropdown_pages(array('name' => 'page_on_front', 'echo' => 0, 'show_option_none' => __('&mdash; Select &mdash;' ), 'option_none_value' => '0', 'selected' => get_option('page_on_front' ) ) ) ); ?></label></li>
 	<li><label for="page_for_posts"><?php printf(__('Posts page: %s' ), wp_dropdown_pages(array('name' => 'page_for_posts', 'echo' => 0, 'show_option_none' => __('&mdash; Select &mdash;' ), 'option_none_value' => '0', 'selected' => get_option('page_for_posts' ) ) ) ); ?></label></li>
 </ul>
-<?php if ('page' == get_option('show_on_front' ) && get_option('page_for_posts' ) == get_option('page_on_front' ) ) : ?>
+<?php if('page' == get_option('show_on_front' ) && get_option('page_for_posts' ) == get_option('page_on_front' ) ) : ?>
 <div id="front-page-warning" class="error inline"><p><?php _e('<strong>Warning:</strong> these pages should not be the same!' ); ?></p></div>
 <?php endif; ?>
 </fieldset></td>
@@ -110,7 +110,7 @@ else :
 <tr class="option-site-visibility">
 <th scope="row"><?php has_action('blog_privacy_selector' ) ? _e('Site Visibility' ) : _e('Search Engine Visibility' ); ?> </th>
 <td><fieldset><legend class="screen-reader-text"><span><?php has_action('blog_privacy_selector' ) ? _e('Site Visibility' ) : _e('Search Engine Visibility' ); ?> </span></legend>
-<?php if (has_action('blog_privacy_selector' ) ) : ?>
+<?php if(has_action('blog_privacy_selector' ) ) : ?>
 	<input id="blog-public" type="radio" name="blog_public" value="1" <?php checked('1', get_option('blog_public')); ?> />
 	<label for="blog-public"><?php _e('Allow search engines to index this site' );?></label><br/>
 	<input id="blog-norobots" type="radio" name="blog_public" value="0" <?php checked('0', get_option('blog_public')); ?> />

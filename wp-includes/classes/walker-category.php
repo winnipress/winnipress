@@ -14,7 +14,7 @@
  *
  * @see Walker
  */
-class Walker_Category extends Walker {
+class Walker_Category extends Walker{
 
 	/**
 	 * What the class handles.
@@ -50,7 +50,7 @@ class Walker_Category extends Walker {
 	 *                       value is 'list'. See wp_list_categories(). Default empty array.
 	 */
 	public function start_lvl(&$output, $depth = 0, $args = array()){
-		if ('list' != $args['style'])
+		if('list' != $args['style'])
 			return;
 
 		$indent = str_repeat("\t", $depth);
@@ -70,7 +70,7 @@ class Walker_Category extends Walker {
 	 *                       value is 'list'. See wp_list_categories(). Default empty array.
 	 */
 	public function end_lvl(&$output, $depth = 0, $args = array()){
-		if ('list' != $args['style'])
+		if('list' != $args['style'])
 			return;
 
 		$indent = str_repeat("\t", $depth);
@@ -99,12 +99,12 @@ class Walker_Category extends Walker {
 		);
 
 		// Don't generate an element if the category name is empty.
-		if (!$cat_name){
+		if(!$cat_name){
 			return;
 		}
 
 		$link = '<a href="' . esc_url(get_term_link($category)) . '" ';
-		if ($args['use_desc_for_title'] && !empty($category->description)){
+		if($args['use_desc_for_title'] && !empty($category->description)){
 			/**
 			 * Filters the category description for display.
 			 *
@@ -119,18 +119,18 @@ class Walker_Category extends Walker {
 		$link .= '>';
 		$link .= $cat_name . '</a>';
 
-		if (!empty($args['feed_image']) || !empty($args['feed'])){
+		if(!empty($args['feed_image']) || !empty($args['feed'])){
 			$link .= ' ';
 
-			if (empty($args['feed_image'])){
+			if(empty($args['feed_image'])){
 				$link .= '(';
 			}
 
 			$link .= '<a href="' . esc_url(get_term_feed_link($category->term_id, $category->taxonomy, $args['feed_type'])) . '"';
 
-			if (empty($args['feed'])){
+			if(empty($args['feed'])){
 				$alt = ' alt="' . sprintf(__('Feed for all posts filed under %s'), $cat_name) . '"';
-			} else {
+			} else{
 				$alt = ' alt="' . $args['feed'] . '"';
 				$name = $args['feed'];
 				$link .= empty($args['title']) ? '' : $args['title'];
@@ -138,43 +138,43 @@ class Walker_Category extends Walker {
 
 			$link .= '>';
 
-			if (empty($args['feed_image'])){
+			if(empty($args['feed_image'])){
 				$link .= $name;
-			} else {
+			} else{
 				$link .= "<img src='" . $args['feed_image'] . "'$alt" . ' />';
 			}
 			$link .= '</a>';
 
-			if (empty($args['feed_image'])){
+			if(empty($args['feed_image'])){
 				$link .= ')';
 			}
 		}
 
-		if (!empty($args['show_count'])){
+		if(!empty($args['show_count'])){
 			$link .= ' (' . number_format_i18n($category->count) . ')';
 		}
-		if ('list' == $args['style']){
+		if('list' == $args['style']){
 			$output .= "\t<li";
 			$css_classes = array(
 				'cat-item',
 				'cat-item-' . $category->term_id,
 			);
 
-			if (!empty($args['current_category'])){
+			if(!empty($args['current_category'])){
 				// 'current_category' can be an array, so we use `get_terms()`.
 				$_current_terms = get_terms($category->taxonomy, array(
 					'include' => $args['current_category'],
 					'hide_empty' => false,
 				));
 
-				foreach ($_current_terms as $_current_term){
-					if ($category->term_id == $_current_term->term_id){
+				foreach($_current_terms as $_current_term){
+					if($category->term_id == $_current_term->term_id){
 						$css_classes[] = 'current-cat';
-					} elseif ($category->term_id == $_current_term->parent){
+					} elseif($category->term_id == $_current_term->parent){
 						$css_classes[] = 'current-cat-parent';
 					}
 					while ($_current_term->parent){
-						if ($category->term_id == $_current_term->parent){
+						if($category->term_id == $_current_term->parent){
 							$css_classes[] =  'current-cat-ancestor';
 							break;
 						}
@@ -199,9 +199,9 @@ class Walker_Category extends Walker {
 
 			$output .=  ' class="' . $css_classes . '"';
 			$output .= ">$link\n";
-		} elseif (isset($args['separator'])){
+		} elseif(isset($args['separator'])){
 			$output .= "\t$link" . $args['separator'] . "\n";
-		} else {
+		} else{
 			$output .= "\t$link<br />\n";
 		}
 	}
@@ -220,7 +220,7 @@ class Walker_Category extends Walker {
 	 *                       to output. See wp_list_categories(). Default empty array.
 	 */
 	public function end_el(&$output, $page, $depth = 0, $args = array()){
-		if ('list' != $args['style'])
+		if('list' != $args['style'])
 			return;
 
 		$output .= "</li>\n";

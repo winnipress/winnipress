@@ -8,21 +8,21 @@ $post_ID = isset($post_ID) ? (int) $post_ID : 0;
 $user_ID = isset($user_ID) ? (int) $user_ID : 0;
 $action = isset($action) ? $action : '';
 
-if ( $post_ID == get_option( 'page_for_posts' ) && empty( $post->post_content ) ) {
+if( $post_ID == get_option( 'page_for_posts' ) && empty( $post->post_content ) ) {
 	add_action( 'edit_form_after_title', '_wp_posts_page_notice' );
 	remove_post_type_support( $post_type, 'editor' );
 }
 
 $thumbnail_support = current_theme_supports( 'post-thumbnails', $post_type ) && post_type_supports( $post_type, 'thumbnail' );
-if ( !$thumbnail_support && 'attachment' === $post_type && $post->post_mime_type ) {
-	if ( wp_attachment_is( 'audio', $post ) ) {
+if( !$thumbnail_support && 'attachment' === $post_type && $post->post_mime_type ) {
+	if( wp_attachment_is( 'audio', $post ) ) {
 		$thumbnail_support = post_type_supports( 'attachment:audio', 'thumbnail' ) || current_theme_supports( 'post-thumbnails', 'attachment:audio' );
-	} elseif ( wp_attachment_is( 'video', $post ) ) {
+	} elseif( wp_attachment_is( 'video', $post ) ) {
 		$thumbnail_support = post_type_supports( 'attachment:video', 'thumbnail' ) || current_theme_supports( 'post-thumbnails', 'attachment:video' );
 	}
 }
 
-if ( $thumbnail_support ) {
+if( $thumbnail_support ) {
 	wp_enqueue_media( array( 'post' => $post_ID ) );
 }
 
@@ -32,7 +32,7 @@ if ( $thumbnail_support ) {
  * @todo Document the $messages array(s).
  */
 $permalink = get_permalink( $post_ID );
-if ( !$permalink ) {
+if( !$permalink ) {
 	$permalink = '';
 }
 
@@ -45,7 +45,7 @@ $preview_url = get_preview_post_link( $post );
 
 $viewable = is_post_type_viewable( $post_type_object );
 
-if ( $viewable ) {
+if( $viewable ) {
 
 	// Preview post link.
 	$preview_post_link_html = sprintf( ' <a target="_blank" href="%1$s">%2$s</a>',
@@ -124,11 +124,11 @@ $messages['attachment'] = array_fill( 1, 10, __( 'Media file updated.' ) ); // H
 $messages = apply_filters( 'post_updated_messages', $messages );
 
 $message = false;
-if ( isset($_GET['message']) ) {
+if( isset($_GET['message']) ) {
 	$_GET['message'] = absint( $_GET['message'] );
-	if ( isset($messages[$post_type][$_GET['message']]) )
+	if( isset($messages[$post_type][$_GET['message']]) )
 		$message = $messages[$post_type][$_GET['message']];
-	elseif ( !isset($messages[$post_type]) && isset($messages['post'][$_GET['message']]) )
+	elseif( !isset($messages[$post_type]) && isset($messages['post'][$_GET['message']]) )
 		$message = $messages['post'][$_GET['message']];
 }
 
@@ -150,14 +150,14 @@ $publish_callback_args = null;
 add_meta_box( 'submitdiv', __( 'Publish' ), 'post_submit_meta_box', null, 'side', 'core', $publish_callback_args );
 
 // all taxonomies
-foreach ( get_object_taxonomies( $post ) as $tax_name ) {
+foreach( get_object_taxonomies( $post ) as $tax_name ) {
 	$taxonomy = get_taxonomy( $tax_name );
-	if ( !$taxonomy->show_ui || false === $taxonomy->meta_box_cb )
+	if( !$taxonomy->show_ui || false === $taxonomy->meta_box_cb )
 		continue;
 
 	$label = $taxonomy->labels->name;
 
-	if ( !is_taxonomy_hierarchical( $tax_name ) )
+	if( !is_taxonomy_hierarchical( $tax_name ) )
 		$tax_meta_box_id = 'tagsdiv-' . $tax_name;
 	else
 		$tax_meta_box_id = $tax_name . 'div';
@@ -165,18 +165,18 @@ foreach ( get_object_taxonomies( $post ) as $tax_name ) {
 	add_meta_box( $tax_meta_box_id, $label, $taxonomy->meta_box_cb, null, 'side', 'core', array( 'taxonomy' => $tax_name ) );
 }
 
-if ( post_type_supports( $post_type, 'page-attributes' ) || count( get_page_templates( $post ) ) > 0 ) {
+if( post_type_supports( $post_type, 'page-attributes' ) || count( get_page_templates( $post ) ) > 0 ) {
 	add_meta_box( 'pageparentdiv', $post_type_object->labels->attributes, 'page_attributes_meta_box', null, 'side', 'core' );
 }
 
-if ( $thumbnail_support && current_user_can( 'upload_files' ) )
+if( $thumbnail_support && current_user_can( 'upload_files' ) )
 	add_meta_box('postimagediv', esc_html( $post_type_object->labels->featured_image ), 'post_thumbnail_meta_box', null, 'side', 'low');
 
-if ( post_type_supports($post_type, 'excerpt') )
+if( post_type_supports($post_type, 'excerpt') )
 	add_meta_box('postexcerpt', __('Excerpt'), 'post_excerpt_meta_box', null, 'normal', 'core');
 
 
-if ( post_type_supports($post_type, 'custom-fields') )
+if( post_type_supports($post_type, 'custom-fields') )
 	add_meta_box('postcustom', __('Custom Fields'), 'post_custom_meta_box', null, 'normal', 'core');
 
 /**
@@ -191,17 +191,17 @@ do_action( 'dbx_post_advanced', $post );
 
 
 $stati = get_post_stati( array( 'public' => true ) );
-if ( empty( $stati ) ) {
+if( empty( $stati ) ) {
 	$stati = array( 'publish' );
 }
 $stati[] = 'private';
 
 
-if ( !( 'pending' == get_post_status( $post ) && !current_user_can( $post_type_object->cap->publish_posts ) ) ){
+if( !( 'pending' == get_post_status( $post ) && !current_user_can( $post_type_object->cap->publish_posts ) ) ){
 	add_meta_box('slugdiv', __('Slug'), 'post_slug_meta_box', null, 'normal', 'core');
 }
 
-if ( post_type_supports( $post_type, 'author' ) && current_user_can( $post_type_object->cap->edit_others_posts ) ) {
+if( post_type_supports( $post_type, 'author' ) && current_user_can( $post_type_object->cap->edit_others_posts ) ) {
 	add_meta_box( 'authordiv', __( 'Author' ), 'post_author_meta_box', null, 'normal', 'core' );
 }
 
@@ -227,7 +227,7 @@ echo esc_html( $title );
 ?></h1>
 
 <?php
-if ( isset( $post_new_file ) && current_user_can( $post_type_object->cap->create_posts ) ) {
+if( isset( $post_new_file ) && current_user_can( $post_type_object->cap->create_posts ) ) {
 	echo ' <a href="' . esc_url( admin_url( $post_new_file ) ) . '" class="page-title-action">' . esc_html( $post_type_object->labels->add_new ) . '</a>';
 }
 ?>
@@ -264,7 +264,7 @@ do_action('post_edit_form_tag', $post);
 <?php $referer = wp_get_referer(); ?>
 <input type="hidden" id="referredby" name="referredby" value="<?php echo $referer ? esc_url( $referer ) : ''; ?>" />
 <?php
-if ( 'draft' != get_post_status( $post ) ){
+if( 'draft' != get_post_status( $post ) ){
 	wp_original_referer_field(true, 'previous');
 }
 echo "<input type='hidden' id='post_ID' name='post_ID' value='" . esc_attr($post_ID) . "' />";
@@ -364,7 +364,7 @@ do_meta_boxes($post_type, 'side', $post);
 <?php
 do_meta_boxes(null, 'normal', $post);
 
-if ('page' == $post_type){
+if('page' == $post_type){
 	// Fires after 'normal' context meta boxes have been output for the 'page' post type
 	do_action('edit_page_form', $post);
 }else{
