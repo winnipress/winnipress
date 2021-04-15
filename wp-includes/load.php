@@ -510,28 +510,6 @@ function wp_start_object_cache(){
 	}
 }
 
-/**
- * Redirect to the installer if WordPress is not installed.
- *
- * Dies with an error message when Multisite is enabled.
- *
- * @since 3.0.0
- * @access private
- */
-function wp_not_installed(){
-	if(!is_wp_installed() && !wp_installing()){
-		nocache_headers();
-
-		require(ABSPATH . WPINC . '/kses.php');
-		require(ABSPATH . WPINC . '/pluggable.php');
-		require(ABSPATH . WPINC . '/formatting.php');
-
-		$link = wp_guess_url() . '/wp-admin/install.php';
-
-		wp_redirect($link);
-		die();
-	}
-}
 
 /**
  * Retrieve an array of must-use plugin files.

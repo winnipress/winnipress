@@ -2279,37 +2279,7 @@ function wp_ajax_crop_image() {
 		wp_send_json_error( array( 'message' => __( 'Image could not be processed.' ) ) );
 	}
 
-	switch ( $context ) {
-		case 'site-icon':
-			require_once ABSPATH . '/wp-admin/includes/class-wp-site-icon.php';
-			$wp_site_icon = new WP_Site_Icon();
-
-			// Skip creating a new attachment if the attachment is a Site Icon.
-			if( get_post_meta( $attachment_id, '_wp_attachment_context', true ) == $context ) {
-
-				// Delete the temporary cropped file, we don't need it.
-				wp_delete_file( $cropped );
-
-				// Additional sizes in wp_prepare_attachment_for_js().
-				add_filter( 'image_size_names_choose', array( $wp_site_icon, 'additional_sizes' ) );
-				break;
-			}
-
-			/** This filter is documented in wp-admin/custom-header.php */
-			$cropped = apply_filters( 'wp_create_file_in_uploads', $cropped, $attachment_id ); // For replication.
-			$object  = $wp_site_icon->create_attachment_object( $cropped, $attachment_id );
-			unset( $object['ID'] );
-
-			// Update the attachment.
-			add_filter( 'intermediate_image_sizes_advanced', array( $wp_site_icon, 'additional_sizes' ) );
-			$attachment_id = $wp_site_icon->insert_attachment( $object, $cropped );
-			remove_filter( 'intermediate_image_sizes_advanced', array( $wp_site_icon, 'additional_sizes' ) );
-
-			// Additional sizes in wp_prepare_attachment_for_js().
-			add_filter( 'image_size_names_choose', array( $wp_site_icon, 'additional_sizes' ) );
-			break;
-
-		default:
+	
 
 			/**
 			 * Fires before a cropped image is saved.
@@ -2365,7 +2335,7 @@ function wp_ajax_crop_image() {
 			 * @param string $context       The Customizer control requesting the cropped image.
 			 */
 			$attachment_id = apply_filters( 'wp_ajax_cropped_attachment_id', $attachment_id, $context );
-	}
+	
 
 	wp_send_json_success( wp_prepare_attachment_for_js( $attachment_id ) );
 }

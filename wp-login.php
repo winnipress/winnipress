@@ -42,24 +42,12 @@ function login_header($title = 'Log In', $message = '', $wp_error = null){
 		$wp_error = new WP_Error();
 	}
 
-	// Shake it!
-	$shake_error_codes = array('empty_password', 'empty_email', 'invalid_email', 'invalidcombo', 'empty_username', 'invalid_username', 'incorrect_password');
-	/**
-	 * Filters the error codes array for shaking the login form.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param array $shake_error_codes Error codes that shake the login form.
-	 */
-	$shake_error_codes = apply_filters('shake_error_codes', $shake_error_codes);
-
-	if($shake_error_codes && $wp_error->get_error_code() && in_array($wp_error->get_error_code(), $shake_error_codes))
-		add_action('login_head', 'wp_shake_js', 12);
+	
 
 	$login_title = get_bloginfo('name', 'display');
 
 	/* translators: Login screen title. 1: Login screen name, 2: Network or site name */
-	$login_title = sprintf(__('%1$s &lsaquo; %2$s &#8212; WordPress'), $title, $login_title);
+	$login_title = sprintf(__('%1$s &lsaquo; %2$s &#8212; WP'), $title, $login_title);
 
 	/**
 	 * Filters the title tag content for login page.

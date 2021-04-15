@@ -92,7 +92,7 @@ require_wp_db();
 $GLOBALS['table_prefix'] = $table_prefix;
 wp_set_wpdb_vars();
 
-// Start the WordPress object cache, or an external object cache if the drop-in is present.
+// Start the WordPress object cache
 wp_start_object_cache();
 
 // Attach the default filters.
@@ -111,49 +111,48 @@ require_once(ABSPATH . WPINC . '/l10n.php');
 require_once(ABSPATH . WPINC . '/classes/locale.php');
 require_once(ABSPATH . WPINC . '/classes/locale-switcher.php');
 
-// Run the installer if WordPress is not installed.
-wp_not_installed();
 
 // Load most of WordPress.
-require(ABSPATH . WPINC . '/classes/ajax-response.php');
 require(ABSPATH . WPINC . '/formatting.php');
 require(ABSPATH . WPINC . '/capabilities.php');
-require(ABSPATH . WPINC . '/classes/roles.php');
-require(ABSPATH . WPINC . '/classes/role.php');
-require(ABSPATH . WPINC . '/classes/user.php');
-require(ABSPATH . WPINC . '/classes/query.php');
 require(ABSPATH . WPINC . '/query.php');
 require(ABSPATH . WPINC . '/date.php');
 require(ABSPATH . WPINC . '/theme.php');
-require(ABSPATH . WPINC . '/classes/theme.php');
 require(ABSPATH . WPINC . '/template.php');
 require(ABSPATH . WPINC . '/user.php');
-require(ABSPATH . WPINC . '/classes/user-query.php');
-require(ABSPATH . WPINC . '/classes/session-tokens.php');
-require(ABSPATH . WPINC . '/classes/user-meta-session-tokens.php');
 require(ABSPATH . WPINC . '/meta.php');
-require(ABSPATH . WPINC . '/classes/meta-query.php');
-require(ABSPATH . WPINC . '/classes/metadata-lazyloader.php');
 require(ABSPATH . WPINC . '/post.php');
-require(ABSPATH . WPINC . '/classes/post-type.php');
-require(ABSPATH . WPINC . '/classes/post.php');
 require(ABSPATH . WPINC . '/post-formats.php');
 require(ABSPATH . WPINC . '/category.php');
 require(ABSPATH . WPINC . '/rewrite.php');
-require(ABSPATH . WPINC . '/classes/rewrite.php');
 require(ABSPATH . WPINC . '/kses.php');
-require(ABSPATH . WPINC . '/cron.php');
 require(ABSPATH . WPINC . '/script-loader.php');
 require(ABSPATH . WPINC . '/taxonomy.php');
-require(ABSPATH . WPINC . '/classes/taxonomy.php');
-require(ABSPATH . WPINC . '/classes/term.php');
-require(ABSPATH . WPINC . '/classes/term-query.php');
-require(ABSPATH . WPINC . '/classes/tax-query.php');
 require(ABSPATH . WPINC . '/canonical.php');
 require(ABSPATH . WPINC . '/shortcodes.php');
 require(ABSPATH . WPINC . '/media.php');
 require(ABSPATH . WPINC . '/http.php');
 
+require(ABSPATH . WPINC . '/classes/ajax-response.php');
+require(ABSPATH . WPINC . '/classes/roles.php');
+require(ABSPATH . WPINC . '/classes/role.php');
+require(ABSPATH . WPINC . '/classes/user.php');
+require(ABSPATH . WPINC . '/classes/query.php');
+require(ABSPATH . WPINC . '/classes/theme.php');
+require(ABSPATH . WPINC . '/classes/user-query.php');
+require(ABSPATH . WPINC . '/classes/session-tokens.php');
+require(ABSPATH . WPINC . '/classes/user-meta-session-tokens.php');
+require(ABSPATH . WPINC . '/classes/meta-query.php');
+require(ABSPATH . WPINC . '/classes/metadata-lazyloader.php');
+require(ABSPATH . WPINC . '/classes/post-type.php');
+require(ABSPATH . WPINC . '/classes/post.php');
+require(ABSPATH . WPINC . '/classes/rewrite.php');
+require(ABSPATH . WPINC . '/classes/taxonomy.php');
+require(ABSPATH . WPINC . '/classes/term.php');
+require(ABSPATH . WPINC . '/classes/term-query.php');
+require(ABSPATH . WPINC . '/classes/tax-query.php');
+
+require(ABSPATH . WPINC . '/functions/cron.php');
 require(ABSPATH . WPINC . '/functions/general.php'); // Functions to handle general stuff
 require(ABSPATH . WPINC . '/functions/urls-and-links.php'); // Functions to handle urls and links
 require(ABSPATH . WPINC . '/functions/authors.php'); // Functions to handle authors
