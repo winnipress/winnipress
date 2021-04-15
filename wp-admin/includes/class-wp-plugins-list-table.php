@@ -194,15 +194,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 			}
 
 			// Filter into individual sections
-			if ( is_multisite() && !$screen->in_admin( 'network' ) && is_network_only_plugin( $plugin_file ) && !is_plugin_active( $plugin_file ) ) {
-				if ( $show_network_active ) {
-					// On the non-network screen, show inactive network-only plugins if allowed
-					$plugins['inactive'][ $plugin_file ] = $plugin_data;
-				} else {
-					// On the non-network screen, filter out network-only plugins as long as they're not individually active
-					unset( $plugins['all'][ $plugin_file ] );
-				}
-			} elseif ( !$screen->in_admin( 'network' ) && is_plugin_active_for_network( $plugin_file ) ) {
+			if ( !$screen->in_admin( 'network' ) && is_plugin_active_for_network( $plugin_file ) ) {
 				if ( $show_network_active ) {
 					// On the non-network screen, show network-active plugins if allowed
 					$plugins['active'][ $plugin_file ] = $plugin_data;
@@ -518,9 +510,6 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	 */
 	public function display_rows() {
 		global $status;
-
-		if ( is_multisite() && !$this->screen->in_admin( 'network' ) && in_array( $status, array( 'mustuse', 'dropins' ) ) )
-			return;
 
 		foreach ( $this->items as $plugin_file => $plugin_data )
 			$this->single_row( array( $plugin_file, $plugin_data ) );

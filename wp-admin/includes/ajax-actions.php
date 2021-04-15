@@ -2621,19 +2621,13 @@ function wp_ajax_install_theme() {
 	$status['themeName'] = wp_get_theme( $slug )->get( 'Name' );
 
 	if ( current_user_can( 'switch_themes' ) ) {
-		if ( is_multisite() ) {
-			$status['activateUrl'] = add_query_arg( array(
-				'action'   => 'enable',
-				'_wpnonce' => wp_create_nonce( 'enable-theme_' . $slug ),
-				'theme'    => $slug,
-			), network_admin_url( 'themes.php' ) );
-		} else {
-			$status['activateUrl'] = add_query_arg( array(
-				'action'     => 'activate',
-				'_wpnonce'   => wp_create_nonce( 'switch-theme_' . $slug ),
-				'stylesheet' => $slug,
-			), admin_url( 'themes.php' ) );
-		}
+		
+		$status['activateUrl'] = add_query_arg( array(
+			'action'     => 'activate',
+			'_wpnonce'   => wp_create_nonce( 'switch-theme_' . $slug ),
+			'stylesheet' => $slug,
+		), admin_url( 'themes.php' ) );
+		
 	}
 
 
@@ -2901,9 +2895,6 @@ function wp_ajax_install_plugin() {
 		), $plugins_url );
 	}
 
-	if ( is_multisite() && current_user_can( 'manage_network_plugins' ) && 'import' !== $pagenow ) {
-		$status['activateUrl'] = add_query_arg( array( 'networkwide' => 1 ), $status['activateUrl'] );
-	}
 
 	wp_send_json_success( $status );
 }

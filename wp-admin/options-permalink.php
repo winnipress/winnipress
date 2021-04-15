@@ -54,15 +54,7 @@ $prefix = $blog_prefix = '';
 if (!got_url_rewrite() )
 	$prefix = '/index.php';
 
-/**
- * In a subdirectory configuration of multisite, the `/blog` prefix is used by
- * default on the main site to avoid collisions with other sites created on that
- * network. If the `permalink_structure` option has been changed to remove this
- * base prefix, WordPress core can no longer account for the possible collision.
- */
-if (is_multisite() && !is_subdomain_install() && is_main_site() && 0 === strpos($permalink_structure, '/blog/' ) ) {
-	$blog_prefix = '/blog';
-}
+
 
 $category_base       = get_option('category_base' );
 $tag_base            = get_option('tag_base' );

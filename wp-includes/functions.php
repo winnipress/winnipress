@@ -1965,7 +1965,7 @@ function _wp_upload_dir( $time = null ){
 	 * Honor the value of UPLOADS. This happens as long as ms-files rewriting is disabled.
 	 * We also sometimes obey UPLOADS when rewriting is enabled -- see the next block.
 	 */
-	if ( defined( 'UPLOADS' ) && !( is_multisite() && get_site_option( 'ms_files_rewriting' ) ) ){
+	if ( defined( 'UPLOADS' ) ){
 		$dir = ABSPATH . UPLOADS;
 		$url = trailingslashit( $siteurl ) . UPLOADS;
 	}

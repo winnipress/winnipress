@@ -9,15 +9,7 @@
 /** WordPress Administration Bootstrap */
 require_once(dirname(__FILE__ ) . '/admin.php' );
 
-if (is_multisite() ) {
-	if (!current_user_can('create_users' ) && !current_user_can('promote_users' ) ) {
-		wp_die(
-			'<h1>' . __('You need a higher level of permission.' ) . '</h1>' .
-			'<p>' . __('Sorry, you are not allowed to add users to this network.' ) . '</p>',
-			403
-		);
-	}
-} elseif (!current_user_can('create_users' ) ) {
+if (!current_user_can('create_users' ) ) {
 	wp_die(
 		'<h1>' . __('You need a higher level of permission.' ) . '</h1>' .
 		'<p>' . __('Sorry, you are not allowed to create users.' ) . '</p>',
@@ -25,9 +17,6 @@ if (is_multisite() ) {
 	);
 }
 
-if (is_multisite() ) {
-	add_filter('wpmu_signup_user_notification_email', 'admin_created_user_email' );
-}
 
 if (isset($_REQUEST['action']) && 'adduser' == $_REQUEST['action'] ) {
 	check_admin_referer('add-user', '_wpnonce_add-user' );
@@ -148,67 +137,16 @@ $parent_file = 'users.php';
 wp_enqueue_script('wp-ajax-response');
 wp_enqueue_script('user-profile' );
 
-/**
- * Filters whether to enable user auto-complete for non-super admins in Multisite.
- *
- * @since 3.4.0
- *
- * @param bool $enable Whether to enable auto-complete for non-super admins. Default false.
- */
-if (is_multisite() && current_user_can('promote_users' ) && !wp_is_large_network('users' )
-	&& (current_user_can('manage_network_users' ) || apply_filters('autocomplete_users_for_site_admins', false ) )
-) {
-	wp_enqueue_script('user-suggest' );
-}
+
 
 require_once(ABSPATH . 'wp-admin/admin-header.php' );
 
 if (isset($_GET['update']) ) {
 	$messages = array();
-	if (is_multisite() ) {
-		$edit_link = '';
-		if ((isset($_GET['user_id'] ) ) ) {
-			$user_id_new = absint($_GET['user_id'] );
-			if ($user_id_new ) {
-				$edit_link = esc_url(add_query_arg('wp_http_referer', urlencode(wp_unslash($_SERVER['REQUEST_URI'] ) ), get_edit_user_link($user_id_new ) ) );
-			}
-		}
-
-		switch ($_GET['update'] ) {
-			case "newuserconfirmation":
-				$messages[] = __('Invitation email sent to new user. A confirmation link must be clicked before their account is created.');
-				break;
-			case "add":
-				$messages[] = __('Invitation email sent to user. A confirmation link must be clicked for them to be added to your site.');
-				break;
-			case "addnoconfirmation":
-				if (empty($edit_link ) ) {
-					$messages[] = __('User has been added to your site.' );
-				} else {
-					/* translators: %s: edit page url */
-					$messages[] = sprintf(__('User has been added to your site. <a href="%s">Edit user</a>' ), $edit_link );
-				}
-				break;
-			case "addexisting":
-				$messages[] = __('That user is already a member of this site.');
-				break;
-			case "could_not_add":
-				$add_user_errors = new WP_Error('could_not_add', __('That user could not be added to this site.' ) );
-				break;
-			case "created_could_not_add":
-				$add_user_errors = new WP_Error('created_could_not_add', __('User has been created, but could not be added to this site.' ) );
-				break;
-			case "does_not_exist":
-				$add_user_errors = new WP_Error('does_not_exist', __('The requested user does not exist.' ) );
-				break;
-			case "enter_email":
-				$add_user_errors = new WP_Error('enter_email', __('Please enter a valid email address.' ) );
-				break;
-		}
-	} else {
-		if ('add' == $_GET['update'] )
+		if ('add' == $_GET['update'] ){
 			$messages[] = __('User added.');
-	}
+		}
+	
 }
 ?>
 <div class="wrap">
@@ -352,15 +290,7 @@ $new_user_ignore_pass = $creating && isset($_POST['noconfirmation'] ) ? wp_unsla
 			</select>
 		</td>
 	</tr>
-	<?php if (is_multisite() && current_user_can('manage_network_users' ) ) { ?>
-	<tr>
-		<th scope="row"><?php _e('Skip Confirmation Email' ); ?></th>
-		<td>
-			<input type="checkbox" name="noconfirmation" id="noconfirmation" value="1" <?php checked($new_user_ignore_pass ); ?> />
-			<label for="noconfirmation"><?php _e('Add the user without sending an email that requires their confirmation.' ); ?></label>
-		</td>
-	</tr>
-	<?php } ?>
+	
 </table>
 
 <?php

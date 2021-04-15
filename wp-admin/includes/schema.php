@@ -176,10 +176,7 @@ CREATE TABLE $wpdb->posts (
   KEY meta_key (meta_key($max_index_length))
 ) $charset_collate;\n";
 
-	// Global tables
-	if ( $is_multisite)
-		$global_tables = $users_multi_table . $usermeta_table;
-	else
+
 		$global_tables = $users_single_table . $usermeta_table;
 
 	// Multisite global tables.
@@ -257,8 +254,6 @@ CREATE TABLE $wpdb->signups (
 			break;
 		case 'global' :
 			$queries = $global_tables;
-			if ( $is_multisite)
-				$queries .= $ms_global_tables;
 			break;
 		case 'ms_global' :
 			$queries = $ms_global_tables;
@@ -266,8 +261,6 @@ CREATE TABLE $wpdb->signups (
 		case 'all' :
 		default:
 			$queries = $global_tables . $blog_tables;
-			if ( $is_multisite)
-				$queries .= $ms_global_tables;
 			break;
 	}
 

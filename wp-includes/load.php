@@ -519,13 +519,7 @@ function wp_start_object_cache(){
  * @access private
  */
 function wp_not_installed(){
-	if(is_multisite() ){
-		if(!is_wp_installed() && !wp_installing() ){
-			nocache_headers();
-
-			wp_die(__('The site you have requested is not installed properly. Please contact the system administrator.' ) );
-		}
-	} elseif(!is_wp_installed() && !wp_installing() ){
+	if(!is_wp_installed() && !wp_installing() ){
 		nocache_headers();
 
 		require(ABSPATH . WPINC . '/kses.php' );
@@ -588,7 +582,7 @@ function wp_get_active_and_valid_plugins(){
 	if(empty($active_plugins ) || wp_installing() )
 		return $plugins;
 
-	$network_plugins = is_multisite() ? wp_get_active_network_plugins() : false;
+	$network_plugins = false;
 
 	foreach ($active_plugins as $plugin ){
 		if(!validate_file($plugin ) // $plugin must validate as file
@@ -774,10 +768,6 @@ function is_user_admin(){
  */
 function is_multisite(){
 	
-
-	if(defined('SUBDOMAIN_INSTALL' ) || defined('VHOST' ) || defined('SUNRISE' ) )
-		return true;
-
 	return false;
 }
 

@@ -155,24 +155,9 @@ function wp_install_defaults($user_id){
 	$now_gmt = current_time('mysql', 1);
 	$first_post_guid = get_option('home') . '/?p=1';
 
-	if(is_multisite()){
-		$first_post = get_site_option('first_post');
-
-		if(!$first_post){
-			/* translators: %s: site link */
-			$first_post = __('Welcome to %s. This is your first post. Edit or delete it, then start blogging!');
-		}
-
-		$first_post = sprintf($first_post,
-			sprintf('<a href="%s">%s</a>', esc_url(network_home_url()), get_network()->site_name)
-		);
-
-		// Back-compat for pre-4.4
-		$first_post = str_replace('SITE_URL', esc_url(network_home_url()), $first_post);
-		$first_post = str_replace('SITE_NAME', get_network()->site_name, $first_post);
-	} else {
-		$first_post = __('Welcome to WordPress. This is your first post. Edit or delete it, then start writing!');
-	}
+	
+	$first_post = __('Example post');
+	
 
 	$wpdb->insert($wpdb->posts, array(
 		'post_author' => $user_id,
@@ -414,15 +399,7 @@ function wp_upgrade(){
 	upgrade_all();
 	wp_cache_flush();
 
-	if(is_multisite()){
-		$site_id = get_current_blog_id();
 
-		if($wpdb->get_row($wpdb->prepare("SELECT blog_id FROM {$wpdb->blog_versions} WHERE blog_id = %d", $site_id))){
-			$wpdb->query($wpdb->prepare("UPDATE {$wpdb->blog_versions} SET db_version = %d WHERE blog_id = %d", $wp_db_version, $site_id));
-		} else {
-			$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->blog_versions} (`blog_id` , `db_version` , `last_updated`) VALUES (%d, %d, NOW());", $site_id, $wp_db_version));
-		}
-	}
 
 	/**
 	 * Fires after a site is fully upgraded.
@@ -1313,22 +1290,7 @@ function pre_schema_upgrade(){
 		$wpdb->query("ALTER TABLE $wpdb->options DROP INDEX option_name");
 	}
 
-	// Multisite schema upgrades.
-	if($wp_current_db_version < 25448 && is_multisite() && wp_should_upgrade_global_tables()){
-
-		// Upgrade versions prior to 3.7
-		if($wp_current_db_version < 25179){
-			// New primary key for signups.
-			$wpdb->query("ALTER TABLE $wpdb->signups ADD signup_id BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST");
-			$wpdb->query("ALTER TABLE $wpdb->signups DROP INDEX domain");
-		}
-
-		if($wp_current_db_version < 25448){
-			// Convert archived from enum to tinyint.
-			$wpdb->query("ALTER TABLE $wpdb->blogs CHANGE COLUMN archived archived varchar(1) NOT NULL default '0'");
-			$wpdb->query("ALTER TABLE $wpdb->blogs CHANGE COLUMN archived archived tinyint(2) NOT NULL default 0");
-		}
-	}
+	
 
 	// Upgrade versions prior to 4.2.
 	if($wp_current_db_version < 31351){

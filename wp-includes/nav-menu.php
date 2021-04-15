@@ -990,46 +990,6 @@ function _wp_delete_tax_menu_item($object_id = 0, $tt_id, $taxonomy ){
 	}
 }
 
-/**
- * Automatically add newly published page objects to menus with that as an option.
- *
- * @since 3.0.0
- * @access private
- *
- * @param string $new_status The new status of the post object.
- * @param string $old_status The old status of the post object.
- * @param object $post       The post object being transitioned from one status to another.
- */
-function _wp_auto_add_pages_to_menu($new_status, $old_status, $post ){
-	if ('publish' != $new_status || 'publish' == $old_status || 'page' != $post->post_type )
-		return;
-	if (!empty($post->post_parent ) )
-		return;
-	$auto_add = get_option('nav_menu_options' );
-	if (empty($auto_add ) || !is_array($auto_add ) || !isset($auto_add['auto_add'] ) )
-		return;
-	$auto_add = $auto_add['auto_add'];
-	if (empty($auto_add ) || !is_array($auto_add ) )
-		return;
-
-	$args = array(
-		'menu-item-object-id' => $post->ID,
-		'menu-item-object' => $post->post_type,
-		'menu-item-type' => 'post_type',
-		'menu-item-status' => 'publish',
-	);
-
-	foreach ($auto_add as $menu_id ){
-		$items = wp_get_nav_menu_items($menu_id, array('post_status' => 'publish,draft' ) );
-		if (!is_array($items ) )
-			continue;
-		foreach ($items as $item ){
-			if ($post->ID == $item->object_id )
-				continue 2;
-		}
-		wp_update_nav_menu_item($menu_id, 0, $args );
-	}
-}
 
 /**
  * Delete auto-draft posts associated with the supplied changeset.

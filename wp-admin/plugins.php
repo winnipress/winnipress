@@ -33,10 +33,7 @@ if ( $action ) {
 				wp_die( __( 'Sorry, you are not allowed to activate this plugin.' ) );
 			}
 
-			if ( is_multisite() && !is_network_admin() && is_network_only_plugin( $plugin ) ) {
-				wp_redirect( self_admin_url("plugins.php?plugin_status=$status&paged=$page&s=$s") );
-				exit;
-			}
+			
 
 			check_admin_referer('activate-plugin_' . $plugin);
 

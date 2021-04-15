@@ -79,13 +79,7 @@ $user_can_edit = current_user_can('edit_posts' ) || current_user_can('edit_pages
  *
  * @param bool $allow Whether to allow editing of any user. Default true.
  */
-if (is_multisite()
-	&& !current_user_can('manage_network_users' )
-	&& $user_id != $current_user->ID
-	&& !apply_filters('enable_edit_any_user_configuration', true )
-) {
-	wp_die(__('Sorry, you are not allowed to edit this user.' ) );
-}
+
 
 // Execute confirmed email change. See send_confirmation_on_profile_email().
 if (IS_PROFILE_PAGE && isset($_GET[ 'newuseremail' ] ) && $current_user->ID ) {
@@ -94,9 +88,7 @@ if (IS_PROFILE_PAGE && isset($_GET[ 'newuseremail' ] ) && $current_user->ID ) {
 		$user = new stdClass;
 		$user->ID = $current_user->ID;
 		$user->user_email = esc_html(trim($new_email[ 'newemail' ] ) );
-		if (is_multisite() && $wpdb->get_var($wpdb->prepare("SELECT user_login FROM {$wpdb->signups} WHERE user_login = %s", $current_user->user_login ) ) ) {
-			$wpdb->query($wpdb->prepare("UPDATE {$wpdb->signups} SET user_email = %s WHERE user_login = %s", $user->user_email, $current_user->user_login ) );
-		}
+		
 		wp_update_user($user );
 		delete_user_meta($current_user->ID, '_new_email' );
 		wp_redirect(add_query_arg(array('updated' => 'true' ), self_admin_url('profile.php' ) ) );
@@ -141,22 +133,12 @@ if (IS_PROFILE_PAGE ) {
 	do_action('edit_user_profile_update', $user_id );
 }
 
-// Update the email address in signups, if present.
-if (is_multisite() ) {
-	$user = get_userdata($user_id );
 
-	if ($user->user_login && isset($_POST[ 'email' ] ) && is_email($_POST[ 'email' ] ) && $wpdb->get_var($wpdb->prepare("SELECT user_login FROM {$wpdb->signups} WHERE user_login = %s", $user->user_login ) ) ) {
-		$wpdb->query($wpdb->prepare("UPDATE {$wpdb->signups} SET user_email = %s WHERE user_login = %s", $_POST[ 'email' ], $user_login ) );
-	}
-}
 
 // Update the user.
 $errors = edit_user($user_id );
 
-// Grant or revoke super admin status if requested.
-if (is_multisite() && is_network_admin() && !IS_PROFILE_PAGE && current_user_can('manage_network_options' ) && !isset($super_admins) && empty($_POST['super_admin'] ) == is_super_admin($user_id ) ) {
-	empty($_POST['super_admin'] ) ? revoke_super_admin($user_id ) : grant_super_admin($user_id );
-}
+
 
 if (!is_wp_error($errors ) ) {
 	$redirect = add_query_arg('updated', true, get_edit_user_link($user_id ) );
@@ -213,8 +195,6 @@ echo esc_html($title );
 if (!IS_PROFILE_PAGE ) {
 	if (current_user_can('create_users' ) ) { ?>
 		<a href="user-new.php" class="page-title-action"><?php echo esc_html_x('Add New', 'user' ); ?></a>
-	<?php } elseif (is_multisite() && current_user_can('promote_users' ) ) { ?>
-		<a href="user-new.php" class="page-title-action"><?php echo esc_html_x('Add Existing', 'user' ); ?></a>
 	<?php }
 }
 ?>
@@ -356,16 +336,7 @@ else
 </select></td></tr>
 <?php endif; //!IS_PROFILE_PAGE
 
-if (is_multisite() && is_network_admin() && !IS_PROFILE_PAGE && current_user_can('manage_network_options' ) && !isset($super_admins) ) { ?>
-<tr class="user-super-admin-wrap"><th><?php _e('Super Admin'); ?></th>
-<td>
-<?php if ($profileuser->user_email != get_site_option('admin_email' ) || !is_super_admin($profileuser->ID ) ) : ?>
-<p><label><input type="checkbox" id="super_admin" name="super_admin"<?php checked(is_super_admin($profileuser->ID ) ); ?> /> <?php _e('Grant this user super admin privileges for the Network.' ); ?></label></p>
-<?php else : ?>
-<p><?php _e('Super admin privileges cannot be removed because this user has the network admin email.' ); ?></p>
-<?php endif; ?>
-</td></tr>
-<?php } ?>
+
 
 <tr class="user-first-name-wrap">
 	<th><label for="first_name"><?php _e('First Name') ?></label></th>

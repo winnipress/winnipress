@@ -96,13 +96,10 @@ function login_header($title = 'Log In', $message = '', $wp_error = null){
 	 */
 	do_action('login_head');
 
-	if(is_multisite()){
-		$login_header_url   = network_home_url();
-		$login_header_title = get_network()->site_name;
-	} else {
-		$login_header_url   = __('https://wordpress.org/');
-		$login_header_title = __('Powered by WordPress');
-	}
+	
+	$login_header_url   = __('/');
+	$login_header_title = __('blablabla');
+	
 
 	/**
 	 * Filters link URL of the header logo above login form.
@@ -126,11 +123,9 @@ function login_header($title = 'Log In', $message = '', $wp_error = null){
 	 * To match the URL/title set above, Multisite sites have the blog name,
 	 * while single sites get the header title.
 	 */
-	if(is_multisite()){
-		$login_header_text = get_bloginfo('name', 'display');
-	} else {
-		$login_header_text = $login_header_title;
-	}
+	
+	$login_header_text = $login_header_title;
+	
 
 	$classes = array('login-action-' . $action, 'wp-core-ui');
 	if(is_rtl())
@@ -317,15 +312,10 @@ function retrieve_password(){
 		return $key;
 	}
 
-	if(is_multisite()){
-		$site_name = get_network()->site_name;
-	} else {
-		/*
-		 * The blogname option is escaped with esc_html on the way into the database
-		 * in sanitize_option we want to reverse this for the plain text arena of emails.
-		 */
-		$site_name = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
-	}
+	
+
+	$site_name = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+	
 
 	$message = __('Someone has requested a password reset for the following account:') . "\r\n\r\n";
 	/* translators: %s: site name */
@@ -722,17 +712,6 @@ if($switched_locale){
 break;
 
 case 'register' :
-	if(is_multisite()){
-		/**
-		 * Filters the Multisite sign up URL.
-		 *
-		 * @since 3.0.0
-		 *
-		 * @param string $sign_up_url The sign up URL.
-		 */
-		wp_redirect(apply_filters('wp_signup_location', network_site_url('wp-signup.php')));
-		exit;
-	}
 
 	if(!get_option('users_can_register')){
 		wp_redirect(site_url('wp-login.php?registration=disabled'));

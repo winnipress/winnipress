@@ -65,7 +65,9 @@
  *     @type bool   $Network     Whether the plugin can only be activated network-wide.
  * }
  */
+
 function get_plugin_data( $plugin_file, $markup = true, $translate = true) {
+
 
 	$default_headers = array(
 		'Name' => 'Plugin Name',
@@ -73,39 +75,11 @@ function get_plugin_data( $plugin_file, $markup = true, $translate = true) {
 		'Version' => 'Version',
 		'Description' => 'Description',
 		'Author' => 'Author',
-		'AuthorURI' => 'Author URI',
-		'TextDomain' => 'Text Domain',
-		'DomainPath' => 'Domain Path',
-		'Network' => 'Network',
-		// Site Wide Only is deprecated in favor of Network.
-		'_sitewide' => 'Site Wide Only',
+		'AuthorURI' => 'Author URI'
 	);
 
 	$plugin_data = get_file_data( $plugin_file, $default_headers, 'plugin');
 
-	// Site Wide Only is the old header for Network
-	if ( !$plugin_data['Network'] && $plugin_data['_sitewide']) {
-		/* translators: 1: Site Wide Only: true, 2: Network: true */
-		_deprecated_argument( __FUNCTION__, '3.0.0', sprintf( __( 'The %1$s plugin header is deprecated. Use %2$s instead.'), '<code>Site Wide Only: true</code>', '<code>Network: true</code>'));
-		$plugin_data['Network'] = $plugin_data['_sitewide'];
-	}
-	$plugin_data['Network'] = ( 'true' == strtolower( $plugin_data['Network']));
-	unset( $plugin_data['_sitewide']);
-
-	// If no text domain is defined fall back to the plugin slug.
-	if ( !$plugin_data['TextDomain']) {
-		$plugin_slug = dirname( plugin_basename( $plugin_file));
-		if ( '.' !== $plugin_slug && false === strpos( $plugin_slug, '/')) {
-			$plugin_data['TextDomain'] = $plugin_slug;
-		}
-	}
-
-	if ( $markup || $translate) {
-		$plugin_data = _get_plugin_data_markup_translate( $plugin_file, $plugin_data, $markup, $translate);
-	} else {
-		$plugin_data['Title']      = $plugin_data['Name'];
-		$plugin_data['AuthorName'] = $plugin_data['Author'];
-	}
 
 	return $plugin_data;
 }
@@ -122,24 +96,6 @@ function _get_plugin_data_markup_translate( $plugin_file, $plugin_data, $markup 
 	// Sanitize the plugin filename to a WP_PLUGIN_DIR relative path
 	$plugin_file = plugin_basename( $plugin_file);
 
-	// Translate fields
-	if ( $translate) {
-		if ( $textdomain = $plugin_data['TextDomain']) {
-			if ( !is_textdomain_loaded( $textdomain)) {
-				if ( $plugin_data['DomainPath']) {
-					load_plugin_textdomain( $textdomain, false, dirname( $plugin_file) . $plugin_data['DomainPath']);
-				} else {
-					load_plugin_textdomain( $textdomain, false, dirname( $plugin_file));
-				}
-			}
-		} elseif ( 'hello.php' == basename( $plugin_file)) {
-			$textdomain = 'default';
-		}
-		if ( $textdomain) {
-			foreach ( array( 'Name', 'PluginURI', 'Description', 'Author', 'AuthorURI', 'Version') as $field)
-				$plugin_data[ $field ] = translate( $plugin_data[ $field ], $textdomain);
-		}
-	}
 
 	// Sanitize fields
 	$allowed_tags = $allowed_tags_in_links = array(
@@ -402,7 +358,6 @@ function get_dropins() {
 /**
  * Returns drop-ins that WordPress uses.
  *
- * Includes Multisite drop-ins only when is_multisite()
  *
  * @since 3.0.0
  * @return array Key is file name. The value is an array, with the first value the
@@ -419,12 +374,7 @@ function _get_dropins() {
 		'object-cache.php'   => array( __( 'External object cache.'        ), true), // auto on load
 	);
 
-	if ( is_multisite()) {
-		$dropins['sunrise.php'       ] = array( __( 'Executed before Multisite is loaded.'), 'SUNRISE'); // SUNRISE
-		$dropins['blog-deleted.php'  ] = array( __( 'Custom site deleted message.'  ), true); // auto on deleted blog
-		$dropins['blog-inactive.php' ] = array( __( 'Custom site inactive message.' ), true); // auto on inactive blog
-		$dropins['blog-suspended.php'] = array( __( 'Custom site suspended message.'), true); // auto on archived or spammed blog
-	}
+
 
 	return $dropins;
 }
@@ -530,13 +480,9 @@ function is_network_only_plugin( $plugin) {
 function activate_plugin( $plugin, $redirect = '', $network_wide = false, $silent = false) {
 	$plugin = plugin_basename( trim( $plugin));
 
-	if ( is_multisite() && ( $network_wide || is_network_only_plugin($plugin))) {
-		$network_wide = true;
-		$current = get_site_option( 'active_sitewide_plugins', array());
-		$_GET['networkwide'] = 1; // Back compat for plugins looking for this value.
-	} else {
-		$current = get_option( 'active_plugins', array());
-	}
+	
+	$current = get_option( 'active_plugins', array());
+	
 
 	$valid = validate_plugin($plugin);
 	if ( is_wp_error($valid))
@@ -633,8 +579,6 @@ function activate_plugin( $plugin, $redirect = '', $network_wide = false, $silen
  * 	A value of null (the default) will deactivate plugins for both the site and the network.
  */
 function deactivate_plugins( $plugins, $silent = false, $network_wide = null) {
-	if ( is_multisite())
-		$network_current = get_site_option( 'active_sitewide_plugins', array());
 	$current = get_option( 'active_plugins', array());
 	$do_blog = $do_network = false;
 
@@ -661,14 +605,7 @@ function deactivate_plugins( $plugins, $silent = false, $network_wide = null) {
 			do_action( 'deactivate_plugin', $plugin, $network_deactivating);
 		}
 
-		if ( false !== $network_wide) {
-			if ( is_plugin_active_for_network( $plugin)) {
-				$do_network = true;
-				unset( $network_current[ $plugin ]);
-			} elseif ( $network_wide) {
-				continue;
-			}
-		}
+		
 
 		if ( true !== $network_wide) {
 			$key = array_search( $plugin, $current);
@@ -712,8 +649,6 @@ function deactivate_plugins( $plugins, $silent = false, $network_wide = null) {
 
 	if ( $do_blog)
 		update_option('active_plugins', $current);
-	if ( $do_network)
-		update_site_option( 'active_sitewide_plugins', $network_current);
 }
 
 /**
@@ -916,10 +851,7 @@ function validate_active_plugins() {
 		$plugins = array();
 	}
 
-	if ( is_multisite() && current_user_can( 'manage_network_plugins')) {
-		$network_plugins = (array) get_site_option( 'active_sitewide_plugins', array());
-		$plugins = array_merge( $plugins, array_keys( $network_plugins));
-	}
+	
 
 	if ( empty( $plugins))
 		return array();

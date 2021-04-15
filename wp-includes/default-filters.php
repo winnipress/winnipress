@@ -120,9 +120,6 @@ foreach (array('term_description', 'get_the_post_type_description' ) as $filter 
 	add_filter($filter, 'shortcode_unautop');
 }
 
-// Format for RSS
-add_filter('term_name_rss', 'convert_chars' );
-
 // Pre save hierarchy
 add_filter('wp_insert_post_parent', 'wp_check_post_hierarchy_for_loops', 10, 2 );
 add_filter('wp_update_term_parent', 'wp_check_term_hierarchy_for_loops', 10, 3 );
@@ -150,48 +147,16 @@ add_filter('the_post_thumbnail_caption', 'wptexturize'     );
 add_filter('the_post_thumbnail_caption', 'convert_smilies' );
 add_filter('the_post_thumbnail_caption', 'convert_chars'   );
 
-add_filter('comment_text', 'wptexturize'            );
-add_filter('comment_text', 'convert_chars'          );
-add_filter('comment_text', 'make_clickable',      9 );
-add_filter('comment_text', 'force_balance_tags', 25 );
-add_filter('comment_text', 'convert_smilies',    20 );
-add_filter('comment_text', 'wpautop',            30 );
 
-add_filter('comment_excerpt', 'convert_chars' );
 
 add_filter('list_cats',         'wptexturize' );
 
 add_filter('wp_sprintf', 'wp_sprintf_l', 10, 2 );
 
-add_filter('widget_text',         'balanceTags'          );
-add_filter('widget_text_content', 'capital_P_dangit', 11 );
-add_filter('widget_text_content', 'wptexturize'          );
-add_filter('widget_text_content', 'convert_smilies',  20 );
-add_filter('widget_text_content', 'wpautop'              );
-add_filter('widget_text_content', 'shortcode_unautop'    );
-add_filter('widget_text_content', 'do_shortcode',     11 ); // Runs after wpautop(); note that $post global will be null when shortcodes run.
+
 
 add_filter('date_i18n', 'wp_maybe_decline_date' );
 
-// RSS filters
-add_filter('the_title_rss',      'strip_tags'                    );
-add_filter('the_title_rss',      'ent2ncr',                    8 );
-add_filter('the_title_rss',      'esc_html'                      );
-add_filter('the_content_rss',    'ent2ncr',                    8 );
-add_filter('the_content_feed',   'wp_staticize_emoji'            );
-add_filter('the_content_feed',   '_oembed_filter_feed_content'   );
-add_filter('the_excerpt_rss',    'convert_chars'                 );
-add_filter('the_excerpt_rss',    'ent2ncr',                    8 );
-add_filter('comment_author_rss', 'ent2ncr',                    8 );
-add_filter('comment_text_rss',   'ent2ncr',                    8 );
-add_filter('comment_text_rss',   'esc_html'                      );
-add_filter('comment_text_rss',   'wp_staticize_emoji'            );
-add_filter('bloginfo_rss',       'ent2ncr',                    8 );
-add_filter('the_author',         'ent2ncr',                    8 );
-add_filter('the_guid',           'esc_url'                       );
-
-// Email filters
-add_filter('wp_mail', 'wp_staticize_emoji_for_email' );
 
 // Mark site as no longer fresh
 foreach (array('publish_post', 'publish_page', 'wp_ajax_save-widget', 'wp_ajax_widgets-order', 'customize_save_after' ) as $action ) {
@@ -275,12 +240,6 @@ add_action('wp_scheduled_auto_draft_delete', 'wp_delete_auto_drafts'     );
 add_action('importer_scheduled_cleanup',     'wp_delete_attachment'      );
 add_action('upgrader_scheduled_cleanup',     'wp_delete_attachment'      );
 add_action('delete_expired_transients',      'delete_expired_transients' );
-
-// Navigation menu actions
-add_action('delete_post',                '_wp_delete_post_menu_item'         );
-add_action('delete_term',                '_wp_delete_tax_menu_item',   10, 3 );
-add_action('transition_post_status',     '_wp_auto_add_pages_to_menu', 10, 3 );
-add_action('delete_post',                '_wp_delete_customize_changeset_dependent_auto_drafts' );
 
 // Post Thumbnail CSS class filtering
 add_action('begin_fetch_post_thumbnail_html', '_wp_post_thumbnail_class_filter_add'    );

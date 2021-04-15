@@ -49,12 +49,9 @@ function map_meta_cap($cap, $user_id){
 		if ('edit_user' == $cap && isset($args[0]) && $user_id == $args[0])
 			break;
 
-		// In multisite the user must have manage_network_users caps. If editing a super admin, the user must be a super admin.
-		if (is_multisite() && ((!is_super_admin($user_id) && 'edit_user' === $cap && is_super_admin($args[0])) || !user_can($user_id, 'manage_network_users'))){
-			$caps[] = 'do_not_allow';
-		} else {
-			$caps[] = 'edit_users'; // edit_user maps to edit_users.
-		}
+		
+		$caps[] = 'edit_users'; // edit_user maps to edit_users.
+		
 		break;
 	case 'delete_post':
 	case 'delete_page':
@@ -372,26 +369,14 @@ function map_meta_cap($cap, $user_id){
 	case 'edit_css' :
 	case 'unfiltered_html' :
 		// Disallow unfiltered_html for all users, even admins and super admins.
-		if (defined('DISALLOW_UNFILTERED_HTML') && DISALLOW_UNFILTERED_HTML)
+		if (defined('DISALLOW_UNFILTERED_HTML') && DISALLOW_UNFILTERED_HTML){
 			$caps[] = 'do_not_allow';
-		elseif (is_multisite() && !is_super_admin($user_id))
-			$caps[] = 'do_not_allow';
-		else
+		}else{
 			$caps[] = 'unfiltered_html';
+		}
 		break;
 	case 'edit_files':
 	case 'edit_plugins':
-	case 'edit_themes':
-		// Disallow the file editors.
-		if (defined('DISALLOW_FILE_EDIT') && DISALLOW_FILE_EDIT)
-			$caps[] = 'do_not_allow';
-		elseif (!wp_is_file_mod_allowed('capability_edit_themes'))
-			$caps[] = 'do_not_allow';
-		elseif (is_multisite() && !is_super_admin($user_id))
-			$caps[] = 'do_not_allow';
-		else
-			$caps[] = $cap;
-		break;
 	case 'update_plugins':
 	case 'delete_plugins':
 	case 'install_plugins':
@@ -400,26 +385,9 @@ function map_meta_cap($cap, $user_id){
 	case 'delete_themes':
 	case 'install_themes':
 	case 'upload_themes':
-	case 'update_core':
-		// Disallow anything that creates, deletes, or updates core, plugin, or theme files.
-		// Files in uploads are excepted.
-		if (!wp_is_file_mod_allowed('capability_update_core')){
-			$caps[] = 'do_not_allow';
-		} elseif (is_multisite() && !is_super_admin($user_id)){
-			$caps[] = 'do_not_allow';
-		} elseif ('upload_themes' === $cap){
-			$caps[] = 'install_themes';
-		} elseif ('upload_plugins' === $cap){
-			$caps[] = 'install_plugins';
-		} else {
-			$caps[] = $cap;
-		}
-		break;
 	case 'install_languages':
 	case 'update_languages':
 		if (!wp_is_file_mod_allowed('can_install_language_pack')){
-			$caps[] = 'do_not_allow';
-		} elseif (is_multisite() && !is_super_admin($user_id)){
 			$caps[] = 'do_not_allow';
 		} else {
 			$caps[] = 'install_languages';
@@ -430,19 +398,9 @@ function map_meta_cap($cap, $user_id){
 	case 'activate_plugin':
 	case 'deactivate_plugin':
 		$caps[] = 'activate_plugins';
-		if (is_multisite()){
-			// update_, install_, and delete_ are handled above with is_super_admin().
-			$menu_perms = get_site_option('menu_items', array());
-			if (empty($menu_perms['plugins']))
-				$caps[] = 'manage_network_plugins';
-		}
 		break;
 	case 'delete_user':
 	case 'delete_users':
-		// If multisite only super admins can delete users.
-		if (is_multisite() && !is_super_admin($user_id))
-			$caps[] = 'do_not_allow';
-		else
 			$caps[] = 'delete_users'; // delete_user maps to delete_users.
 		break;
 	case 'create_users':
@@ -456,13 +414,6 @@ function map_meta_cap($cap, $user_id){
 		break;
 	case 'customize' :
 		$caps[] = 'edit_theme_options';
-		break;
-	case 'delete_site':
-		if (is_multisite()){
-			$caps[] = 'manage_options';
-		} else {
-			$caps[] = 'do_not_allow';
-		}
 		break;
 	case 'edit_term':
 	case 'delete_term':
@@ -512,17 +463,10 @@ function map_meta_cap($cap, $user_id){
 	case 'upgrade_network':
 		$caps[] = $cap;
 		break;
-	case 'setup_network':
-		if (is_multisite()){
-			$caps[] = 'manage_network_options';
-		} else {
-			$caps[] = 'manage_options';
-		}
-		break;
 	case 'export_others_personal_data':
 	case 'erase_others_personal_data':
 	case 'manage_privacy_options':
-		$caps[] = is_multisite() ? 'manage_network' : 'manage_options';
+		$caps[] = 'manage_options';
 		break;
 	default:
 		// Handle meta capabilities for custom post types.
@@ -593,14 +537,11 @@ function current_user_can($capability){
  * @return bool Whether the user has the given capability.
  */
 function current_user_can_for_blog($blog_id, $capability){
-	$switched = is_multisite() ? switch_to_blog($blog_id) : false;
+
 
 	$current_user = wp_get_current_user();
 
 	if (empty($current_user)){
-		if ($switched){
-			restore_current_blog();
-		}
 		return false;
 	}
 
@@ -609,9 +550,7 @@ function current_user_can_for_blog($blog_id, $capability){
 
 	$can = call_user_func_array(array($current_user, 'has_cap'), $args);
 
-	if ($switched){
-		restore_current_blog();
-	}
+
 
 	return $can;
 }
@@ -755,14 +694,11 @@ function is_super_admin($user_id = false){
 	if (!$user || !$user->exists())
 		return false;
 
-	if (is_multisite()){
-		$super_admins = get_super_admins();
-		if (is_array($super_admins) && in_array($user->user_login, $super_admins))
+	
+		if ($user->has_cap('delete_users')){
 			return true;
-	} else {
-		if ($user->has_cap('delete_users'))
-			return true;
-	}
+		}
+	
 
 	return false;
 }

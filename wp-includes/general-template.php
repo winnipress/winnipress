@@ -773,10 +773,6 @@ function get_bloginfo( $show = '', $filter = 'raw' ) {
 function get_site_icon_url( $size = 512, $url = '', $blog_id = 0 ) {
 	$switched_blog = false;
 
-	if ( is_multisite() && !empty( $blog_id ) && (int) $blog_id !== get_current_blog_id() ) {
-		switch_to_blog( $blog_id );
-		$switched_blog = true;
-	}
 
 	$site_icon_id = get_option( 'site_icon' );
 
@@ -841,10 +837,6 @@ function has_site_icon( $blog_id = 0 ) {
 function has_custom_logo( $blog_id = 0 ) {
 	$switched_blog = false;
 
-	if ( is_multisite() && !empty( $blog_id ) && (int) $blog_id !== get_current_blog_id() ) {
-		switch_to_blog( $blog_id );
-		$switched_blog = true;
-	}
 
 	$custom_logo_id = get_theme_mod( 'custom_logo' );
 

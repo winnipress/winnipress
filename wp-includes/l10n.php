@@ -30,44 +30,13 @@
 function get_locale(){
 	global $locale, $wp_local_package;
 
-	if(isset($locale ) ){
-		/**
-		 * Filters the locale ID of the WordPress installation.
-		 *
-		 * @since 1.5.0
-		 *
-		 * @param string $locale The locale ID.
-		 */
-		return apply_filters('locale', $locale );
+	// Grab WPLANG from the database
+	$db_locale = get_option('WPLANG');
+	if($db_locale !== false ){
+		$locale = $db_locale;
 	}
 
-	if(isset($wp_local_package ) ){
-		$locale = $wp_local_package;
-	}
-
-	// WPLANG was defined in wp-config.
-	if(defined('WPLANG' ) ){
-		$locale = WPLANG;
-	}
-
-	// If multisite, check options.
-	if(is_multisite() ){
-		// Don't check blog option when installing.
-		if(wp_installing() || (false === $ms_locale = get_option('WPLANG' ) ) ){
-			$ms_locale = get_site_option('WPLANG' );
-		}
-
-		if($ms_locale !== false ){
-			$locale = $ms_locale;
-		}
-	} else {
-		$db_locale = get_option('WPLANG' );
-		if($db_locale !== false ){
-			$locale = $db_locale;
-		}
-	}
-
-	if(empty($locale ) ){
+	if(empty($locale)){
 		$locale = 'en_US';
 	}
 
@@ -671,10 +640,6 @@ function load_default_textdomain($locale = null ){
 
 	$return = load_textdomain('default', WP_LANG_DIR . "/$locale.mo" );
 
-	if((is_multisite() || (defined('WP_INSTALLING_NETWORK' ) && WP_INSTALLING_NETWORK ) ) && !file_exists(WP_LANG_DIR . "/admin-$locale.mo" ) ){
-		load_textdomain('default', WP_LANG_DIR . "/ms-$locale.mo" );
-		return $return;
-	}
 
 	if(is_admin() || wp_installing() || (defined('WP_REPAIRING' ) && WP_REPAIRING ) ){
 		load_textdomain('default', WP_LANG_DIR . "/admin-$locale.mo" );
@@ -703,15 +668,8 @@ function load_default_textdomain($locale = null ){
  * @return bool True when textdomain is successfully loaded, false otherwise.
  */
 function load_plugin_textdomain($domain, $deprecated = false, $plugin_rel_path = false ){
-	/**
-	 * Filters a plugin's locale.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param string $locale The plugin's current locale.
-	 * @param string $domain Text domain. Unique identifier for retrieving translated strings.
-	 */
-	$locale = apply_filters('plugin_locale', is_admin() ? get_user_locale() : get_locale(), $domain );
+
+	$locale = apply_filters('plugin_locale', get_locale(), $domain );
 
 	$mofile = $domain . '-' . $locale . '.mo';
 
@@ -720,12 +678,9 @@ function load_plugin_textdomain($domain, $deprecated = false, $plugin_rel_path =
 		return true;
 	}
 
-	if(false !== $plugin_rel_path ){
-		$path = WP_PLUGIN_DIR . '/' . trim($plugin_rel_path, '/' );
-	} elseif(false !== $deprecated ){
-		_deprecated_argument(__FUNCTION__, '2.7.0' );
-		$path = ABSPATH . trim($deprecated, '/' );
-	} else {
+	if(false !== $plugin_rel_path){
+		$path = WP_PLUGIN_DIR . '/' . trim($plugin_rel_path, '/');
+	}else{
 		$path = WP_PLUGIN_DIR;
 	}
 

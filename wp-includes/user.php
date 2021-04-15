@@ -300,20 +300,7 @@ function wp_authenticate_cookie($user, $username, $password) {
  * @return WP_User|WP_Error WP_User on success, WP_Error if the user is considered a spammer.
  */
 function wp_authenticate_spam_check($user ) {
-	if ($user instanceof WP_User && is_multisite() ) {
-		/**
-		 * Filters whether the user has been marked as a spammer.
-		 *
-		 * @since 3.7.0
-		 *
-		 * @param bool    $spammed Whether the user is considered a spammer.
-		 * @param WP_User $user    User to check against.
-		 */
-		$spammed = apply_filters('check_is_user_spammed', is_user_spammy($user ), $user );
-
-		if ($spammed )
-			return new WP_Error('spammer_account', __('<strong>ERROR</strong>: Your account has been marked as a spammer.' ) );
-	}
+	
 	return $user;
 }
 
@@ -826,13 +813,9 @@ function count_users($strategy = 'time', $site_id = null ) {
 	$result = array();
 
 	if ('time' == $strategy ) {
-		if (is_multisite() && $site_id != get_current_blog_id() ) {
-			switch_to_blog($site_id );
+		
 			$avail_roles = wp_roles()->get_names();
-			restore_current_blog();
-		} else {
-			$avail_roles = wp_roles()->get_names();
-		}
+		
 
 		// Build a CPU-intensive query that will return concise information.
 		$select_count = array();
@@ -2116,9 +2099,7 @@ function get_password_reset_key($user ) {
 	do_action('retrieve_password', $user->user_login );
 
 	$allow = true;
-	if (is_multisite() && is_user_spammy($user ) ) {
-		$allow = false;
-	}
+	
 
 	/**
 	 * Filters whether to allow a password to be reset.
@@ -2483,13 +2464,9 @@ function wp_get_users_with_no_role($site_id = null ) {
 
 	$prefix = $wpdb->get_blog_prefix($site_id );
 
-	if (is_multisite() && $site_id != get_current_blog_id() ) {
-		switch_to_blog($site_id );
-		$role_names = wp_roles()->get_names();
-		restore_current_blog();
-	} else {
-		$role_names = wp_roles()->get_names();
-	}
+
+	$role_names = wp_roles()->get_names();
+	
 
 	$regex  = implode('|', array_keys($role_names ) );
 	$regex  = preg_replace('/[^a-zA-Z_\|-]/', '', $regex );

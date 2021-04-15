@@ -218,7 +218,7 @@ function wp_load_alloptions(){
 }
 
 /**
- * Loads and caches certain often requested site options if is_multisite() and a persistent cache is not being used.
+ * Loads and caches certain often requested site options if  a persistent cache is not being used.
  *
  * @since 3.0.0
  *

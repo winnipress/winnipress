@@ -75,14 +75,7 @@ case 'promote':
 				continue;
 		}
 
-		// If the user doesn't already belong to the blog, bail.
-		if (is_multisite() && !is_user_member_of_blog($id ) ) {
-			wp_die(
-				'<h1>' . __('Something went wrong.' ) . '</h1>' .
-				'<p>' . __('One of the selected users is not a member of this site.' ) . '</p>',
-				403
-			);
-		}
+		
 
 		$user = get_userdata($id );
 		$user->set_role($role );
@@ -92,8 +85,6 @@ case 'promote':
 	exit();
 
 case 'dodelete':
-	if (is_multisite() )
-		wp_die(__('User deletion is not allowed from this screen.'), 400 );
 
 	check_admin_referer('delete-users');
 
@@ -141,8 +132,6 @@ case 'dodelete':
 	exit();
 
 case 'delete':
-	if (is_multisite() )
-		wp_die(__('User deletion is not allowed from this screen.'), 400 );
 
 	check_admin_referer('bulk-users');
 
@@ -346,9 +335,7 @@ echo esc_html($title );
 <?php
 if (current_user_can('create_users' ) ) { ?>
 	<a href="<?php echo admin_url('user-new.php' ); ?>" class="page-title-action"><?php echo esc_html_x('Add New', 'user' ); ?></a>
-<?php } elseif (is_multisite() && current_user_can('promote_users' ) ) { ?>
-	<a href="<?php echo admin_url('user-new.php' ); ?>" class="page-title-action"><?php echo esc_html_x('Add Existing', 'user' ); ?></a>
-<?php }
+<?php } 
 
 if (strlen($usersearch ) ) {
 	/* translators: %s: search keywords */
