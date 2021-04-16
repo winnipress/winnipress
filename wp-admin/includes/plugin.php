@@ -255,54 +255,7 @@ function get_plugins($plugin_folder = '') {
 	return $wp_plugins;
 }
 
-/**
- * Check the mu-plugins directory and retrieve all mu-plugin files with any plugin data.
- *
- * WordPress only includes mu-plugin files in the base mu-plugins directory (wp-content/mu-plugins).
- *
- * @since 3.0.0
- * @return array Key is the mu-plugin file path and the value is an array of the mu-plugin data.
- */
-function get_mu_plugins() {
-	$wp_plugins = array();
-	// Files in wp-content/mu-plugins directory
-	$plugin_files = array();
 
-	if( !is_dir( WPMU_PLUGIN_DIR))
-		return $wp_plugins;
-	if( $plugins_dir = @ opendir( WPMU_PLUGIN_DIR)) {
-		while ( ( $file = readdir( $plugins_dir)) !== false) {
-			if( substr( $file, -4) == '.php')
-				$plugin_files[] = $file;
-		}
-	} else {
-		return $wp_plugins;
-	}
-
-	@closedir( $plugins_dir);
-
-	if( empty($plugin_files))
-		return $wp_plugins;
-
-	foreach( $plugin_files as $plugin_file) {
-		if( !is_readable( WPMU_PLUGIN_DIR . "/$plugin_file"))
-			continue;
-
-		$plugin_data = get_plugin_data( WPMU_PLUGIN_DIR . "/$plugin_file", false, false); //Do not apply markup/translate as it'll be cached.
-
-		if( empty ( $plugin_data['Name']))
-			$plugin_data['Name'] = $plugin_file;
-
-		$wp_plugins[ $plugin_file ] = $plugin_data;
-	}
-
-	if( isset( $wp_plugins['index.php']) && filesize( WPMU_PLUGIN_DIR . '/index.php') <= 30) // silence is golden
-		unset( $wp_plugins['index.php']);
-
-	uasort( $wp_plugins, '_sort_uname_callback');
-
-	return $wp_plugins;
-}
 
 /**
  * Callback to sort array by a 'Name' key.

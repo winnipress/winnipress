@@ -122,7 +122,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 	 * @global int      $per_page
 	 * @global string   $mode
 	 */
-	public function prepare_items() {
+	public function prepare_items(){
 		global $avail_post_stati, $wp_query, $per_page, $mode;
 
 		// is going to call wp()

@@ -2188,7 +2188,7 @@ function wp_count_posts($type = 'post', $perm = ''){
 		return apply_filters('wp_count_posts', $counts, $type, $perm);
 	}
 
-	$query = "SELECT post_status, COUNT(*) AS num_posts FROM{$wpdb->posts} WHERE post_type = %s";
+	$query = "SELECT post_status, COUNT(*) AS num_posts FROM {$wpdb->posts} WHERE post_type = %s";
 	if('readable' == $perm && is_user_logged_in()){
 		$post_type_object = get_post_type_object($type);
 		if(!current_user_can($post_type_object->cap->read_private_posts)){
@@ -6311,7 +6311,7 @@ function _filter_query_attachment_filenames($clauses){
 	remove_filter('posts_clauses', __FUNCTION__);
 
 	// Add a LEFT JOIN of the postmeta table so we don't trample existing JOINs.
-	$clauses['join'] .= " LEFT JOIN{$wpdb->postmeta} AS sq1 ON ({$wpdb->posts}.ID = sq1.post_id AND sq1.meta_key = '_wp_attached_file')";
+	$clauses['join'] .= " LEFT JOIN {$wpdb->postmeta} AS sq1 ON ({$wpdb->posts}.ID = sq1.post_id AND sq1.meta_key = '_wp_attached_file')";
 
 	$clauses['groupby'] = "{$wpdb->posts}.ID";
 

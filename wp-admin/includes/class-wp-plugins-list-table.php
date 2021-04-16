@@ -117,9 +117,7 @@ class WP_Plugins_List_Table extends WP_List_Table {
 			 *                     plugin type. Default true.
 			 * @param string $type The plugin type. Accepts 'mustuse', 'dropins'.
 			 */
-			if( apply_filters( 'show_advanced_plugins', true, 'mustuse' ) ) {
-				$plugins['mustuse'] = get_mu_plugins();
-			}
+			
 
 			/** This action is documented in wp-admin/includes/class-wp-plugins-list-table.php */
 			if( apply_filters( 'show_advanced_plugins', true, 'dropins' ) )

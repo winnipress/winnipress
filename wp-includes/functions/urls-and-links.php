@@ -3142,12 +3142,9 @@ function plugins_url($path = '', $plugin = '' ){
 
 	$path = wp_normalize_path($path );
 	$plugin = wp_normalize_path($plugin );
-	$mu_plugin_dir = wp_normalize_path(WPMU_PLUGIN_DIR );
 
-	if(!empty($plugin) && 0 === strpos($plugin, $mu_plugin_dir) )
-		$url = WPMU_PLUGIN_URL;
-	else
-		$url = WP_PLUGIN_URL;
+	
+	$url = WP_PLUGIN_URL;
 
 
 	$url = set_url_scheme($url );

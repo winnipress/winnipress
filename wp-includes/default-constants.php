@@ -1,14 +1,9 @@
 <?php
-/**
- * Defines constants and global variables that can be overridden, generally in wp-config.php.
- *
- * @package WordPress
- */
+// Defines constants and global variables that can be overridden, generally in wp-config.php
 
 /**
  * Defines initial WordPress constants
  *
- * @see wp_debug_mode()
  *
  * @since 3.0.0
  *
@@ -97,32 +92,13 @@ function wp_initial_constants(){
 	if(!defined('MEDIA_TRASH') )
 		define('MEDIA_TRASH', false);
 
-	if(!defined('SHORTINIT') )
-		define('SHORTINIT', false);
-
-	// Constants for features added to WP that should short-circuit their plugin implementations
-	define('WP_FEATURE_BETTER_PASSWORDS', true );
-
-	/**#@+
-	 * Constants for expressing human-readable intervals
-	 * in their respective number of seconds.
-	 *
-	 * Please note that these values are approximate and are provided for convenience.
-	 * For example, MONTH_IN_SECONDS wrongly assumes every month has 30 days and
-	 * YEAR_IN_SECONDS does not take leap years into account.
-	 *
-	 * If you need more accuracy please consider using the DateTime class (https://secure.php.net/manual/en/class.datetime.php).
-	 *
-	 * @since 3.5.0
-	 * @since 4.4.0 Introduced `MONTH_IN_SECONDS`.
-	 */
 	define('MINUTE_IN_SECONDS', 60 );
 	define('HOUR_IN_SECONDS',   60 * MINUTE_IN_SECONDS );
 	define('DAY_IN_SECONDS',    24 * HOUR_IN_SECONDS   );
 	define('WEEK_IN_SECONDS',    7 * DAY_IN_SECONDS    );
 	define('MONTH_IN_SECONDS',  30 * DAY_IN_SECONDS    );
 	define('YEAR_IN_SECONDS',  365 * DAY_IN_SECONDS    );
-	/**#@-*/
+
 }
 
 /**
@@ -355,6 +331,6 @@ function wp_templating_constants(){
 	 * @see WP_Theme::get_core_default_theme()
 	 */
 	if(!defined('WP_DEFAULT_THEME') )
-		define('WP_DEFAULT_THEME', 'twentyseventeen' );
+		define('WP_DEFAULT_THEME', 'default' );
 
 }

@@ -203,7 +203,7 @@ class WP_List_Util{
 		}
 
 		foreach($orderby as $field => $direction ){
-			$orderby[ $field ] = 'DESC' === strtoupper($direction ) ? 'DESC' : 'ASC';
+			$orderby[ $field ] = 'DESC' === strtoupper($direction) ? 'DESC' : 'ASC';
 		}
 
 		$this->orderby = $orderby;

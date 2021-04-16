@@ -3651,8 +3651,8 @@ function _split_shared_term($term_id, $term_taxonomy_id, $record = true){
 
 	// If we've just split the final shared term, set the "finished" flag.
 	$shared_terms_exist = $wpdb->get_results(
-		"SELECT tt.term_id, t.*, count(*) as term_tt_count FROM{$wpdb->term_taxonomy} tt
-		 LEFT JOIN{$wpdb->terms} t ON t.term_id = tt.term_id
+		"SELECT tt.term_id, t.*, count(*) as term_tt_count FROM {$wpdb->term_taxonomy} tt
+		 LEFT JOIN {$wpdb->terms} t ON t.term_id = tt.term_id
 		 GROUP BY t.term_id
 		 HAVING term_tt_count > 1
 		 LIMIT 1"
@@ -3706,8 +3706,8 @@ function _wp_batch_split_terms(){
 
 	// Get a list of shared terms (those with more than one associated row in term_taxonomy).
 	$shared_terms = $wpdb->get_results(
-		"SELECT tt.term_id, t.*, count(*) as term_tt_count FROM{$wpdb->term_taxonomy} tt
-		 LEFT JOIN{$wpdb->terms} t ON t.term_id = tt.term_id
+		"SELECT tt.term_id, t.*, count(*) as term_tt_count FROM {$wpdb->term_taxonomy} tt
+		 LEFT JOIN {$wpdb->terms} t ON t.term_id = tt.term_id
 		 GROUP BY t.term_id
 		 HAVING term_tt_count > 1
 		 LIMIT 10"
@@ -3733,7 +3733,7 @@ function _wp_batch_split_terms(){
 
 	// Get term taxonomy data for all shared terms.
 	$shared_term_ids = implode(',', array_keys($shared_terms));
-	$shared_tts = $wpdb->get_results("SELECT * FROM{$wpdb->term_taxonomy} WHERE `term_id` IN ({$shared_term_ids})");
+	$shared_tts = $wpdb->get_results("SELECT * FROM {$wpdb->term_taxonomy} WHERE `term_id` IN ({$shared_term_ids})");
 
 	// Split term data recording is slow, so we do it just once, outside the loop.
 	$split_term_data = get_option('_split_terms', array());
@@ -3824,9 +3824,9 @@ function _wp_check_split_terms_in_menus($term_id, $new_term_id, $term_taxonomy_i
 	global $wpdb;
 	$post_ids = $wpdb->get_col($wpdb->prepare(
 		"SELECT m1.post_id
-		FROM{$wpdb->postmeta} AS m1
-			INNER JOIN{$wpdb->postmeta} AS m2 ON (m2.post_id = m1.post_id)
-			INNER JOIN{$wpdb->postmeta} AS m3 ON (m3.post_id = m1.post_id)
+		FROM {$wpdb->postmeta} AS m1
+			INNER JOIN {$wpdb->postmeta} AS m2 ON (m2.post_id = m1.post_id)
+			INNER JOIN {$wpdb->postmeta} AS m3 ON (m3.post_id = m1.post_id)
 		WHERE (m1.meta_key = '_menu_item_type' AND m1.meta_value = 'taxonomy')
 			AND (m2.meta_key = '_menu_item_object' AND m2.meta_value = %s)
 			AND (m3.meta_key = '_menu_item_object_id' AND m3.meta_value = %d)",

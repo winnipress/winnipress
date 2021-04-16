@@ -1079,10 +1079,11 @@ function wp_edit_posts_query( $q = false) {
 		$query['fields'] = 'id=>parent';
 	}
 
-	if( !empty( $q['show_sticky']))
+	if(!empty( $q['show_sticky'])){
 		$query['post__in'] = (array) get_option( 'sticky_posts');
+	}
 
-	wp( $query);
+	wp($query);
 
 	return $avail_post_stati;
 }

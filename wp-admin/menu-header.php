@@ -11,6 +11,7 @@
  *
  * @global string $self
  */
+global $self;
 $self = preg_replace('|^.*/wp-admin/|i', '', $self);
 $self = preg_replace('|^.*/plugins/|i', '', $self);
 

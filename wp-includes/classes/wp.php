@@ -722,6 +722,6 @@ class WP{
 		 *
 		 * @param WP $this Current WordPress environment instance (passed by reference).
 		 */
-		do_action_ref_array( 'wp', array( &$this ) );
+		do_action_ref_array('wp', array( &$this ) );
 	}
 }

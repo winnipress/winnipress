@@ -810,7 +810,7 @@ function delete_expired_transients($force_db = false ){
 	}
 
 	$wpdb->query($wpdb->prepare(
-		"DELETE a, b FROM{$wpdb->options} a,{$wpdb->options} b
+		"DELETE a, b FROM {$wpdb->options} a,{$wpdb->options} b
 			WHERE a.option_name LIKE %s
 			AND a.option_name NOT LIKE %s
 			AND b.option_name = CONCAT('_transient_timeout_', SUBSTRING(a.option_name, 12 ) )
@@ -823,7 +823,7 @@ function delete_expired_transients($force_db = false ){
 	
 		// non-Multisite stores site transients in the options table.
 		$wpdb->query($wpdb->prepare(
-			"DELETE a, b FROM{$wpdb->options} a,{$wpdb->options} b
+			"DELETE a, b FROM {$wpdb->options} a,{$wpdb->options} b
 				WHERE a.option_name LIKE %s
 				AND a.option_name NOT LIKE %s
 				AND b.option_name = CONCAT('_site_transient_timeout_', SUBSTRING(a.option_name, 17 ) )

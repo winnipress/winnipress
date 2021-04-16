@@ -642,7 +642,6 @@ function do_action_deprecated($tag, $args, $version, $replacement = false, $mess
  *
  * @since 1.5.0
  *
- * @global array $wp_plugin_paths
  *
  * @param string $file The filename of plugin.
  * @return string The name of a plugin.
@@ -661,9 +660,8 @@ function plugin_basename($file){
 	}
 
 	$plugin_dir = wp_normalize_path(WP_PLUGIN_DIR);
-	$mu_plugin_dir = wp_normalize_path(WPMU_PLUGIN_DIR);
 
-	$file = preg_replace('#^' . preg_quote($plugin_dir, '#') . '/|^' . preg_quote($mu_plugin_dir, '#') . '/#','',$file); // get relative path from plugins dir
+	$file = preg_replace('#^' . preg_quote($plugin_dir, '#') . '/#','',$file); // get relative path from plugins dir
 	$file = trim($file, '/');
 	return $file;
 }
@@ -680,7 +678,6 @@ function plugin_basename($file){
  * @global array $wp_plugin_paths
  *
  * @staticvar string $wp_plugin_path
- * @staticvar string $wpmu_plugin_path
  *
  * @param string $file Known path to the file.
  * @return bool Whether the path was able to be registered.
@@ -689,16 +686,15 @@ function wp_register_plugin_realpath($file){
 	global $wp_plugin_paths;
 
 	// Normalize, but store as static to avoid recalculation of a constant value
-	static $wp_plugin_path = null, $wpmu_plugin_path = null;
+	static $wp_plugin_path = null;
 	if(!isset($wp_plugin_path)){
 		$wp_plugin_path   = wp_normalize_path(WP_PLUGIN_DIR  );
-		$wpmu_plugin_path = wp_normalize_path(WPMU_PLUGIN_DIR);
 	}
 
 	$plugin_path = wp_normalize_path(dirname($file));
 	$plugin_realpath = wp_normalize_path(dirname(realpath($file)));
 
-	if($plugin_path === $wp_plugin_path || $plugin_path === $wpmu_plugin_path){
+	if($plugin_path === $wp_plugin_path){
 		return false;
 	}
 

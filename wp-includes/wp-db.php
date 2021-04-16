@@ -1830,9 +1830,6 @@ class wpdb {
 	 * @param string $query The query to run.
 	 */
 	private function _do_query($query) {
-		if(defined('SAVEQUERIES') && SAVEQUERIES) {
-			$this->timer_start();
-		}
 
 		if(!empty($this->dbh) && $this->use_mysqli) {
 			$this->result = mysqli_query($this->dbh, $query);
@@ -1842,7 +1839,7 @@ class wpdb {
 		$this->num_queries++;
 
 		if(defined('SAVEQUERIES') && SAVEQUERIES) {
-			$this->queries[] = array($query, $this->timer_stop(), $this->get_caller());
+			$this->queries[] = array($query, false, $this->get_caller());
 		}
 	}
 
@@ -3132,28 +3129,7 @@ class wpdb {
 		}
 	}
 
-	/**
-	 * Starts the timer, for debugging purposes.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return true
-	 */
-	public function timer_start() {
-		$this->time_start = microtime(true);
-		return true;
-	}
 
-	/**
-	 * Stops the debugging timer.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return float Total time spent on the query, in seconds
-	 */
-	public function timer_stop() {
-		return (microtime(true) - $this->time_start);
-	}
 
 	/**
 	 * Wraps errors in a nice header and footer and dies.

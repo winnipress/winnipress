@@ -6,18 +6,19 @@
  * @subpackage Administration
  */
 
-/** WordPress Administration Bootstrap */
-require_once( dirname( __FILE__ ) . '/admin.php' );
+// WordPress Administration Bootstrap
+require_once(dirname( __FILE__ ) . '/admin.php');
 
-if( !$typenow )
-	wp_die( __( 'Invalid post type.' ) );
-
-if( !in_array( $typenow, get_post_types( array( 'show_ui' => true ) ) ) ) {
-	wp_die( __( 'Sorry, you are not allowed to edit posts in this post type.' ) );
+if(!$typenow){
+	wp_die(__('Invalid post type.'));
 }
 
-if( 'attachment' === $typenow ) {
-	if( wp_redirect( admin_url( 'upload.php' ) ) ) {
+if(!in_array($typenow, get_post_types(array('show_ui' => true)))){
+	wp_die(__('Sorry, you are not allowed to edit posts in this post type.'));
+}
+
+if('attachment' === $typenow){
+	if(wp_redirect(admin_url('upload.php'))){
 		exit;
 	}
 }
@@ -29,15 +30,18 @@ if( 'attachment' === $typenow ) {
 global $post_type, $post_type_object;
 
 $post_type = $typenow;
-$post_type_object = get_post_type_object( $post_type );
+$post_type_object = get_post_type_object($post_type);
 
-if( !$post_type_object )
-	wp_die( __( 'Invalid post type.' ) );
+// Is this post type defined?
+if(!$post_type_object){
+	wp_die(__('Invalid post type.'));
+}
 
-if( !current_user_can( $post_type_object->cap->edit_posts ) ) {
+// Can the current user edit this post type?
+if(!current_user_can($post_type_object->cap->edit_posts)){
 	wp_die(
-		'<h1>' . __( 'You need a higher level of permission.' ) . '</h1>' .
-		'<p>' . __( 'Sorry, you are not allowed to edit posts in this post type.' ) . '</p>',
+		'<h1>' . __('You need a higher level of permission.') . '</h1>' .
+		'<p>' . __('Sorry, you are not allowed to edit posts in this post type.') . '</p>',
 		403
 	);
 }
@@ -46,11 +50,11 @@ $wp_list_table = _get_list_table('WP_Posts_List_Table');
 $pagenum = $wp_list_table->get_pagenum();
 
 
-if( 'post' != $post_type ) {
+if('post' != $post_type){
 	$parent_file = "edit.php?post_type=$post_type";
 	$submenu_file = "edit.php?post_type=$post_type";
 	$post_new_file = "post-new.php?post_type=$post_type";
-} else {
+}else{
 	$parent_file = 'edit.php';
 	$submenu_file = 'edit.php';
 	$post_new_file = 'post-new.php';
@@ -58,7 +62,7 @@ if( 'post' != $post_type ) {
 
 $doaction = $wp_list_table->current_action();
 
-if( $doaction ) {
+if($doaction){
 	check_admin_referer('bulk-posts');
 
 	$sendback = remove_query_arg( array('trashed', 'untrashed', 'deleted', 'locked', 'ids'), wp_get_referer() );
@@ -170,7 +174,6 @@ if( $doaction ) {
 
 $wp_list_table->prepare_items();
 
-wp_enqueue_script('inline-edit-post');
 wp_enqueue_script('heartbeat');
 
 $title = $post_type_object->labels->name;
@@ -225,11 +228,11 @@ echo esc_html( $post_type_object->labels->name );
 ?></h1>
 
 <?php
-if( current_user_can( $post_type_object->cap->create_posts ) ) {
+if(current_user_can($post_type_object->cap->create_posts)){
 	echo ' <a href="' . esc_url( admin_url( $post_new_file ) ) . '" class="page-title-action">' . esc_html( $post_type_object->labels->add_new ) . '</a>';
 }
 
-if( isset( $_REQUEST['s'] ) && strlen( $_REQUEST['s'] ) ) {
+if(isset($_REQUEST['s']) && strlen($_REQUEST['s'])){
 	/* translators: %s: search keywords */
 	printf( ' <span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;' ) . '</span>', get_search_query() );
 }
@@ -252,9 +255,10 @@ foreach( $bulk_counts as $message => $count ) {
 	}
 }
 
-if( $messages )
+if($messages){
 	echo '<div id="message" class="updated notice is-dismissible"><p>' . join( ' ', $messages ) . '</p></div>';
-unset( $messages );
+	unset($messages);
+}
 
 $_SERVER['REQUEST_URI'] = remove_query_arg( array( 'locked', 'skipped', 'updated', 'deleted', 'trashed', 'untrashed' ), $_SERVER['REQUEST_URI'] );
 ?>

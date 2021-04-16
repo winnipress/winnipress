@@ -828,8 +828,8 @@ function count_users($strategy = 'time', $site_id = null){
 		// Add the meta_value index to the selection list, then run the query.
 		$row = $wpdb->get_row("
 			SELECT{$select_count}, COUNT(*)
-			FROM{$wpdb->usermeta}
-			INNER JOIN{$wpdb->users} ON user_id = ID
+			FROM {$wpdb->usermeta}
+			INNER JOIN {$wpdb->users} ON user_id = ID
 			WHERE meta_key = '{$blog_prefix}capabilities'
 		", ARRAY_N);
 
@@ -857,8 +857,8 @@ function count_users($strategy = 'time', $site_id = null){
 
 		$users_of_blog = $wpdb->get_col("
 			SELECT meta_value
-			FROM{$wpdb->usermeta}
-			INNER JOIN{$wpdb->users} ON user_id = ID
+			FROM {$wpdb->usermeta}
+			INNER JOIN {$wpdb->users} ON user_id = ID
 			WHERE meta_key = '{$blog_prefix}capabilities'
 		");
 
@@ -2580,7 +2580,7 @@ function send_confirmation_on_profile_email(){
 			return;
 		}
 
-		if($wpdb->get_var($wpdb->prepare("SELECT user_email FROM{$wpdb->users} WHERE user_email=%s", $_POST['email']))){
+		if($wpdb->get_var($wpdb->prepare("SELECT user_email FROM {$wpdb->users} WHERE user_email=%s", $_POST['email']))){
 			$errors->add('user_email', __("<strong>ERROR</strong>: The email address is already used."), array(
 				'form-field' => 'email',
 			));

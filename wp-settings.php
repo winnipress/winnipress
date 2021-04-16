@@ -2,8 +2,10 @@
 define('WPINC', 'wp-includes');
 
 // Include files required for initialization.
-require(ABSPATH . WPINC . '/load.php');
+require(ABSPATH . WPINC . '/functions/load.php');
 require(ABSPATH . WPINC . '/default-constants.php');
+
+// Functions to handle filters and actions and some plugin related stuff
 require_once(ABSPATH . WPINC . '/plugin.php');
 
 /*
@@ -26,8 +28,7 @@ global $blog_id;
 // Set initial default constants including WP_MEMORY_LIMIT, WP_MAX_MEMORY_LIMIT, WP_DEBUG, SCRIPT_DEBUG, WP_CONTENT_DIR and WP_CACHE.
 wp_initial_constants();
 
-// Check for the required PHP version and for the MySQL extension or a database drop-in.
-wp_check_php_mysql_versions();
+
 
 // Disable magic quotes at runtime. Magic quotes are added using wpdb later in wp-settings.php.
 @ini_set('magic_quotes_runtime', 0);
@@ -42,14 +43,6 @@ wp_unregister_GLOBALS();
 // Standardize $_SERVER variables across setups.
 wp_fix_server_vars();
 
-// Check if we're in maintenance mode.
-wp_maintenance();
-
-// Start loading timer.
-timer_start();
-
-// Check if we're in WP_DEBUG mode.
-wp_debug_mode();
 
 /**
  * Filters whether to enable loading of the advanced-cache.php drop-in.
@@ -98,13 +91,8 @@ wp_start_object_cache();
 // Attach the default filters.
 require(ABSPATH . WPINC . '/default-filters.php');
 
-
-
 register_shutdown_function('shutdown_action_hook');
 
-// Stop most of WordPress from being loaded if we just want the basics.
-if(SHORTINIT)
-	return false;
 
 // Load the L10n library.
 require_once(ABSPATH . WPINC . '/l10n.php');
@@ -166,11 +154,6 @@ wp_plugin_directory_constants();
 
 $GLOBALS['wp_plugin_paths'] = array();
 
-// Load must-use plugins.
-foreach(wp_get_mu_plugins() as $mu_plugin){
-	include_once($mu_plugin);
-}
-unset($mu_plugin);
 
 
 /**

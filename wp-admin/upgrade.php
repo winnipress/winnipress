@@ -19,7 +19,6 @@ require( dirname( dirname( __FILE__ ) ) . '/wp-load.php' );
 
 nocache_headers();
 
-timer_start();
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 delete_site_transient('update_core');
@@ -114,7 +113,6 @@ switch ( $step ) :
 <pre>
 <?php printf( __( '%s queries' ), $wpdb->num_queries ); ?>
 
-<?php printf( __( '%s seconds' ), timer_stop( 0 ) ); ?>
 </pre>
 -->
 

@@ -1699,8 +1699,8 @@ function kses_init_filters(){
  * A quick procedural method to removing all of the filters that kses uses for
  * content in WordPress Loop.
  *
- * Does not remove the kses_init() function from{@see 'init'} hook (priority is
- * default). Also does not remove kses_init() function from{@see 'set_current_user'}
+ * Does not remove the kses_init() function FROM {@see 'init'} hook (priority is
+ * default). Also does not remove kses_init() function FROM {@see 'set_current_user'}
  * hook (priority is also default).
  *
  * @since 2.0.6
@@ -1722,7 +1722,7 @@ function kses_remove_filters(){
 /**
  * Sets up most of the Kses filters for input form content.
  *
- * If you remove the kses_init() function from{@see 'init'} hook and
+ * If you remove the kses_init() function FROM {@see 'init'} hook and
  *{@see 'set_current_user'} (priority is default), then none of the Kses filter hooks
  * will be added.
  *
