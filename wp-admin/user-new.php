@@ -91,7 +91,7 @@ You\'ve been invited to join \'%1$s\' at
 
 Please click the following link to confirm the invite:
 %4$s' );
-			wp_mail($new_user_email, sprintf(__('[%s] Joining confirmation' ), wp_specialchars_decode(get_option('blogname' ) ) ), sprintf($message, get_option('blogname' ), home_url(), wp_specialchars_decode(translate_user_role($role['name'] ) ), home_url("/newbloguser/$newuser_key/" ) ) );
+			wp_mail($new_user_email, sprintf(__('[%s] Joining confirmation' ), wp_specialchars_decode(get_option('website_title' ) ) ), sprintf($message, get_option('website_title' ), home_url(), wp_specialchars_decode(translate_user_role($role['name'] ) ), home_url("/newbloguser/$newuser_key/" ) ) );
 
 			if($switched_locale ) {
 				restore_previous_locale();

@@ -649,7 +649,7 @@ function get_bloginfo( $show = '', $filter = 'raw'){
 			$output = site_url();
 			break;
 		case 'description':
-			$output = get_option('blogdescription');
+			$output = get_option('website_tagline');
 			break;
 		case 'rdf_url':
 			$output = get_feed_link('rdf');
@@ -686,7 +686,7 @@ function get_bloginfo( $show = '', $filter = 'raw'){
 			$output = get_option('admin_email');
 			break;
 		case 'charset':
-			$output = get_option('blog_charset');
+			$output = get_option('website_charset');
 			if('' == $output) $output = 'UTF-8';
 			break;
 		case 'html_type' :
@@ -723,7 +723,7 @@ function get_bloginfo( $show = '', $filter = 'raw'){
 			break;
 		case 'name':
 		default:
-			$output = get_option('blogname');
+			$output = get_option('website_title');
 			break;
 	}
 

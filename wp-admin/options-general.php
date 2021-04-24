@@ -33,13 +33,13 @@ include(ABSPATH . 'wp-admin/admin-header.php' );
 <table class="form-table">
 
 <tr>
-<th scope="row"><label for="blogname"><?php _e('Site Title') ?></label></th>
-<td><input name="blogname" type="text" id="blogname" value="<?php form_option('blogname'); ?>" class="regular-text" /></td>
+<th scope="row"><label for="website_title"><?php _e('Site Title') ?></label></th>
+<td><input name="website_title" type="text" id="website_title" value="<?php form_option('website_title'); ?>" class="regular-text" /></td>
 </tr>
 
 <tr>
-<th scope="row"><label for="blogdescription"><?php _e('Tagline') ?></label></th>
-<td><input name="blogdescription" type="text" id="blogdescription" aria-describedby="tagline-description" value="<?php form_option('blogdescription'); ?>" class="regular-text" />
+<th scope="row"><label for="website_tagline"><?php _e('Tagline') ?></label></th>
+<td><input name="website_tagline" type="text" id="website_tagline" aria-describedby="tagline-description" value="<?php form_option('website_tagline'); ?>" class="regular-text" />
 <p class="description" id="tagline-description"><?php _e('In a few words, explain what this site is about.' ) ?></p></td>
 </tr>
 

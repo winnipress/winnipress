@@ -1449,9 +1449,9 @@ function wp_notify_postauthor($comment_id, $deprecated = null){
 
 	$comment_author_domain = @gethostbyaddr($comment->comment_author_IP);
 
-	// The blogname option is escaped with esc_html on the way into the database in sanitize_option
+	// The website_title option is escaped with esc_html on the way into the database in sanitize_option
 	// we want to reverse this for the plain text arena of emails.
-	$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+	$website_title = wp_specialchars_decode(get_option('website_title'), ENT_QUOTES);
 	$comment_content = wp_specialchars_decode($comment->comment_content);
 
 	switch ($comment->comment_type){
@@ -1464,7 +1464,7 @@ function wp_notify_postauthor($comment_id, $deprecated = null){
 			$notify_message .= sprintf(__('Comment: %s'), "\r\n" . $comment_content) . "\r\n\r\n";
 			$notify_message .= __('You can see all trackbacks on this post here:') . "\r\n";
 			/* translators: 1: blog name, 2: post title */
-			$subject = sprintf(__('[%1$s] Trackback: "%2$s"'), $blogname, $post->post_title);
+			$subject = sprintf(__('[%1$s] Trackback: "%2$s"'), $website_title, $post->post_title);
 			break;
 		case 'pingback':
 			/* translators: 1: Post title */
@@ -1475,7 +1475,7 @@ function wp_notify_postauthor($comment_id, $deprecated = null){
 			$notify_message .= sprintf(__('Comment: %s'), "\r\n" . $comment_content) . "\r\n\r\n";
 			$notify_message .= __('You can see all pingbacks on this post here:') . "\r\n";
 			/* translators: 1: blog name, 2: post title */
-			$subject = sprintf(__('[%1$s] Pingback: "%2$s"'), $blogname, $post->post_title);
+			$subject = sprintf(__('[%1$s] Pingback: "%2$s"'), $website_title, $post->post_title);
 			break;
 		default: // Comments
 			$notify_message  = sprintf(__('New comment on your post "%s"'), $post->post_title) . "\r\n";
@@ -1486,7 +1486,7 @@ function wp_notify_postauthor($comment_id, $deprecated = null){
 			$notify_message .= sprintf(__('Comment: %s'), "\r\n" . $comment_content) . "\r\n\r\n";
 			$notify_message .= __('You can see all comments on this post here:') . "\r\n";
 			/* translators: 1: blog name, 2: post title */
-			$subject = sprintf(__('[%1$s] Comment: "%2$s"'), $blogname, $post->post_title);
+			$subject = sprintf(__('[%1$s] Comment: "%2$s"'), $website_title, $post->post_title);
 			break;
 	}
 	$notify_message .= get_permalink($comment->comment_post_ID) . "#comments\r\n\r\n";
@@ -1504,7 +1504,7 @@ function wp_notify_postauthor($comment_id, $deprecated = null){
 	$wp_email = 'wordpress@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME']));
 
 	if('' == $comment->comment_author){
-		$from = "From: \"$blogname\" <$wp_email>";
+		$from = "From: \"$website_title\" <$wp_email>";
 		if('' != $comment->comment_author_email)
 			$reply_to = "Reply-To: $comment->comment_author_email";
 	} else{
@@ -1514,7 +1514,7 @@ function wp_notify_postauthor($comment_id, $deprecated = null){
 	}
 
 	$message_headers = "$from\n"
-		. "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
+		. "Content-Type: text/plain; charset=\"" . get_option('website_charset') . "\"\n";
 
 	if(isset($reply_to))
 		$message_headers .= $reply_to . "\n";
@@ -1609,9 +1609,9 @@ function wp_notify_moderator($comment_id){
 	$comment_author_domain = @gethostbyaddr($comment->comment_author_IP);
 	$comments_waiting = $wpdb->get_var("SELECT count(comment_ID) FROM $wpdb->comments WHERE comment_approved = '0'");
 
-	// The blogname option is escaped with esc_html on the way into the database in sanitize_option
+	// The website_title option is escaped with esc_html on the way into the database in sanitize_option
 	// we want to reverse this for the plain text arena of emails.
-	$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+	$website_title = wp_specialchars_decode(get_option('website_title'), ENT_QUOTES);
 	$comment_content = wp_specialchars_decode($comment->comment_content);
 
 	switch ($comment->comment_type){
@@ -1670,7 +1670,7 @@ function wp_notify_moderator($comment_id){
 	$notify_message .= admin_url("edit-comments.php?comment_status=moderated#wpbody-content") . "\r\n";
 
 	/* translators: Comment moderation notification email subject. 1: Site name, 2: Post title */
-	$subject = sprintf(__('[%1$s] Please moderate: "%2$s"'), $blogname, $post->post_title);
+	$subject = sprintf(__('[%1$s] Please moderate: "%2$s"'), $website_title, $post->post_title);
 	$message_headers = '';
 
 	/**
@@ -1739,9 +1739,9 @@ function wp_password_change_notification($user){
 	if(0 !== strcasecmp($user->user_email, get_option('admin_email'))){
 		/* translators: %s: user name */
 		$message = sprintf(__('Password changed for user: %s'), $user->user_login) . "\r\n";
-		// The blogname option is escaped with esc_html on the way into the database in sanitize_option
+		// The website_title option is escaped with esc_html on the way into the database in sanitize_option
 		// we want to reverse this for the plain text arena of emails.
-		$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+		$website_title = wp_specialchars_decode(get_option('website_title'), ENT_QUOTES);
 
 		$wp_password_change_notification_email = array(
 			'to'      => get_option('admin_email'),
@@ -1765,13 +1765,13 @@ function wp_password_change_notification($user){
 		 *     @type string $headers The headers of the email.
 		 * }
 		 * @param WP_User $user     User object for user whose password was changed.
-		 * @param string  $blogname The site title.
+		 * @param string  $website_title The site title.
 		 */
-		$wp_password_change_notification_email = apply_filters('wp_password_change_notification_email', $wp_password_change_notification_email, $user, $blogname);
+		$wp_password_change_notification_email = apply_filters('wp_password_change_notification_email', $wp_password_change_notification_email, $user, $website_title);
 
 		wp_mail(
 			$wp_password_change_notification_email['to'],
-			wp_specialchars_decode(sprintf($wp_password_change_notification_email['subject'], $blogname)),
+			wp_specialchars_decode(sprintf($wp_password_change_notification_email['subject'], $website_title)),
 			$wp_password_change_notification_email['message'],
 			$wp_password_change_notification_email['headers']
 		);
@@ -1806,15 +1806,15 @@ function wp_new_user_notification($user_id, $deprecated = null, $notify = ''){
 	global $wpdb, $wp_hasher;
 	$user = get_userdata($user_id);
 
-	// The blogname option is escaped with esc_html on the way into the database in sanitize_option
+	// The website_title option is escaped with esc_html on the way into the database in sanitize_option
 	// we want to reverse this for the plain text arena of emails.
-	$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+	$website_title = wp_specialchars_decode(get_option('website_title'), ENT_QUOTES);
 
 	if('user' !== $notify){
 		$switched_locale = switch_to_locale(get_locale());
 
 		/* translators: %s: site title */
-		$message  = sprintf(__('New user registration on your site %s:'), $blogname) . "\r\n\r\n";
+		$message  = sprintf(__('New user registration on your site %s:'), $website_title) . "\r\n\r\n";
 		/* translators: %s: user login */
 		$message .= sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
 		/* translators: %s: user email address */
@@ -1842,13 +1842,13 @@ function wp_new_user_notification($user_id, $deprecated = null, $notify = ''){
 		 *     @type string $headers The headers of the email.
 		 * }
 		 * @param WP_User $user     User object for new user.
-		 * @param string  $blogname The site title.
+		 * @param string  $website_title The site title.
 		 */
-		$wp_new_user_notification_email_admin = apply_filters('wp_new_user_notification_email_admin', $wp_new_user_notification_email_admin, $user, $blogname);
+		$wp_new_user_notification_email_admin = apply_filters('wp_new_user_notification_email_admin', $wp_new_user_notification_email_admin, $user, $website_title);
 
 		@wp_mail(
 			$wp_new_user_notification_email_admin['to'],
-			wp_specialchars_decode(sprintf($wp_new_user_notification_email_admin['subject'], $blogname)),
+			wp_specialchars_decode(sprintf($wp_new_user_notification_email_admin['subject'], $website_title)),
 			$wp_new_user_notification_email_admin['message'],
 			$wp_new_user_notification_email_admin['headers']
 		);
@@ -1908,13 +1908,13 @@ function wp_new_user_notification($user_id, $deprecated = null, $notify = ''){
 	 *     @type string $headers The headers of the email.
 	 * }
 	 * @param WP_User $user     User object for new user.
-	 * @param string  $blogname The site title.
+	 * @param string  $website_title The site title.
 	 */
-	$wp_new_user_notification_email = apply_filters('wp_new_user_notification_email', $wp_new_user_notification_email, $user, $blogname);
+	$wp_new_user_notification_email = apply_filters('wp_new_user_notification_email', $wp_new_user_notification_email, $user, $website_title);
 
 	wp_mail(
 		$wp_new_user_notification_email['to'],
-		wp_specialchars_decode(sprintf($wp_new_user_notification_email['subject'], $blogname)),
+		wp_specialchars_decode(sprintf($wp_new_user_notification_email['subject'], $website_title)),
 		$wp_new_user_notification_email['message'],
 		$wp_new_user_notification_email['headers']
 	);

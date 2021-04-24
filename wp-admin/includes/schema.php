@@ -202,66 +202,39 @@ function populate_options() {
 	$options = array(
 	'siteurl' => $guessurl,
 	'home' => $guessurl,
-	'blogname' => __('My Site'),
-	/* translators: site tagline */
-	'blogdescription' => __('New WP project'),
+	'website_title' => __('Website title'),
+	'website_tagline' => __('This is the tagline'),
+	'website_charset' => 'UTF-8',
 	'users_can_register' => 0,
-	'admin_email' => 'you@example.com',
-	/* translators: default start of the week. 0 = Sunday, 1 = Monday */
-	'start_of_week' => _x( '1', 'start of week'),
+	'start_of_week' => _x( '1', 'start of week'), // 0 = Sunday, 1 = Monday
 	'use_balanceTags' => 0,
 	'default_category' => 1,
 	'posts_per_page' => 10,
-	/* translators: default date format, see https://secure.php.net/date */
 	'date_format' => __('F j, Y'),
-	/* translators: default time format, see https://secure.php.net/date */
 	'time_format' => __('g:i a'),
 	'permalink_structure' => '',
 	'rewrite_rules' => '',
-	'blog_charset' => 'UTF-8',
 	'active_plugins' => array(),
 	'category_base' => '',
 	'gmt_offset' => $gmt_offset,
-
-	// 1.5
 	'recently_edited' => '',
 	'template' => $template,
 	'stylesheet' => $stylesheet,
 	'html_type' => 'text/html',
-
-	// 2.0
 	'default_role' => 'subscriber',
 	'db_version' => $wp_db_version,
-
-	// 2.0.1
 	'uploads_use_yearmonth_folders' => $uploads_use_yearmonth_folders,
 	'upload_path' => '',
-
-	// 2.1
 	'blog_public' => '1',
 	'default_link_category' => 2,
 	'show_on_front' => 'posts',
-
-	// 2.2
 	'tag_base' => '',
-
-	// 2.5
 	'show_avatars' => '1',
-
-	// 2.7
 	'uninstall_plugins' => array(),
-
-	// 2.8
 	'timezone_string' => $timezone_string,
-
-	// 3.0
 	'page_for_posts' => 0,
 	'page_on_front' => 0,
-
-	// 3.1
 	'default_post_format' => 0,
-
-	// 4.3.0
 	'finished_splitting_shared_terms' => 1,
 	);
 
@@ -317,13 +290,11 @@ function populate_roles(){
 	// Add caps for Administrator role
 	$role = get_role('administrator');
 	$role->add_cap('switch_themes');
-	$role->add_cap('edit_themes');
 	$role->add_cap('activate_plugins');
 	$role->add_cap('edit_plugins');
 	$role->add_cap('edit_users');
 	$role->add_cap('edit_files');
 	$role->add_cap('manage_options');
-	$role->add_cap('moderate_comments');
 	$role->add_cap('manage_categories');
 	$role->add_cap('manage_links');
 	$role->add_cap('upload_files');
@@ -338,7 +309,6 @@ function populate_roles(){
 
 	// Add caps for Editor role
 	$role = get_role('editor');
-	$role->add_cap('moderate_comments');
 	$role->add_cap('manage_categories');
 	$role->add_cap('manage_links');
 	$role->add_cap('upload_files');

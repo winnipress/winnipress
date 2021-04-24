@@ -1712,7 +1712,7 @@ function set_site_transient($transient, $value, $expiration = 0 ){
  * @since 4.7.0
  */
 function register_initial_settings(){
-	register_setting('general', 'blogname', array(
+	register_setting('general', 'website_title', array(
 		'show_in_rest' => array(
 			'name' => 'title',
 		),
@@ -1720,7 +1720,7 @@ function register_initial_settings(){
 		'description'  => __('Site title.' ),
 	) );
 
-	register_setting('general', 'blogdescription', array(
+	register_setting('general', 'website_tagline', array(
 		'show_in_rest' => array(
 			'name' => 'description',
 		),

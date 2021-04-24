@@ -3145,7 +3145,7 @@ function _wp_json_prepare_data( $data){
  * @param int   $status_code The HTTP status code to output.
  */
 function wp_send_json( $response, $status_code = null){
-	@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset'));
+	@header( 'Content-Type: application/json; charset=' . get_option( 'website_charset'));
 	if( null !== $status_code){
 		status_header( $status_code);
 	}
@@ -5363,7 +5363,7 @@ All at ###SITENAME###
 		'headers' => '',
 	);
 	// get site name
-	$site_name = wp_specialchars_decode( get_option( 'blogname'), ENT_QUOTES);
+	$site_name = wp_specialchars_decode( get_option( 'website_title'), ENT_QUOTES);
 
 	/**
 	 * Filters the contents of the email notification sent when the site admin email address is changed.

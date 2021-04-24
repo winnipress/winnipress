@@ -1494,7 +1494,7 @@ function iframe_header( $title = '', $deprecated = false) {
 
 	$current_screen = get_current_screen();
 
-	@header( 'Content-Type: ' . get_option( 'html_type') . '; charset=' . get_option( 'blog_charset'));
+	@header( 'Content-Type: ' . get_option( 'html_type') . '; charset=' . get_option( 'website_charset'));
 	_wp_admin_html_begin();
 ?>
 <title><?php bloginfo('name') ?> &rsaquo; <?php echo $title ?> &#8212; <?php _e('WordPress'); ?></title>
@@ -1845,7 +1845,7 @@ function _wp_admin_html_begin() {
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php echo get_option('blog_charset'); ?>" />
+<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php echo get_option('website_charset'); ?>" />
 <?php
 }
 
@@ -1944,14 +1944,4 @@ function wp_star_rating( $args = array()) {
 	}
 
 	return $output;
-}
-
-/**
- * Output a notice when editing the page for posts (internal use only).
- *
- * @ignore
- * @since 4.2.0
- */
-function _wp_posts_page_notice() {
-	echo '<div class="notice notice-warning inline"><p>' . __( 'You are currently editing the page that shows your latest posts.') . '</p></div>';
 }

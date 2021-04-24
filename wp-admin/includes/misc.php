@@ -889,10 +889,10 @@ All at ###SITENAME###
 	$content = str_replace( '###USERNAME###', $current_user->user_login, $content);
 	$content = str_replace( '###ADMIN_URL###', esc_url( self_admin_url( 'options.php?adminhash=' . $hash)), $content);
 	$content = str_replace( '###EMAIL###', $value, $content);
-	$content = str_replace( '###SITENAME###', wp_specialchars_decode( get_option( 'blogname'), ENT_QUOTES), $content);
+	$content = str_replace( '###SITENAME###', wp_specialchars_decode( get_option( 'website_title'), ENT_QUOTES), $content);
 	$content = str_replace( '###SITEURL###', home_url(), $content);
 
-	wp_mail( $value, sprintf( __( '[%s] New Admin Email Address'), wp_specialchars_decode( get_option( 'blogname'), ENT_QUOTES)), $content);
+	wp_mail( $value, sprintf( __( '[%s] New Admin Email Address'), wp_specialchars_decode( get_option( 'website_title'), ENT_QUOTES)), $content);
 
 	if( $switched_locale){
 		restore_previous_locale();

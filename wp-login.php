@@ -302,7 +302,7 @@ function retrieve_password(){
 
 	
 
-	$site_name = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+	$site_name = wp_specialchars_decode(get_option('website_title'), ENT_QUOTES);
 	
 
 	$message = __('Someone has requested a password reset for the following account:') . "\r\n\r\n";

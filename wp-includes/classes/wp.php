@@ -396,19 +396,19 @@ class WP{
 			if( 404 === $status ){
 				if( !is_user_logged_in() )
 					$headers = array_merge($headers, wp_get_nocache_headers());
-				$headers['Content-Type'] = get_option('html_type') . '; charset=' . get_option('blog_charset');
+				$headers['Content-Type'] = get_option('html_type') . '; charset=' . get_option('website_charset');
 			} elseif( in_array( $status, array( 403, 500, 502, 503 ) ) ){
 				$exit_required = true;
 			}
 		} elseif( empty( $this->query_vars['feed'] ) ){
-			$headers['Content-Type'] = get_option('html_type') . '; charset=' . get_option('blog_charset');
+			$headers['Content-Type'] = get_option('html_type') . '; charset=' . get_option('website_charset');
 		} else{
 			// Set the correct content type for feeds
 			$type = $this->query_vars['feed'];
 			if( 'feed' == $this->query_vars['feed'] ){
 				$type = get_default_feed();
 			}
-			$headers['Content-Type'] = feed_content_type( $type ) . '; charset=' . get_option( 'blog_charset' );
+			$headers['Content-Type'] = feed_content_type( $type ) . '; charset=' . get_option( 'website_charset' );
 
 			// We're showing a feed, so WP is indeed the only thing that last changed.
 			if( !empty( $this->query_vars['withcomments'] )

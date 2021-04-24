@@ -46,7 +46,7 @@ function wp_install($blog_title, $user_name, $user_email, $public, $deprecated =
 	populate_options();
 	populate_roles();
 
-	update_option('blogname', $blog_title);
+	update_option('website_title', $blog_title);
 	update_option('admin_email', $user_email);
 	update_option('blog_public', $public);
 
@@ -1153,7 +1153,7 @@ function make_site_theme_from_default($theme_name, $template){
  */
 function make_site_theme(){
 	// Name the theme after the blog.
-	$theme_name = __get_option('blogname');
+	$theme_name = __get_option('website_title');
 	$template = sanitize_title($theme_name);
 	$site_dir = WP_CONTENT_DIR . "/themes/$template";
 

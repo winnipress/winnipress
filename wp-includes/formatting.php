@@ -929,7 +929,7 @@ function _wp_specialchars( $string, $quote_style = ENT_NOQUOTES, $charset = fals
 		static $_charset = null;
 		if( !isset( $_charset)){
 			$alloptions = wp_load_alloptions();
-			$_charset = isset( $alloptions['blog_charset']) ? $alloptions['blog_charset'] : '';
+			$_charset = isset( $alloptions['website_charset']) ? $alloptions['website_charset'] : '';
 		}
 		$charset = $_charset;
 	}
@@ -1051,7 +1051,7 @@ function wp_check_invalid_utf8( $string, $strip = false){
 	// Store the site charset as a static to avoid multiple calls to get_option()
 	static $is_utf8 = null;
 	if( !isset( $is_utf8)){
-		$is_utf8 = in_array( get_option( 'blog_charset'), array( 'utf8', 'utf-8', 'UTF8', 'UTF-8'));
+		$is_utf8 = in_array( get_option( 'website_charset'), array( 'utf8', 'utf-8', 'UTF8', 'UTF-8'));
 	}
 	if( !$is_utf8){
 		return $string;
@@ -3206,7 +3206,7 @@ function wp_trim_words( $text, $num_words = 55, $more = null){
 	 * enter 'characters_excluding_spaces' or 'characters_including_spaces'. Otherwise, enter 'words'.
 	 * Do not translate into your own language.
 	 */
-	if( strpos( _x( 'words', 'Word count type. Do not translate!'), 'characters') === 0 && preg_match( '/^utf\-?8$/i', get_option( 'blog_charset'))){
+	if( strpos( _x( 'words', 'Word count type. Do not translate!'), 'characters') === 0 && preg_match( '/^utf\-?8$/i', get_option( 'website_charset'))){
 		$text = trim( preg_replace( "/[\n\r\t ]+/", ' ', $text), ' ');
 		preg_match_all( '/./u', $text, $words_array);
 		$words_array = array_slice( $words_array[0], 0, $num_words + 1);
@@ -3542,7 +3542,7 @@ function ent2ncr( $text){
  */
 function format_for_editor( $text, $default_editor = null){
 	if( $text){
-		$text = htmlspecialchars( $text, ENT_NOQUOTES, get_option( 'blog_charset'));
+		$text = htmlspecialchars( $text, ENT_NOQUOTES, get_option( 'website_charset'));
 	}
 
 	/**
@@ -3835,7 +3835,7 @@ function esc_attr( $text){
  * @return string
  */
 function esc_textarea( $text){
-	$safe_text = htmlspecialchars( $text, ENT_QUOTES, get_option( 'blog_charset'));
+	$safe_text = htmlspecialchars( $text, ENT_QUOTES, get_option( 'website_charset'));
 	/**
 	 * Filters a string cleaned and escaped for output in a textarea element.
 	 *
@@ -3959,8 +3959,8 @@ function sanitize_option( $option, $value){
 				$value = 'closed';
 			break;
 
-		case 'blogdescription':
-		case 'blogname':
+		case 'website_tagline':
+		case 'website_title':
 			$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value);
 			if( $value !== $original_value){
 				$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', wp_encode_emoji( $original_value));
@@ -3973,7 +3973,7 @@ function sanitize_option( $option, $value){
 			}
 			break;
 
-		case 'blog_charset':
+		case 'website_charset':
 			$value = preg_replace('/[^a-zA-Z0-9_-]/', '', $value); // strips slashes
 			break;
 

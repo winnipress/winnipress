@@ -74,8 +74,8 @@ if( !empty( $_GET[ 'adminhash' ] ) ) {
 
 $whitelist_options = array(
 	'general' => array(
-		'blogname',
-		'blogdescription',
+		'website_title',
+		'website_tagline',
 		'template',
 		'gmt_offset',
 		'date_format',
@@ -117,8 +117,8 @@ $whitelist_options['misc'] = $whitelist_options['options'] = $whitelist_options[
 
 $mail_options = array('mailserver_url', 'mailserver_port', 'mailserver_login', 'mailserver_pass');
 
-if( !in_array( get_option( 'blog_charset' ), array( 'utf8', 'utf-8', 'UTF8', 'UTF-8' ) ) )
-	$whitelist_options['reading'][] = 'blog_charset';
+if( !in_array( get_option( 'website_charset' ), array( 'utf8', 'utf-8', 'UTF8', 'UTF-8' ) ) )
+	$whitelist_options['reading'][] = 'website_charset';
 
 if( get_site_option( 'initial_db_version' ) < 32453 ) {
 	$whitelist_options['writing'][] = 'use_smilies';

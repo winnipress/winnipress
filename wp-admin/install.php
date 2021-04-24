@@ -3,13 +3,14 @@
 // Installing WordPress
 define('WP_INSTALLING', true);
 
-// Load WP
+require(dirname(dirname(__FILE__)) . '/wp-includes/winni-debug-tools.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/classes/walker.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/classes/walker-page.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/classes/walker-page-dropdown.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/classes/walker-category.php');
+require(dirname(dirname(__FILE__)). '/wp-includes/classes/walker-category-dropdown.php');
 require_once(dirname(dirname(__FILE__)) . '/wp-load.php');
-
-// Load the WP upgrade API (gotta change some stuff)
 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-// Load WP DB
 require_once(ABSPATH . WPINC . '/wp-db.php');
 
 nocache_headers();

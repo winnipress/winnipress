@@ -49,8 +49,8 @@ include(ABSPATH . 'wp-admin/admin-header.php' );
 <?php
 settings_fields('reading' );
 
-if(!in_array(get_option('blog_charset' ), array('utf8', 'utf-8', 'UTF8', 'UTF-8' ) ) )
-	add_settings_field('blog_charset', __('Encoding for pages and feeds' ), 'options_reading_blog_charset', 'reading', 'default', array('label_for' => 'blog_charset' ) );
+if(!in_array(get_option('website_charset' ), array('utf8', 'utf-8', 'UTF8', 'UTF-8' ) ) )
+	add_settings_field('website_charset', __('Encoding for pages and feeds' ), 'options_reading_website_charset', 'reading', 'default', array('label_for' => 'website_charset' ) );
 ?>
 
 <?php if(!get_pages() ) : ?>

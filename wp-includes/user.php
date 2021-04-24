@@ -600,7 +600,7 @@ function get_blogs_of_user($user_id, $all = false){
 		$site_id = get_current_blog_id();
 		$sites = array($site_id => new stdClass);
 		$sites[ $site_id ]->userblog_id = $site_id;
-		$sites[ $site_id ]->blogname = get_option('blogname');
+		$sites[ $site_id ]->website_title = get_option('website_title');
 		$sites[ $site_id ]->domain = '';
 		$sites[ $site_id ]->path = '';
 		$sites[ $site_id ]->site_id = 1;
@@ -647,7 +647,7 @@ function get_blogs_of_user($user_id, $all = false){
 		foreach($_sites as $site){
 			$sites[ $site->id ] = (object) array(
 				'userblog_id' => $site->id,
-				'blogname'    => $site->blogname,
+				'website_title'    => $site->website_title,
 				'domain'      => $site->domain,
 				'path'        => $site->path,
 				'site_id'     => $site->network_id,
@@ -1810,7 +1810,7 @@ function wp_update_user($userdata){
 
 	if(!is_wp_error($user_id)){
 
-		$blog_name = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+		$blog_name = wp_specialchars_decode(get_option('website_title'), ENT_QUOTES);
 
 		$switched_locale = false;
 		if(!empty($send_password_change_email) || !empty($send_email_change_email)){
@@ -2596,7 +2596,7 @@ function send_confirmation_on_profile_email(){
 		);
 		update_user_meta($current_user->ID, '_new_email', $new_user_email);
 
-		$sitename = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+		$sitename = wp_specialchars_decode(get_option('website_title'), ENT_QUOTES);
 
 		/* translators: Do not translate USERNAME, ADMIN_URL, EMAIL, SITENAME, SITEURL: those are placeholders. */
 		$email_text = __('Howdy ###USERNAME###,
@@ -2854,7 +2854,7 @@ function _wp_privacy_send_request_confirmation_notification($request_id){
 		'user_email'  => $request_data->email,
 		'description' => $action_description,
 		'manage_url'  => $manage_url,
-		'sitename'    => wp_specialchars_decode(get_option('blogname'), ENT_QUOTES),
+		'sitename'    => wp_specialchars_decode(get_option('website_title'), ENT_QUOTES),
 		'siteurl'     => home_url(),
 		'admin_email' => $admin_email,
 	);
@@ -2983,7 +2983,7 @@ function _wp_privacy_send_erasure_fulfillment_notification($request_id){
 		'request'            => $request_data,
 		'message_recipient'  => $user_email,
 		'privacy_policy_url' => get_privacy_policy_url(),
-		'sitename'           => wp_specialchars_decode(get_option('blogname'), ENT_QUOTES),
+		'sitename'           => wp_specialchars_decode(get_option('website_title'), ENT_QUOTES),
 		'siteurl'            => home_url(),
 	);
 
@@ -3237,7 +3237,7 @@ function wp_send_user_request($request_id){
 			'request_id'  => $request_id,
 			'confirm_key' => wp_generate_user_request_key($request_id),
 		), wp_login_url()),
-		'sitename'    => wp_specialchars_decode(get_option('blogname'), ENT_QUOTES),
+		'sitename'    => wp_specialchars_decode(get_option('website_title'), ENT_QUOTES),
 		'siteurl'     => home_url(),
 	);
 

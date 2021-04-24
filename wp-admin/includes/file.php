@@ -1697,7 +1697,7 @@ All at ###SITENAME###
 
 	$email_address = $request->email;
 	$export_file_url = get_post_meta( $request_id, '_export_file_url', true);
-	$site_name = wp_specialchars_decode( get_option( 'blogname'), ENT_QUOTES);
+	$site_name = wp_specialchars_decode( get_option( 'website_title'), ENT_QUOTES);
 	$site_url = home_url();
 
 	$content = str_replace( '###EXPIRATION###', $expiration_date, $content);
