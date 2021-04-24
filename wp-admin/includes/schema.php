@@ -99,17 +99,17 @@ KEY meta_key (meta_key($max_index_length))
 CREATE TABLE $wpdb->posts (
 ID bigint(20) unsigned NOT NULL auto_increment,
 post_author bigint(20) unsigned NOT NULL default '0',
-post_date_gmt datetime NOT NULL default '0000-00-00 00:00:00',
+post_date datetime NOT NULL default '0000-00-00 00:00:00',
 post_content longtext NOT NULL,
 post_title text NOT NULL,
 post_status varchar(20) NOT NULL default 'publish',
 post_name varchar(200) NOT NULL default '',
-post_modified_gmt datetime NOT NULL default '0000-00-00 00:00:00',
+post_modified datetime NOT NULL default '0000-00-00 00:00:00',
 post_parent bigint(20) unsigned NOT NULL default '0',
 post_type varchar(20) NOT NULL default 'post',
 PRIMARY KEY  (ID),
 KEY post_name (post_name($max_index_length)),
-KEY type_status_date (post_type,post_status,post_date_gmt,ID),
+KEY type_status_date (post_type,post_status,post_date,ID),
 KEY post_parent (post_parent),
 KEY post_author (post_author)
 ) $charset_collate;
