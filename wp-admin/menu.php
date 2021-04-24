@@ -12,18 +12,8 @@ $menu[4] = array('', 'read', 'separator1', '', 'wp-menu-separator');
 
 // $menu[5] = Posts
 
-$menu[10] = array(__('Media'), 'upload_files', 'upload.php', '', 'menu-top menu-icon-media', 'menu-media', 'la-photo-video');
-	$submenu['upload.php'][5] = array(__('Library'), 'upload_files', 'upload.php');
-	/* translators: add new file */
-	$submenu['upload.php'][10] = array(_x('Add New', 'file'), 'upload_files', 'media-new.php');
-	$i = 15;
-	foreach(get_taxonomies_for_attachments('objects') as $tax) {
-		if(!$tax->show_ui || !$tax->show_in_menu)
-			continue;
+$menu[10] = array(__('Files'), 'upload_files', 'file-manager.php', '', 'menu-top menu-icon-media', 'menu-media', 'la-photo-video');
 
-		$submenu['upload.php'][$i++] = array(esc_attr($tax->labels->menu_name), $tax->cap->manage_terms, 'edit-tags.php?taxonomy=' . $tax->name . '&amp;post_type=attachment');
-	}
-	unset($tax, $i);
 
 
 

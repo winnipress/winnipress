@@ -22,12 +22,6 @@ require_once(ABSPATH . 'wp-admin/includes/admin-filters.php');
 /** WordPress Administration File API */
 require_once(ABSPATH . 'wp-admin/includes/file.php');
 
-/** WordPress Image Administration API */
-require_once(ABSPATH . 'wp-admin/includes/image.php');
-
-/** WordPress Media Administration API */
-require_once(ABSPATH . 'wp-admin/includes/media.php');
-
 /** WordPress Misc Administration API */
 require_once(ABSPATH . 'wp-admin/includes/misc.php');
 
