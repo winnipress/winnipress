@@ -109,7 +109,7 @@ post_parent bigint(20) unsigned NOT NULL default '0',
 post_type varchar(20) NOT NULL default 'post',
 PRIMARY KEY  (ID),
 KEY post_slug (post_slug($max_index_length)),
-KEY type_status_date (post_type,post_status,post_date,ID),
+KEY type_status_date (post_type,post_status,post_date_gmt,ID),
 KEY post_parent (post_parent),
 KEY post_author (post_author)
 ) $charset_collate;
