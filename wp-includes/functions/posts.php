@@ -1146,7 +1146,7 @@ function wp_dropdown_pages($args = '' ){
  *                                      'modified' or any other value. An empty value hides the date. Default empty.
  *     @type string       $sort_column  Comma-separated list of column names to sort the pages by. Accepts 'post_author',
  *                                      'post_date', 'post_title', 'post_name', 'post_modified', 'post_modified_gmt',
- *                                      'menu_order', 'post_parent', 'ID', 'rand', or 'comment_count'. Default 'post_title'.
+ *                                       'post_parent', 'ID', 'rand', or 'comment_count'. Default 'post_title'.
  *     @type string       $title_li     List heading. Passing a null or empty value will result in no heading, and the list
  *                                      will not be wrapped with unordered list `<ul>` tags. Default 'Pages'.
  *     @type string       $item_spacing Whether to preserve whitespace within the menu's HTML. Accepts 'preserve' or 'discard'.
@@ -1165,7 +1165,7 @@ function wp_list_pages($args = '' ){
 		'title_li'     => __('Pages' ),
 		'echo'         => 1,
 		'authors'      => '',
-		'sort_column'  => 'menu_order, post_title',
+		'sort_column'  => 'post_title',
 		'link_before'  => '',
 		'link_after'   => '',
 		'item_spacing' => 'preserve',
@@ -1257,7 +1257,7 @@ function wp_list_pages($args = '' ){
  *     Optional. Arguments to generate a page menu. See wp_list_pages() for additional arguments.
  *
  *     @type string          $sort_column  How to sort the list of pages. Accepts post column names.
- *                                         Default 'menu_order, post_title'.
+ *                                         Default, post_title'.
  *     @type string          $menu_id      ID for the div containing the page list. Default is empty string.
  *     @type string          $menu_class   Class to use for the element containing the page list. Default 'menu'.
  *     @type string          $container    Element to use for the element containing the page list. Default 'div'.
@@ -1276,7 +1276,7 @@ function wp_list_pages($args = '' ){
  */
 function wp_page_menu($args = array() ){
 	$defaults = array(
-		'sort_column'  => 'menu_order, post_title',
+		'sort_column'  => 'post_title',
 		'menu_id'      => '',
 		'menu_class'   => 'menu',
 		'container'    => 'div',

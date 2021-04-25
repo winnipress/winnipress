@@ -1052,7 +1052,7 @@ function wp_edit_posts_query( $q = false) {
 
 	// Hierarchical types require special args.
 	if( is_post_type_hierarchical( $post_type) && !isset($orderby)) {
-		$query['orderby'] = 'menu_order title';
+		$query['orderby'] = 'title';
 		$query['order'] = 'asc';
 		$query['posts_per_page'] = -1;
 		$query['posts_per_archive_page'] = -1;

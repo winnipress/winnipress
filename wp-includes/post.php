@@ -1935,7 +1935,7 @@ function sanitize_post($post, $context = 'display'){
  * @return mixed Sanitized value.
  */
 function sanitize_post_field($field, $value, $post_id, $context = 'display'){
-	$int_fields = array('ID', 'post_parent', 'menu_order');
+	$int_fields = array('ID', 'post_parent');
 	if(in_array($field, $int_fields))
 		$value = (int) $value;
 
@@ -2987,7 +2987,6 @@ function wp_get_recent_posts($args = array(), $output = ARRAY_A){
  *     @type string $post_modified_gmt     The date when the post was last modified in the GMT
  *                                         timezone. Default is the current time.
  *     @type int    $post_parent           Set this for the post it belongs to, if any. Default 0.
- *     @type int    $menu_order            The order the post should be displayed in. Default 0.
  *     @type string $post_mime_type        The mime type of the post. Default empty.
  *     @type string $guid                  Global Unique ID for referencing the post. Default empty.
  *     @type array  $post_category         Array of category names, slugs, or IDs.
@@ -3013,8 +3012,7 @@ function wp_insert_post($postarr, $wp_error = false){
 		'post_title' => '',
 		'post_status' => 'draft',
 		'post_type' => 'post',
-		'post_parent' => 0,
-		'menu_order' => 0
+		'post_parent' => 0
 	);
 
 	$postarr = wp_parse_args($postarr, $defaults);
@@ -4397,7 +4395,7 @@ function get_page_uri($page = 0){
  *                                      hierarchical results. Default 0, or no restriction.
  *     @type string       $sort_order   How to sort retrieved pages. Accepts 'ASC', 'DESC'. Default 'ASC'.
  *     @type string       $sort_column  What columns to sort pages by, comma-separated. Accepts 'post_author',
- *                                      'post_date', 'post_title', 'post_name', 'post_modified', 'menu_order',
+ *                                      'post_date', 'post_title', 'post_name', 'post_modified', ',
  *                                      'post_modified_gmt', 'post_parent', 'ID', 'rand', 'comment_count'.
  *                                      'post_' can be omitted for any values that start with it.
  *                                      Default 'post_title'.
@@ -4585,8 +4583,6 @@ function get_pages($args = array()){
 		}
 
 		switch ($orderby){
-			case 'menu_order':
-				break;
 			case 'ID':
 				$orderby = "$wpdb->posts.ID";
 				break;

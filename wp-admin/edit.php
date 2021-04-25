@@ -17,11 +17,6 @@ if(!in_array($typenow, get_post_types(array('show_ui' => true)))){
 	wp_die(__('Sorry, you are not allowed to edit posts in this post type.'));
 }
 
-if('attachment' === $typenow){
-	if(wp_redirect(admin_url('upload.php'))){
-		exit;
-	}
-}
 
 /**
  * @global string       $post_type
@@ -80,8 +75,6 @@ if($doaction){
 			$post_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type=%s AND post_status = %s", $post_type, $post_status ) );
 		}
 		$doaction = 'delete';
-	} elseif( isset( $_REQUEST['media'] ) ) {
-		$post_ids = $_REQUEST['media'];
 	} elseif( isset( $_REQUEST['ids'] ) ) {
 		$post_ids = explode( ',', $_REQUEST['ids'] );
 	} elseif( !empty( $_REQUEST['post'] ) ) {

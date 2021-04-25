@@ -240,68 +240,7 @@ function add_menu_classes($menu) {
 
 uksort($menu, "strnatcasecmp"); // make it all pretty
 
-/**
- * Filters whether to enable custom ordering of the administration menu.
- *
- * See the {@see 'menu_order'} filter for reordering menu items.
- *
- * @since 2.8.0
- *
- * @param bool $custom Whether custom ordering is enabled. Default false.
- */
-if( apply_filters( 'custom_menu_order', false)) {
-	$menu_order = array();
-	foreach( $menu as $menu_item) {
-		$menu_order[] = $menu_item[2];
-	}
-	unset($menu_item);
-	$default_menu_order = $menu_order;
 
-	/**
-	 * Filters the order of administration menu items.
-	 *
-	 * A truthy value must first be passed to the {@see 'custom_menu_order'} filter
-	 * for this filter to work. Use the following to enable custom menu ordering:
-	 *
-	 *     add_filter( 'custom_menu_order', '__return_true');
-	 *
-	 * @since 2.8.0
-	 *
-	 * @param array $menu_order An ordered array of menu items.
-	 */
-	$menu_order = apply_filters( 'menu_order', $menu_order);
-	$menu_order = array_flip($menu_order);
-	$default_menu_order = array_flip($default_menu_order);
-
-	/**
-	 *
-	 * @global array $menu_order
-	 * @global array $default_menu_order
-	 *
-	 * @param array $a
-	 * @param array $b
-	 * @return int
-	 */
-	function sort_menu($a, $b) {
-		global $menu_order, $default_menu_order;
-		$a = $a[2];
-		$b = $b[2];
-		if( isset($menu_order[$a]) && !isset($menu_order[$b])) {
-			return -1;
-		} elseif( !isset($menu_order[$a]) && isset($menu_order[$b])) {
-			return 1;
-		} elseif( isset($menu_order[$a]) && isset($menu_order[$b])) {
-			if( $menu_order[$a] == $menu_order[$b])
-				return 0;
-			return ($menu_order[$a] < $menu_order[$b]) ? -1 : 1;
-		} else {
-			return ($default_menu_order[$a] <= $default_menu_order[$b]) ? -1 : 1;
-		}
-	}
-
-	usort($menu, 'sort_menu');
-	unset($menu_order, $default_menu_order);
-}
 
 // Prevent adjacent separators
 $prev_menu_was_separator = false;

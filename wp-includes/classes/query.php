@@ -554,7 +554,6 @@ class WP_Query{
 			, 'sentence'
 			, 'title'
 			, 'fields'
-			, 'menu_order'
 			, 'embed'
 		);
 
@@ -627,7 +626,6 @@ class WP_Query{
 	 *     @type array        $meta_query              An associative array of WP_Meta_Query arguments. See WP_Meta_Query.
 	 *     @type string       $meta_value              Custom field value.
 	 *     @type int          $meta_value_num          Custom field value number.
-	 *     @type int          $menu_order              The menu order of the posts.
 	 *     @type int          $monthnum                The two-digit month. Default empty. Accepts numbers 1-12.
 	 *     @type string       $name                    Post slug.
 	 *     @type bool         $nopaging                Show all posts (true) or paginate (false). Default false.
@@ -641,7 +639,7 @@ class WP_Query{
 	 *                                                 'meta_key=keyname' must be also be defined. To sort by a
 	 *                                                 specific `$meta_query` clause, use that clause's array key.
 	 *                                                 Accepts 'none', 'name', 'author', 'date', 'title',
-	 *                                                 'modified', 'menu_order', 'parent', 'ID', 'rand',
+	 *                                                 'modified', 'parent', 'ID', 'rand',
 	 *                                                 'relevance', 'RAND(x)' (where 'x' is an integer seed value),
 	 *                                                 'comment_count', 'meta_value', 'meta_value_num', 'post__in',
 	 *                                                 'post_name__in', 'post_parent__in', and the array keys
@@ -737,7 +735,6 @@ class WP_Query{
 		if('' !== $qv['hour'] ) $qv['hour'] = absint($qv['hour']);
 		if('' !== $qv['minute'] ) $qv['minute'] = absint($qv['minute']);
 		if('' !== $qv['second'] ) $qv['second'] = absint($qv['second']);
-		if('' !== $qv['menu_order'] ) $qv['menu_order'] = absint($qv['menu_order']);
 
 		// Fairly insane upper bound for search string lengths.
 		if(!is_scalar($qv['s'] ) || (!empty($qv['s'] ) && strlen($qv['s'] ) > 1600 ) ){
@@ -1459,7 +1456,7 @@ class WP_Query{
 		$allowed_keys = array(
 			'post_name', 'post_author', 'post_date', 'post_title', 'post_modified',
 			'post_parent', 'post_type', 'name', 'author', 'date', 'title', 'modified',
-			'parent', 'type', 'ID', 'menu_order', 'comment_count', 'rand',
+			'parent', 'type', 'ID', 'rand',
 		);
 
 		$primary_meta_key = '';
@@ -1499,10 +1496,6 @@ class WP_Query{
 			case 'post_parent':
 			case 'post_type':
 			case 'ID':
-			case 'menu_order':
-			case 'comment_count':
-				$orderby_clause = "{$wpdb->posts}.{$orderby}";
-				break;
 			case 'rand':
 				$orderby_clause = 'RAND()';
 				break;
@@ -1765,9 +1758,7 @@ class WP_Query{
 				$fields = "{$wpdb->posts}.*";
 		}
 
-		if('' !== $q['menu_order'] ){
-			$where .= " AND {$wpdb->posts}.menu_order = " . $q['menu_order'];
-		}
+		
 		// The "m" parameter is meant for months but accepts datetimes of varying specificity
 		if($q['m'] ){
 			$where .= " AND YEAR({$wpdb->posts}.post_date)=" . substr($q['m'], 0, 4);

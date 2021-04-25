@@ -128,7 +128,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 		// is going to call wp()
 		$avail_post_stati = wp_edit_posts_query();
 
-		$this->set_hierarchical_display( is_post_type_hierarchical( $this->screen->post_type ) && 'menu_order title' === $wp_query->query['orderby'] );
+		$this->set_hierarchical_display( is_post_type_hierarchical( $this->screen->post_type ) && 'title' === $wp_query->query['orderby'] );
 
 		$post_type = $this->screen->post_type;
 		$per_page = $this->get_items_per_page( 'edit_' . $post_type . '_per_page' );
@@ -138,6 +138,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 
 		if( $this->hierarchical_display ) {
 			$total_items = $wp_query->post_count;
+			winni_log($wp_query);
 		} elseif( $wp_query->found_posts || $this->get_pagenum() === 1 ) {
 			$total_items = $wp_query->found_posts;
 		} else {
@@ -158,6 +159,8 @@ class WP_Posts_List_Table extends WP_List_Table {
 				}
 			}
 		}
+
+		winni_log('ttoal'.$total_items);
 
 		if( !empty( $_REQUEST['mode'] ) ) {
 			$mode = $_REQUEST['mode'] === 'excerpt' ? 'excerpt' : 'list';
@@ -661,7 +664,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 		$level = 0;
 
 		if( !$pages ) {
-			$pages = get_pages( array( 'sort_column' => 'menu_order' ) );
+			$pages = get_pages( );
 
 			if( !$pages )
 				return;
@@ -1491,7 +1494,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 			'name'              => 'post_parent',
 			'show_option_none'  => __( 'Main Page (no parent)' ),
 			'option_none_value' => 0,
-			'sort_column'       => 'menu_order, post_title',
+			'sort_column'       => 'post_title',
 		);
 
 		if( $bulk )
@@ -1517,10 +1520,6 @@ class WP_Posts_List_Table extends WP_List_Table {
 
 			if( !$bulk ) : ?>
 
-			<label>
-				<span class="title"><?php _e( 'Order' ); ?></span>
-				<span class="input-text-wrap"><input type="text" name="menu_order" class="inline-edit-menu-order-input" value="<?php echo $post->menu_order ?>" /></span>
-			</label>
 
 	<?php
 			endif; // !$bulk

@@ -1935,16 +1935,7 @@ function wp_ajax_save_attachment_order() {
 	if( !current_user_can( 'edit_post', $post_id ) )
 		wp_send_json_error();
 
-	foreach( $attachments as $attachment_id => $menu_order ) {
-		if( !current_user_can( 'edit_post', $attachment_id ) )
-			continue;
-		if( !$attachment = get_post( $attachment_id ) )
-			continue;
-		if( 'attachment' != $attachment->post_type )
-			continue;
-
-		wp_update_post( array( 'ID' => $attachment_id, 'menu_order' => $menu_order ) );
-	}
+	
 
 	wp_send_json_success();
 }

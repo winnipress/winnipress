@@ -298,9 +298,7 @@ function get_inline_data($post) {
 
 	echo '<div class="page_template">' . ( $post->page_template ? esc_html( $post->page_template) : 'default') . '</div>';
 
-	if( post_type_supports( $post->post_type, 'page-attributes')) {
-		echo '<div class="menu_order">' . $post->menu_order . '</div>';
-	}
+
 
 	$taxonomy_names = get_object_taxonomies( $post->post_type);
 	foreach( $taxonomy_names as $taxonomy_name) {
@@ -669,7 +667,7 @@ function page_template_dropdown( $default = '', $post_type = 'page') {
 function parent_dropdown( $default = 0, $parent = 0, $level = 0, $post = null) {
 	global $wpdb;
 	$post = get_post( $post);
-	$items = $wpdb->get_results( $wpdb->prepare("SELECT ID, post_parent, post_title FROM $wpdb->posts WHERE post_parent = %d AND post_type = 'page' ORDER BY menu_order", $parent));
+	$items = $wpdb->get_results( $wpdb->prepare("SELECT ID, post_parent, post_title FROM $wpdb->posts WHERE post_parent = %d AND post_type = 'page'", $parent));
 
 	if( $items) {
 		foreach( $items as $item) {
