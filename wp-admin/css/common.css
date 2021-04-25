@@ -2190,7 +2190,6 @@ vertical-align: top;
 ------------------------------------------------------------------------------*/
 
 .spinner{
-background: url(../images/spinner.gif) no-repeat;
 background-size: 20px 20px;
 display: inline-block;
 visibility: hidden;
@@ -2897,20 +2896,12 @@ left: 50%;
 top: 50%;
 z-index: -1;
 margin: -10px 0 0 -10px;
-background: #fcfcfc url(../images/spinner.gif) no-repeat center;
 background-size: 20px 20px;
 -webkit-transform: translateZ(0);
 transform: translateZ(0);
 }
 
-@media print,
-(-webkit-min-device-pixel-ratio: 1.25),
-(min-resolution: 120dpi){
 
-#TB_window.plugin-details-modal.thickbox-loading:before{
-background-image: url(../images/spinner-2x.gif);
-}
-}
 
 .plugin-details-modal #TB_title{
 float: left;

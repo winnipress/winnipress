@@ -22,7 +22,7 @@ if(!defined('ABSPATH')){
 }
 
 // Report everything
-error_reporting(E_ALL);
+error_reporting(E_ALL ^ E_NOTICE);
 ini_set('display_errors', TRUE);
 
 // Require the wp-config.php file
