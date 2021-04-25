@@ -2952,10 +2952,12 @@ function wp_editor($content, $editor_id, $settings = array()){
 <script>
 tinymce.init({
 	selector:'#<?php echo $editor_id; ?>',
-	plugins: 'image',
+	plugins: 'image, code, link, lists, codesample, searchreplace, table, toc, visualblocks, wordcount, autoresize',
+	min_height : 350,
 	menubar: false,
-	toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent',
-	branding: false
+	toolbar1: 'undo redo | styleselect fontselect fontsizeselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent',
+	toolbar2: 'forecolor backcolor | table | link unlink | numlist bullist | subscript superscript | codesample | searchreplace | toc visualblocks wordcount code',
+	toolbar_sticky: true
 	}
 );
 </script>

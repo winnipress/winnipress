@@ -127,6 +127,13 @@ function create_initial_post_types(){
 		'label_count' => _n_noop('Draft <span class="count">(%s)</span>', 'Drafts <span class="count">(%s)</span>'),
 	));
 
+	register_post_status('auto-draft', array(
+		'label'       => _x('Auto draft', 'post status'),
+		'protected'   => true,
+		'_builtin'    => true, /* internal use only. */
+		'label_count' => _n_noop('Auto-Draft <span class="count">(%s)</span>', 'Auto-Drafts <span class="count">(%s)</span>'),
+	));
+
 	register_post_status('pending', array(
 		'label'       => _x('Pending', 'post status'),
 		'protected'   => true,

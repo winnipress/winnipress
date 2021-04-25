@@ -45,26 +45,6 @@ function post_submit_meta_box( $post, $args = array()) {
 <span class="spinner"></span>
 <?php } ?>
 </div>
-<?php if( is_post_type_viewable( $post_type_object)) : ?>
-<div id="preview-action">
-<?php
-$preview_link = esc_url( get_preview_post_link( $post));
-if( 'publish' == $post->post_status) {
-	$preview_button_text = __( 'Preview Changes');
-} else {
-	$preview_button_text = __( 'Preview');
-}
-
-$preview_button = sprintf( '%1$s<span class="screen-reader-text"> %2$s</span>',
-	$preview_button_text,
-	/* translators: accessibility text */
-	__( '(opens in a new window)')
-);
-?>
-<a class="preview button" href="<?php echo $preview_link; ?>" target="wp-preview-<?php echo (int) $post->ID; ?>" id="post-preview"><?php echo $preview_button; ?></a>
-<input type="hidden" name="wp-preview" id="wp-preview" value="" />
-</div>
-<?php endif; // public post type ?>
 <?php
 /**
  * Fires before the post time/date setting in the Publish meta box.
@@ -104,9 +84,9 @@ switch ( $post->post_status) {
 ?>
 </span>
 <?php if( 'publish' == $post->post_status || 'private' == $post->post_status || $can_publish) { ?>
-<a href="#post_status" <?php if( 'private' == $post->post_status) { ?>style="display:none;" <?php } ?>class="edit-post-status hide-if-no-js" role="button"><span aria-hidden="true"><?php _e( 'Edit'); ?></span> <span class="screen-reader-text"><?php _e( 'Edit status'); ?></span></a>
 
-<div id="post-status-select" class="hide-if-js">
+
+<div id="post-status-select">
 <input type="hidden" name="hidden_post_status" id="hidden_post_status" value="<?php echo esc_attr( ('auto-draft' == $post->post_status) ? 'draft' : $post->post_status); ?>" />
 <label for="post_status" class="screen-reader-text"><?php _e( 'Set status') ?></label>
 <select name="post_status" id="post_status">
@@ -124,8 +104,6 @@ switch ( $post->post_status) {
 <option<?php selected( $post->post_status, 'draft'); ?> value='draft'><?php _e('Draft') ?></option>
 <?php endif; ?>
 </select>
- <a href="#post_status" class="save-post-status hide-if-no-js button"><?php _e('OK'); ?></a>
- <a href="#post_status" class="cancel-post-status hide-if-no-js button-cancel"><?php _e('Cancel'); ?></a>
 </div>
 
 <?php } ?>
@@ -138,9 +116,6 @@ if( 'private' == $post->post_status) {
 	$post->post_password = '';
 	$visibility = 'private';
 	$visibility_trans = __('Private');
-} elseif( !empty( $post->post_password)) {
-	$visibility = 'password';
-	$visibility_trans = __('Password protected');
 } elseif( $post_type == 'post' && is_sticky( $post->ID)) {
 	$visibility = 'public';
 	$visibility_trans = __('Public, Sticky');
@@ -151,8 +126,6 @@ if( 'private' == $post->post_status) {
 
 echo esc_html( $visibility_trans); ?></span>
 <?php if( $can_publish) { ?>
-<a href="#visibility" class="edit-visibility hide-if-no-js" role="button"><span aria-hidden="true"><?php _e( 'Edit'); ?></span> <span class="screen-reader-text"><?php _e( 'Edit visibility'); ?></span></a>
-
 <div id="post-visibility-select" class="hide-if-js">
 <input type="hidden" name="hidden_post_password" id="hidden-post-password" value="<?php echo esc_attr($post->post_password); ?>" />
 <?php if($post_type == 'post'): ?>
@@ -163,14 +136,7 @@ echo esc_html( $visibility_trans); ?></span>
 <?php if( $post_type == 'post' && current_user_can( 'edit_others_posts')) : ?>
 <span id="sticky-span"><input id="sticky" name="sticky" type="checkbox" value="sticky" <?php checked( is_sticky( $post->ID)); ?> /> <label for="sticky" class="selectit"><?php _e( 'Stick this post to the front page'); ?></label><br /></span>
 <?php endif; ?>
-<input type="radio" name="visibility" id="visibility-radio-password" value="password" <?php checked( $visibility, 'password'); ?> /> <label for="visibility-radio-password" class="selectit"><?php _e('Password protected'); ?></label><br />
-<span id="password-span"><label for="post_password"><?php _e('Password:'); ?></label> <input type="text" name="post_password" id="post_password" value="<?php echo esc_attr($post->post_password); ?>"  maxlength="255" /><br /></span>
-<input type="radio" name="visibility" id="visibility-radio-private" value="private" <?php checked( $visibility, 'private'); ?> /> <label for="visibility-radio-private" class="selectit"><?php _e('Private'); ?></label><br />
-
-<p>
- <a href="#visibility" class="save-post-visibility hide-if-no-js button"><?php _e('OK'); ?></a>
- <a href="#visibility" class="cancel-post-visibility hide-if-no-js button-cancel"><?php _e('Cancel'); ?></a>
-</p>
+<input type="radio" name="visibility" id="visibility-radio-private" value="private" <?php checked( $visibility, 'private'); ?> /> <label for="visibility-radio-private" class="selectit"><?php _e('Private'); ?></label>
 </div>
 <?php } ?>
 
@@ -207,32 +173,11 @@ if( $can_publish) : // Contributors don't get to choose the date of publish ?>
 <div class="misc-pub-section curtime misc-pub-curtime">
 	<span id="timestamp">
 	<?php printf($stamp, $date); ?></span>
-	<a href="#edit_timestamp" class="edit-timestamp hide-if-no-js" role="button"><span aria-hidden="true"><?php _e( 'Edit'); ?></span> <span class="screen-reader-text"><?php _e( 'Edit date and time'); ?></span></a>
-	<fieldset id="timestampdiv" class="hide-if-js">
+	<fieldset id="timestampdiv">
 	<legend class="screen-reader-text"><?php _e( 'Date and time'); ?></legend>
 	<?php touch_time( ( $action === 'edit'), 1); ?>
 	</fieldset>
 </div><?php // /misc-pub-section ?>
-<?php endif; ?>
-
-<?php if( 'draft' === $post->post_status && get_post_meta( $post->ID, '_customize_changeset_uuid', true)) : ?>
-	<div class="notice notice-info notice-alt inline">
-		<p>
-			<?php
-			echo sprintf(
-				/* translators: %s: URL to the Customizer */
-				__( 'This draft comes from your <a href="%s">unpublished customization changes</a>. You can edit, but there&#8217;s no need to publish now. It will be published automatically with those changes.'),
-				esc_url(
-					add_query_arg(
-						'changeset_uuid',
-						rawurlencode( get_post_meta( $post->ID, '_customize_changeset_uuid', true)),
-						admin_url( 'customize.php')
-					)
-				)
-			);
-			?>
-		</p>
-	</div>
 <?php endif; ?>
 
 <?php
@@ -276,7 +221,6 @@ if( current_user_can( "delete_post", $post->ID)) {
 </div>
 
 <div id="publishing-action">
-<span class="spinner"></span>
 <?php
 if( !in_array( $post->post_status, array('publish', 'future', 'private')) || 0 == $post->ID) {
 	if( $can_publish) :
@@ -599,25 +543,6 @@ function post_categories_meta_box( $post, $box) {
 	<?php
 }
 
-/**
- * Display post excerpt form fields.
- *
- * @since 2.6.0
- *
- * @param object $post
- */
-function post_excerpt_meta_box($post) {
-?>
-<label class="screen-reader-text" for="excerpt"><?php _e('Excerpt') ?></label><textarea rows="1" cols="40" name="excerpt" id="excerpt"><?php echo $post->post_excerpt; // textarea_escaped ?></textarea>
-<p><?php
-	printf(
-		/* translators: %s: Codex URL */
-		__( 'Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="%s">Learn more about manual excerpts</a>.'),
-		__( 'https://codex.wordpress.org/Excerpt')
-	);
-?></p>
-<?php
-}
 
 
 /**

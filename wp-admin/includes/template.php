@@ -630,11 +630,6 @@ function touch_time( $edit = 1, $for_post = 1, $tab_index = 0, $multi = 0) {
 		echo '<input type="hidden" id="' . $cur_timeunit . '" name="' . $cur_timeunit . '" value="' . $curr . '" />' . "\n";
 	}
 ?>
-
-<p>
-<a href="#edit_timestamp" class="save-timestamp hide-if-no-js button"><?php _e('OK'); ?></a>
-<a href="#edit_timestamp" class="cancel-timestamp hide-if-no-js button-cancel"><?php _e('Cancel'); ?></a>
-</p>
 <?php
 }
 

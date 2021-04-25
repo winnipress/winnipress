@@ -186,13 +186,12 @@ function map_meta_cap($cap, $user_id){
 		break;
 	case 'read_post':
 	case 'read_page':
+
 		$post = get_post($args[0]);
 		if(!$post){
 			$caps[] = 'do_not_allow';
 			break;
 		}
-
-
 
 		$post_type = get_post_type_object($post->post_type);
 		if(!$post_type){
@@ -211,6 +210,7 @@ function map_meta_cap($cap, $user_id){
 		}
 
 		$status_obj = get_post_status_object($post->post_status);
+
 		if($status_obj->public){
 			$caps[] = $post_type->cap->read;
 			break;
