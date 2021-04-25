@@ -2953,7 +2953,9 @@ function wp_editor($content, $editor_id, $settings = array()){
 tinymce.init({
 	selector:'#<?php echo $editor_id; ?>',
 	plugins: 'image',
-	toolbar: 'image',
+	menubar: false,
+	toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent',
+	branding: false
 	}
 );
 </script>
@@ -2970,7 +2972,7 @@ tinymce.init({
  * See wp.editor.initialize() in wp-a initialization options.
  */
 function wp_enqueue_editor(){
-	wp_enqueue_script('tiny-mce-js', '/wp-admin/tinymce/tinymce.min.js');
+	wp_enqueue_script('tiny-mce-js', '/wp-includes/tinymce/tinymce.min.js');
 }
 
 function wp_enqueue_default_admin_styles(){
