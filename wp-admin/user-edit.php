@@ -417,11 +417,6 @@ else
 	</td>
 </tr>
 
-<tr class="user-url-wrap">
-	<th><label for="url"><?php _e('Website') ?></label></th>
-	<td><input type="url" name="url" id="url" value="<?php echo esc_attr($profileuser->user_url ) ?>" class="regular-text code" /></td>
-</tr>
-
 <?php
 	foreach(wp_get_user_contact_methods($profileuser ) as $name => $desc ) {
 ?>

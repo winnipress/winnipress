@@ -167,7 +167,7 @@ class WP_User_Query{
 	 *                                             keys and orders ('ASC' or 'DESC') as values. Accepted values are
 	 *                                             'ID', 'display_name' (or 'name'), 'include', 'user_login'
 	 *                                             (or 'login'), 'login__in', 'user_nicename' (or 'nicename'),
-	 *                                             'nicename__in', 'user_email (or 'email'), 'user_url' (or 'url'),
+	 *                                             'nicename__in', 'user_email (or 'email'),
 	 *                                             'user_registered' (or 'registered'), 'post_count', 'meta_value',
 	 *                                             'meta_value_num', the value of `$meta_key`, or an array key of
 	 *                                             `$meta_query`. To use 'meta_value' or 'meta_value_num', `$meta_key`
@@ -188,7 +188,7 @@ class WP_User_Query{
 	 *                                             Default true.
 	 *     @type string|array $fields              Which fields to return. Single or all fields (string), or array
 	 *                                             of fields. Accepts 'ID', 'display_name', 'user_login',
-	 *                                             'user_nicename', 'user_email', 'user_url', 'user_registered'.
+	 *                                             'user_nicename', 'user_email', 'user_registered'.
 	 *                                             Use 'all' for all fields and 'all_with_meta' to include
 	 *                                             meta fields. Default 'all'.
 	 *     @type string       $who                 Type of users to query. Accepts 'authors'.
@@ -516,7 +516,7 @@ class WP_User_Query{
 
 			$search_columns = array();
 			if( $qv['search_columns'] ){
-				$search_columns = array_intersect( $qv['search_columns'], array( 'ID', 'user_login', 'user_email', 'user_url', 'user_nicename', 'display_name' ) );
+				$search_columns = array_intersect( $qv['search_columns'], array( 'ID', 'user_login', 'user_email', 'user_nicename', 'display_name' ) );
 			}
 			if( !$search_columns ){
 				if( false !== strpos( $search, '@') )
@@ -524,14 +524,14 @@ class WP_User_Query{
 				elseif( is_numeric($search) )
 					$search_columns = array('user_login', 'ID');
 				else
-					$search_columns = array('user_login', 'user_url', 'user_email', 'user_nicename', 'display_name');
+					$search_columns = array('user_login', 'user_email', 'user_nicename', 'display_name');
 			}
 
 			/**
 			 * Filters the columns to search in a WP_User_Query search.
 			 *
 			 * The default columns depend on the search term, and include 'user_email',
-			 * 'user_login', 'ID', 'user_url', 'display_name', and 'user_nicename'.
+			 * 'user_login', 'ID', 'display_name', and 'user_nicename'.
 			 *
 			 * @since 3.6.0
 			 *
@@ -723,7 +723,7 @@ class WP_User_Query{
 		$_orderby = '';
 		if( in_array( $orderby, array( 'login', 'nicename', 'email', 'url', 'registered' ) ) ){
 			$_orderby = 'user_' . $orderby;
-		} elseif( in_array( $orderby, array( 'user_login', 'user_nicename', 'user_email', 'user_url', 'user_registered' ) ) ){
+		} elseif( in_array( $orderby, array( 'user_login', 'user_nicename', 'user_email', 'user_registered' ) ) ){
 			$_orderby = $orderby;
 		} elseif( 'name' == $orderby || 'display_name' == $orderby ){
 			$_orderby = 'display_name';

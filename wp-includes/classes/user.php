@@ -23,7 +23,6 @@
  * @property string $user_pass
  * @property string $user_nicename
  * @property string $user_email
- * @property string $user_url
  * @property string $user_registered
  * @property string $user_activation_key
  * @property string $user_status

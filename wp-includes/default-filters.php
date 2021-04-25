@@ -42,23 +42,6 @@ if(is_admin()){
 }
 
 
-// Save URL
-foreach(array('pre_user_url', 'pre_link_url', 'pre_link_image',
-	'pre_link_rss', 'pre_post_guid') as $filter){
-	add_filter($filter, 'wp_strip_all_tags');
-	add_filter($filter, 'esc_url_raw'      );
-	add_filter($filter, 'wp_filter_kses'   );
-}
-
-// Display URL
-foreach(array('user_url', 'post_guid') as $filter){
-	if(is_admin())
-		add_filter($filter, 'wp_strip_all_tags');
-	add_filter($filter, 'esc_url'          );
-	if(is_admin())
-		add_filter($filter, 'wp_kses_data'   );
-}
-
 // Slugs
 add_filter('pre_term_slug', 'sanitize_title');
 add_filter('wp_insert_post_data', '_wp_customize_changeset_filter_insert_post_data', 10, 2);

@@ -132,7 +132,6 @@ function the_modified_author(){
  * - user_pass
  * - user_registered
  * - user_status
- * - user_url
  * - yim
  *
  * @since 2.8.0
@@ -368,7 +367,7 @@ function get_author_posts_url($author_id, $author_nicename = ''){
  *     Optional. Array or string of default arguments.
  *
  *     @type string       $orderby       How to sort the authors. Accepts 'nicename', 'email', 'url', 'registered',
- *                                       'user_nicename', 'user_email', 'user_url', 'user_registered', 'name',
+ *                                       'user_nicename', 'user_email', 'user_registered', 'name',
  *                                       'display_name', 'post_count', 'ID', 'meta_value', 'user_login'. Default 'name'.
  *     @type string       $order         Sorting direction for $orderby. Accepts 'ASC', 'DESC'. Default 'ASC'.
  *     @type int          $number        Maximum authors to return or display. Default empty (all authors).

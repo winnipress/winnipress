@@ -901,13 +901,12 @@ function count_users($strategy = 'time', $site_id = null){
  * @global int     $user_level    The level of the user
  * @global int     $user_ID       The ID of the user
  * @global string  $user_email    The email address of the user
- * @global string  $user_url      The url in the user's profile
  * @global string  $user_identity The display name of the user
  *
  * @param int $for_user_id Optional. User ID to set up global data.
  */
 function setup_userdata($for_user_id = ''){
-	global $user_login, $userdata, $user_level, $user_ID, $user_email, $user_url, $user_identity;
+	global $user_login, $userdata, $user_level, $user_ID, $user_email, $user_identity;
 
 	if('' == $for_user_id)
 		$for_user_id = get_current_user_id();
@@ -917,7 +916,7 @@ function setup_userdata($for_user_id = ''){
 		$user_ID = 0;
 		$user_level = 0;
 		$userdata = null;
-		$user_login = $user_email = $user_url = $user_identity = '';
+		$user_login = $user_email = $user_identity = '';
 		return;
 	}
 
@@ -926,7 +925,6 @@ function setup_userdata($for_user_id = ''){
 	$userdata   = $user;
 	$user_login = $user->user_login;
 	$user_email = $user->user_email;
-	$user_url   = $user->user_url;
 	$user_identity = $user->display_name;
 }
 
@@ -1202,9 +1200,6 @@ function sanitize_user_field($field, $value, $user_id, $context){
 		}
 	}
 
-	if('user_url' == $field)
-		$value = esc_url($value);
-
 	if('attribute' == $context){
 		$value = esc_attr($value);
 	} elseif('js' == $context){
@@ -1355,7 +1350,6 @@ function validate_username($username){
  *     @type string      $user_pass            The plain-text user password.
  *     @type string      $user_login           The user's login username.
  *     @type string      $user_nicename        The URL-friendly user name.
- *     @type string      $user_url             The user URL.
  *     @type string      $user_email           The user email address.
  *     @type string      $display_name         The user's display name.
  *                                             Default is the user's username.
@@ -1476,16 +1470,6 @@ function wp_insert_user($userdata){
 	 */
 	$user_nicename = apply_filters('pre_user_nicename', $user_nicename);
 
-	$raw_user_url = empty($userdata['user_url']) ? '' : $userdata['user_url'];
-
-	/**
-	 * Filters a user's URL before the user is created or updated.
-	 *
-	 * @since 2.0.3
-	 *
-	 * @param string $raw_user_url The user's URL.
-	 */
-	$user_url = apply_filters('pre_user_url', $raw_user_url);
 
 	$raw_user_email = empty($userdata['user_email']) ? '' : $userdata['user_email'];
 
@@ -1608,7 +1592,7 @@ function wp_insert_user($userdata){
 		$user_nicename = $alt_user_nicename;
 	}
 
-	$compacted = compact('user_pass', 'user_email', 'user_url', 'user_nicename', 'display_name', 'user_registered');
+	$compacted = compact('user_pass', 'user_email', 'user_nicename', 'display_name', 'user_registered');
 	$data = wp_unslash($compacted);
 
 	if(!$update){
@@ -1628,7 +1612,6 @@ function wp_insert_user($userdata){
 	 *     @type string $user_login      The user's login. Only included if $update == false
 	 *     @type string $user_pass       The user's password.
 	 *     @type string $user_email      The user's email.
-	 *     @type string $user_url        The user's url.
 	 *     @type string $user_nicename   The user's nice name. Defaults to a URL-safe version of user's login
 	 *     @type string $display_name    The user's display name.
 	 *     @type string $user_registered MySQL timestamp describing the moment when the user registered. Defaults to
@@ -2728,7 +2711,6 @@ function wp_user_personal_data_exporter($email_address){
 		'user_login'      => __('User Login Name'),
 		'user_nicename'   => __('User Nice Name'),
 		'user_email'      => __('User Email'),
-		'user_url'        => __('User URL'),
 		'user_registered' => __('User Registration Date'),
 		'display_name'    => __('User Display Name'),
 		'nickname'        => __('User Nickname'),
@@ -2747,7 +2729,6 @@ function wp_user_personal_data_exporter($email_address){
 			case 'user_login':
 			case 'user_nicename':
 			case 'user_email':
-			case 'user_url':
 			case 'user_registered':
 			case 'display_name':
 				$value = $user->data->$key;
