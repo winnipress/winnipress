@@ -18,10 +18,6 @@ if( !$thumbnail_support && 'attachment' === $post_type && $post->post_mime_type 
 	}
 }
 
-if( $thumbnail_support ) {
-	wp_enqueue_media( array( 'post' => $post_ID ) );
-}
-
 
 
 /*

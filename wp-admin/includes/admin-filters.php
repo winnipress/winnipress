@@ -7,35 +7,6 @@
  * @since 4.3.0
  */
 
-// Bookmark hooks.
-add_action( 'admin_page_access_denied', 'wp_link_manager_disabled_message' );
-
-// Dashboard hooks.
-add_action( 'activity_box_end', 'wp_dashboard_quota' );
-
-// Media hooks.
-add_action( 'attachment_submitbox_misc_actions', 'attachment_submitbox_metadata' );
-
-add_action( 'media_upload_image', 'wp_media_upload_handler' );
-add_action( 'media_upload_audio', 'wp_media_upload_handler' );
-add_action( 'media_upload_video', 'wp_media_upload_handler' );
-add_action( 'media_upload_file',  'wp_media_upload_handler' );
-
-add_action( 'post-plupload-upload-ui', 'media_upload_flash_bypass' );
-
-add_action( 'post-html-upload-ui', 'media_upload_html_bypass'  );
-
-add_filter( 'async_upload_image', 'get_media_item', 10, 2 );
-add_filter( 'async_upload_audio', 'get_media_item', 10, 2 );
-add_filter( 'async_upload_video', 'get_media_item', 10, 2 );
-add_filter( 'async_upload_file',  'get_media_item', 10, 2 );
-
-add_filter( 'attachment_fields_to_save', 'image_attachment_fields_to_save', 10, 2 );
-
-add_filter( 'media_upload_gallery', 'media_upload_gallery' );
-add_filter( 'media_upload_library', 'media_upload_library' );
-
-add_filter( 'media_upload_tabs', 'update_gallery_tab' );
 
 // Misc hooks.
 add_action( 'admin_init', 'wp_admin_headers'         );

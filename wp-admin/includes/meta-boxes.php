@@ -1122,7 +1122,7 @@ function link_advanced_meta_box($link) {
  */
 function post_thumbnail_meta_box( $post) {
 	$thumbnail_id = get_post_meta( $post->ID, '_thumbnail_id', true);
-	echo _wp_post_thumbnail_html( $thumbnail_id, $post->ID);
+	echo 'Ya veremos qué hacer con este metabox';
 }
 
 /**

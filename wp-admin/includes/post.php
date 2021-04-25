@@ -613,10 +613,6 @@ function get_default_post_to_edit( $post_type = 'post', $create_in_db = false) {
 	if( !empty( $_REQUEST['content']))
 		$post_content = esc_html( wp_unslash( $_REQUEST['content']));
 
-	$post_excerpt = '';
-	if( !empty( $_REQUEST['excerpt']))
-		$post_excerpt = esc_html( wp_unslash( $_REQUEST['excerpt']));
-
 	if( $create_in_db) {
 		$post_id = wp_insert_post( array( 'post_title' => __( 'Auto Draft'), 'post_type' => $post_type, 'post_status' => 'auto-draft'));
 		$post = get_post( $post_id);
@@ -627,18 +623,12 @@ function get_default_post_to_edit( $post_type = 'post', $create_in_db = false) {
 		$post->ID = 0;
 		$post->post_author = '';
 		$post->post_date = '';
-		$post->post_date_gmt = '';
-		$post->post_password = '';
 		$post->post_name = '';
 		$post->post_type = $post_type;
 		$post->post_status = 'draft';
-		$post->to_ping = '';
-		$post->pinged = '';
-		$post->post_pingback = get_option( 'default_pingback_flag');
 		$post->post_category = get_option( 'default_category');
 		$post->page_template = 'default';
 		$post->post_parent = 0;
-		$post->menu_order = 0;
 		$post = new WP_Post( $post);
 	}
 
@@ -661,16 +651,6 @@ function get_default_post_to_edit( $post_type = 'post', $create_in_db = false) {
 	 * @param WP_Post $post       Post object.
 	 */
 	$post->post_title = apply_filters( 'default_title', $post_title, $post);
-
-	/**
-	 * Filters the default post excerpt initially used in the "Write Post" form.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param string  $post_excerpt Default post excerpt.
-	 * @param WP_Post $post         Post object.
-	 */
-	$post->post_excerpt = apply_filters( 'default_excerpt', $post_excerpt, $post);
 
 	return $post;
 }

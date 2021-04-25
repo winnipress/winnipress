@@ -118,7 +118,6 @@ require(ABSPATH . WPINC . '/script-loader.php');
 require(ABSPATH . WPINC . '/taxonomy.php');
 require(ABSPATH . WPINC . '/canonical.php');
 require(ABSPATH . WPINC . '/shortcodes.php');
-require(ABSPATH . WPINC . '/media.php');
 require(ABSPATH . WPINC . '/http.php');
 
 require(ABSPATH . WPINC . '/classes/ajax-response.php');

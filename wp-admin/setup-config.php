@@ -302,13 +302,7 @@ switch($step) {
 			$secret_keys[] = $key;
 		}
 	} catch ( Exception $ex ) {
-		$no_api = isset( $_POST['noapi'] );
-
-		if( !$no_api ) {
-			$secret_keys = wp_remote_get( 'https://api.wordpress.org/secret-key/1.1/salt/' );
-		}
-
-		if( $no_api || is_wp_error( $secret_keys ) ) {
+		if(  is_wp_error( $secret_keys ) ) {
 			$secret_keys = array();
 			for ( $i = 0; $i < 8; $i++ ) {
 				$secret_keys[] = wp_generate_password( 64, true, true );

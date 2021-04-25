@@ -3003,21 +3003,11 @@ function wp_insert_post($postarr, $wp_error = false){
 	$defaults = array(
 		'post_author' => $user_id,
 		'post_content' => '',
-		'post_content_filtered' => '',
 		'post_title' => '',
-		'post_excerpt' => '',
 		'post_status' => 'draft',
 		'post_type' => 'post',
-		'comment_status' => '',
-		'ping_status' => '',
-		'post_password' => '',
-		'to_ping' =>  '',
-		'pinged' => '',
 		'post_parent' => 0,
-		'menu_order' => 0,
-		'guid' => '',
-		'import_id' => 0,
-		'context' => '',
+		'menu_order' => 0
 	);
 
 	$postarr = wp_parse_args($postarr, $defaults);
@@ -3029,12 +3019,11 @@ function wp_insert_post($postarr, $wp_error = false){
 	// Are we updating or creating?
 	$post_ID = 0;
 	$update = false;
-	$guid = $postarr['guid'];
 
 	if(!empty($postarr['ID'])){
 		$update = true;
 
-		// Get the post ID and GUID.
+		// Get the post ID
 		$post_ID = $postarr['ID'];
 		$post_before = get_post($post_ID);
 		if(is_null($post_before)){
@@ -3043,8 +3032,6 @@ function wp_insert_post($postarr, $wp_error = false){
 			}
 			return 0;
 		}
-
-		$guid = get_post_field('guid', $post_ID);
 		$previous_status = get_post_field('post_status', $post_ID);
 	} else{
 		$previous_status = 'new';
@@ -3054,7 +3041,6 @@ function wp_insert_post($postarr, $wp_error = false){
 
 	$post_title = $postarr['post_title'];
 	$post_content = $postarr['post_content'];
-	$post_excerpt = $postarr['post_excerpt'];
 	if(isset($postarr['post_name'])){
 		$post_name = $postarr['post_name'];
 	} elseif($update){
@@ -3062,18 +3048,16 @@ function wp_insert_post($postarr, $wp_error = false){
 		$post_name = $post_before->post_name;
 	}
 
-	$maybe_empty = 'attachment' !== $post_type
-		&& !$post_content && !$post_title && !$post_excerpt
+	$maybe_empty = !$post_content && !$post_title
 		&& post_type_supports($post_type, 'editor')
-		&& post_type_supports($post_type, 'title')
-		&& post_type_supports($post_type, 'excerpt');
+		&& post_type_supports($post_type, 'title');
 
 	/**
 	 * Filters whether the post should be considered "empty".
 	 *
 	 * The post is considered "empty" if both:
-	 * 1. The post type supports the title, editor, and excerpt fields
-	 * 2. The title, editor, and excerpt fields are all empty
+	 * 1. The post type supports the title, editor fields
+	 * 2. The title, editor fields are empty
 	 *
 	 * Returning a truthy value to the filter will effectively short-circuit
 	 * the new post being inserted, returning 0. If $wp_error is true, a WP_Error
@@ -3086,16 +3070,13 @@ function wp_insert_post($postarr, $wp_error = false){
 	 */
 	if(apply_filters('wp_insert_post_empty_content', $maybe_empty, $postarr)){
 		if($wp_error){
-			return new WP_Error('empty_content', __('Content, title, and excerpt are empty.'));
+			return new WP_Error('empty_content', __('Content and title are empty.'));
 		} else{
 			return 0;
 		}
 	}
 
 	$post_status = empty($postarr['post_status']) ? 'draft' : $postarr['post_status'];
-	if('attachment' === $post_type && !in_array($post_status, array('inherit', 'private', 'trash', 'auto-draft'), true)){
-		$post_status = 'inherit';
-	}
 
 	if(!empty($postarr['post_category'])){
 		// Filter out empty terms.
@@ -3141,13 +3122,9 @@ function wp_insert_post($postarr, $wp_error = false){
 	 * If the post date is empty (due to having been new or a draft) and status
 	 * is not 'draft' or 'pending', set date to now.
 	 */
-	if(empty($postarr['post_date']) || '0000-00-00 00:00:00' == $postarr['post_date']){
-		if(empty($postarr['post_date_gmt']) || '0000-00-00 00:00:00' == $postarr['post_date_gmt']){
-			$post_date = current_time('mysql');
-		} else{
-			$post_date = get_date_from_gmt($postarr['post_date_gmt']);
-		}
-	} else{
+	if(empty($postarr['post_date'])){
+		$post_date = current_time('mysql');
+	}else{
 		$post_date = $postarr['post_date'];
 	}
 
@@ -3164,59 +3141,28 @@ function wp_insert_post($postarr, $wp_error = false){
 		}
 	}
 
-	if(empty($postarr['post_date_gmt']) || '0000-00-00 00:00:00' == $postarr['post_date_gmt']){
-		if(!in_array($post_status, array('draft', 'pending', 'auto-draft'))){
-			$post_date_gmt = get_gmt_from_date($post_date);
-		} else{
-			$post_date_gmt = '0000-00-00 00:00:00';
+
+	if($update){
+		$post_modified = current_time('mysql');
+	} else{
+		$post_modified = $post_date;
+	}
+
+	
+	if('publish' == $post_status){
+		$now = gmdate('Y-m-d H:i:59');
+		if(mysql2date('U', $post_date_gmt, false) > mysql2date('U', $now, false)){
+			$post_status = 'future';
 		}
-	} else{
-		$post_date_gmt = $postarr['post_date_gmt'];
-	}
-
-	if($update || '0000-00-00 00:00:00' == $post_date){
-		$post_modified     = current_time('mysql');
-		$post_modified_gmt = current_time('mysql', 1);
-	} else{
-		$post_modified     = $post_date;
-		$post_modified_gmt = $post_date_gmt;
-	}
-
-	if('attachment' !== $post_type){
-		if('publish' == $post_status){
-			$now = gmdate('Y-m-d H:i:59');
-			if(mysql2date('U', $post_date_gmt, false) > mysql2date('U', $now, false)){
-				$post_status = 'future';
-			}
-		} elseif('future' == $post_status){
-			$now = gmdate('Y-m-d H:i:59');
-			if(mysql2date('U', $post_date_gmt, false) <= mysql2date('U', $now, false)){
-				$post_status = 'publish';
-			}
+	} elseif('future' == $post_status){
+		$now = gmdate('Y-m-d H:i:59');
+		if(mysql2date('U', $post_date_gmt, false) <= mysql2date('U', $now, false)){
+			$post_status = 'publish';
 		}
 	}
-
-
-
+	
 	// These variables are needed by compact() later.
-	$post_content_filtered = $postarr['post_content_filtered'];
 	$post_author = isset($postarr['post_author']) ? $postarr['post_author'] : $user_id;
-	$import_id = isset($postarr['import_id']) ? $postarr['import_id'] : 0;
-
-	/*
-	 * The 'wp_insert_post_parent' filter expects all variables to be present.
-	 * Previously, these variables would have already been extracted
-	 */
-	if(isset($postarr['menu_order'])){
-		$menu_order = (int) $postarr['menu_order'];
-	} else{
-		$menu_order = 0;
-	}
-
-	$post_password = isset($postarr['post_password']) ? $postarr['post_password'] : '';
-	if('private' == $post_status){
-		$post_password = '';
-	}
 
 	if(isset($postarr['post_parent'])){
 		$post_parent = (int) $postarr['post_parent'];
@@ -3260,50 +3206,23 @@ function wp_insert_post($postarr, $wp_error = false){
 
 	$post_name = wp_unique_post_slug($post_name, $post_ID, $post_status, $post_type, $post_parent);
 
-	// Don't unslash.
-	$post_mime_type = isset($postarr['post_mime_type']) ? $postarr['post_mime_type'] : '';
 
 	// Expected_slashed (everything!).
-	$data = compact('post_author', 'post_date', 'post_date_gmt', 'post_content', 'post_content_filtered', 'post_title', 'post_excerpt', 'post_status', 'post_type', 'comment_status', 'ping_status', 'post_password', 'post_name', 'to_ping', 'pinged', 'post_modified', 'post_modified_gmt', 'post_parent', 'menu_order', 'post_mime_type', 'guid');
+	$data = compact('post_author', 'post_date', 'post_content', 'post_title', 'post_status', 'post_type', 'post_name', 'post_modified',  'post_parent');
 
-	$emoji_fields = array('post_title', 'post_content', 'post_excerpt');
-
-	foreach($emoji_fields as $emoji_field){
-		if(isset($data[ $emoji_field ])){
-			$charset = $wpdb->get_col_charset($wpdb->posts, $emoji_field);
-			if('utf8' === $charset){
-				$data[ $emoji_field ] = wp_encode_emoji($data[ $emoji_field ]);
-			}
-		}
-	}
-
-	if('attachment' === $post_type){
-		/**
-		 * Filters attachment post data before it is updated in or added to the database.
-		 *
-		 * @since 3.9.0
-		 * @since 5.4.1 `$unsanitized_postarr` argument added.
-		 *
-		 * @param array $data                An array of slashed, sanitized, and processed attachment post data.
-		 * @param array $postarr             An array of slashed and sanitized attachment post data, but not processed.
-		 * @param array $unsanitized_postarr An array of slashed yet *unsanitized* and unprocessed attachment post data
-		 *                                   as originally passed to wp_insert_post().
-		 */
-		$data = apply_filters('wp_insert_attachment_data', $data, $postarr, $unsanitized_postarr);
-	} else{
-		/**
-		 * Filters slashed post data just before it is inserted into the database.
-		 *
-		 * @since 2.7.0
-		 * @since 5.4.1 `$unsanitized_postarr` argument added.
-		 *
-		 * @param array $data                An array of slashed, sanitized, and processed post data.
-		 * @param array $postarr             An array of sanitized (and slashed) but otherwise unmodified post data.
-		 * @param array $unsanitized_postarr An array of slashed yet *unsanitized* and unprocessed post data as
-		 *                                   originally passed to wp_insert_post().
-		 */
-		$data = apply_filters('wp_insert_post_data', $data, $postarr, $unsanitized_postarr);
-	}
+	/**
+		* Filters slashed post data just before it is inserted into the database.
+		*
+		* @since 2.7.0
+		* @since 5.4.1 `$unsanitized_postarr` argument added.
+		*
+		* @param array $data                An array of slashed, sanitized, and processed post data.
+		* @param array $postarr             An array of sanitized (and slashed) but otherwise unmodified post data.
+		* @param array $unsanitized_postarr An array of slashed yet *unsanitized* and unprocessed post data as
+		*                                   originally passed to wp_insert_post().
+		*/
+	$data = apply_filters('wp_insert_post_data', $data, $postarr, $unsanitized_postarr);
+	
 	$data = wp_unslash($data);
 	$where = array('ID' => $post_ID);
 
@@ -3382,44 +3301,6 @@ function wp_insert_post($postarr, $wp_error = false){
 	if(!empty($postarr['meta_input'])){
 		foreach($postarr['meta_input'] as $field => $value){
 			update_post_meta($post_ID, $field, $value);
-		}
-	}
-
-	$current_guid = get_post_field('guid', $post_ID);
-
-	// Set GUID.
-	if(!$update && '' == $current_guid){
-		$wpdb->update($wpdb->posts, array('guid' => get_permalink($post_ID)), $where);
-	}
-
-	if('attachment' === $postarr['post_type']){
-		if(!empty($postarr['file'])){
-			update_attached_file($post_ID, $postarr['file']);
-		}
-
-		if(!empty($postarr['context'])){
-			add_post_meta($post_ID, '_wp_attachment_context', $postarr['context'], true);
-		}
-	}
-
-	// Set or remove featured image.
-	if(isset($postarr['_thumbnail_id'])){
-		$thumbnail_support = current_theme_supports('post-thumbnails', $post_type) && post_type_supports($post_type, 'thumbnail') || 'revision' === $post_type;
-		if(!$thumbnail_support && 'attachment' === $post_type && $post_mime_type){
-			if(wp_attachment_is('audio', $post_ID)){
-				$thumbnail_support = post_type_supports('attachment:audio', 'thumbnail') || current_theme_supports('post-thumbnails', 'attachment:audio');
-			} elseif(wp_attachment_is('video', $post_ID)){
-				$thumbnail_support = post_type_supports('attachment:video', 'thumbnail') || current_theme_supports('post-thumbnails', 'attachment:video');
-			}
-		}
-
-		if($thumbnail_support){
-			$thumbnail_id = intval($postarr['_thumbnail_id']);
-			if(-1 === $thumbnail_id){
-				delete_post_thumbnail($post_ID);
-			} else{
-				set_post_thumbnail($post_ID, $thumbnail_id);
-			}
 		}
 	}
 
@@ -4687,8 +4568,8 @@ function get_pages($args = array()){
 
 	$orderby_array = array();
 	$allowed_keys = array('author', 'post_author', 'date', 'post_date', 'title', 'post_title', 'name', 'post_name', 'modified',
-		'post_modified', 'modified_gmt', 'post_modified_gmt', 'menu_order', 'parent', 'post_parent',
-		'ID', 'rand', 'comment_count');
+		'post_modified', 'parent', 'post_parent',
+		'ID', 'rand');
 
 	foreach(explode(',', $r['sort_column']) as $orderby){
 		$orderby = trim($orderby);
@@ -4704,9 +4585,6 @@ function get_pages($args = array()){
 				break;
 			case 'rand':
 				$orderby = 'RAND()';
-				break;
-			case 'comment_count':
-				$orderby = "$wpdb->posts.comment_count";
 				break;
 			default:
 				if(0 === strpos($orderby, 'post_')){

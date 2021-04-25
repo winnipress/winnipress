@@ -2970,7 +2970,7 @@ tinymce.init({
  * See wp.editor.initialize() in wp-a initialization options.
  */
 function wp_enqueue_editor(){
-	wp_enqueue_script('tiny-mce-js', 'https://cdn.tiny.cloud/1/evqvk8c0ivmpp74hgedelbjmk315r4t6rwokf15r15ay7x0r/tinymce/5/tinymce.min.js');
+	wp_enqueue_script('tiny-mce-js', '/wp-admin/tinymce/tinymce.min.js');
 }
 
 function wp_enqueue_default_admin_styles(){
