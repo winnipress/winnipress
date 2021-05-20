@@ -365,7 +365,7 @@ function wp_dropdown_categories($args = ''){
 	// Avoid clashes with the 'name' param of get_terms().
 	$get_terms_args = $r;
 	unset($get_terms_args['name']);
-	$categories = get_terms($r['taxonomy'], $get_terms_args);
+	$categories = get_terms($get_terms_args);
 
 	$name = esc_attr($r['name']);
 	$class = esc_attr($r['class']);
@@ -681,7 +681,7 @@ function wp_tag_cloud($args = ''){
 	);
 	$args = wp_parse_args($args, $defaults);
 
-	$tags = get_terms($args['taxonomy'], array_merge($args, array('orderby' => 'count', 'order' => 'DESC'))); // Always query top tags
+	$tags = get_terms(array_merge($args, array('orderby' => 'count', 'order' => 'DESC'))); // Always query top tags
 
 	if(empty($tags) || is_wp_error($tags))
 		return;

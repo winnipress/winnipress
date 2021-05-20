@@ -206,6 +206,8 @@ class WP_Terms_List_Table extends WP_List_Table {
 			'hide_empty' => 0
 		));
 
+		$args['taxonomy'] = $taxonomy;
+
 		$page = $args['page'];
 
 		// Set variable because $args['number'] can be subsequently overridden.
@@ -220,7 +222,8 @@ class WP_Terms_List_Table extends WP_List_Table {
 			// We'll need the full set of terms then.
 			$args['number'] = $args['offset'] = 0;
 		}
-		$terms = get_terms( $taxonomy, $args);
+
+		$terms = get_terms($args);
 
 		if( empty( $terms) || !is_array( $terms)) {
 			echo '<tr class="no-items"><td class="colspanchange" colspan="' . $this->get_column_count() . '">';
@@ -528,7 +531,6 @@ class WP_Terms_List_Table extends WP_List_Table {
 
 		return "<a href='" . esc_url ( add_query_arg( $args, 'edit.php')) . "'>$count</a>";
 	}
-
 
 	/**
 	 * @param WP_Term $tag Term object.

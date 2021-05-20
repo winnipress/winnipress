@@ -422,7 +422,8 @@ class WP_Term_Query{
 			foreach($exclude_tree as $extrunk ){
 				$excluded_children = array_merge(
 					$excluded_children,
-					(array) get_terms(reset($taxonomies ), array(
+					(array) get_terms(array(
+						'taxonomy' => reset($taxonomies),
 						'child_of' => intval($extrunk ),
 						'fields' => 'ids',
 						'hide_empty' => 0
@@ -663,7 +664,7 @@ class WP_Term_Query{
 		$this->sql_clauses['orderby'] = $orderby ? "$orderby $order" : '';
 		$this->sql_clauses['limits']  = $limits;
 
-		$this->request = "{$this->sql_clauses['select']}{$this->sql_clauses['from']}{$where}{$this->sql_clauses['orderby']}{$this->sql_clauses['limits']}";
+		$this->request = "{$this->sql_clauses['select']} {$this->sql_clauses['from']} {$where} {$this->sql_clauses['orderby']} {$this->sql_clauses['limits']}";
 
 		// $args can be anything. Only use the args defined in defaults to compute the key.
 		$key = md5(serialize(wp_array_slice_assoc($args, array_keys($this->query_var_defaults ) ) ) . serialize($taxonomies ) . $this->request );

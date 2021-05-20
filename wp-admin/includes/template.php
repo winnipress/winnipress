@@ -124,7 +124,8 @@ function wp_terms_checklist( $post_id = 0, $args = array()) {
 	if( is_array( $r['popular_cats'])) {
 		$args['popular_cats'] = $r['popular_cats'];
 	} else {
-		$args['popular_cats'] = get_terms( $taxonomy, array(
+		$args['popular_cats'] = get_terms( array(
+			'taxonomy' => $taxonomy, 
 			'fields' => 'ids',
 			'orderby' => 'count',
 			'order' => 'DESC',
@@ -133,7 +134,8 @@ function wp_terms_checklist( $post_id = 0, $args = array()) {
 		));
 	}
 	if( $descendants_and_self) {
-		$categories = (array) get_terms( $taxonomy, array(
+		$categories = (array) get_terms( array(
+			'taxonomy' => $taxonomy, 
 			'child_of' => $descendants_and_self,
 			'hierarchical' => 0,
 			'hide_empty' => 0
@@ -141,7 +143,7 @@ function wp_terms_checklist( $post_id = 0, $args = array()) {
 		$self = get_term( $descendants_and_self, $taxonomy);
 		array_unshift( $categories, $self);
 	} else {
-		$categories = (array) get_terms( $taxonomy, array( 'get' => 'all'));
+		$categories = (array) get_terms( array( 'taxonomy' => $taxonomy, 'get' => 'all'));
 	}
 
 	$output = '';
@@ -195,7 +197,7 @@ function wp_popular_terms_checklist( $taxonomy, $default = 0, $number = 10, $ech
 	else
 		$checked_terms = array();
 
-	$terms = get_terms( $taxonomy, array( 'orderby' => 'count', 'order' => 'DESC', 'number' => $number, 'hierarchical' => false));
+	$terms = get_terms( array( 'taxonomy' => $taxonomy, 'orderby' => 'count', 'order' => 'DESC', 'number' => $number, 'hierarchical' => false));
 
 	$tax = get_taxonomy($taxonomy);
 
@@ -221,43 +223,6 @@ function wp_popular_terms_checklist( $taxonomy, $default = 0, $number = 10, $ech
 		<?php
 	}
 	return $popular_ids;
-}
-
-/**
- * Outputs a link category checklist element.
- *
- * @since 2.5.1
- *
- * @param int $link_id
- */
-function wp_link_category_checklist( $link_id = 0) {
-	$default = 1;
-
-	$checked_categories = array();
-
-	if( $link_id) {
-		$checked_categories = wp_get_link_cats( $link_id);
-		// No selected categories, strange
-		if( !count( $checked_categories)) {
-			$checked_categories[] = $default;
-		}
-	} else {
-		$checked_categories[] = $default;
-	}
-
-	$categories = get_terms( 'link_category', array( 'orderby' => 'name', 'hide_empty' => 0));
-
-	if( empty( $categories))
-		return;
-
-	foreach( $categories as $category) {
-		$cat_id = $category->term_id;
-
-		/** This filter is documented in wp-includes/category-template.php */
-		$name = esc_html( apply_filters( 'the_category', $category->name, '', ''));
-		$checked = in_array( $cat_id, $checked_categories) ? ' checked="checked"' : '';
-		echo '<li id="link-category-', $cat_id, '"><label for="in-link-category-', $cat_id, '" class="selectit"><input value="', $cat_id, '" type="checkbox" name="link_category[]" id="in-link-category-', $cat_id, '"', $checked, '/> ', $name, "</label></li>";
-	}
 }
 
 /**

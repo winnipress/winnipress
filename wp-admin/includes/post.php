@@ -367,7 +367,8 @@ function edit_post( $post_data = null) {
 					continue;
 				}
 
-				$_term = get_terms( $taxonomy, array(
+				$_term = get_terms( array(
+					'taxonomy' => $taxonomy, 
 					'name' => $term,
 					'fields' => 'ids',
 					'hide_empty' => false,

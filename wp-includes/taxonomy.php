@@ -1023,39 +1023,15 @@ function get_term_to_edit($id, $taxonomy){
  * The{@see 'get_terms_orderby'} filter passes the `ORDER BY` clause for the query
  * along with the $args array.
  *
- * Prior to 4.5.0, the first parameter of `get_terms()` was a taxonomy or list of taxonomies:
- *
- *     $terms = get_terms('post_tag', array(
- *         'hide_empty' => false,
- *    ));
- *
- * Since 4.5.0, taxonomies should be passed via the 'taxonomy' argument in the `$args` array:
+ * Taxonomies should be passed via the 'taxonomy' argument in the `$args` array:
  *
  *     $terms = get_terms(array(
  *         'taxonomy' => 'post_tag',
  *         'hide_empty' => false,
  *    ));
- *
- * @since 2.3.0
- * @since 4.2.0 Introduced 'name' and 'childless' parameters.
- * @since 4.4.0 Introduced the ability to pass 'term_id' as an alias of 'id' for the `orderby` parameter.
- *              Introduced the 'meta_query' and 'update_term_meta_cache' parameters. Converted to return
- *              a list of WP_Term objects.
- * @since 4.5.0 Changed the function signature so that the `$args` array can be provided as the first parameter.
- *              Introduced 'meta_key' and 'meta_value' parameters. Introduced the ability to order results by metadata.
- * @since 4.8.0 Introduced 'suppress_filter' parameter.
- *
- * @internal The `$deprecated` parameter is parsed for backward compatibility only.
- *
- * @param string|array $args       Optional. Array or string of arguments. See WP_Term_Query::__construct()
- *                                 for information on accepted arguments. Default empty.
- * @param array        $deprecated Argument array, when using the legacy function parameter format. If present, this
- *                                 parameter will be interpreted as `$args`, and the first function parameter will
- *                                 be parsed as a taxonomy or array of taxonomies.
- * @return array|int|WP_Error List of WP_Term instances and their children. Will return WP_Error, if any of $taxonomies
- *                            do not exist.
  */
-function get_terms($args = array(), $deprecated = ''){
+function get_terms($args = array()){
+
 	$term_query = new WP_Term_Query();
 
 	$defaults = array(
@@ -1077,7 +1053,7 @@ function get_terms($args = array(), $deprecated = ''){
 		$taxonomies = (array) $args;
 		$args = wp_parse_args($deprecated, $defaults);
 		$args['taxonomy'] = $taxonomies;
-	} else{
+	}else{
 		$args = wp_parse_args($args, $defaults);
 		if(isset($args['taxonomy']) && null !== $args['taxonomy']){
 			$args['taxonomy'] = (array) $args['taxonomy'];
@@ -1638,8 +1614,9 @@ function wp_count_terms($taxonomy, $args = array()){
 	}
 
 	$args['fields'] = 'count';
+	$args['taxonomy'] = $taxonomy;
 
-	return get_terms($taxonomy, $args);
+	return get_terms($args);
 }
 
 /**
@@ -2104,7 +2081,8 @@ function wp_insert_term($term, $taxonomy, $args = array()){
 	 * Prevent the creation of terms with duplicate names at the same level of a taxonomy hierarchy,
 	 * unless a unique slug has been explicitly provided.
 	 */
-	$name_matches = get_terms($taxonomy, array(
+	$name_matches = get_terms(array(
+		'taxonomy' => $taxonomy,
 		'name' => $name,
 		'hide_empty' => false,
 		'parent' => $args['parent'],
@@ -2128,7 +2106,7 @@ function wp_insert_term($term, $taxonomy, $args = array()){
 		$slug_match = get_term_by('slug', $slug, $taxonomy);
 		if(!$slug_provided || $name_match->slug === $slug || $slug_match){
 			if(is_taxonomy_hierarchical($taxonomy)){
-				$siblings = get_terms($taxonomy, array('get' => 'all', 'parent' => $parent));
+				$siblings = get_terms(array('taxonomy' => $taxonomy, 'get' => 'all', 'parent' => $parent));
 
 				$existing_term = null;
 				if((!$slug_provided || $name_match->slug === $slug) && in_array($name, wp_list_pluck($siblings, 'name'))){
@@ -3274,7 +3252,7 @@ function _get_term_hierarchy($taxonomy){
 	if(is_array($children))
 		return $children;
 	$children = array();
-	$terms = get_terms($taxonomy, array('get' => 'all', 'orderby' => 'id', 'fields' => 'id=>parent'));
+	$terms = get_terms(array('taxonomy' => $taxonomy, 'get' => 'all', 'orderby' => 'id', 'fields' => 'id=>parent'));
 	foreach($terms as $term_id => $parent){
 		if($parent > 0)
 			$children[$parent][] = $term_id;

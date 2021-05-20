@@ -148,7 +148,7 @@ function wp_ajax_ajax_tag_search() {
 		wp_die();
 	}
 
-	$results = get_terms( $taxonomy, array( 'name__like' => $s, 'fields' => 'names', 'hide_empty' => false ) );
+	$results = get_terms( array( 'taxonomy' => $taxonomy, 'name__like' => $s, 'fields' => 'names', 'hide_empty' => false ) );
 
 	echo join( $results, "\n" );
 	wp_die();
@@ -557,7 +557,7 @@ function wp_ajax_get_tagcloud() {
 		wp_die( -1 );
 	}
 
-	$tags = get_terms( $taxonomy, array( 'number' => 45, 'orderby' => 'count', 'order' => 'DESC' ) );
+	$tags = get_terms( array( 'taxonomy' => $taxonomy, 'number' => 45, 'orderby' => 'count', 'order' => 'DESC' ) );
 
 	if( empty( $tags ) )
 		wp_die( $tax->labels->not_found );
