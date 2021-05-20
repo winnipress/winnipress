@@ -75,6 +75,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 	public function prepare_items() {
 		$tags_per_page = $this->get_items_per_page( 'edit_' . $this->screen->taxonomy . '_per_page');
 
+
 		if( 'post_tag' === $this->screen->taxonomy) {
 			/**
 			 * Filters the number of terms displayed per page for the Tags list table.
@@ -85,15 +86,6 @@ class WP_Terms_List_Table extends WP_List_Table {
 			 */
 			$tags_per_page = apply_filters( 'edit_tags_per_page', $tags_per_page);
 
-			/**
-			 * Filters the number of terms displayed per page for the Tags list table.
-			 *
-			 * @since 2.7.0
-			 * @deprecated 2.8.0 Use edit_tags_per_page instead.
-			 *
-			 * @param int $tags_per_page Number of tags to be displayed. Default 20.
-			 */
-			$tags_per_page = apply_filters( 'tagsperpage', $tags_per_page);
 		} elseif( 'category' === $this->screen->taxonomy) {
 			/**
 			 * Filters the number of terms displayed per page for the Categories list table.
@@ -515,16 +507,17 @@ class WP_Terms_List_Table extends WP_List_Table {
 	 * @param WP_Term $tag Term object.
 	 * @return string
 	 */
-	public function column_posts( $tag) {
+	public function column_posts($tag) {
+
 		$count = number_format_i18n( $tag->count);
 
-		$tax = get_taxonomy( $this->screen->taxonomy);
+		$tax = get_taxonomy($this->screen->taxonomy);
 
-		$ptype_object = get_post_type_object( $this->screen->post_type);
-		if( !$ptype_object->show_ui)
+		$ptype_object = get_post_type_object($this->screen->post_type);
+		if(!$ptype_object->show_ui)
 			return $count;
 
-		if( $tax->query_var) {
+		if($tax->query_var){
 			$args = array( $tax->query_var => $tag->slug);
 		} else {
 			$args = array( 'taxonomy' => $tax->name, 'term' => $tag->slug);
@@ -533,22 +526,9 @@ class WP_Terms_List_Table extends WP_List_Table {
 		if( 'post' != $this->screen->post_type)
 			$args['post_type'] = $this->screen->post_type;
 
-		if( 'attachment' === $this->screen->post_type)
-			return "<a href='" . esc_url ( add_query_arg( $args, 'upload.php')) . "'>$count</a>";
-
 		return "<a href='" . esc_url ( add_query_arg( $args, 'edit.php')) . "'>$count</a>";
 	}
 
-	/**
-	 * @param WP_Term $tag Term object.
-	 * @return string
-	 */
-	public function column_links( $tag) {
-		$count = number_format_i18n( $tag->count);
-		if( $count)
-			$count = "<a href='link-manager.php?cat_id=$tag->term_id'>$count</a>";
-		return $count;
-	}
 
 	/**
 	 * @param WP_Term $tag Term object.

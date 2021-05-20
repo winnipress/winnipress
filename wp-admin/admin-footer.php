@@ -66,14 +66,13 @@ if(function_exists('get_site_option')) {
 
 
 
-winni_log(memory_get_peak_usage()/(1024*1024));
-
-
 // Print logs
 winni_print_logs();
 
 ?>
 
 <div class="clear"></div></div><!-- wpwrap -->
+
+<?php echo '<!-- Mem peak usage: '.memory_get_peak_usage()/(1024*1024).' -->'; ?>
 </body>
 </html>

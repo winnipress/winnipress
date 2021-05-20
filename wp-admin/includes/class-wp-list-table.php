@@ -13,7 +13,7 @@
  * @since 3.1.0
  * @access private
  */
-class WP_List_Table {
+class WP_List_Table{
 
 	/**
 	 * The current list of items.
@@ -129,7 +129,7 @@ class WP_List_Table {
 			'screen' => null,
 		) );
 
-		$this->screen = convert_to_screen( $args['screen'] );
+		$this->screen = convert_to_screen( $args['screen']);
 
 		add_filter( "manage_{$this->screen->id}_columns", array( $this, 'get_columns' ), 0 );
 
@@ -141,8 +141,7 @@ class WP_List_Table {
 
 		$this->_args = $args;
 
-		if( $args['ajax'] ) {
-			// wp_enqueue_script( 'list-table' );
+		if( $args['ajax'] ){
 			add_action( 'admin_footer', array( $this, '_js_vars' ) );
 		}
 

@@ -37,17 +37,15 @@ if( !current_user_can( $tax->cap->manage_terms ) ) {
 global $post_type;
 
 $wp_list_table = _get_list_table('WP_Terms_List_Table');
+
 $pagenum = $wp_list_table->get_pagenum();
 
 $title = $tax->labels->name;
 
 if( 'post' != $post_type ) {
-	$parent_file = ( 'attachment' == $post_type ) ? 'upload.php' : "edit.php?post_type=$post_type";
+	$parent_file = "edit.php?post_type=$post_type";
 	$submenu_file = "edit-tags.php?taxonomy=$taxonomy&amp;post_type=$post_type";
-} elseif( 'link_category' == $tax->name ) {
-	$parent_file = 'link-manager.php';
-	$submenu_file = 'edit-tags.php?taxonomy=link_category';
-} else {
+}else{
 	$parent_file = 'edit.php';
 	$submenu_file = "edit-tags.php?taxonomy=$taxonomy";
 }
@@ -202,6 +200,7 @@ if( $location ) {
 }
 
 $wp_list_table->prepare_items();
+
 $total_pages = $wp_list_table->get_pagination_arg( 'total_pages' );
 
 if( $pagenum > $total_pages && $total_pages > 0 ) {
@@ -209,9 +208,6 @@ if( $pagenum > $total_pages && $total_pages > 0 ) {
 	exit;
 }
 
-wp_enqueue_script('admin-tags');
-if( current_user_can($tax->cap->edit_terms) )
-	wp_enqueue_script('inline-edit-tax');
 
 require_once( ABSPATH . 'wp-admin/admin-header.php' );
 
@@ -268,17 +264,7 @@ if( current_user_can($tax->cap->edit_terms) ) {
 		 * @param object $arg Optional arguments cast to an object.
 		 */
 		do_action( 'add_category_form_pre', (object) array( 'parent' => 0 ) );
-	} elseif( 'link_category' == $taxonomy ) {
-		/**
-		 * Fires before the link category form.
-		 *
-		 * @since 2.3.0
-		 * @deprecated 3.0.0 Use {$taxonomy}_pre_add_form instead.
-		 *
-		 * @param object $arg Optional arguments cast to an object.
-		 */
-		do_action( 'add_link_category_form_pre', (object) array( 'parent' => 0 ) );
-	} else {
+	} else{
 		/**
 		 * Fires before the Add Tag form.
 		 *
@@ -419,16 +405,6 @@ if( 'category' == $taxonomy ) {
 	 * @param object $arg Optional arguments cast to an object.
 	 */
 	do_action( 'edit_category_form', (object) array( 'parent' => 0 ) );
-} elseif( 'link_category' == $taxonomy ) {
-	/**
-	 * Fires at the end of the Edit Link form.
-	 *
-	 * @since 2.3.0
-	 * @deprecated 3.0.0 Use {$taxonomy}_add_form instead.
-	 *
-	 * @param object $arg Optional arguments cast to an object.
-	 */
-	do_action( 'edit_link_category_form', (object) array( 'parent' => 0 ) );
 } else {
 	/**
 	 * Fires at the end of the Add Tag form.
@@ -467,7 +443,8 @@ do_action( "{$taxonomy}_add_form", $taxonomy );
 <input type="hidden" name="taxonomy" value="<?php echo esc_attr( $taxonomy ); ?>" />
 <input type="hidden" name="post_type" value="<?php echo esc_attr( $post_type ); ?>" />
 
-<?php $wp_list_table->display(); ?>
+<?php
+$wp_list_table->display(); ?>
 
 </form>
 

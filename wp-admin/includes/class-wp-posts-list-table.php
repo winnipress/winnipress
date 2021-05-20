@@ -138,7 +138,6 @@ class WP_Posts_List_Table extends WP_List_Table {
 
 		if( $this->hierarchical_display ) {
 			$total_items = $wp_query->post_count;
-			winni_log($wp_query);
 		} elseif( $wp_query->found_posts || $this->get_pagenum() === 1 ) {
 			$total_items = $wp_query->found_posts;
 		} else {
@@ -159,8 +158,6 @@ class WP_Posts_List_Table extends WP_List_Table {
 				}
 			}
 		}
-
-		winni_log('ttoal'.$total_items);
 
 		if( !empty( $_REQUEST['mode'] ) ) {
 			$mode = $_REQUEST['mode'] === 'excerpt' ? 'excerpt' : 'list';
