@@ -769,9 +769,7 @@ final class WP_Theme implements ArrayAccess{
 				$this->name_translated = translate($value, $this->get('TextDomain' ) );
 				return $this->name_translated;
 			case 'Tags' :
-				if(empty($value ) || !function_exists('get_theme_feature_list' ) ){
-					return $value;
-				}
+				
 
 				static $tags_list;
 				if(!isset($tags_list ) ){
@@ -787,10 +785,7 @@ final class WP_Theme implements ArrayAccess{
 						'photoblogging' => __('Photoblogging' ), 'seasonal' => __('Seasonal' ),
 					);
 
-					$feature_list = get_theme_feature_list(false ); // No API
-					foreach($feature_list as $tags ){
-						$tags_list += $tags;
-					}
+					
 				}
 
 				foreach($value as &$tag ){

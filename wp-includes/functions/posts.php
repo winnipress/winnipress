@@ -453,15 +453,6 @@ function get_post_class($class = '', $post_id = null ){
 	$classes[] = 'type-' . $post->post_type;
 	$classes[] = 'status-' . $post->post_status;
 
-	// Post Format
-	if(post_type_supports($post->post_type, 'post-formats' ) ){
-		$post_format = get_post_format($post->ID );
-
-		if($post_format && !is_wp_error($post_format) )
-			$classes[] = 'format-' . sanitize_html_class($post_format );
-		else
-			$classes[] = 'format-standard';
-	}
 
 	$post_password_required = post_password_required($post->ID );
 
@@ -602,16 +593,6 @@ function get_body_class($class = '' ){
 			if(isset($post->post_type ) ){
 				$classes[] = 'single-' . sanitize_html_class($post->post_type, $post_id );
 				$classes[] = 'postid-' . $post_id;
-
-				// Post Format
-				if(post_type_supports($post->post_type, 'post-formats' ) ){
-					$post_format = get_post_format($post->ID );
-
-					if($post_format && !is_wp_error($post_format) )
-						$classes[] = 'single-format-' . sanitize_html_class($post_format );
-					else
-						$classes[] = 'single-format-standard';
-				}
 			}
 		}
 

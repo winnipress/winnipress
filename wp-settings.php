@@ -110,7 +110,6 @@ require(ABSPATH . WPINC . '/template.php');
 require(ABSPATH . WPINC . '/user.php');
 require(ABSPATH . WPINC . '/meta.php');
 require(ABSPATH . WPINC . '/post.php');
-require(ABSPATH . WPINC . '/post-formats.php');
 require(ABSPATH . WPINC . '/category.php');
 require(ABSPATH . WPINC . '/rewrite.php');
 require(ABSPATH . WPINC . '/kses.php');

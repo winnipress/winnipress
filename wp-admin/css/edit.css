@@ -737,14 +737,6 @@ a.post-format-icon:hover:before {
 	color: #00a0d2;
 }
 
-#post-formats-select {
-	line-height: 2;
-}
-
-#post-formats-select .post-format-icon::before {
-	top: 5px;
-}
-
 input.post-format {
 	margin-top: 1px;
 }

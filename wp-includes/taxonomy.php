@@ -90,64 +90,7 @@ function create_initial_taxonomies(){
 		'rest_base' => 'tags',
 		'rest_controller_class' => 'WP_REST_Terms_Controller',
 	));
-
-	register_taxonomy('nav_menu', 'nav_menu_item', array(
-		'public' => false,
-		'hierarchical' => false,
-		'labels' => array(
-			'name' => __('Navigation Menus'),
-			'singular_name' => __('Navigation Menu'),
-		),
-		'query_var' => false,
-		'rewrite' => false,
-		'show_ui' => false,
-		'_builtin' => true,
-		'show_in_nav_menus' => false,
-	));
-
-	register_taxonomy('link_category', 'link', array(
-		'hierarchical' => false,
-		'labels' => array(
-			'name' => __('Link Categories'),
-			'singular_name' => __('Link Category'),
-			'search_items' => __('Search Link Categories'),
-			'popular_items' => null,
-			'all_items' => __('All Link Categories'),
-			'edit_item' => __('Edit Link Category'),
-			'update_item' => __('Update Link Category'),
-			'add_new_item' => __('Add New Link Category'),
-			'new_item_name' => __('New Link Category Name'),
-			'separate_items_with_commas' => null,
-			'add_or_remove_items' => null,
-			'choose_from_most_used' => null,
-			'back_to_items' => __('&larr; Back to Link Categories'),
-		),
-		'capabilities' => array(
-			'manage_terms' => 'manage_links',
-			'edit_terms'   => 'manage_links',
-			'delete_terms' => 'manage_links',
-			'assign_terms' => 'manage_links',
-		),
-		'query_var' => false,
-		'rewrite' => false,
-		'public' => false,
-		'show_ui' => true,
-		'_builtin' => true,
-	));
-
-	register_taxonomy('post_format', 'post', array(
-		'public' => true,
-		'hierarchical' => false,
-		'labels' => array(
-			'name' => _x('Format', 'post format'),
-			'singular_name' => _x('Format', 'post format'),
-		),
-		'query_var' => true,
-		'rewrite' => $rewrite['post_format'],
-		'show_ui' => false,
-		'_builtin' => true,
-		'show_in_nav_menus' => current_theme_supports('post-formats'),
-	));
+	
 }
 
 /**

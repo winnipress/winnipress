@@ -75,33 +75,6 @@ wp_dropdown_categories(array('hide_empty' => 0, 'name' => 'default_category', 'o
 ?>
 </td>
 </tr>
-<?php
-$post_formats = get_post_format_strings();
-unset($post_formats['standard'] );
-?>
-<tr>
-<th scope="row"><label for="default_post_format"><?php _e('Default Post Format') ?></label></th>
-<td>
-	<select name="default_post_format" id="default_post_format">
-		<option value="0"><?php echo get_post_format_string('standard' ); ?></option>
-<?php foreach($post_formats as $format_slug => $format_name ): ?>
-		<option<?php selected(get_option('default_post_format' ), $format_slug ); ?> value="<?php echo esc_attr($format_slug ); ?>"><?php echo esc_html($format_name ); ?></option>
-<?php endforeach; ?>
-	</select>
-</td>
-</tr>
-<?php
-if(get_option('link_manager_enabled' ) ) :
-?>
-<tr>
-<th scope="row"><label for="default_link_category"><?php _e('Default Link Category') ?></label></th>
-<td>
-<?php
-wp_dropdown_categories(array('hide_empty' => 0, 'name' => 'default_link_category', 'orderby' => 'name', 'selected' => get_option('default_link_category'), 'hierarchical' => true, 'taxonomy' => 'link_category'));
-?>
-</td>
-</tr>
-<?php endif; ?>
 
 <?php
 do_settings_fields('writing', 'default');

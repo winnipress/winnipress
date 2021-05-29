@@ -1865,9 +1865,6 @@ function get_theme_starter_content(){
  *
  * @global array $_wp_theme_features
  *
- * @param string $feature  The feature being added. Likely core values include 'post-formats',
- *                         'post-thumbnails', 'html5', 'custom-logo', 'custom-header-uploads',
- *                         'custom-header', 'custom-background', 'title-tag', 'starter-content', etc.
  * @param mixed  $args,... Optional extra arguments to pass along with certain features.
  * @return void|bool False on failure, void otherwise.
  */
@@ -1894,15 +1891,6 @@ function add_theme_support($feature){
 				$args[0] = array_unique(array_merge($_wp_theme_features['post-thumbnails'][0], $args[0]));
 			}
 
-			break;
-
-		case 'post-formats' :
-			if(is_array($args[0])){
-				$post_formats = get_post_format_slugs();
-				unset($post_formats['standard']);
-
-				$args[0] = array_intersect($args[0], array_keys($post_formats));
-			}
 			break;
 
 		case 'html5' :
@@ -2221,7 +2209,6 @@ function current_theme_supports($feature){
 			return in_array($content_type, $_wp_theme_features[$feature][0]);
 
 		case 'html5':
-		case 'post-formats':
 			// specific post formats can be registered by passing an array of types to
 			// add_theme_support()
 
@@ -2241,7 +2228,7 @@ function current_theme_supports($feature){
 	 * Filters whether the current theme supports a specific feature.
 	 *
 	 * The dynamic portion of the hook name, `$feature`, refers to the specific theme
-	 * feature. Possible values include 'post-formats', 'post-thumbnails', 'custom-background',
+	 * feature. Possible values include 'post-thumbnails', 'custom-background',
 	 * 'custom-header', 'menus', 'automatic-feed-links', 'html5',
 	 * 'starter-content', and 'customize-selective-refresh-widgets'.
 	 *

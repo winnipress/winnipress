@@ -29,7 +29,7 @@ function create_initial_post_types(){
 		'rewrite' => false,
 		'query_var' => false,
 		'delete_with_user' => true,
-		'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields', 'comments', 'post-formats'),
+		'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields'),
 		'show_in_rest' => true,
 		'rest_base' => 'posts',
 		'rest_controller_class' => 'WP_REST_Posts_Controller',
@@ -1009,7 +1009,7 @@ function get_post_types($args = array(), $output = 'names', $operator = 'and'){
  *     @type array       $supports              Core feature(s) the post type supports. Serves as an alias for calling
  *                                              add_post_type_support() directly. Core features include 'title',
  *                                              'editor', 'comments', 'revisions', 'trackbacks', 'author', 'excerpt',
- *                                              'page-attributes', 'thumbnail', 'custom-fields', and 'post-formats'.
+ *                                              'page-attributes', 'thumbnail', 'custom-fields'.
  *                                              Additionally, the 'revisions' feature dictates whether the post type
  *                                              will store revisions, and the 'comments' feature dictates whether the
  *                                              comments count will show on the edit screen. Defaults is an array
@@ -1437,7 +1437,7 @@ function _add_post_type_submenus(){
  * All core features are directly associated with a functional area of the edit
  * screen, such as the editor or a meta box. Features include: 'title', 'editor',
  * 'comments', 'revisions', 'trackbacks', 'author', 'excerpt', 'page-attributes',
- * 'thumbnail', 'custom-fields', and 'post-formats'.
+ * 'thumbnail', 'custom-fields'.
  *
  * Additionally, the 'revisions' feature dictates whether the post type will
  * store revisions, and the 'comments' feature dictates whether the comments

@@ -533,10 +533,6 @@ function get_embed_template(){
 	$templates = array();
 
 	if(!empty($object->post_type)){
-		$post_format = get_post_format($object);
-		if($post_format){
-			$templates[] = "embed-{$object->post_type}-{$post_format}.php";
-		}
 		$templates[] = "embed-{$object->post_type}.php";
 	}
 
