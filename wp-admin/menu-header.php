@@ -1,16 +1,6 @@
 <?php
-/**
- * Displays Administration Menu.
- *
- * @package WordPress
- * @subpackage Administration
- */
 
-/**
- * The current page.
- *
- * @global string $self
- */
+// $self = $_SERVER['PHP_SELF']
 global $self;
 $self = preg_replace('|^.*/wp-admin/|i', '', $self);
 $self = preg_replace('|^.*/plugins/|i', '', $self);
@@ -47,6 +37,7 @@ $parent_file = apply_filters('parent_file', $parent_file);
 $submenu_file = apply_filters('submenu_file', $submenu_file, $parent_file);
 
 get_admin_page_parent();
+winni_log($parent_file);
 
 /**
  * Display menu.
@@ -76,7 +67,7 @@ function _wp_menu_output($menu, $submenu, $submenu_as_parent = true) {
 		$aria_hidden = '';
 		$is_separator = false;
 
-		if($first) {
+		if($first){
 			$class[] = 'wp-first-item';
 			$first = false;
 		}
@@ -90,36 +81,37 @@ function _wp_menu_output($menu, $submenu, $submenu_as_parent = true) {
 		if(($parent_file && $item[2] == $parent_file) || (empty($typenow) && $self == $item[2])) {
 			if(!empty($submenu_items)) {
 				$class[] = 'wp-has-current-submenu wp-menu-open';
-			} else {
+			}else{
 				$class[] = 'current';
 				$aria_attributes .= 'aria-current="page"';
 			}
-		} else {
+		}else{
 			$class[] = 'wp-not-current-submenu';
-			if(!empty($submenu_items))
+			if(!empty($submenu_items)){
 				$aria_attributes .= 'aria-haspopup="true"';
+			}
 		}
 
-		if(!empty($item[4]))
+		if(!empty($item[4])){
 			$class[] = esc_attr($item[4]);
+		}
 
 		$class = $class ? ' class="' . join(' ', $class) . '"' : '';
 		$id = !empty($item[5]) ? ' id="' . preg_replace('|[^a-zA-Z0-9_:.]|', '-', $item[5]) . '"' : '';
 		$img = $img_style = '';
 		$img_class = ' dashicons-before';
 
+		// If it contains the wp-menu-separator classname
 		if(false !== strpos($class, 'wp-menu-separator')) {
 			$is_separator = true;
 		}
-
-		
 
 		$arrow = '<div class="wp-menu-arrow"><div></div></div>';
 
 		$title = wptexturize($item[0]);
 
-		// hide separators from screen readers
-		if($is_separator) {
+		// Hide separators from screen readers
+		if($is_separator){
 			$aria_hidden = ' aria-hidden="true"';
 		}
 
@@ -134,7 +126,7 @@ function _wp_menu_output($menu, $submenu, $submenu_as_parent = true) {
 
 		if($is_separator) {
 			echo '<div class="separator"></div>';
-		} elseif($submenu_as_parent && !empty($submenu_items)) {
+		}elseif($submenu_as_parent && !empty($submenu_items)){
 			$submenu_items = array_values($submenu_items);  // Re-index.
 			$menu_hook = get_plugin_page_hook($submenu_items[0][2], $item[2]);
 			$menu_file = $submenu_items[0][2];
@@ -146,15 +138,16 @@ function _wp_menu_output($menu, $submenu, $submenu_as_parent = true) {
 			} else {
 				echo "\n\t<a href='{$submenu_items[0][2]}'$class $aria_attributes>$arrow<div class='wp-menu-name'>$icon $title</div></a>";
 			}
-		} elseif(!empty($item[2]) && current_user_can($item[1])) {
+		}elseif(!empty($item[2]) && current_user_can($item[1])){
 			$menu_hook = get_plugin_page_hook($item[2], 'admin.php');
 			$menu_file = $item[2];
-			if(false !== ($pos = strpos($menu_file, '?')))
+			if(false !== ($pos = strpos($menu_file, '?'))){
 				$menu_file = substr($menu_file, 0, $pos);
+			}
 			if(!empty($menu_hook) || (('index.php' != $item[2]) && file_exists(WP_PLUGIN_DIR . "/$menu_file") && !file_exists(ABSPATH . "/wp-admin/$menu_file"))) {
 				$admin_is_parent = true;
 				echo "\n\t<a href='admin.php?page={$item[2]}'$class $aria_attributes>$arrow<div class='wp-menu-name'>$icon{$item[0]}</div></a>";
-			} else {
+			}else{
 				echo "\n\t<a href='{$item[2]}'$class $aria_attributes>$arrow<div class='wp-menu-name'>$icon{$item[0]}</div></a>";
 			}
 		}
@@ -236,23 +229,17 @@ function _wp_menu_output($menu, $submenu, $submenu_as_parent = true) {
 ?>
 
 <div id="adminmenumain" role="navigation" aria-label="<?php esc_attr_e('Main menu'); ?>">
-<a href="#wpbody-content" class="screen-reader-shortcut"><?php _e('Skip to main content'); ?></a>
-<a href="#wp-toolbar" class="screen-reader-shortcut"><?php _e('Skip to toolbar'); ?></a>
-<div id="adminmenuback"></div>
-<div id="adminmenuwrap">
-<ul id="adminmenu">
+	<a href="#wpbody-content" class="screen-reader-shortcut"><?php _e('Skip to main content'); ?></a>
+	<a href="#wp-toolbar" class="screen-reader-shortcut"><?php _e('Skip to toolbar'); ?></a>
+	<div id="adminmenuback"></div>
+	<div id="adminmenuwrap">
+		<ul id="adminmenu">
+		<?php
+		_wp_menu_output($menu, $submenu);
 
-<?php
-
-_wp_menu_output($menu, $submenu);
-/**
- * Fires after the admin menu has been output.
- *
- * @since 2.5.0
- */
-do_action('adminmenu');
-
-?>
-</ul>
-</div>
+		// Fires after the admin menu has been output
+		do_action('adminmenu');
+		?>
+		</ul>
+	</div>
 </div>

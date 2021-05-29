@@ -5,7 +5,7 @@ if(!isset($wp_loaded_template)){
 
 	$wp_loaded_template = true;
 
-	// Set up the WordPress query
+	// Set up the WP query
 	wp();
 
 	// Load the theme

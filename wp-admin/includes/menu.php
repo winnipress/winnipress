@@ -1,23 +1,8 @@
 <?php
-/**
- * Build Administration Menu.
- *
- * @package WordPress
- * @subpackage Administration
- */
+// Build Administration Menu
 
-if( is_network_admin()) {
-
-	/**
-	 * Fires before the administration menu loads in the Network Admin.
-	 *
-	 * The hook fires before menus and sub-menus are removed based on user privileges.
-	 *
-	 * @private
-	 * @since 3.1.0
-	 */
-	do_action( '_network_admin_menu');
-} elseif( is_user_admin()) {
+if(is_user_admin()){
+	winni_log('IS USR ADMIN');
 
 	/**
 	 * Fires before the administration menu loads in the User Admin.
@@ -29,6 +14,7 @@ if( is_network_admin()) {
 	 */
 	do_action( '_user_admin_menu');
 } else {
+	winni_log('IS NORMAL ADMIN');
 
 	/**
 	 * Fires before the administration menu loads in the admin.
@@ -42,46 +28,48 @@ if( is_network_admin()) {
 }
 
 // Create list of page plugin hook names.
-foreach($menu as $menu_page) {
-	if( false !== $pos = strpos($menu_page[2], '?')) {
+foreach($menu as $menu_page){
+	if(false !== $pos = strpos($menu_page[2], '?')){
 		// Handle post_type=post|page|foo pages.
 		$hook_name = substr($menu_page[2], 0, $pos);
 		$hook_args = substr($menu_page[2], $pos + 1);
 		wp_parse_str($hook_args, $hook_args);
 		// Set the hook name to be the post type.
-		if( isset($hook_args['post_type']))
+		if(isset($hook_args['post_type']))
 			$hook_name = $hook_args['post_type'];
 		else
 			$hook_name = basename($hook_name, '.php');
 		unset($hook_args);
-	} else {
+	}else{
 		$hook_name = basename($menu_page[2], '.php');
 	}
 	$hook_name = sanitize_title($hook_name);
 
-	if( isset($compat[$hook_name]))
-		$hook_name = $compat[$hook_name];
-	elseif( !$hook_name)
+	if(!$hook_name){
 		continue;
+	}
 
 	$admin_page_hooks[$menu_page[2]] = $hook_name;
 }
-unset($menu_page, $compat);
+unset($menu_page);
 
 $_wp_submenu_nopriv = array();
 $_wp_menu_nopriv = array();
-// Loop over submenus and remove pages for which the user does not have privs.
-foreach($submenu as $parent => $sub) {
-	foreach($sub as $index => $data) {
-		if( !current_user_can($data[1])) {
+
+// Loop over submenus and remove pages for which the user does not have privilege.
+foreach($submenu as $parent => $sub){
+	foreach($sub as $index => $data){
+		if(!current_user_can($data[1])){
 			unset($submenu[$parent][$index]);
 			$_wp_submenu_nopriv[$parent][$data[2]] = true;
 		}
 	}
 	unset($index, $data);
 
-	if( empty($submenu[$parent]))
+	// Remove if it's now empty
+	if(empty($submenu[$parent])){
 		unset($submenu[$parent]);
+	}
 }
 unset($sub, $parent);
 
@@ -90,45 +78,36 @@ unset($sub, $parent);
  * Menus for which the original parent is not accessible due to lack of privileges
  * will have the next submenu in line be assigned as the new menu parent.
  */
-foreach( $menu as $id => $data) {
-	if( empty($submenu[$data[2]]))
+foreach($menu as $id => $data) {
+	if(empty($submenu[$data[2]])){
 		continue;
+	}
+
 	$subs = $submenu[$data[2]];
-	$first_sub = reset( $subs);
+	$first_sub = reset($subs);
 	$old_parent = $data[2];
 	$new_parent = $first_sub[2];
-	/*
-	 * If the first submenu is not the same as the assigned parent,
-	 * make the first submenu the new parent.
-	 */
-	if( $new_parent != $old_parent) {
+
+	// If the first submenu is not the same as the assigned parent, make the first submenu the new parent
+	if($new_parent != $old_parent){
 		$_wp_real_parent_file[$old_parent] = $new_parent;
 		$menu[$id][2] = $new_parent;
 
-		foreach($submenu[$old_parent] as $index => $data) {
+		foreach($submenu[$old_parent] as $index => $data){
 			$submenu[$new_parent][$index] = $submenu[$old_parent][$index];
 			unset($submenu[$old_parent][$index]);
 		}
 		unset($submenu[$old_parent], $index);
 
-		if( isset($_wp_submenu_nopriv[$old_parent]))
+		if(isset($_wp_submenu_nopriv[$old_parent])){
 			$_wp_submenu_nopriv[$new_parent] = $_wp_submenu_nopriv[$old_parent];
+		}
 	}
 }
 unset($id, $data, $subs, $first_sub, $old_parent, $new_parent);
 
-if( is_network_admin()) {
-
-	/**
-	 * Fires before the administration menu loads in the Network Admin.
-	 *
-	 * @since 3.1.0
-	 *
-	 * @param string $context Empty context.
-	 */
-	do_action( 'network_admin_menu', '');
-} elseif( is_user_admin()) {
-
+if(is_user_admin()){
+winni_log('IS USER ADMIN');
 	/**
 	 * Fires before the administration menu loads in the User Admin.
 	 *
@@ -137,7 +116,7 @@ if( is_network_admin()) {
 	 * @param string $context Empty context.
 	 */
 	do_action( 'user_admin_menu', '');
-} else {
+}else{
 
 	/**
 	 * Fires before the administration menu loads in the admin.

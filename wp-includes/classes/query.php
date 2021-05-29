@@ -1274,7 +1274,7 @@ class WP_Query{
 			}
 
 			$like = $n . $wpdb->esc_like($term ) . $n;
-			$search .= $wpdb->prepare("{$searchand}(({$wpdb->posts}.post_title $like_op %s) $andor_op ({$wpdb->posts}.post_excerpt $like_op %s) $andor_op ({$wpdb->posts}.post_content $like_op %s))", $like, $like, $like );
+			$search .= $wpdb->prepare("{$searchand}(({$wpdb->posts}.post_title $like_op %s) $andor_op ({$wpdb->posts}.post_content $like_op %s))", $like, $like, $like );
 			$searchand = ' AND ';
 		}
 
@@ -1388,7 +1388,7 @@ class WP_Query{
 
 			// sentence match in 'post_title'
 			if($like ){
-				$search_orderby .= $wpdb->prepare("WHEN{$wpdb->posts}.post_title LIKE %s THEN 1 ", $like );
+				$search_orderby .= $wpdb->prepare("WHEN {$wpdb->posts}.post_title LIKE %s THEN 1 ", $like );
 			}
 
 			// sanity limit, sort as sentence when more than 6 terms
@@ -1403,8 +1403,7 @@ class WP_Query{
 
 			// Sentence match in 'post_content' and 'post_excerpt'.
 			if($like ){
-				$search_orderby .= $wpdb->prepare("WHEN{$wpdb->posts}.post_excerpt LIKE %s THEN 4 ", $like );
-				$search_orderby .= $wpdb->prepare("WHEN{$wpdb->posts}.post_content LIKE %s THEN 5 ", $like );
+				$search_orderby .= $wpdb->prepare("WHEN {$wpdb->posts}.post_content LIKE %s THEN 5 ", $like );
 			}
 
 			if($search_orderby ){

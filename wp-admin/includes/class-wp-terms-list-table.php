@@ -199,14 +199,15 @@ class WP_Terms_List_Table extends WP_List_Table {
 	public function display_rows_or_placeholder() {
 		$taxonomy = $this->screen->taxonomy;
 
-		$args = wp_parse_args( $this->callback_args, array(
+		$args = wp_parse_args(
+			$this->callback_args,
+			array(
+			'taxonomy'   => $taxonomy,
 			'page' => 1,
 			'number' => 20,
 			'search' => '',
 			'hide_empty' => 0
 		));
-
-		$args['taxonomy'] = $taxonomy;
 
 		$page = $args['page'];
 

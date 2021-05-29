@@ -1377,60 +1377,65 @@ function menu_page_url($menu_slug, $echo = true) {
  * @global array $_wp_menu_nopriv
  * @global array $_wp_submenu_nopriv
  */
-function get_admin_page_parent( $parent = '') {
+function get_admin_page_parent($parent = ''){
 	global $parent_file, $menu, $submenu, $pagenow, $typenow,
 		$plugin_page, $_wp_real_parent_file, $_wp_menu_nopriv, $_wp_submenu_nopriv;
 
-	if( !empty ( $parent) && 'admin.php' != $parent) {
-		if( isset( $_wp_real_parent_file[$parent]))
+	if(!empty($parent) && 'admin.php' != $parent){
+		if(isset($_wp_real_parent_file[$parent]))
 			$parent = $_wp_real_parent_file[$parent];
 		return $parent;
 	}
 
-	if( $pagenow == 'admin.php' && isset( $plugin_page)) {
-		foreach( (array)$menu as $parent_menu) {
-			if( $parent_menu[2] == $plugin_page) {
+	if($pagenow == 'admin.php' && isset($plugin_page)){
+		foreach((array)$menu as $parent_menu){
+			if($parent_menu[2] == $plugin_page){
 				$parent_file = $plugin_page;
-				if( isset( $_wp_real_parent_file[$parent_file]))
+				if(isset($_wp_real_parent_file[$parent_file])){
 					$parent_file = $_wp_real_parent_file[$parent_file];
+					return $parent_file;
+				}
+			}
+		}
+		if(isset($_wp_menu_nopriv[$plugin_page])) {
+			$parent_file = $plugin_page;
+			if(isset($_wp_real_parent_file[$parent_file])){
+				$parent_file = $_wp_real_parent_file[$parent_file];
 				return $parent_file;
 			}
 		}
-		if( isset( $_wp_menu_nopriv[$plugin_page])) {
-			$parent_file = $plugin_page;
-			if( isset( $_wp_real_parent_file[$parent_file]))
-					$parent_file = $_wp_real_parent_file[$parent_file];
+	}
+
+	if(isset($plugin_page) && isset($_wp_submenu_nopriv[$pagenow][$plugin_page])){
+		$parent_file = $pagenow;
+		if(isset($_wp_real_parent_file[$parent_file])){
+			$parent_file = $_wp_real_parent_file[$parent_file];
 			return $parent_file;
 		}
 	}
 
-	if( isset( $plugin_page) && isset( $_wp_submenu_nopriv[$pagenow][$plugin_page])) {
-		$parent_file = $pagenow;
-		if( isset( $_wp_real_parent_file[$parent_file]))
-			$parent_file = $_wp_real_parent_file[$parent_file];
-		return $parent_file;
-	}
-
-	foreach(array_keys( (array)$submenu) as $parent) {
-		foreach( $submenu[$parent] as $submenu_array) {
-			if( isset( $_wp_real_parent_file[$parent]))
+	foreach(array_keys((array)$submenu) as $parent){
+		foreach($submenu[$parent] as $submenu_array){
+			if(isset($_wp_real_parent_file[$parent])){
 				$parent = $_wp_real_parent_file[$parent];
-			if( !empty($typenow) && ($submenu_array[2] == "$pagenow?post_type=$typenow")) {
+			}
+			if(!empty($typenow) && ($submenu_array[2] == "$pagenow?post_type=$typenow")){
 				$parent_file = $parent;
 				return $parent;
-			} elseif( $submenu_array[2] == $pagenow && empty($typenow) && ( empty($parent_file) || false === strpos($parent_file, '?'))) {
+			}elseif($submenu_array[2] == $pagenow && empty($typenow) && (empty($parent_file) || false === strpos($parent_file, '?'))){
 				$parent_file = $parent;
 				return $parent;
-			} elseif( isset( $plugin_page) && ($plugin_page == $submenu_array[2])) {
+			}elseif(isset($plugin_page) && ($plugin_page == $submenu_array[2])){
 				$parent_file = $parent;
 				return $parent;
 			}
 		}
 	}
 
-	if( empty($parent_file))
+	if(empty($parent_file)){
 		$parent_file = '';
-	return '';
+		return '';
+	}
 }
 
 /**

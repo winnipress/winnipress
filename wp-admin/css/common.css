@@ -560,9 +560,6 @@ vertical-align: middle;
 margin: 10px 20px 0 2px;
 }
 
-.wrap > h2:first-child, /* Back-compat for pre-4.4 */
-.wrap [class$="icon32"] + h2, /* Back-compat for pre-4.4 */
-.postbox .inside h2, /* Back-compat for pre-4.4 */
 .wrap h1{
 font-size: 23px;
 font-weight: 400;
@@ -1267,57 +1264,8 @@ margin: 40px auto 0;
 float: none;
 }
 
-@media only screen and (max-width: 1120px){
-.filter-drawer{
-border-bottom: 1px solid #eee;
-}
 
-.filter-group{
-margin-bottom: 0;
-margin-top: 5px;
-width: 100%;
-}
 
-.filter-group li{
-margin: 10px 0;
-}
-}
-
-@media only screen and (max-width: 1000px){
-.filter-items{
-float: none;
-}
-
-.wp-filter .media-toolbar-primary,
-.wp-filter .media-toolbar-secondary,
-.wp-filter .search-form{
-float: none; /* Remove float from media-views.css */
-position: relative;
-max-width: 100%;
-}
-}
-
-@media only screen and (max-width: 782px){
-.filter-group li{
-padding: 0;
-width: 50%;
-}
-}
-
-@media only screen and (max-width: 320px){
-.filter-count{
-display: none;
-}
-
-.wp-filter .drawer-toggle{
-margin: 10px 0;
-}
-
-.filter-group li,
-.wp-filter .search-form input[type="search"]{
-width: 100%;
-}
-}
 
 /*------------------------------------------------------------------------------
   4.0 - Notifications
@@ -1577,14 +1525,6 @@ transition-duration: .05s;
 transition-timing-function: ease-in-out;
 }
 
-@media aural{
-.wrap .notice p:before,
-.button.installing:before,
-.button.installed:before,
-.update-message p:before{
-speak: none;
-}
-}
 
 
 /* @todo: this does not need its own section anymore */
@@ -1976,14 +1916,6 @@ width: 280px;
 min-height: 250px;
 }
 
-/* one column on the dash */
-@media only screen and (max-width: 799px){
-#wpbody-content .metabox-holder .postbox-container .empty-container{
-border: 0 none;
-height: 0;
-min-height: 0;
-}
-}
 
 .js .widget .widget-top,
 .js .postbox .hndle{
@@ -2828,58 +2760,6 @@ font-size: 13px;
 margin-right: 1em;
 }
 
-@media screen and ( max-width: 771px ){
-#plugin-information-title.with-banner{
-height: 100px;
-}
-
-#plugin-information-title.with-banner h2{
-margin-top: 30px;
-font-size: 20px;
-line-height: 40px;
-max-width: 85%;
-}
-
-#plugin-information-title.with-banner div.vignette{
-height: 100px;
-}
-
-#plugin-information-tabs{
-overflow: hidden; /* clearfix */
-padding: 0;
-height: auto; /* let tabs wrap */
-}
-
-#plugin-information-tabs a.current{
-margin-bottom: 0;
-border-bottom: none;
-}
-
-#plugin-information .fyi{
-float: none;
-border: 1px solid #ddd;
-position: static;
-width: auto;
-margin: 26px 26px 0;
-padding-bottom: 0; /* reset from the two column height fix */
-}
-
-#section-holder{
-position: static;
-margin: 0;
-padding-bottom: 70px; /* reset from the two column height fix, plus accommodate footer */
-}
-
-#plugin-information .fyi h3,
-#plugin-information .fyi small{
-display: none;
-}
-
-#plugin-information-footer{
-padding: 12px 16px 0;
-height: 46px;
-}
-}
 
 /* Thickbox for the Plugin details modal. */
 #TB_window.plugin-details-modal{
@@ -2937,13 +2817,7 @@ speak: none;
 -moz-osx-font-smoothing: grayscale;
 }
 
-/* move plugin install close icon to top on narrow screens */
-@media screen and ( max-width: 830px ){
-.plugin-details-modal #TB_closeWindowButton{
-right: 0;
-top: -30px;
-}
-}
+
 
 /* @todo: move this. */
 img{
@@ -3458,130 +3332,9 @@ min-height: 130px;
 margin: 0;
 }
 
-@media only screen and (max-width: 599px){
-.my-sites li{
-min-height: 0;
-}
-}
 
-@media only screen and (min-width: 600px){
-.my-sites.striped li{
-background-color: #fff;
-position: relative;
-}
-.my-sites.striped li:after{
-content: "";
-width: 1px;
-height: 100%;
-position: absolute;
-top: 0;
-right: 0;
-background: #ccc;
-}
 
-}
-@media only screen and (min-width: 600px) and (max-width: 699px){
-.my-sites li{
-float: left;
-width: 44%;
-}
-.my-sites.striped li{
-background-color: #fff;
-}
-.my-sites.striped li:nth-of-type(2n+1){
-clear: left;
-}
-.my-sites.striped li:nth-of-type(2n+2):after{
-content: none;
-}
-.my-sites li:nth-of-type(4n+1),
-.my-sites li:nth-of-type(4n+2){
-background-color: #f9f9f9;
-}
 
-}
-
-@media only screen and (min-width: 700px) and (max-width: 1199px){
-.my-sites li{
-float: left;
-width: 27.333333%;
-background-color: #fff;
-}
-.my-sites.striped li:nth-of-type(3n+3):after{
-content: none;
-}
-.my-sites li:nth-of-type(6n+1),
-.my-sites li:nth-of-type(6n+2),
-.my-sites li:nth-of-type(6n+3){
-background-color: #f9f9f9;
-}
-}
-
-@media only screen and (min-width: 1200px) and (max-width: 1399px){
-.my-sites li{
-float: left;
-width: 21%;
-padding: 8px 2%;
-background-color: #fff;
-}
-.my-sites.striped li:nth-of-type(4n+1){
-clear: left;
-}
-.my-sites.striped li:nth-of-type(4n+4):after{
-content: none;
-}
-.my-sites li:nth-of-type(8n+1),
-.my-sites li:nth-of-type(8n+2),
-.my-sites li:nth-of-type(8n+3),
-.my-sites li:nth-of-type(8n+4){
-background-color: #f9f9f9;
-}
-}
-
-@media only screen and (min-width: 1400px) and (max-width: 1599px){
-.my-sites li{
-float: left;
-width: 16%;
-padding: 8px 2%;
-background-color: #fff;
-}
-.my-sites.striped li:nth-of-type(5n+1){
-clear: left;
-}
-.my-sites.striped li:nth-of-type(5n+5):after{
-content: none;
-}
-.my-sites li:nth-of-type(10n+1),
-.my-sites li:nth-of-type(10n+2),
-.my-sites li:nth-of-type(10n+3),
-.my-sites li:nth-of-type(10n+4),
-.my-sites li:nth-of-type(10n+5){
-background-color: #f9f9f9;
-}
-}
-
-@media only screen and (min-width: 1600px){
-.my-sites li{
-float: left;
-width: 12.666666%;
-padding: 8px 2%;
-background-color: #fff;
-}
-.my-sites.striped li:nth-of-type(6n+1){
-clear: left;
-}
-.my-sites.striped li:nth-of-type(6n+6):after{
-content: none;
-}
-.my-sites li:nth-of-type(12n+1),
-.my-sites li:nth-of-type(12n+2),
-.my-sites li:nth-of-type(12n+3),
-.my-sites li:nth-of-type(12n+4),
-.my-sites li:nth-of-type(12n+5),
-.my-sites li:nth-of-type(12n+6){
-background-color: #f9f9f9;
-}
-}
 
 .my-sites li a{
 text-decoration: none;
@@ -3590,214 +3343,4 @@ text-decoration: none;
 /* =Media Queries
 -------------------------------------------------------------- */
 
-/**
- * HiDPI Displays
- */
-@media print,
-  (-webkit-min-device-pixel-ratio: 1.25),
-  (min-resolution: 120dpi){
-/* Back-compat for pre-3.8 */
-div.star-holder,
-div.star-holder .star-rating{
-background: url(../images/stars-2x.png?ver=20121108) repeat-x bottom left;
-background-size: 21px 37px;
-}
 
-.spinner{
-background-image: url(../images/spinner-2x.gif);
-}
-
-/* @todo: evaluate - most of these were likely replaced by dashicons */
-.curtime #timestamp,
-#screen-meta-links a.show-settings,
-.widget-top .widget-action,
-.widget-top .widget-action:hover,
-.sidebar-name .toggle-indicator,
-.sidebar-name:hover .toggle-indicator,
-.meta-box-sortables .postbox:hover .handlediv,
-#bulk-titles div a,
-#bulk-titles div a:hover{
-background: none !important;
-}
-
-}
-
-@-ms-viewport{
-width: device-width;
-}
-
-@media screen and ( max-width: 782px ){
-html.wp-toolbar{
-padding-top: 46px;
-}
-
-body{
-min-width: 240px;
-overflow-x: hidden;
-}
-
-body *{
--webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
-}
-
-#wpcontent{
-position: relative;
-margin-left: 0;
-padding-left: 10px;
-}
-
-#wpbody-content{
-padding-bottom: 100px;
-}
-
-.wrap{
-margin-right: 12px;
-margin-left: 0;
-}
-
-/* categories */
-#col-left,
-#col-right{
-float: none;
-width: auto;
-}
-
-#col-left .col-wrap,
-#col-right .col-wrap{
-padding: 0;
-}
-
-/* Hidden Elements */
-#screen-meta,
-#screen-meta-links,
-#collapse-menu,
-.post-format-select{
-display: none !important;
-}
-
-.wrap h1.wp-heading-inline{
-margin-bottom: 0.5em;
-}
-
-.wrap .add-new-h2, /* deprecated */
-.wrap .add-new-h2:active, /* deprecated */
-.wrap .page-title-action,
-.wrap .page-title-action:active{
-padding: 10px 15px;
-font-size: 14px;
-white-space: nowrap;
-}
-
-/* Feedback Messages */
-.notice,
-.wrap div.updated,
-.wrap div.error,
-.media-upload-form div.error{
-margin: 20px 0 10px 0;
-padding: 5px 10px;
-font-size: 14px;
-line-height: 175%;
-}
-
-.wp-core-ui .notice.is-dismissible{
-padding-right: 46px;
-}
-
-.notice-dismiss{
-padding: 13px;
-}
-
-.wrap .icon32 + h2{
-margin-top: -2px;
-}
-
-.wp-responsive-open #wpbody{
-right: -16em;
-}
-
-code{
-word-wrap: break-word;
-}
-
-/* General Metabox */
-.postbox{
-font-size: 14px;
-}
-
-.metabox-holder h3.hndle, /* Back-compat for pre-4.4 */
-.metabox-holder .stuffbox > h3, /* Back-compat for pre-4.4 */
-.metabox-holder .postbox > h3, /* Back-compat for pre-4.4 */
-.metabox-holder h2{
-padding: 12px;
-}
-
-.postbox .handlediv{
-margin-top: 3px;
-}
-
-/* Subsubsub Nav */
-.subsubsub{
-font-size: 16px;
-text-align: center;
-margin-bottom: 15px;
-}
-
-.filter-drawer .filter-group-feature input,
-.filter-drawer .filter-group-feature label{
-line-height: 25px;
-}
-
-.filter-drawer .filter-group-feature label{
-margin-left: 32px;
-}
-
-.wp-filter .button.drawer-toggle{
-font-size: 13px;
-line-height: 26px;
-height: 28px;
-}
-}
-
-/* Smartphone */
-@media screen and (max-width: 600px){
-/* Disable horizontal scroll when responsive menu is open
-   since we push the main content off to the right. */
-#wpwrap.wp-responsive-open{
-overflow-x: hidden;
-}
-
-html.wp-toolbar{
-padding-top: 0;
-}
-
-#wpbody{
-padding-top: 46px;
-}
-
-/* Keep full-width boxes on Edit Post page from causing horizontal scroll */
-div#post-body.metabox-holder.columns-1{
-overflow-x: hidden;
-}
-
-h1.nav-tab-wrapper,
-.wrap h2.nav-tab-wrapper,
-.nav-tab-wrapper{
-border-bottom: 0;
-}
-
-h1 .nav-tab,
-h2 .nav-tab,
-h3 .nav-tab{
-margin: 10px 10px 0 0;
-border-bottom: 1px solid #ccc;
-}
-}
-
-@media screen and (max-width: 320px){
-/* Prevent default center alignment and larger font for the Right Now widget when
-   the network dashboard is viewed on a small mobile device. */
-#network_dashboard_right_now .subsubsub{
-font-size: 14px;
-text-align: left;
-}
-}

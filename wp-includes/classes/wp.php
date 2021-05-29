@@ -579,11 +579,7 @@ class WP{
 			$GLOBALS['authordata'] = get_userdata( $wp_query->post->post_author );
 	}
 
-	/**
-	 * Set up the current user.
-	 *
-	 * @since 2.0.0
-	 */
+	// Set up the current users
 	public function init(){
 		wp_get_current_user();
 	}
