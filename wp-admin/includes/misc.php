@@ -712,7 +712,6 @@ function wp_refresh_post_nonces( $response, $data, $screen_id){
 				'getpermalinknonce' => wp_create_nonce('getpermalink'),
 				'samplepermalinknonce' => wp_create_nonce('samplepermalink'),
 				'closedpostboxesnonce' => wp_create_nonce('closedpostboxes'),
-				'_ajax_linking_nonce' => wp_create_nonce( 'internal-linking'),
 				'_wpnonce' => wp_create_nonce( 'update-post_' . $post_id),
 			),
 			'heartbeatNonce' => wp_create_nonce( 'heartbeat-nonce'),
