@@ -1,449 +1,166 @@
 <?php
-/**
- * Query API: WP_Query class
- *
- * @package WordPress
- * @subpackage Query
- * @since 4.7.0
- */
+// Query API: WP_Query class
 
-/**
- * The WordPress Query class.
- *
- * @link https://codex.wordpress.org/Function_Reference/WP_Query Codex page.
- *
- * @since 1.5.0
- * @since 4.5.0 Removed the `$comments_popup` property.
- */
 class WP_Query{
 
-	/**
-	 * Query vars set by the user
-	 *
-	 * @since 1.5.0
-	 * @var array
-	 */
+	// Query vars set by the user
 	public $query;
 
-	/**
-	 * Query vars, after parsing
-	 *
-	 * @since 1.5.0
-	 * @var array
-	 */
+	// Query vars, after parsing
 	public $query_vars = array();
 
-	/**
-	 * Taxonomy query, as passed to get_tax_sql()
-	 *
-	 * @since 3.1.0
-	 * @var object WP_Tax_Query
-	 */
+	// Taxonomy query, as passed to get_tax_sql()
 	public $tax_query;
 
-	/**
-	 * Metadata query container
-	 *
-	 * @since 3.2.0
-	 * @var object WP_Meta_Query
-	 */
+	// Metadata query container
 	public $meta_query = false;
 
-	/**
-	 * Date query container
-	 *
-	 * @since 3.7.0
-	 * @var object WP_Date_Query
-	 */
+	// Date query container
 	public $date_query = false;
 
-	/**
-	 * Holds the data for a single object that is queried.
-	 *
-	 * Holds the contents of a post, page, category, attachment.
-	 *
-	 * @since 1.5.0
-	 * @var object|array
-	 */
+	// Holds the data for a single object that is queried
 	public $queried_object;
 
-	/**
-	 * The ID of the queried object.
-	 *
-	 * @since 1.5.0
-	 * @var int
-	 */
+	// The ID of the queried object
 	public $queried_object_id;
 
-	/**
-	 * Get post database query.
-	 *
-	 * @since 2.0.1
-	 * @var string
-	 */
+	// Database query
 	public $request;
 
-	/**
-	 * List of posts.
-	 *
-	 * @since 1.5.0
-	 * @var array
-	 */
+	// List of posts
 	public $posts;
 
-	/**
-	 * The amount of posts for the current query.
-	 *
-	 * @since 1.5.0
-	 * @var int
-	 */
+	// The amount of posts for the current query
 	public $post_count = 0;
 
-	/**
-	 * Index of the current item in the loop.
-	 *
-	 * @since 1.5.0
-	 * @var int
-	 */
+	// Index of the current item in the loop
 	public $current_post = -1;
 
-	/**
-	 * Whether the loop has started and the caller is in the loop.
-	 *
-	 * @since 2.0.0
-	 * @var bool
-	 */
+	// Whether the loop has started and the caller is in the loop
 	public $in_the_loop = false;
 
-	/**
-	 * The current post.
-	 *
-	 * @since 1.5.0
-	 * @var WP_Post
-	 */
+	// The current post
 	public $post;
 
-	/**
-	 * The list of comments for current post.
-	 *
-	 * @since 2.2.0
-	 * @var array
-	 */
+	// The list of comments for current post - TO REMOVE
 	public $comments;
 
-	/**
-	 * The amount of comments for the posts.
-	 *
-	 * @since 2.2.0
-	 * @var int
-	 */
+	// The amount of comments for the posts - TO REMOVE
 	public $comment_count = 0;
 
-	/**
-	 * The index of the comment in the comment loop.
-	 *
-	 * @since 2.2.0
-	 * @var int
-	 */
+	// The index of the comment in the comment loop - TO REMOVE
 	public $current_comment = -1;
 
-	/**
-	 * Current comment ID.
-	 *
-	 * @since 2.2.0
-	 * @var int
-	 */
+	// Current comment ID - TO REMOVE
 	public $comment;
 
-	/**
-	 * The amount of found posts for the current query.
-	 *
-	 * If limit clause was not used, equals $post_count.
-	 *
-	 * @since 2.1.0
-	 * @var int
-	 */
+	// The amount of found posts for the current query. If limit clause was not used, equals $post_count
 	public $found_posts = 0;
 
-	/**
-	 * The amount of pages.
-	 *
-	 * @since 2.1.0
-	 * @var int
-	 */
+	// The amount of pages
 	public $max_num_pages = 0;
 
-	/**
-	 * The amount of comment pages.
-	 *
-	 * @since 2.7.0
-	 * @var int
-	 */
+	// The amount of comment pages - TO REMOVE
 	public $max_num_comment_pages = 0;
 
-	/**
-	 * Signifies whether the current query is for a single post.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a single post
 	public $is_single = false;
 
-	/**
-	 * Signifies whether the current query is for a preview.
-	 *
-	 * @since 2.0.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a preview
 	public $is_preview = false;
 
-	/**
-	 * Signifies whether the current query is for a page.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a page
 	public $is_page = false;
 
-	/**
-	 * Signifies whether the current query is for an archive.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for an archive
 	public $is_archive = false;
 
-	/**
-	 * Signifies whether the current query is for a date archive.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a date archive
 	public $is_date = false;
 
-	/**
-	 * Signifies whether the current query is for a year archive.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a year archive
 	public $is_year = false;
 
-	/**
-	 * Signifies whether the current query is for a month archive.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a month archive
 	public $is_month = false;
 
-	/**
-	 * Signifies whether the current query is for a day archive.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a day archive
 	public $is_day = false;
 
-	/**
-	 * Signifies whether the current query is for a specific time.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a specific time
 	public $is_time = false;
 
-	/**
-	 * Signifies whether the current query is for an author archive.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for an author archive
 	public $is_author = false;
 
-	/**
-	 * Signifies whether the current query is for a category archive.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a category archive
 	public $is_category = false;
 
-	/**
-	 * Signifies whether the current query is for a tag archive.
-	 *
-	 * @since 2.3.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a tag archive
 	public $is_tag = false;
 
-	/**
-	 * Signifies whether the current query is for a taxonomy archive.
-	 *
-	 * @since 2.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a taxonomy archive
 	public $is_tax = false;
 
-	/**
-	 * Signifies whether the current query is for a search.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a search
 	public $is_search = false;
 
-	/**
-	 * Signifies whether the current query is for a feed.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a feed - TO REMOVE
 	public $is_feed = false;
 
-	/**
-	 * Signifies whether the current query is for a comment feed.
-	 *
-	 * @since 2.2.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a comment feed - TO REMOVE
 	public $is_comment_feed = false;
 
-	/**
-	 * Signifies whether the current query is for trackback endpoint call.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for trackback endpoint call - TO REMOVE
 	public $is_trackback = false;
 
-	/**
-	 * Signifies whether the current query is for the site homepage.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for the site homepage
 	public $is_home = false;
 
-	/**
-	 * Signifies whether the current query couldn't find anything.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query couldn't find anything
 	public $is_404 = false;
 
-	/**
-	 * Signifies whether the current query is for an embed.
-	 *
-	 * @since 4.4.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for an embed - TO REMOVE
 	public $is_embed = false;
 
-	/**
-	 * Signifies whether the current query is for a paged result and not for the first page.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a paged result and not for the first page
 	public $is_paged = false;
 
-	/**
-	 * Signifies whether the current query is for an administrative interface page.
-	 *
-	 * @since 1.5.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for an administrative interface page
 	public $is_admin = false;
 
-	/**
-	 * Signifies whether the current query is for an attachment page.
-	 *
-	 * @since 2.0.0
-	 * @var bool
-	 */
-	public $is_attachment = false;
-
-	/**
-	 * Signifies whether the current query is for an existing single post of any post type
-	 * (post, attachment, page, custom post types).
-	 *
-	 * @since 2.1.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for an existing single post of any post type
 	public $is_singular = false;
 
-	/**
-	 * Signifies whether the current query is for the robots.txt file.
-	 *
-	 * @since 2.1.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for the robots.txt file
 	public $is_robots = false;
 
-	/**
-	 * Signifies whether the current query is for the page_for_posts page.
-	 *
-	 * Basically, the homepage if the option isn't set for the static homepage.
-	 *
-	 * @since 2.1.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for the page_for_posts page,
+	// Basically, the homepage if the option isn't set for the static homepage
 	public $is_posts_page = false;
 
-	/**
-	 * Signifies whether the current query is for a post type archive.
-	 *
-	 * @since 3.1.0
-	 * @var bool
-	 */
+	// Signifies whether the current query is for a post type archive
 	public $is_post_type_archive = false;
 
-	/**
-	 * Stores the ->query_vars state like md5(serialize($this->query_vars ) ) so we know
-	 * whether we have to re-parse because something has changed
-	 *
-	 * @since 3.1.0
-	 * @var bool|string
-	 */
+	// Stores the ->query_vars state like md5(serialize($this->query_vars)) so we know
+	// whether we have to re-parse because something has changed
 	private $query_vars_hash = false;
 
-	/**
-	 * Whether query vars have changed since the initial parse_query() call. Used to catch modifications to query vars made
-	 * via pre_get_posts hooks.
-	 *
-	 * @since 3.1.1
-	 */
+	/// Whether query vars have changed since the initial parse_query() call.
+	// Used to catch modifications to query vars made via pre_get_posts hooks
 	private $query_vars_changed = true;
 
-	/**
-	 * Set if post thumbnails are cached
-	 *
-	 * @since 3.2.0
-	 * @var bool
-	 */
-	 public $thumbnails_cached = false;
+	// Set if post thumbnails are cached
+	public $thumbnails_cached = false;
 
-	/**
-	 * Cached list of search stopwords.
-	 *
-	 * @since 3.7.0
-	 * @var array
-	 */
+	// Cached list of search stopwords
 	private $stopwords;
 
 	private $compat_fields = array('query_vars_hash', 'query_vars_changed' );
 
 	private $compat_methods = array('init_query_flags', 'parse_tax_query' );
 
-	/**
-	 * Resets query flags to false.
-	 *
-	 * The query flags are what page info WordPress was able to figure out.
-	 *
-	 * @since 2.0.0
-	 */
+	// Resets query flags to false
 	private function init_query_flags(){
 		$this->is_single = false;
 		$this->is_preview = false;
@@ -466,18 +183,13 @@ class WP_Query{
 		$this->is_404 = false;
 		$this->is_paged = false;
 		$this->is_admin = false;
-		$this->is_attachment = false;
 		$this->is_singular = false;
 		$this->is_robots = false;
 		$this->is_posts_page = false;
 		$this->is_post_type_archive = false;
 	}
 
-	/**
-	 * Initiates object properties and sets default values.
-	 *
-	 * @since 1.5.0
-	 */
+	// Initiates object properties and sets default values
 	public function init(){
 		unset($this->posts);
 		unset($this->query);
@@ -500,11 +212,7 @@ class WP_Query{
 		$this->init_query_flags();
 	}
 
-	/**
-	 * Reparse the query vars.
-	 *
-	 * @since 1.5.0
-	 */
+	// Reparse the query vars
 	public function parse_query_vars(){
 		$this->parse_query();
 	}
@@ -557,18 +265,20 @@ class WP_Query{
 			, 'embed'
 		);
 
-		foreach($keys as $key ){
-			if(!isset($array[$key]) )
+		foreach($keys as $key){
+			if(!isset($array[$key])){
 				$array[$key] = '';
+			}
 		}
 
 		$array_keys = array('category__in', 'category__not_in', 'category__and', 'post__in', 'post__not_in', 'post_name__in',
 			'tag__in', 'tag__not_in', 'tag__and', 'tag_slug__in', 'tag_slug__and', 'post_parent__in', 'post_parent__not_in',
 			'author__in', 'author__not_in' );
 
-		foreach($array_keys as $key ){
-			if(!isset($array[$key]) )
+		foreach($array_keys as $key){
+			if(!isset($array[$key])){
 				$array[$key] = array();
+			}
 		}
 		return $array;
 	}
@@ -828,8 +538,8 @@ class WP_Query{
 					continue;
 				}
 
-				if(isset($tax_query['operator'] ) && 'NOT IN' != $tax_query['operator']){
-					switch ($tax_query['taxonomy']){
+				if(isset($tax_query['operator']) && 'NOT IN' != $tax_query['operator']){
+					switch($tax_query['taxonomy']){
 						case 'category':
 							$this->is_category = true;
 							break;
@@ -878,7 +588,7 @@ class WP_Query{
 			$this->is_admin = true;
 		}
 
-		$this->is_singular = $this->is_single || $this->is_page || $this->is_attachment;
+		$this->is_singular = $this->is_single || $this->is_page;
 
 		if(!($this->is_singular || $this->is_archive || $this->is_search || $this->is_404 || $this->is_admin || $this->is_robots)){
 			$this->is_home = true;
@@ -956,7 +666,7 @@ class WP_Query{
 		}
 
 
-		$this->is_singular = $this->is_single || $this->is_page || $this->is_attachment;
+		$this->is_singular = $this->is_single || $this->is_page;
 		// Done correcting is_* for page_on_front and page_for_posts
 
 		if('404' == $qv['error'] )
@@ -1853,13 +1563,8 @@ class WP_Query{
 				$q['pagename'] = sanitize_title_for_query(wp_basename($q['pagename'] ) );
 				$q['name'] = $q['pagename'];
 				$where .= " AND ({$wpdb->posts}.ID = '$reqpage')";
-				$reqpage_obj = get_post($reqpage );
-				if(is_object($reqpage_obj) && 'attachment' == $reqpage_obj->post_type ){
-					$this->is_attachment = true;
-					$post_type = $q['post_type'] = 'attachment';
-					$this->is_page = true;
-					$q['attachment_id'] = $reqpage;
-				}
+				$reqpage_obj = get_post($reqpage);
+				
 			}
 		} elseif('' != $q['attachment'] ){
 			$q['attachment'] = sanitize_title_for_query(wp_basename($q['attachment'] ) );
@@ -2211,10 +1916,7 @@ class WP_Query{
 		} elseif(!empty($post_type ) ){
 			$where .= $wpdb->prepare(" AND {$wpdb->posts}.post_type = %s", $post_type );
 			$post_type_object = get_post_type_object ($post_type );
-		} elseif($this->is_attachment ){
-			$where .= " AND {$wpdb->posts}.post_type = 'attachment'";
-			$post_type_object = get_post_type_object ('attachment' );
-		} elseif($this->is_page ){
+		}elseif($this->is_page ){
 			$where .= " AND {$wpdb->posts}.post_type = 'page'";
 			$post_type_object = get_post_type_object ('page' );
 		} else{
@@ -2758,11 +2460,6 @@ class WP_Query{
 		// Check post status to determine if post should be displayed.
 		if(!empty($this->posts) && ($this->is_single || $this->is_page) ){
 			$status = get_post_status($this->posts[0]);
-			if('attachment' === $this->posts[0]->post_type && 0 === (int) $this->posts[0]->post_parent ){
-				$this->is_page = false;
-				$this->is_single = true;
-				$this->is_attachment = true;
-			}
 			$post_status_obj = get_post_status_object($status);
 
 			// If the post_status was specifically requested, let it pass through.
@@ -3292,37 +2989,6 @@ class WP_Query{
 		$post_type_object = get_post_type_object($post_type );
 
 		return in_array($post_type_object->name, (array) $post_types );
-	}
-
-	/**
-	 * Is the query for an existing attachment page?
-	 *
-	 * @since 3.1.0
-	 *
-	 * @param mixed $attachment Attachment ID, title, slug, or array of such.
-	 * @return bool
-	 */
-	public function is_attachment($attachment = '' ){
-		if(!$this->is_attachment ){
-			return false;
-		}
-
-		if(empty($attachment ) ){
-			return true;
-		}
-
-		$attachment = array_map('strval', (array) $attachment );
-
-		$post_obj = $this->get_queried_object();
-
-		if(in_array((string) $post_obj->ID, $attachment ) ){
-			return true;
-		} elseif(in_array($post_obj->post_title, $attachment ) ){
-			return true;
-		} elseif(in_array($post_obj->post_name, $attachment ) ){
-			return true;
-		}
-		return false;
 	}
 
 	/**

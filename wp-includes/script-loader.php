@@ -21,38 +21,6 @@ require(ABSPATH . WPINC . '/functions/styles.php');
 
 
 /**
- * Load localized data on print rather than initialization.
- *
- * These localizations require information that may not be loaded even by init.
- *
- * @since 2.5.0
- */
-function wp_just_in_time_script_localization(){
-
-	wp_localize_script('autosave', 'autosaveL10n', array(
-		'autosaveInterval' => AUTOSAVE_INTERVAL,
-		'blog_id' => get_current_blog_id(),
-	));
-
-	wp_localize_script('mce-view', 'mceViewL10n', array(
-		'shortcodes' => !empty($GLOBALS['shortcode_tags']) ? array_keys($GLOBALS['shortcode_tags']) : array()
-	));
-
-	wp_localize_script('word-count', 'wordCountL10n', array(
-		/*
-		 * translators: If your word count is based on single characters (e.g. East Asian characters),
-		 * enter 'characters_excluding_spaces' or 'characters_including_spaces'. Otherwise, enter 'words'.
-		 * Do not translate into your own language.
-		 */
-		'type' => _x('words', 'Word count type. Do not translate!'),
-		'shortcodes' => !empty($GLOBALS['shortcode_tags']) ? array_keys($GLOBALS['shortcode_tags']) : array()
-	));
-}
-
-
-
-
-/**
  * Administration Screen CSS for changing the styles.
  *
  * If installing the 'wp-admin/' directory will be replaced with './'.

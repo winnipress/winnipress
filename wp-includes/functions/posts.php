@@ -464,7 +464,7 @@ function get_post_class($class = '', $post_id = null ){
 	}
 
 	// Post thumbnails.
-	if(current_theme_supports('post-thumbnails' ) && has_post_thumbnail($post->ID ) && !is_attachment($post ) && !$post_password_required ){
+	if(current_theme_supports('post-thumbnails') && has_post_thumbnail($post->ID) && !$post_password_required ){
 		$classes[] = 'has-post-thumbnail';
 	}
 
@@ -564,8 +564,6 @@ function get_body_class($class = '' ){
 	}
 	if(is_paged() )
 		$classes[] = 'paged';
-	if(is_attachment() )
-		$classes[] = 'attachment';
 	if(is_404() )
 		$classes[] = 'error404';
 
@@ -596,12 +594,7 @@ function get_body_class($class = '' ){
 			}
 		}
 
-		if(is_attachment() ){
-			$mime_type = get_post_mime_type($post_id);
-			$mime_prefix = array('application/', 'image/', 'text/', 'audio/', 'video/', 'music/' );
-			$classes[] = 'attachmentid-' . $post_id;
-			$classes[] = 'attachment-' . str_replace($mime_prefix, '', $mime_type );
-		} elseif(is_page() ){
+		if(is_page()){
 			$classes[] = 'page';
 
 			$page_id = $wp_query->get_queried_object_id();
@@ -1187,7 +1180,7 @@ function wp_list_pages($args = '' ){
 			$output .= '<li class="pagenav">' . $r['title_li'] . '<ul>';
 		}
 		global $wp_query;
-		if(is_page() || is_attachment() || $wp_query->is_posts_page ){
+		if(is_page() || $wp_query->is_posts_page){
 			$current_page = get_queried_object_id();
 		} elseif(is_singular() ){
 			$queried_object = get_queried_object();

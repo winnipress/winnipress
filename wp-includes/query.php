@@ -179,27 +179,6 @@ function is_post_type_archive($post_types = ''){
 }
 
 /**
- * Is the query for an existing attachment page?
- *
- * @since 2.0.0
- *
- * @global WP_Query $wp_query Global WP_Query instance.
- *
- * @param int|string|array|object $attachment Attachment ID, title, slug, or array of such.
- * @return bool
- */
-function is_attachment($attachment = ''){
-	global $wp_query;
-
-	if(!isset($wp_query)){
-		_doing_it_wrong(__FUNCTION__, __('Conditional query tags do not work before the query is run. Before then, they always return false.'), '3.1.0');
-		return false;
-	}
-
-	return $wp_query->is_attachment($attachment);
-}
-
-/**
  * Is the query for an existing author archive page?
  *
  * If the $author parameter is specified, this function will additionally
