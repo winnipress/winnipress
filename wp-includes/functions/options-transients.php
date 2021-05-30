@@ -846,7 +846,7 @@ function delete_expired_transients($force_db = false ){
  */
 function wp_user_settings(){
 
-	if(!is_admin() || wp_doing_ajax() ){
+	if(!is_admin()){
 		return;
 	}
 

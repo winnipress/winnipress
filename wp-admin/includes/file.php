@@ -1723,7 +1723,7 @@ All at ###SITENAME###
 }
 
 /**
- * Intercept personal data exporter page ajax responses in order to assemble the personal data export file.
+ * Intercept personal data exporter page responses in order to assemble the personal data export file.
  * @see wp_privacy_personal_data_export_page
  * @since 4.9.6
  *
@@ -1739,7 +1739,7 @@ All at ###SITENAME###
 function wp_privacy_process_personal_data_export_page( $response, $exporter_index, $email_address, $page, $request_id, $send_as_email, $exporter_key) {
 	/* Do some simple checks on the shape of the response from the exporter.
 	 * If the exporter response is malformed, don't attempt to consume it - let it
-	 * pass through to generate a warning to the user by default ajax processing.
+	 * pass through to generate a warning to the user by default processing.
 	 */
 	if( !is_array( $response)) {
 		return $response;
@@ -1778,7 +1778,6 @@ function wp_privacy_process_personal_data_export_page( $response, $exporter_inde
 	update_post_meta( $request_id, '_export_data_raw', $export_data);
 
 	// If we are not yet on the last page of the last exporter, return now.
-	/** This filter is documented in wp-admin/includes/ajax-actions.php */
 	$exporters = apply_filters( 'wp_privacy_personal_data_exporters', array());
 	$is_last_exporter = $exporter_index === count( $exporters);
 	$exporter_done = $response['done'];

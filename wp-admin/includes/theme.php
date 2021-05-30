@@ -363,7 +363,6 @@ function themes_api( $action, $args = array()) {
 		$request = wp_remote_post( $url, $http_args);
 
 		if( $ssl && is_wp_error( $request)) {
-			if( !wp_doing_ajax()) {
 				trigger_error(
 					sprintf(
 						/* translators: %s: support forums URL */
@@ -372,7 +371,6 @@ function themes_api( $action, $args = array()) {
 					) . ' ' . __( '(WordPress could not establish a secure connection to WordPress.org. Please contact your server administrator.)'),
 					headers_sent() || WP_DEBUG ? E_USER_WARNING : E_USER_NOTICE
 				);
-			}
 			$request = wp_remote_post( $http_url, $http_args);
 		}
 

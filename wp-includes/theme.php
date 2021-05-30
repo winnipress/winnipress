@@ -671,12 +671,7 @@ function switch_theme($stylesheet){
 	global $wp_theme_directories, $wp_customize, $sidebars_widgets;
 
 	$_sidebars_widgets = null;
-	if('wp_ajax_customize_save' === current_action()){
-		$old_sidebars_widgets_data_setting = $wp_customize->get_setting('old_sidebars_widgets_data');
-		if($old_sidebars_widgets_data_setting){
-			$_sidebars_widgets = $wp_customize->post_value($old_sidebars_widgets_data_setting);
-		}
-	} elseif(is_array($sidebars_widgets)){
+	if(is_array($sidebars_widgets)){
 		$_sidebars_widgets = $sidebars_widgets;
 	}
 
@@ -723,9 +718,7 @@ function switch_theme($stylesheet){
 		 * we need to remove the theme mods to avoid overwriting changes made via
 		 * the Customizer when accessing wp-admin/widgets.php.
 		 */
-		if('wp_ajax_customize_save' === current_action()){
-			remove_theme_mod('sidebars_widgets');
-		}
+		
 	}
 
 	update_option('theme_switched', $old_theme->get_stylesheet());

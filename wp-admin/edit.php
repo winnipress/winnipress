@@ -279,10 +279,8 @@ $_SERVER['REQUEST_URI'] = remove_query_arg( array( 'locked', 'skipped', 'updated
 
 <?php
 if( $wp_list_table->has_items() )
-	$wp_list_table->inline_edit();
 ?>
 
-<div id="ajax-response"></div>
 <br class="clear" />
 </div>
 

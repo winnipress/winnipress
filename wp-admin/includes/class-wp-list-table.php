@@ -8,7 +8,7 @@
  */
 
 /**
- * Base class for displaying a list of items in an ajaxified HTML table.
+ * Base class for displaying a list of items in an clean HTML table.
  *
  * @since 3.1.0
  * @access private
@@ -112,10 +112,6 @@ class WP_List_Table{
 	 *                            in the list table, e.g. 'posts'. Default empty.
 	 *     @type string $singular Singular label for an object being listed, e.g. 'post'.
 	 *                            Default empty
-	 *     @type bool   $ajax     Whether the list table supports Ajax. This includes loading
-	 *                            and sorting data, for example. If true, the class will call
-	 *                            the _js_vars() method in the footer to provide variables
-	 *                            to any scripts handling Ajax events. Default false.
 	 *     @type string $screen   String containing the hook name used to determine the current
 	 *                            screen. If left null, the current screen will be automatically set.
 	 *                            Default null.
@@ -125,7 +121,6 @@ class WP_List_Table{
 		$args = wp_parse_args( $args, array(
 			'plural' => '',
 			'singular' => '',
-			'ajax' => false,
 			'screen' => null,
 		) );
 
@@ -140,10 +135,6 @@ class WP_List_Table{
 		$args['singular'] = sanitize_key( $args['singular'] );
 
 		$this->_args = $args;
-
-		if( $args['ajax'] ){
-			add_action( 'admin_footer', array( $this, '_js_vars' ) );
-		}
 
 		if( empty( $this->modes ) ) {
 			$this->modes = array(
@@ -226,16 +217,6 @@ class WP_List_Table{
 	}
 
 	/**
-	 * Checks the current user's permissions
-	 *
-	 * @since 3.1.0
-	 * @abstract
-	 */
-	public function ajax_user_can() {
-		die( 'function WP_List_Table::ajax_user_can() must be over-ridden in a sub-class.' );
-	}
-
-	/**
 	 * Prepares the list of items for displaying.
 	 * @uses WP_List_Table::set_pagination_args()
 	 *
@@ -264,7 +245,7 @@ class WP_List_Table{
 			$args['total_pages'] = ceil( $args['total_items'] / $args['per_page'] );
 
 		// Redirect if page number is invalid and headers are not already sent.
-		if( !headers_sent() && !wp_doing_ajax() && $args['total_pages'] > 0 && $this->get_pagenum() > $args['total_pages'] ) {
+		if( !headers_sent() && $args['total_pages'] > 0 && $this->get_pagenum() > $args['total_pages'] ) {
 			wp_redirect( add_query_arg( 'paged', $args['total_pages'] ) );
 			exit;
 		}
@@ -1219,39 +1200,6 @@ class WP_List_Table{
 	protected function handle_row_actions( $item, $column_name, $primary ) {
 		return $column_name === $primary ? '<button type="button" class="toggle-row"><span class="screen-reader-text">' . __( 'Show more details' ) . '</span></button>' : '';
  	}
-
-	/**
-	 * Handle an incoming ajax request (called from admin-ajax.php)
-	 *
-	 * @since 3.1.0
-	 */
-	public function ajax_response() {
-		$this->prepare_items();
-
-		ob_start();
-		if( !empty( $_REQUEST['no_placeholder'] ) ) {
-			$this->display_rows();
-		} else {
-			$this->display_rows_or_placeholder();
-		}
-
-		$rows = ob_get_clean();
-
-		$response = array( 'rows' => $rows );
-
-		if( isset( $this->_pagination_args['total_items'] ) ) {
-			$response['total_items_i18n'] = sprintf(
-				_n( '%s item', '%s items', $this->_pagination_args['total_items'] ),
-				number_format_i18n( $this->_pagination_args['total_items'] )
-			);
-		}
-		if( isset( $this->_pagination_args['total_pages'] ) ) {
-			$response['total_pages'] = $this->_pagination_args['total_pages'];
-			$response['total_pages_i18n'] = number_format_i18n( $this->_pagination_args['total_pages'] );
-		}
-
-		die( wp_json_encode( $response ) );
-	}
 
 	
 }

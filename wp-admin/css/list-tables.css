@@ -876,95 +876,6 @@ tr:hover .row-actions,
 	position: static;
 }
 
-/* deprecated */
-.row-actions-visible {
-	padding: 2px 0 0;
-}
-
-
-/*------------------------------------------------------------------------------
-  10.1 - Inline Editing
-------------------------------------------------------------------------------*/
-
-/*
-.quick-edit* is for Quick Edit
-.bulk-edit* is for Bulk Edit
-.inline-edit* is for everything
-*/
-
-/*	Layout */
-
-#wpbody-content .inline-edit-row fieldset {
-	font-size: 12px;
-	float: left;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-}
-
-tr.inline-edit-row td,
-#wpbody-content .inline-edit-row fieldset .inline-edit-col {
-	padding: 0 0.5em;
-}
-
-#wpbody-content .quick-edit-row-post .inline-edit-col-left {
-	width: 40%;
-}
-
-#wpbody-content .quick-edit-row-post .inline-edit-col-right {
-	width: 39%;
-}
-
-#wpbody-content .inline-edit-row-post .inline-edit-col-center {
-	width: 20%;
-}
-
-#wpbody-content .quick-edit-row-page .inline-edit-col-left {
-	width: 50%;
-}
-
-#wpbody-content .quick-edit-row-page .inline-edit-col-right,
-#wpbody-content .bulk-edit-row-post .inline-edit-col-right {
-	width: 49%;
-}
-
-#wpbody-content .bulk-edit-row .inline-edit-col-left {
-	width: 30%;
-}
-
-#wpbody-content .bulk-edit-row-page .inline-edit-col-right {
-	width: 69%;
-}
-
-#wpbody-content .bulk-edit-row .inline-edit-col-bottom {
-	float: right;
-	width: 69%;
-}
-
-#wpbody-content .inline-edit-row-page .inline-edit-col-right {
-	margin-top: 27px;
-}
-
-.inline-edit-row fieldset .inline-edit-group {
-	clear: both;
-	line-height: 2.5;
-}
-
-.inline-edit-row .submit {
-	clear: both;
-	padding: 0.5em;
-	margin: 0.5em 0 0;
-}
-
-.inline-edit-row .notice-error {
-	margin-top: 1em;
-}
-
-.inline-edit-row .notice-error .error {
-	margin: 0.5em 0;
-	padding: 2px;
-}
-
 /*	Positioning */
 
 /* Needs higher specificity for the padding */
@@ -1899,12 +1810,7 @@ div.action-links,
 		word-wrap: normal;
 	}
 
-	/* Quick Edit and Bulk Edit */
-	#wpbody-content .quick-edit-row-post .inline-edit-col-left,
-	#wpbody-content .quick-edit-row-post .inline-edit-col-right,
-	#wpbody-content .inline-edit-row-post .inline-edit-col-center,
-	#wpbody-content .quick-edit-row-page .inline-edit-col-left,
-	#wpbody-content .quick-edit-row-page .inline-edit-col-right,
+	/* Bulk Edit */
 	#wpbody-content .bulk-edit-row-post .inline-edit-col-right,
 	#wpbody-content .bulk-edit-row .inline-edit-col-left,
 	#wpbody-content .bulk-edit-row-page .inline-edit-col-right,
@@ -1913,8 +1819,6 @@ div.action-links,
 		width: 100%;
 	}
 
-	#wpbody-content .quick-edit-row fieldset .inline-edit-col label,
-	#wpbody-content .quick-edit-row fieldset .inline-edit-group label,
 	#wpbody-content .bulk-edit-row fieldset .inline-edit-col label,
 	#wpbody-content .bulk-edit-row fieldset .inline-edit-group label {
 		max-width: none;

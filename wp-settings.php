@@ -119,7 +119,6 @@ require(ABSPATH . WPINC . '/canonical.php');
 require(ABSPATH . WPINC . '/shortcodes.php');
 require(ABSPATH . WPINC . '/http.php');
 
-require(ABSPATH . WPINC . '/classes/ajax-response.php');
 require(ABSPATH . WPINC . '/classes/roles.php');
 require(ABSPATH . WPINC . '/classes/role.php');
 require(ABSPATH . WPINC . '/classes/user.php');

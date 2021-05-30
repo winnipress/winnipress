@@ -37,7 +37,6 @@ $parent_file = apply_filters('parent_file', $parent_file);
 $submenu_file = apply_filters('submenu_file', $submenu_file, $parent_file);
 
 get_admin_page_parent();
-winni_log($parent_file);
 
 /**
  * Display menu.

@@ -1133,8 +1133,7 @@ class WP_Privacy_Data_Export_Requests_Table extends WP_Privacy_Requests_Table {
 	 * @param WP_User_Request $item Item being shown.
 	 * @return string Email column markup.
 	 */
-	public function column_email( $item) {
-		/** This filter is documented in wp-admin/includes/ajax-actions.php */
+	public function column_email( $item){
 		$exporters       = apply_filters( 'wp_privacy_personal_data_exporters', array());
 		$exporters_count = count( $exporters);
 		$request_id      = $item->ID;

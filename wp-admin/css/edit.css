@@ -918,17 +918,11 @@ p.description code {
   13.0 - Tags
 ------------------------------------------------------------------------------*/
 
-#poststuff .tagsdiv .ajaxtag {
-	margin-top: 1em;
-}
 
 #poststuff .tagsdiv .howto {
 	margin: 1em 0 6px 0;
 }
 
-.ajaxtag .newtag {
-	position: relative;
-}
 
 .tagsdiv .newtag {
 	width: 180px;

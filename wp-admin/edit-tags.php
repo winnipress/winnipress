@@ -236,7 +236,6 @@ if( isset( $_REQUEST['s'] ) && strlen( $_REQUEST['s'] ) ) {
 <div id="message" class="<?php echo $class; ?> notice is-dismissible"><p><?php echo $message; ?></p></div>
 <?php $_SERVER['REQUEST_URI'] = remove_query_arg( array( 'message', 'error' ), $_SERVER['REQUEST_URI'] );
 endif; ?>
-<div id="ajax-response"></div>
 
 <form class="search-form wp-clearfix" method="get">
 <input type="hidden" name="taxonomy" value="<?php echo esc_attr($taxonomy); ?>" />
@@ -490,7 +489,5 @@ do_action( "after-{$taxonomy}-table", $taxonomy );
 </div><!-- /wrap -->
 
 <?php 
-
-$wp_list_table->inline_edit();
 
 include( ABSPATH . 'wp-admin/admin-footer.php' );

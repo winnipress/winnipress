@@ -1492,17 +1492,6 @@ float: none;
 margin: -4px 0;
 }
 
-#ajax-loading,
-.ajax-loading,
-.ajax-feedback,
-.imgedit-wait-spin,
-.list-ajax-loading{ /* deprecated */
-visibility: hidden;
-}
-
-#ajax-response.alignleft{
-margin-left: 2em;
-}
 
 .button.updating-message:before,
 .button.updated-message:before,
@@ -2788,9 +2777,6 @@ float: left;
 height: 1px;
 }
 
-.plugin-details-modal #TB_ajaxWindowTitle{
-display: none;
-}
 
 .plugin-details-modal #TB_closeWindowButton{
 left: auto;

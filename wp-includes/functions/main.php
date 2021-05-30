@@ -1324,7 +1324,6 @@ function do_robots(){
 		$site_url = parse_url( site_url());
 		$path = ( !empty( $site_url['path'])) ? $site_url['path'] : '';
 		$output .= "Disallow: $path/wp-admin/\n";
-		$output .= "Allow: $path/wp-admin/admin-ajax.php\n";
 	}
 
 	/**
@@ -2644,23 +2643,12 @@ function wp_nonce_ays( $action){
  * @since 4.1.0 The `$title` and `$args` parameters were changed to optionally accept
  *              an integer to be used as the response code.
  *
- * @param string|WP_Error  $message Optional. Error message. If this is a WP_Error object,
- *                                  and not an Ajax or XML-RPC request, the error's messages are used.
- *                                  Default empty.
  * @param string|int       $title   Optional. Error title. If `$message` is a `WP_Error` object,
  *                                  error data with the key 'title' may be used to specify the title.
  *                                  If `$title` is an integer, then it is treated as the response
  *                                  code. Default empty.
  * @param string|array|int $args{
- *     Optional. Arguments to control behavior. If `$args` is an integer, then it is treated
- *     as the response code. Default empty array.
- *
- *     @type int    $response       The HTTP response code. Default 200 for Ajax requests, 500 otherwise.
- *     @type bool   $back_link      Whether to include a link to go back. Default false.
- *     @type string $text_direction The text direction. This is only useful internally, when WordPress
- *                                  is still loading and the site's locale is not set up yet. Accepts 'rtl'.
- *                                  Default is the value of is_rtl().
- * }
+ *     Optional. Arguments to control behavior. If `$args` is an integer, then it is treated...
  */
 function wp_die( $message = '', $title = '', $args = array()){
 
@@ -2671,25 +2659,9 @@ function wp_die( $message = '', $title = '', $args = array()){
 		$title = '';
 	}
 
-	if( wp_doing_ajax()){
-		/**
-		 * Filters the callback for killing WordPress execution for Ajax requests.
-		 *
-		 * @since 3.4.0
-		 *
-		 * @param callable $function Callback function name.
-		 */
-		$function = apply_filters( 'wp_die_ajax_handler', '_ajax_wp_die_handler');
-	}else{
-		/**
-		 * Filters the callback for killing WordPress execution for all non-Ajax requests.
-		 *
-		 * @since 3.0.0
-		 *
-		 * @param callable $function Callback function name.
-		 */
-		$function = apply_filters( 'wp_die_handler', '_default_wp_die_handler');
-	}
+	
+	$function = apply_filters( 'wp_die_handler', '_default_wp_die_handler');
+	
 
 	call_user_func( $function, $message, $title, $args);
 }
@@ -2900,32 +2872,7 @@ function _xmlrpc_wp_die_handler( $message, $title = '', $args = array()){
 	die();
 }
 
-/**
- * Kill WordPress ajax execution.
- *
- * This is the handler for wp_die when processing Ajax requests.
- *
- * @since 3.4.0
- * @access private
- *
- * @param string       $message Error message.
- * @param string       $title   Optional. Error title (unused). Default empty.
- * @param string|array $args    Optional. Arguments to control behavior. Default empty array.
- */
-function _ajax_wp_die_handler( $message, $title = '', $args = array()){
-	$defaults = array(
-		'response' => 200,
-	);
-	$r = wp_parse_args( $args, $defaults);
 
-	if( !headers_sent() && null !== $r['response']){
-		status_header( $r['response']);
-	}
-
-	if( is_scalar( $message))
-		die( (string) $message);
-	die( '0');
-}
 
 /**
  * Kill WordPress execution.
@@ -3134,34 +3081,19 @@ function _wp_json_prepare_data( $data){
 	}
 }
 
-/**
- * Send a JSON response back to an Ajax request.
- *
- * @since 3.5.0
- * @since 4.7.0 The `$status_code` parameter was added.
- *
- * @param mixed $response    Variable (usually an array or object) to encode as JSON,
- *                           then print and die.
- * @param int   $status_code The HTTP status code to output.
- */
+// Send a JSON response
 function wp_send_json( $response, $status_code = null){
 	@header( 'Content-Type: application/json; charset=' . get_option( 'website_charset'));
 	if( null !== $status_code){
-		status_header( $status_code);
+		status_header($status_code);
 	}
-	echo wp_json_encode( $response);
+	echo wp_json_encode($response);
 
-	if( wp_doing_ajax()){
-		wp_die( '', '', array(
-			'response' => null,
-		));
-	} else{
-		die;
-	}
+	die;
 }
 
 /**
- * Send a JSON response back to an Ajax request, indicating success.
+ * Send a JSON response back to an request, indicating success.
  *
  * @since 3.5.0
  * @since 4.7.0 The `$status_code` parameter was added.
@@ -3169,8 +3101,8 @@ function wp_send_json( $response, $status_code = null){
  * @param mixed $data        Data to encode as JSON, then print and die.
  * @param int   $status_code The HTTP status code to output.
  */
-function wp_send_json_success( $data = null, $status_code = null){
-	$response = array( 'success' => true);
+function wp_send_json_success($data = null, $status_code = null){
+	$response = array('success' => true);
 
 	if( isset( $data))
 		$response['data'] = $data;
@@ -3179,7 +3111,7 @@ function wp_send_json_success( $data = null, $status_code = null){
 }
 
 /**
- * Send a JSON response back to an Ajax request, indicating failure.
+ * Send a JSON response back to an request, indicating failure.
  *
  * If the `$data` parameter is a WP_Error object, the errors
  * within the object are processed and output as an array of error
@@ -3193,7 +3125,7 @@ function wp_send_json_success( $data = null, $status_code = null){
  * @param mixed $data        Data to encode as JSON, then print and die.
  * @param int   $status_code The HTTP status code to output.
  */
-function wp_send_json_error( $data = null, $status_code = null){
+function wp_send_json_error($data = null, $status_code = null){
 	$response = array( 'success' => false);
 
 	if( isset( $data)){

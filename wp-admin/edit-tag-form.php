@@ -81,8 +81,6 @@ do_action( "{$taxonomy}_pre_edit_form", $tag, $taxonomy ); ?>
 </div>
 <?php endif; ?>
 
-<div id="ajax-response"></div>
-
 <form name="edittag" id="edittag" method="post" action="edit-tags.php" class="validate"<?php
 /**
  * Fires inside the Edit Term form tag.

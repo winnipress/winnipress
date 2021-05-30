@@ -132,9 +132,6 @@ Please click the following link to confirm the invite:
 $title = __('Add New User');
 $parent_file = 'users.php';
 
-
-
-wp_enqueue_script('wp-ajax-response');
 wp_enqueue_script('user-profile' );
 
 
@@ -182,7 +179,6 @@ if(!empty($messages ) ) {
 		?>
 	</div>
 <?php endif; ?>
-<div id="ajax-response"></div>
 
 <?php
 if(current_user_can('create_users') ) {

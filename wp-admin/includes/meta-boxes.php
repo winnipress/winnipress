@@ -373,11 +373,6 @@ function post_tags_meta_box( $post, $box) {
 		<p><textarea name="<?php echo "tax_input[$tax_name]"; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled( !$user_can_assign_terms); ?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace( ',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr() ?></textarea></p>
 	</div>
  	<?php if( $user_can_assign_terms) : ?>
-	<div class="ajaxtag hide-if-no-js">
-		<label class="screen-reader-text" for="new-tag-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_new_item; ?></label>
-		<p><input data-wp-taxonomy="<?php echo $tax_name; ?>" type="text" id="new-tag-<?php echo $tax_name; ?>" name="newtag[<?php echo $tax_name; ?>]" class="newtag form-input-tip" size="16" autocomplete="off" aria-describedby="new-tag-<?php echo $tax_name; ?>-desc" value="" />
-		<input type="button" class="button tagadd" value="<?php esc_attr_e('Add'); ?>" /></p>
-	</div>
 	<p class="howto" id="new-tag-<?php echo $tax_name; ?>-desc"><?php echo $taxonomy->labels->separate_items_with_commas; ?></p>
 	<?php elseif( empty( $terms_to_edit)): ?>
 		<p><?php echo $taxonomy->labels->no_terms; ?></p>

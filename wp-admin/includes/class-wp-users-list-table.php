@@ -56,20 +56,6 @@ class WP_Users_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * Check the current user's permissions.
-	 *
- 	 * @since 3.1.0
-	 *
-	 * @return bool
-	 */
-	public function ajax_user_can() {
-		if( $this->is_site_users)
-			return current_user_can( 'manage_sites');
-		else
-			return current_user_can( 'list_users');
-	}
-
-	/**
 	 * Prepare the users list for display.
 	 *
 	 * @since 3.1.0

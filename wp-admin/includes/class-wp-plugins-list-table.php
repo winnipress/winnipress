@@ -55,13 +55,6 @@ class WP_Plugins_List_Table extends WP_List_Table {
 	}
 
 	/**
-	 * @return bool
-	 */
-	public function ajax_user_can() {
-		return current_user_can('activate_plugins');
-	}
-
-	/**
 	 *
 	 * @global string $status
 	 * @global array  $plugins

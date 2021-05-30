@@ -14,7 +14,6 @@ if(is_user_admin()){
 	 */
 	do_action( '_user_admin_menu');
 } else {
-	winni_log('IS NORMAL ADMIN');
 
 	/**
 	 * Fires before the administration menu loads in the admin.

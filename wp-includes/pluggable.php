@@ -613,8 +613,8 @@ function wp_validate_auth_cookie($cookie = '', $scheme = ''){
 	$token = $cookie_elements['token'];
 	$expired = $expiration = $cookie_elements['expiration'];
 
-	// Allow a grace period for POST and Ajax requests
-	if(wp_doing_ajax() || 'POST' == $_SERVER['REQUEST_METHOD']){
+	// Allow a grace period for POST requests
+	if('POST' == $_SERVER['REQUEST_METHOD']){
 		$expired += HOUR_IN_SECONDS;
 	}
 
@@ -670,7 +670,7 @@ function wp_validate_auth_cookie($cookie = '', $scheme = ''){
 		return false;
 	}
 
-	// Ajax/POST grace period set above
+	// POST grace period set above
 	if($expiration < time()){
 		$GLOBALS['login_grace_period'] = 1;
 	}
@@ -1106,59 +1106,7 @@ function check_admin_referer($action = -1, $query_arg = '_wpnonce'){
 }
 endif;
 
-if(!function_exists('check_ajax_referer')) :
-/**
- * Verifies the Ajax request to prevent processing requests external of the blog.
- *
- * @since 2.0.3
- *
- * @param int|string   $action    Action nonce.
- * @param false|string $query_arg Optional. Key to check for the nonce in `$_REQUEST` (since 2.5). If false,
- *                                `$_REQUEST` values will be evaluated for '_ajax_nonce', and '_wpnonce'
- *                                (in that order). Default false.
- * @param bool         $die       Optional. Whether to die early when the nonce cannot be verified.
- *                                Default true.
- * @return false|int False if the nonce is invalid, 1 if the nonce is valid and generated between
- *                   0-12 hours ago, 2 if the nonce is valid and generated between 12-24 hours ago.
- */
-function check_ajax_referer($action = -1, $query_arg = false, $die = true){
-	if(-1 == $action){
-		_doing_it_wrong(__FUNCTION__, __('You should specify a nonce action to be verified by using the first parameter.'), '4.7');
-	}
 
-	$nonce = '';
-
-	if($query_arg && isset($_REQUEST[ $query_arg ]))
-		$nonce = $_REQUEST[ $query_arg ];
-	elseif(isset($_REQUEST['_ajax_nonce']))
-		$nonce = $_REQUEST['_ajax_nonce'];
-	elseif(isset($_REQUEST['_wpnonce']))
-		$nonce = $_REQUEST['_wpnonce'];
-
-	$result = wp_verify_nonce($nonce, $action);
-
-	/**
-	 * Fires once the Ajax request has been validated or not.
-	 *
-	 * @since 2.1.0
-	 *
-	 * @param string    $action The Ajax nonce action.
-	 * @param false|int $result False if the nonce is invalid, 1 if the nonce is valid and generated between
-	 *                          0-12 hours ago, 2 if the nonce is valid and generated between 12-24 hours ago.
-	 */
-	do_action('check_ajax_referer', $action, $result);
-
-	if($die && false === $result){
-		if(wp_doing_ajax()){
-			wp_die(-1, 403);
-		} else{
-			die('-1');
-		}
-	}
-
-	return $result;
-}
-endif;
 
 if(!function_exists('wp_redirect')) :
 // Redirect to another page
