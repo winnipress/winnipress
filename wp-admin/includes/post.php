@@ -986,7 +986,8 @@ function get_available_post_statuses($type = 'post') {
  * @param array|bool $q Array of query variables to use to build the query or false to use $_GET superglobal.
  * @return array
  */
-function wp_edit_posts_query( $q = false) {
+function wp_edit_posts_query($q = false) {
+
 	if( false === $q)
 		$q = $_GET;
 	$q['m'] = isset($q['m']) ? (int) $q['m'] : 0;
@@ -1062,7 +1063,7 @@ function wp_edit_posts_query( $q = false) {
 		$query['post__in'] = (array) get_option( 'sticky_posts');
 	}
 
-	wp($query);
+	$GLOBALS['wp']->execute_main_query($query);
 
 	return $avail_post_stati;
 }
@@ -1084,90 +1085,6 @@ function get_available_post_mime_types($type = 'attachment') {
 	return $types;
 }
 
-/**
- * Get the query variables for the current attachments request.
- *
- * @since 4.2.0
- *
- * @param array|false $q Optional. Array of query variables to use to build the query or false
- *                       to use $_GET superglobal. Default false.
- * @return array The parsed query vars.
- */
-function wp_edit_attachments_query_vars( $q = false) {
-	if( false === $q) {
-		$q = $_GET;
-	}
-	$q['m']   = isset( $q['m']) ? (int) $q['m'] : 0;
-	$q['cat'] = isset( $q['cat']) ? (int) $q['cat'] : 0;
-	$q['post_type'] = 'attachment';
-	$post_type = get_post_type_object( 'attachment');
-	$states = 'inherit';
-	if( current_user_can( $post_type->cap->read_private_posts)) {
-		$states .= ',private';
-	}
-
-	$q['post_status'] = isset( $q['status']) && 'trash' == $q['status'] ? 'trash' : $states;
-	$q['post_status'] = isset( $q['attachment-filter']) && 'trash' == $q['attachment-filter'] ? 'trash' : $states;
-
-	$media_per_page = (int) get_user_option( 'upload_per_page');
-	if( empty( $media_per_page) || $media_per_page < 1) {
-		$media_per_page = 20;
-	}
-
-	/**
-	 * Filters the number of items to list per page when listing media items.
-	 *
-	 * @since 2.9.0
-	 *
-	 * @param int $media_per_page Number of media to list. Default 20.
-	 */
-	$q['posts_per_page'] = apply_filters( 'upload_per_page', $media_per_page);
-
-	$post_mime_types = get_post_mime_types();
-	if( isset($q['post_mime_type']) && !array_intersect( (array) $q['post_mime_type'], array_keys($post_mime_types))) {
-		unset($q['post_mime_type']);
-	}
-
-	foreach( array_keys( $post_mime_types) as $type) {
-		if( isset( $q['attachment-filter']) && "post_mime_type:$type" == $q['attachment-filter']) {
-			$q['post_mime_type'] = $type;
-			break;
-		}
-	}
-
-	if( isset( $q['detached']) || ( isset( $q['attachment-filter']) && 'detached' == $q['attachment-filter'])) {
-		$q['post_parent'] = 0;
-	}
-
-	if( isset( $q['mine']) || ( isset( $q['attachment-filter']) && 'mine' == $q['attachment-filter'])) {
-		$q['author'] = get_current_user_id();
-	}
-
-	// Filter query clauses to include filenames.
-	if( isset( $q['s'])) {
-		add_filter( 'posts_clauses', '_filter_query_attachment_filenames');
-	}
-
-	return $q;
-}
-
-/**
- * Executes a query for attachments. An array of WP_Query arguments
- * can be passed in, which will override the arguments set by this function.
- *
- * @since 2.5.0
- *
- * @param array|false $q Array of query variables to use to build the query or false to use $_GET superglobal.
- * @return array
- */
-function wp_edit_attachments_query( $q = false) {
-	wp( wp_edit_attachments_query_vars( $q));
-
-	$post_mime_types = get_post_mime_types();
-	$avail_post_mime_types = get_available_post_mime_types( 'attachment');
-
-	return array( $post_mime_types, $avail_post_mime_types);
-}
 
 /**
  * Returns the list of classes to be used by a meta box.

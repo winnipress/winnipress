@@ -75,61 +75,6 @@ function set_query_var($var, $value){
 	$wp_query->set($var, $value);
 }
 
-/**
- * Sets up The Loop with query parameters.
- *
- * Note: This function will completely override the main query and isn't intended for use
- * by plugins or themes. Its overly-simplistic approach to modifying the main query can be
- * problematic and should be avoided wherever possible. In most cases, there are better,
- * more performant options for modifying the main query such as via the{@see 'pre_get_posts'}
- * action within WP_Query.
- *
- * This must not be used within the WordPress Loop.
- *
- * @since 1.5.0
- *
- * @global WP_Query $wp_query Global WP_Query instance.
- *
- * @param array|string $query Array or string of WP_Query arguments.
- * @return array List of post objects.
- */
-function query_posts($query){
-	$GLOBALS['wp_query'] = new WP_Query();
-	return $GLOBALS['wp_query']->query($query);
-}
-
-/**
- * Destroys the previous query and sets up a new query.
- *
- * This should be used after query_posts() and before another query_posts().
- * This will remove obscure bugs that occur when the previous WP_Query object
- * is not destroyed properly before another is set up.
- *
- * @since 2.3.0
- *
- * @global WP_Query $wp_query     Global WP_Query instance.
- * @global WP_Query $wp_the_query Copy of the global WP_Query instance created during wp_reset_query().
- */
-function wp_reset_query(){
-	$GLOBALS['wp_query'] = $GLOBALS['wp_the_query'];
-	wp_reset_postdata();
-}
-
-/**
- * After looping through a separate query, this function restores
- * the $post global to the current post in the main query.
- *
- * @since 3.0.0
- *
- * @global WP_Query $wp_query Global WP_Query instance.
- */
-function wp_reset_postdata(){
-	global $wp_query;
-
-	if(isset($wp_query)){
-		$wp_query->reset_postdata();
-	}
-}
 
 /*
  * Query type checks.
@@ -702,31 +647,7 @@ function is_embed(){
 	return $wp_query->is_embed();
 }
 
-/**
- * Is the query the main query?
- *
- * @since 3.3.0
- *
- * @global WP_Query $wp_query Global WP_Query instance.
- *
- * @return bool
- */
-function is_main_query(){
-	if('pre_get_posts' === current_filter()){
-		$message = sprintf(
-			/* translators: 1: pre_get_posts 2: WP_Query->is_main_query() 3: is_main_query() 4: link to codex is_main_query() page. */
-			__('In %1$s, use the %2$s method, not the %3$s function. See %4$s.'),
-			'<code>pre_get_posts</code>',
-			'<code>WP_Query->is_main_query()</code>',
-			'<code>is_main_query()</code>',
-			__('https://codex.wordpress.org/Function_Reference/is_main_query')
-		);
-		_doing_it_wrong(__FUNCTION__, $message, '3.7.0');
-	}
 
-	global $wp_query;
-	return $wp_query->is_main_query();
-}
 
 /*
  * The Loop. Post loop control.

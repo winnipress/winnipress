@@ -1,118 +1,47 @@
 <?php
-/**
- * WordPress environment setup class.
- *
- * @package WordPress
- * @since 2.0.0
- */
+// WordPress environment setup class
+
 class WP{
-	/**
-	 * Public query variables.
-	 *
-	 * Long list of public query variables.
-	 *
-	 * @since 2.0.0
-	 * @var array
-	 */
+	
+	// Public query variables
 	public $public_query_vars = array( 'm', 'p', 'posts', 'w', 'cat', 's', 'search', 'exact', 'sentence', 'calendar', 'page', 'paged', 'more', 'tb', 'pb', 'author', 'order', 'orderby', 'year', 'monthnum', 'day', 'hour', 'minute', 'second', 'name', 'category_name', 'tag', 'feed', 'author_name', 'pagename', 'page_id', 'error', 'subpost', 'subpost_id', 'preview', 'robots', 'taxonomy', 'term', 'cpage', 'post_type', 'embed' );
 
-	/**
-	 * Private query variables.
-	 *
-	 * Long list of private query variables.
-	 *
-	 * @since 2.0.0
-	 * @var array
-	 */
+	// Private query variables
 	public $private_query_vars = array( 'offset', 'posts_per_page', 'posts_per_archive_page', 'showposts', 'nopaging', 'post_type', 'post_status', 'category__in', 'category__not_in', 'category__and', 'tag__in', 'tag__not_in', 'tag__and', 'tag_slug__in', 'tag_slug__and', 'tag_id', 'post_mime_type', 'perm', 'post__in', 'post__not_in', 'post_parent', 'post_parent__in', 'post_parent__not_in', 'title', 'fields' );
 
-	/**
-	 * Extra query variables set by the user.
-	 *
-	 * @since 2.1.0
-	 * @var array
-	 */
+	// Extra query variables set by the user
 	public $extra_query_vars = array();
 
-	/**
-	 * Query variables for setting up the WordPress Query Loop.
-	 *
-	 * @since 2.0.0
-	 * @var array
-	 */
+	// Query variables for setting up the WordPress Query Loop
 	public $query_vars;
 
-	/**
-	 * String parsed to set the query variables.
-	 *
-	 * @since 2.0.0
-	 * @var string
-	 */
+	// String parsed to set the query variables
 	public $query_string;
 
-	/**
-	 * The request path, e.g. 2015/05/06.
-	 *
-	 * @since 2.0.0
-	 * @var string
-	 */
+	// The request path, e.g. 2015/05/06
 	public $request;
 
-	/**
-	 * Rewrite rule the request matched.
-	 *
-	 * @since 2.0.0
-	 * @var string
-	 */
+	// Rewrite rule the request matched
 	public $matched_rule;
 
-	/**
-	 * Rewrite query the request matched.
-	 *
-	 * @since 2.0.0
-	 * @var string
-	 */
+	// Rewrite query the request matched
 	public $matched_query;
 
-	/**
-	 * Whether already did the permalink.
-	 *
-	 * @since 2.0.0
-	 * @var bool
-	 */
+	// Whether already did the permalink
 	public $did_permalink = false;
 
-	/**
-	 * Add name to list of public query variables.
-	 *
-	 * @since 2.1.0
-	 *
-	 * @param string $qv Query variable name.
-	 */
+	// Add name to list of public query variables
 	public function add_query_var($qv){
 		if( !in_array($qv, $this->public_query_vars) )
 			$this->public_query_vars[] = $qv;
 	}
 
-	/**
-	 * Removes a query variable from a list of public query variables.
-	 *
-	 * @since 4.5.0
-	 *
-	 * @param string $name Query variable name.
-	 */
+	// Removes a query variable from the list of public query variables
 	public function remove_query_var( $name ){
 		$this->public_query_vars = array_diff( $this->public_query_vars, array( $name ) );
 	}
 
-	/**
-	 * Set the value of a query variable.
-	 *
-	 * @since 2.3.0
-	 *
-	 * @param string $key Query variable name.
-	 * @param mixed $value Query variable value.
-	 */
+	// Set the value of a query variable
 	public function set_query_var($key, $value){
 		$this->query_vars[$key] = $value;
 	}
@@ -122,13 +51,7 @@ class WP{
 	 *
 	 * Sets up the query variables based on the request. There are also many
 	 * filters and actions that can be used to further manipulate the result.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @global WP_Rewrite $wp_rewrite
-	 *
-	 * @param array|string $extra_query_vars Set the extra query variables.
-	 */
+	*/
 	public function parse_request($extra_query_vars = ''){
 		global $wp_rewrite;
 
@@ -199,6 +122,7 @@ class WP{
 			$requested_file = $req_uri;
 
 			$this->request = $requested_path;
+			winni_log('WP Request: ' . $requested_path);
 
 			// Look for matches.
 			$request_match = $requested_path;
@@ -240,6 +164,9 @@ class WP{
 			}
 
 			if( isset( $this->matched_rule ) ){
+
+				winni_log('Matched rule: '.$this->matched_rule);
+
 				// Trim the query of everything up to the '?'.
 				$query = preg_replace("!^.+\?!", '', $query);
 
@@ -247,6 +174,8 @@ class WP{
 				$query = addslashes(WP_MatchesMapRegex::apply($query, $matches));
 
 				$this->matched_query = $query;
+
+				winni_log('Matched query: '.$this->matched_query);
 
 				// Parse the query.
 				parse_str($query, $perma_query_vars);
@@ -382,7 +311,7 @@ class WP{
 	 * If showing a feed, it will also send Last-Modified, ETag, and 304 status if needed.
 	 *
 	 * @since 2.0.0
-	 * @since 4.4.0 `X-Pingback` header is added conditionally after posts have been queried in handle_404().
+	 * @since 4.4.0 `X-Pingback` header is added conditionally after posts have been queried in send_status_200_or_404().
 	 */
 	public function send_headers(){
 		$headers = array();
@@ -509,19 +438,6 @@ class WP{
 				$this->query_string .= $wpvar . '=' . rawurlencode($this->query_vars[$wpvar]);
 			}
 		}
-
-		if( has_filter( 'query_string' ) ){  // Don't bother filtering and parsing if no plugins are hooked in.
-			/**
-			 * Filters the query string before parsing.
-			 *
-			 * @since 1.5.0
-			 * @deprecated 2.1.0 Use 'query_vars' or 'request' filters instead.
-			 *
-			 * @param string $query_string The query string to modify.
-			 */
-			$this->query_string = apply_filters( 'query_string', $this->query_string );
-			parse_str($this->query_string, $this->query_vars);
-		}
 	}
 
 	/**
@@ -564,62 +480,15 @@ class WP{
 			$GLOBALS['authordata'] = get_userdata( $wp_query->post->post_author );
 	}
 
-	// Set up the current users
-	public function init(){
-		wp_get_current_user();
-	}
-
-	/**
-	 * Set up the Loop based on the query variables.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @global WP_Query $wp_the_query
-	 */
-	public function query_posts(){
-		global $wp_the_query;
-		$this->build_query_string();
-		$wp_the_query->query($this->query_vars);
- 	}
-
- 	/**
-	 * Set the Headers for 404, if nothing is found for requested URL.
-	 *
-	 * Issue a 404 if a request doesn't match any posts and doesn't match
-	 * any object (e.g. an existing-but-empty category, tag, author) and a 404 was not already
-	 * issued, and if the request was not a search or the homepage.
-	 *
-	 * Otherwise, issue a 200.
-	 *
-	 * This sets headers after posts have been queried. handle_404() really means "handle status."
-	 * By inspecting the result of querying posts, seemingly successful requests can be switched to
-	 * a 404 so that canonical redirection logic can kick in.
-	 *
-	 * @since 2.0.0
-     *
-	 * @global WP_Query $wp_query
- 	 */
-	public function handle_404(){
+ 	// Set header status to 200 or 404 depending on the results of the main query
+	public function send_status_200_or_404(){
 		global $wp_query;
 
-		/**
-		 * Filters whether to short-circuit default header status handling.
-		 *
-		 * Returning a non-false value from the filter will short-circuit the handling
-		 * and return early.
-		 *
-		 * @since 4.5.0
-		 *
-		 * @param bool     $preempt  Whether to short-circuit default header status handling. Default false.
-		 * @param WP_Query $wp_query WordPress Query object.
-		 */
-		if( false !== apply_filters( 'pre_handle_404', false, $wp_query ) ){
-			return;
-		}
 
 		// If we've already issued a 404, bail.
-		if( is_404() )
+		if(is_404()){
 			return;
+		}
 
 		// Never 404 for the admin, robots, or if we found posts.
 		if( is_admin() || is_robots() || $wp_query->posts ){
@@ -673,7 +542,7 @@ class WP{
 
 		// Guess it's time to 404.
 		$wp_query->set_404();
-		status_header( 404 );
+		status_header(404);
 		nocache_headers();
 	}
 
@@ -688,21 +557,18 @@ class WP{
 	 *
 	 * @param string|array $query_args Passed to parse_request().
 	 */
-	public function main($query_args = ''){
-		$this->init();
+	public function execute_main_query($query_args = ''){
+		winni_log('Executing Main Query');
 		$this->parse_request($query_args);
 		$this->send_headers();
-		$this->query_posts();
-		$this->handle_404();
+		$this->build_query_string();
+		winni_log('Query vars going into main query');
+		winni_log($this->query_vars);
+		$GLOBALS['wp_query']->query($this->query_vars);
+		$this->send_status_200_or_404();
 		$this->register_globals();
 
-		/**
-		 * Fires once the WordPress environment has been set up.
-		 *
-		 * @since 2.1.0
-		 *
-		 * @param WP $this Current WordPress environment instance (passed by reference).
-		 */
+		// Fires once the WordPress environment has been set up
 		do_action_ref_array('wp', array( &$this ) );
 	}
 }

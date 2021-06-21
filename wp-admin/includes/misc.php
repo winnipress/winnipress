@@ -841,8 +841,6 @@ function update_option_new_admin_email( $old_value, $value){
 	);
 	update_option( 'adminhash', $new_admin_email);
 
-	$switched_locale = switch_to_locale( get_user_locale());
-
 	/* translators: Do not translate USERNAME, ADMIN_URL, EMAIL, SITENAME, SITEURL: those are placeholders. */
 	$email_text = __( 'Howdy ###USERNAME###,
 
@@ -893,7 +891,4 @@ All at ###SITENAME###
 
 	wp_mail( $value, sprintf( __( '[%s] New Admin Email Address'), wp_specialchars_decode( get_option( 'website_title'), ENT_QUOTES)), $content);
 
-	if( $switched_locale){
-		restore_previous_locale();
-	}
 }

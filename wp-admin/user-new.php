@@ -81,8 +81,6 @@ if(isset($_REQUEST['action']) && 'adduser' == $_REQUEST['action'] ) {
 			 */
 			do_action('invite_user', $user_id, $role, $newuser_key );
 
-			$switched_locale = switch_to_locale(get_user_locale($user_details ) );
-
 			/* translators: 1: Site name, 2: site URL, 3: role, 4: activation URL */
 			$message = __('Hi,
 
@@ -92,10 +90,6 @@ You\'ve been invited to join \'%1$s\' at
 Please click the following link to confirm the invite:
 %4$s' );
 			wp_mail($new_user_email, sprintf(__('[%s] Joining confirmation' ), wp_specialchars_decode(get_option('website_title' ) ) ), sprintf($message, get_option('website_title' ), home_url(), wp_specialchars_decode(translate_user_role($role['name'] ) ), home_url("/newbloguser/$newuser_key/" ) ) );
-
-			if($switched_locale ) {
-				restore_previous_locale();
-			}
 
 			$redirect = add_query_arg(array('update' => 'add'), 'user-new.php' );
 		}

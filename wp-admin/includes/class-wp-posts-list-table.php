@@ -117,7 +117,6 @@ class WP_Posts_List_Table extends WP_List_Table {
 	public function prepare_items(){
 		global $avail_post_stati, $wp_query, $per_page, $mode;
 
-		// is going to call wp()
 		$avail_post_stati = wp_edit_posts_query();
 
 		$this->set_hierarchical_display( is_post_type_hierarchical( $this->screen->post_type ) && 'title' === $wp_query->query['orderby'] );

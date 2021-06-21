@@ -9,5 +9,8 @@ require_once(dirname(__FILE__) . '/wp-includes/winni-debug-tools.php');
 // Load WP
 require_once(dirname(__FILE__) . '/wp-load.php');
 
-// Load the corresponding template
-require(dirname(__FILE__) . '/wp-load-template.php');
+// Execute the main WP query
+$GLOBALS['wp']->execute_main_query();
+
+// Load the theme
+require_once(ABSPATH . WPINC . '/template-loader.php');

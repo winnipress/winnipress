@@ -933,7 +933,7 @@ class WP_Query{
 
 		// added slashes screw with quote grouping when done early, so done later
 		$q['s'] = stripslashes($q['s'] );
-		if(empty($_GET['s'] ) && $this->is_main_query() )
+		if(empty($_GET['s'] ))
 			$q['s'] = urldecode($q['s'] );
 		// there are no line breaks in <input /> fields
 		$q['s'] = str_replace(array("\r", "\n" ), '', $q['s'] );
@@ -1296,17 +1296,6 @@ class WP_Query{
 
 		$this->parse_query();
 
-		/**
-		 * Fires after the query variable object is created, but before the actual query is run.
-		 *
-		 * Note: If using conditional tags, use the method versions within the passed instance
-		 * (e.g. $this->is_main_query() instead of is_main_query()). This is because the functions
-		 * like is_main_query() test against the global $wp_query instance, not the passed one.
-		 *
-		 * @since 2.0.0
-		 *
-		 * @param WP_Query $this The WP_Query instance (passed by reference).
-		 */
 		do_action_ref_array('pre_get_posts', array(&$this ) );
 
 		// Shorthand.
@@ -3458,20 +3447,6 @@ class WP_Query{
 	 */
 	public function is_embed(){
 		return (bool) $this->is_embed;
-	}
-
-	/**
-	 * Is the query the main query?
-	 *
-	 * @since 3.3.0
-	 *
-	 * @global WP_Query $wp_query Global WP_Query instance.
-	 *
-	 * @return bool
-	 */
-	public function is_main_query(){
-		global $wp_the_query;
-		return $wp_the_query === $this;
 	}
 
 	/**

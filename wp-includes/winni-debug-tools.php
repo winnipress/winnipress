@@ -31,6 +31,8 @@ function winni_log($thing){
 // Print logs
 function winni_print_logs(){
 
+    $GLOBALS['winni_logs'][] = memory_get_peak_usage()/(1024*1024);
+
     if(empty($GLOBALS['winni_logs'])){
         return false;
     }

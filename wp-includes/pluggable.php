@@ -50,25 +50,6 @@ function wp_set_current_user($id, $name = ''){
 }
 endif;
 
-if(!function_exists('wp_get_current_user')) :
-/**
- * Retrieve the current user object.
- *
- * Will set the current user, if the current user is not set. The current user
- * will be set to the logged-in person. If no user is logged-in, then it will
- * set the current user to 0, which is invalid and won't have any permissions.
- *
- * @since 2.0.3
- *
- * @see _wp_get_current_user()
- * @global WP_User $current_user Checks if the current user is set.
- *
- * @return WP_User Current WP_User instance.
- */
-function wp_get_current_user(){
-	return _wp_get_current_user();
-}
-endif;
 
 if(!function_exists('get_userdata')) :
 /**
@@ -1393,7 +1374,6 @@ function wp_notify_postauthor($comment_id, $deprecated = null){
 		$emails = array_flip($emails);
 	}
 
-	$switched_locale = switch_to_locale(get_locale());
 
 	$comment_author_domain = @gethostbyaddr($comment->comment_author_IP);
 
@@ -1501,9 +1481,6 @@ function wp_notify_postauthor($comment_id, $deprecated = null){
 		@wp_mail($email, wp_specialchars_decode($subject), $notify_message, $message_headers);
 	}
 
-	if($switched_locale){
-		restore_previous_locale();
-	}
 
 	return true;
 }
@@ -1552,7 +1529,6 @@ function wp_notify_moderator($comment_id){
 			$emails[] = $user->user_email;
 	}
 
-	$switched_locale = switch_to_locale(get_locale());
 
 	$comment_author_domain = @gethostbyaddr($comment->comment_author_IP);
 	$comments_waiting = $wpdb->get_var("SELECT count(comment_ID) FROM $wpdb->comments WHERE comment_approved = '0'");
@@ -1665,9 +1641,6 @@ function wp_notify_moderator($comment_id){
 		@wp_mail($email, wp_specialchars_decode($subject), $notify_message, $message_headers);
 	}
 
-	if($switched_locale){
-		restore_previous_locale();
-	}
 
 	return true;
 }
@@ -1759,7 +1732,6 @@ function wp_new_user_notification($user_id, $deprecated = null, $notify = ''){
 	$website_title = wp_specialchars_decode(get_option('website_title'), ENT_QUOTES);
 
 	if('user' !== $notify){
-		$switched_locale = switch_to_locale(get_locale());
 
 		/* translators: %s: site title */
 		$message  = sprintf(__('New user registration on your site %s:'), $website_title) . "\r\n\r\n";
@@ -1801,9 +1773,6 @@ function wp_new_user_notification($user_id, $deprecated = null, $notify = ''){
 			$wp_new_user_notification_email_admin['headers']
 		);
 
-		if($switched_locale){
-			restore_previous_locale();
-		}
 	}
 
 	// `$deprecated was pre-4.3 `$plaintext_pass`. An empty `$plaintext_pass` didn't sent a user notification.
@@ -1825,7 +1794,6 @@ function wp_new_user_notification($user_id, $deprecated = null, $notify = ''){
 	$hashed = time() . ':' . $wp_hasher->HashPassword($key);
 	$wpdb->update($wpdb->users, array('user_activation_key' => $hashed), array('user_login' => $user->user_login));
 
-	$switched_locale = switch_to_locale(get_user_locale($user));
 
 	/* translators: %s: user login */
 	$message = sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
@@ -1867,9 +1835,6 @@ function wp_new_user_notification($user_id, $deprecated = null, $notify = ''){
 		$wp_new_user_notification_email['headers']
 	);
 
-	if($switched_locale){
-		restore_previous_locale();
-	}
 }
 endif;
 

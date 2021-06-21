@@ -1795,10 +1795,6 @@ function wp_update_user($userdata){
 
 		$blog_name = wp_specialchars_decode(get_option('website_title'), ENT_QUOTES);
 
-		$switched_locale = false;
-		if(!empty($send_password_change_email) || !empty($send_email_change_email)){
-			$switched_locale = switch_to_locale(get_user_locale($user_id));
-		}
 
 		if(!empty($send_password_change_email)){
 			/* translators: Do not translate USERNAME, ADMIN_EMAIL, EMAIL, SITENAME, SITEURL: those are placeholders. */
@@ -1913,9 +1909,6 @@ All at ###SITENAME###
 			wp_mail($email_change_email['to'], sprintf($email_change_email['subject'], $blog_name), $email_change_email['message'], $email_change_email['headers']);
 		}
 
-		if($switched_locale){
-			restore_previous_locale();
-		}
 	}
 
 	// Update the cookies if the password changed.
@@ -2470,19 +2463,10 @@ function wp_get_users_with_no_role($site_id = null){
  * will be set to the logged-in person. If no user is logged-in, then it will
  * set the current user to 0, which is invalid and won't have any permissions.
  *
- * This function is used by the pluggable functions wp_get_current_user() and
- * get_currentuserinfo(), the latter of which is deprecated but used for backward
- * compatibility.
- *
- * @since 4.5.0
- * @access private
- *
- * @see wp_get_current_user()
- * @global WP_User $current_user Checks if the current user is set.
- *
- * @return WP_User Current WP_User instance.
  */
-function _wp_get_current_user(){
+function wp_get_current_user(){
+
+	winni_log('Runnning get current user');
 	global $current_user;
 
 	if(!empty($current_user)){

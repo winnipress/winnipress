@@ -97,7 +97,6 @@ register_shutdown_function('shutdown_action_hook');
 // Load the L10n library.
 require_once(ABSPATH . WPINC . '/l10n.php');
 require_once(ABSPATH . WPINC . '/classes/locale.php');
-require_once(ABSPATH . WPINC . '/classes/locale-switcher.php');
 
 
 // Load most of WordPress.
@@ -151,16 +150,6 @@ wp_plugin_directory_constants();
 
 $GLOBALS['wp_plugin_paths'] = array();
 
-
-
-/**
- * Fires once all must-use and network-activated plugins have loaded.
- *
- * @since 2.8.0
- */
-do_action('muplugins_loaded');
-
-
 // Define constants after multisite is loaded.
 wp_cookie_constants();
 
@@ -194,16 +183,11 @@ require(ABSPATH . WPINC . '/pluggable.php');
 wp_set_internal_encoding();
 
 // Run wp_cache_postload() if object cache is enabled and the function exists.
-if(WP_CACHE && function_exists('wp_cache_postload'))
+if(WP_CACHE && function_exists('wp_cache_postload')){
 	wp_cache_postload();
+}
 
-/**
- * Fires once activated plugins have loaded.
- *
- * Pluggable functions are also available at this point in the loading order.
- *
- * @since 1.5.0
- */
+// Fires once activated plugins have loaded
 do_action('plugins_loaded');
 
 // Define constants which affect functionality if not already defined.
@@ -212,49 +196,19 @@ wp_functionality_constants();
 // Add magic quotes and set up $_REQUEST ($_GET + $_POST)
 wp_magic_quotes();
 
+// Main and global WP Query
+$GLOBALS['wp_query'] = new WP_Query();
 
-/**
- * WordPress Query object
- * @global WP_Query $wp_the_query
- * @since 2.0.0
- */
-$GLOBALS['wp_the_query'] = new WP_Query();
-
-/**
- * Holds the reference to @see $wp_the_query
- * Use this global for WordPress queries
- * @global WP_Query $wp_query
- * @since 1.5.0
- */
-$GLOBALS['wp_query'] = $GLOBALS['wp_the_query'];
-
-/**
- * Holds the WordPress Rewrite object for creating pretty URLs
- * @global WP_Rewrite $wp_rewrite
- * @since 1.5.0
- */
+// Global Rewrite object for creating pretty URLs
 $GLOBALS['wp_rewrite'] = new WP_Rewrite();
 
-/**
- * WordPress Object
- * @global WP $wp
- * @since 2.0.0
- */
+// Global WP object
 $GLOBALS['wp'] = new WP();
 
-
-/**
- * WordPress User Roles
- * @global WP_Roles $wp_roles
- * @since 2.0.0
- */
+// WP User Roles
 $GLOBALS['wp_roles'] = new WP_Roles();
 
-/**
- * Fires before the theme is loaded.
- *
- * @since 2.6.0
- */
+// Fires before the theme is loaded
 do_action('setup_theme');
 
 // Define the template related constants.
@@ -265,26 +219,13 @@ load_default_textdomain();
 
 $locale = get_locale();
 $locale_file = WP_LANG_DIR . "/$locale.php";
-if((0 === validate_file($locale)) && is_readable($locale_file))
+if((0 === validate_file($locale)) && is_readable($locale_file)){
 	require($locale_file);
+}
 unset($locale_file);
 
-/**
- * WordPress Locale object for loading locale domain date and various strings.
- * @global WP_Locale $wp_locale
- * @since 2.1.0
- */
+// Locale object for loading locale domain date and various strings
 $GLOBALS['wp_locale'] = new WP_Locale();
-
-/**
- *  WordPress Locale Switcher object for switching locales.
- *
- * @since 4.7.0
- *
- * @global WP_Locale_Switcher $wp_locale_switcher WordPress locale switcher object.
- */
-$GLOBALS['wp_locale_switcher'] = new WP_Locale_Switcher();
-$GLOBALS['wp_locale_switcher']->init();
 
 // Load the functions for the active theme, for both parent and child theme if applicable.
 if(!wp_installing()){
@@ -294,33 +235,14 @@ if(!wp_installing()){
 		include(TEMPLATEPATH . '/functions.php');
 }
 
-/**
- * Fires after the theme is loaded.
- *
- * @since 3.0.0
- */
+// Fires after the theme is loaded
 do_action('after_setup_theme');
 
-// Set up current user.
-$GLOBALS['wp']->init();
+// Get current user
+wp_get_current_user();
 
-/**
- * Fires after WordPress has finished loading but before any headers are sent.
- *
- * Most of WP is loaded at this stage, and the user is authenticated. WP continues
- * to load on the{@see 'init'} hook that follows (e.g. widgets), and many plugins instantiate
- * themselves on it for all sorts of reasons (e.g. they need a user, a taxonomy, etc.).
- *
- * If you wish to plug an action once WP is loaded, use the{@see 'wp_loaded'} hook below.
- *
- * @since 1.5.0
- */
+// Fires after WordPress has finished loading but before any headers are sent.
 do_action('init');
 
-
-
-/**
- * This hook is fired once WP, all plugins, and the theme are fully loaded and instantiated.
- *
- */
+// All plugins, and the theme are fully loaded and instantiated
 do_action('wp_loaded');
