@@ -4,7 +4,7 @@
 session_start();
 
 // Require debug tools
-require_once(dirname(__FILE__) . '/wp-includes/winni-debug-tools.php');
+require_once(dirname(__FILE__) . '/wp-core/winni-debug-tools.php');
 
 // Load WP
 require_once(dirname(__FILE__) . '/wp-load.php');
@@ -13,4 +13,4 @@ require_once(dirname(__FILE__) . '/wp-load.php');
 $GLOBALS['wp']->execute_main_query();
 
 // Load the theme
-require_once(ABSPATH . WPINC . '/template-loader.php');
+require_once(ABSPATH . 'wp-core/template-loader.php');

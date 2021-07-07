@@ -422,7 +422,7 @@ case 'postpass' :
 		exit();
 	}
 
-	require_once ABSPATH . WPINC . '/classes/phpass.php';
+	require_once ABSPATH . 'wp-core/classes/phpass.php';
 	$hasher = new PasswordHash(8, true);
 
 	/**
@@ -547,7 +547,7 @@ if(get_option('users_can_register')) :
 
 	echo esc_html($login_link_separator);
 
-	/** This filter is documented in wp-includes/general-template.php */
+	/** This filter is documented in wp-core/general-template.php */
 	echo apply_filters('register', $registration_url);
 endif;
 ?>
@@ -673,7 +673,7 @@ if(get_option('users_can_register')) :
 
 	echo esc_html($login_link_separator);
 
-	/** This filter is documented in wp-includes/general-template.php */
+	/** This filter is documented in wp-core/general-template.php */
 	echo apply_filters('register', $registration_url);
 endif;
 ?>
@@ -822,7 +822,7 @@ default:
 	if(isset($_REQUEST['redirect_to'])){
 		$redirect_to = $_REQUEST['redirect_to'];
 		// Redirect to https if user wants ssl
-		if($secure_cookie && false !== strpos($redirect_to, 'wp-admin'))
+		if($secure_cookie && false !== strpos($redirect_to, 'admin'))
 			$redirect_to = preg_replace('|^http://|', 'https://', $redirect_to);
 	} else{
 		$redirect_to = admin_url();
@@ -871,7 +871,7 @@ default:
 <?php		exit;
 		}
 
-		if((empty($redirect_to) || $redirect_to == 'wp-admin/' || $redirect_to == admin_url())){
+		if((empty($redirect_to) || $redirect_to == 'admin/' || $redirect_to == admin_url())){
 			// If the user doesn't belong to a blog, send them to user admin. If the user can't edit posts, send them to their profile.
 			if(is_multisite() && !get_active_blog_for_user($user->ID) && !is_super_admin($user->ID))
 				$redirect_to = user_admin_url();
@@ -976,7 +976,7 @@ default:
 	if(get_option('users_can_register')) :
 		$registration_url = sprintf('<a href="%s">%s</a>', esc_url(wp_registration_url()), __('Register'));
 
-		/** This filter is documented in wp-includes/general-template.php */
+		/** This filter is documented in wp-core/general-template.php */
 		echo apply_filters('register', $registration_url);
 
 		echo esc_html($login_link_separator);

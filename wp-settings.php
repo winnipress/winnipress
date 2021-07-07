@@ -1,12 +1,11 @@
 <?php
-define('WPINC', 'wp-includes');
 
 // Include files required for initialization.
-require(ABSPATH . WPINC . '/functions/load.php');
-require(ABSPATH . WPINC . '/default-constants.php');
+require(ABSPATH . 'wp-core/functions/load.php');
+require(ABSPATH . 'wp-core/default-constants.php');
 
 // Functions to handle filters and actions and some plugin related stuff
-require_once(ABSPATH . WPINC . '/plugin.php');
+require_once(ABSPATH . 'wp-core/plugin.php');
 
 /*
  * These can't be directly globalized in version.php. When updating,
@@ -14,7 +13,7 @@ require_once(ABSPATH . WPINC . '/plugin.php');
  * these values to be overridden if already set.
  */
 global $wp_version, $wp_db_version, $tinymce_version, $required_php_version, $required_mysql_version, $wp_local_package;
-require(ABSPATH . WPINC . '/version.php');
+require(ABSPATH . 'wp-core/version.php');
 
 /**
  * If not already configured, `$blog_id` will default to 1 in a single site
@@ -37,43 +36,17 @@ wp_initial_constants();
 // WordPress calculates offsets from UTC.
 date_default_timezone_set('UTC');
 
-
-// Standardize $_SERVER variables across setups.
-wp_fix_server_vars();
-
-
-/**
- * Filters whether to enable loading of the advanced-cache.php drop-in.
- *
- * This filter runs before it can be used by plugins. It is designed for non-web
- * run-times. If false is returned, advanced-cache.php will never be loaded.
- *
- * @since 4.6.0
- *
- * @param bool $enable_advanced_cache Whether to enable loading advanced-cache.php (if present).
- *                                    Default true.
- */
-if(WP_CACHE && apply_filters('enable_loading_advanced_cache_dropin', true)){
-	// For an advanced caching plugin to use. Uses a static drop-in because you would only want one.
-	WP_DEBUG ? include(WP_CONTENT_DIR . '/advanced-cache.php') : @include(WP_CONTENT_DIR . '/advanced-cache.php');
-
-	// Re-initialize any hooks added manually by advanced-cache.php
-	if($wp_filter){
-		$wp_filter = WP_Hook::build_preinitialized_hooks($wp_filter);
-	}
-}
-
 // Define WP_LANG_DIR if not set.
 wp_set_lang_dir();
 
 // Load early WordPress files.
-require(ABSPATH . WPINC . '/classes/list-util.php');
-require(ABSPATH . WPINC . '/functions/options-transients.php');
-require(ABSPATH . WPINC . '/functions/main.php');
-require(ABSPATH . WPINC . '/classes/matchesmapregex.php');
-require(ABSPATH . WPINC . '/classes/wp.php');
-require(ABSPATH . WPINC . '/classes/error.php');
-require(ABSPATH . WPINC . '/pomo/mo.php');
+require(ABSPATH . 'wp-core/classes/list-util.php');
+require(ABSPATH . 'wp-core/functions/options-transients.php');
+require(ABSPATH . 'wp-core/functions/main.php');
+require(ABSPATH . 'wp-core/classes/matchesmapregex.php');
+require(ABSPATH . 'wp-core/classes/wp.php');
+require(ABSPATH . 'wp-core/classes/error.php');
+require(ABSPATH . 'wp-core/pomo/mo.php');
 
 // Include the wpdb class and, if present, a db.php database drop-in.
 global $wpdb;
@@ -87,60 +60,60 @@ wp_set_wpdb_vars();
 wp_start_object_cache();
 
 // Attach the default filters.
-require(ABSPATH . WPINC . '/default-filters.php');
+require(ABSPATH . 'wp-core/default-filters.php');
 
 register_shutdown_function('shutdown_action_hook');
 
 
 // Load the L10n library.
-require_once(ABSPATH . WPINC . '/l10n.php');
-require_once(ABSPATH . WPINC . '/classes/locale.php');
+require_once(ABSPATH . 'wp-core/l10n.php');
+require_once(ABSPATH . 'wp-core/classes/locale.php');
 
 
 // Load most of WordPress.
-require(ABSPATH . WPINC . '/formatting.php');
-require(ABSPATH . WPINC . '/capabilities.php');
-require(ABSPATH . WPINC . '/query.php');
-require(ABSPATH . WPINC . '/date.php');
-require(ABSPATH . WPINC . '/theme.php');
-require(ABSPATH . WPINC . '/template.php');
-require(ABSPATH . WPINC . '/user.php');
-require(ABSPATH . WPINC . '/meta.php');
-require(ABSPATH . WPINC . '/post.php');
-require(ABSPATH . WPINC . '/category.php');
-require(ABSPATH . WPINC . '/rewrite.php');
-require(ABSPATH . WPINC . '/kses.php');
-require(ABSPATH . WPINC . '/script-loader.php');
-require(ABSPATH . WPINC . '/taxonomy.php');
-require(ABSPATH . WPINC . '/canonical.php');
-require(ABSPATH . WPINC . '/shortcodes.php');
-require(ABSPATH . WPINC . '/http.php');
+require(ABSPATH . 'wp-core/formatting.php');
+require(ABSPATH . 'wp-core/capabilities.php');
+require(ABSPATH . 'wp-core/query.php');
+require(ABSPATH . 'wp-core/date.php');
+require(ABSPATH . 'wp-core/theme.php');
+require(ABSPATH . 'wp-core/template.php');
+require(ABSPATH . 'wp-core/user.php');
+require(ABSPATH . 'wp-core/meta.php');
+require(ABSPATH . 'wp-core/post.php');
+require(ABSPATH . 'wp-core/category.php');
+require(ABSPATH . 'wp-core/rewrite.php');
+require(ABSPATH . 'wp-core/kses.php');
+require(ABSPATH . 'wp-core/script-loader.php');
+require(ABSPATH . 'wp-core/taxonomy.php');
+require(ABSPATH . 'wp-core/canonical.php');
+require(ABSPATH . 'wp-core/shortcodes.php');
+require(ABSPATH . 'wp-core/http.php');
 
-require(ABSPATH . WPINC . '/classes/roles.php');
-require(ABSPATH . WPINC . '/classes/role.php');
-require(ABSPATH . WPINC . '/classes/user.php');
-require(ABSPATH . WPINC . '/classes/query.php');
-require(ABSPATH . WPINC . '/classes/theme.php');
-require(ABSPATH . WPINC . '/classes/user-query.php');
-require(ABSPATH . WPINC . '/classes/session-tokens.php');
-require(ABSPATH . WPINC . '/classes/user-meta-session-tokens.php');
-require(ABSPATH . WPINC . '/classes/meta-query.php');
-require(ABSPATH . WPINC . '/classes/metadata-lazyloader.php');
-require(ABSPATH . WPINC . '/classes/post-type.php');
-require(ABSPATH . WPINC . '/classes/post.php');
-require(ABSPATH . WPINC . '/classes/rewrite.php');
-require(ABSPATH . WPINC . '/classes/taxonomy.php');
-require(ABSPATH . WPINC . '/classes/term.php');
-require(ABSPATH . WPINC . '/classes/term-query.php');
-require(ABSPATH . WPINC . '/classes/tax-query.php');
+require(ABSPATH . 'wp-core/classes/roles.php');
+require(ABSPATH . 'wp-core/classes/role.php');
+require(ABSPATH . 'wp-core/classes/user.php');
+require(ABSPATH . 'wp-core/classes/query.php');
+require(ABSPATH . 'wp-core/classes/theme.php');
+require(ABSPATH . 'wp-core/classes/user-query.php');
+require(ABSPATH . 'wp-core/classes/session-tokens.php');
+require(ABSPATH . 'wp-core/classes/user-meta-session-tokens.php');
+require(ABSPATH . 'wp-core/classes/meta-query.php');
+require(ABSPATH . 'wp-core/classes/metadata-lazyloader.php');
+require(ABSPATH . 'wp-core/classes/post-type.php');
+require(ABSPATH . 'wp-core/classes/post.php');
+require(ABSPATH . 'wp-core/classes/rewrite.php');
+require(ABSPATH . 'wp-core/classes/taxonomy.php');
+require(ABSPATH . 'wp-core/classes/term.php');
+require(ABSPATH . 'wp-core/classes/term-query.php');
+require(ABSPATH . 'wp-core/classes/tax-query.php');
 
-require(ABSPATH . WPINC . '/functions/cron.php');
-require(ABSPATH . WPINC . '/functions/general.php'); // Functions to handle general stuff
-require(ABSPATH . WPINC . '/functions/urls-and-links.php'); // Functions to handle urls and links
-require(ABSPATH . WPINC . '/functions/authors.php'); // Functions to handle authors
-require(ABSPATH . WPINC . '/functions/posts.php'); // Functions to handle posts
-require(ABSPATH . WPINC . '/functions/post-thumbnails.php'); // Functions to handle post thumbnails
-require(ABSPATH . WPINC . '/functions/categories.php'); // Functions to handle categories
+require(ABSPATH . 'wp-core/functions/cron.php');
+require(ABSPATH . 'wp-core/functions/general.php'); // Functions to handle general stuff
+require(ABSPATH . 'wp-core/functions/urls-and-links.php'); // Functions to handle urls and links
+require(ABSPATH . 'wp-core/functions/authors.php'); // Functions to handle authors
+require(ABSPATH . 'wp-core/functions/posts.php'); // Functions to handle posts
+require(ABSPATH . 'wp-core/functions/post-thumbnails.php'); // Functions to handle post thumbnails
+require(ABSPATH . 'wp-core/functions/categories.php'); // Functions to handle categories
 
 // Define constants that rely on the API to obtain the default value.
 // Define must-use plugin directory constants, which may be overridden in the sunrise.php drop-in.
@@ -155,7 +128,7 @@ wp_cookie_constants();
 wp_ssl_constants();
 
 // Create common globals.
-require(ABSPATH . WPINC . '/vars.php');
+require(ABSPATH . 'wp-core/vars.php');
 
 // Make taxonomies and posts available to plugins and themes.
 // @plugin authors: warning: these get registered again on the init hook.
@@ -175,15 +148,10 @@ foreach(wp_get_active_and_valid_plugins() as $plugin){
 unset($plugin);
 
 // Load pluggable functions.
-require(ABSPATH . WPINC . '/pluggable.php');
+require(ABSPATH . 'wp-core/pluggable.php');
 
 // Set internal encoding.
 wp_set_internal_encoding();
-
-// Run wp_cache_postload() if object cache is enabled and the function exists.
-if(WP_CACHE && function_exists('wp_cache_postload')){
-	wp_cache_postload();
-}
 
 // Fires once activated plugins have loaded
 do_action('plugins_loaded');
